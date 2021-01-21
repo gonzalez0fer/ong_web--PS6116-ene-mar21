@@ -43,11 +43,15 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-INSTALLED_APPS = []
+INSTALLED_APPS = [
+    'apps.main.users.apps.UsersConfig',
+]
 
 THIRD_PARTY_APPS = []
 
 INSTALLED_APPS = INSTALLED_APPS + DJANGO_APPS + THIRD_PARTY_APPS
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
