@@ -28,14 +28,58 @@
                 </a>
           </li>
 
-          <li class="nav-item {% if 'ui-icons' in segment %} active {% endif %}">
-            <a class="nav-link" href="/ui-icons.html">
-              <i class="material-icons">bubble_chart</i>
-              <p>Icons</p>
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false"><i class="material-icons">food_bank</i>Comedores</a>
+            <div class="dropdown-menu">
+
+              <a class="dropdown-item" href="">
+                  <i class="material-icons">restaurant</i> 
+                  <p>Ver Comedores</p>
+                </a>
+
+                <a class="dropdown-item" href="">
+                    <i class="material-icons">kitchen</i> 
+                    <p>Ver Inventario</p>
+                  </a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false"><i class="material-icons">opacity</i>Agua</a>
+            <div class="dropdown-menu">
+
+              <a class="dropdown-item" href="">
+                  <i class="material-icons">water_damage</i> 
+                  <p>Ver Tanques</p>
+                </a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false"><i class="material-icons">home_repair_service
+            </i>Mantenimiento</a>
+            <div class="dropdown-menu">
+
+              <a class="dropdown-item" href="">
+                  <i class="material-icons">science</i> 
+                  <p>Ver Suministros</p>
+                </a>
+
+                <a class="dropdown-item" href="">
+                    <i class="material-icons">construction</i> 
+                    <p>Ver Mantenimientos</p>
+                  </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="">
+              <i class="material-icons">engineering</i>
+              <p>Proveedores</p>
             </a>
           </li>
-          
-          <li class="nav-item ">
+
+
+          <li class="nav-item" style="position: absolute; bottom: 5%;">
             <a class="nav-link" href="{% url 'logout' %}" >
               <i class="material-icons">directions_run</i>
               <p>Logout</p>
