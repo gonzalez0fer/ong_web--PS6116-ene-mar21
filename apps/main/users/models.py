@@ -31,7 +31,7 @@ class UserProfile(models.Model):
     last_name = models.CharField(max_length=100, blank=True, null=True)
     address = models.TextField(max_length=600,blank=True, null=True)
     about = models.TextField(max_length=1000,blank=True, null=True)
-    user = models.OneToOneField(CustomUser, null=True, on_delete=models.SET_NULL)
+    user = models.OneToOneField(CustomUser, null=True, on_delete=models.SET_NULL, related_name = 'profile')
 
     @receiver(post_save, sender=CustomUser) 
     def create_user_profile(sender, instance, created, **kwargs):

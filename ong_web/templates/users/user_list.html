@@ -1,0 +1,132 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-plain">
+                  <div class="card-header card-header-info">
+                    <h4 class="card-title mt-0"> Tu Usuario</h4>
+                    <p class="card-category"> Aqui padras editar tus datos.</p>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead class="">
+                          <th>
+                              ID
+                          </th>
+                          <th>
+                              Nombre
+                          </th>
+                          <th>
+                              Apellido
+                          </th>
+                          <th>
+                              Email
+                          </th>
+                          <th>
+                              Acciones
+                          </th>
+                        </thead>
+                        <tbody>
+  
+                            {% for user_object in object_list %}
+                            {% if user_object.id == user.id %}
+                            <tr>
+                            <td>
+                                {{ user_object.id }}
+                                </td>
+                              <td>
+                                {{ user_object.name }}
+                              </td>
+                              <td>
+                                {{ user_object.last_name }}
+                              </td>
+                              <td>
+                                {{ user_object.email }}
+                              </td>
+                              <td>
+                                <button type="button" class="btn btn-info">Editar</button>
+                                <button type="button" class="btn btn-default" disabled>Eliminar</button>
+                              </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+  
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </br>
+        </br>
+            <div class="col-md-12">
+              <div class="card card-plain">
+                <div class="card-header card-header-info">
+                  <h4 class="card-title mt-0"> Tabla de Usuarios Autorizados</h4>
+                  <p class="card-category"> Aqui se listan todos los encargados creados por usted.</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="">
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Nombre
+                        </th>
+                        <th>
+                            Apellido
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Acciones
+                        </th>
+                      </thead>
+                      <tbody>
+
+                        {% for user_object in object_list %}
+                        {% if user_object.id is not user.id %}
+                        <tr>
+                        <td>
+                            {{ user_object.id }}
+                            </td>
+                          <td>
+                            {{ user_object.name }}
+                          </td>
+                          <td>
+                            {{ user_object.last_name }}
+                          </td>
+                          <td>
+                            {{ user_object.email }}
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-info">Editar</button>
+                            <button type="button" class="btn btn-danger">Eliminar</button>
+                          </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
