@@ -10,9 +10,9 @@
   <div class="row">
     <div class="col-md-5">
       <div class="card">
-        <div class="card-header card-header-primary">
+        <div class="card-header card-header-info">
           <h4 class="card-title">
-            Crea una cuenta de autorizado
+            Crear una cuenta de autorizado
           </h4>
         </div>
         <div class="card-body">
@@ -21,7 +21,7 @@
               {% if msg %}
                 <span class="text-danger">{{ msg }}</span>
               {% else %}
-                Add your credentials
+                agrega todos los datos
               {% endif %}  
           </h6>
           
@@ -65,7 +65,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="bmd-label-floating">Verifica tu Password</label>
+                    <label class="bmd-label-floating">Verifica el Password</label>
                     {{ form.password2 }}
                   </div>
                 </div>
@@ -76,7 +76,7 @@
 
               <br />
 
-              <button type="submit" name="register" class="btn btn-primary pull-left">Registrar</button>
+              <button type="submit" name="register" class="btn btn-info pull-left">Registrar</button>
 
               &nbsp; &nbsp; 
 

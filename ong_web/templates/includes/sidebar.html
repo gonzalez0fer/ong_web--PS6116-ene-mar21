@@ -1,4 +1,4 @@
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="/static/assets/img/sidebar-1.jpg">
+    <div class="sidebar" data-color="azure" data-background-color="white" data-image="/static/assets/img/sidebar-1.jpg">
       <div class="logo">
         <a href="/" class="simple-text logo-normal">
           ONG-web
@@ -13,19 +13,21 @@
               <p>Dashboard</p>
             </a>
           </li>
+          {% url 'register' as register_view %} 
 
-          <li class="nav-item {% if 'page-user' in segment %} active {% endif %}">
-            <a class="nav-link" href="{% url 'register' %}">
-              <i class="material-icons">assignment_ind</i>
-              <p>Register User</p>
-            </a>
+          <li class="nav-item dropdown {% if request.path == register_view %} active {% endif %}">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false"><i class="material-icons">person</i> Usuarios</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{% url 'register' %}">
+                <i class="material-icons">person_add</i>
+                <p>Registrar Usuarios</p>
+              </a>
+              <a class="dropdown-item" href="/user_list.html">
+                  <i class="material-icons">person_search</i> 
+                  <p>Ver Usuarios</p>
+                </a>
           </li>
-          <li class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">
-            <a class="nav-link" href="/ui-tables.html">
-              <i class="material-icons">content_paste</i>
-              <p>Table List</p>
-            </a>
-          </li>
+
           <li class="nav-item {% if 'ui-icons' in segment %} active {% endif %}">
             <a class="nav-link" href="/ui-icons.html">
               <i class="material-icons">bubble_chart</i>
