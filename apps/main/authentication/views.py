@@ -6,12 +6,30 @@ Copyright (c) 2019 - present AppSeed.us
 from django.shortcuts import render
 
 # Create your views here.
-from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.template import loader
+from django import template
+from django.shortcuts import render, get_object_or_404 ,redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.forms.utils import ErrorList
 from django.http import HttpResponse
 from .forms import LoginForm, SignUpForm
+
+
+
+
+@login_required(login_url="/login/")
+def index(request):
+    
+    context = {}
+    context['segment'] = 'index'
+
+    html_template = loader.get_template( 'index.html' )
+    return HttpResponse(html_template.render(context, request))
+
+
+
 
 def login_view(request):
     form = LoginForm(request.POST or None)
@@ -26,7 +44,7 @@ def login_view(request):
             user = authenticate(email=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("/")
+                return redirect("/dashboard")
             else:    
                 msg = 'Invalid credentials'    
         else:
@@ -34,7 +52,7 @@ def login_view(request):
 
     return render(request, "accounts/login.html", {"form": form, "msg" : msg})
 
-
+@login_required(login_url="/login/")
 def register_user(request):
 
     msg     = None

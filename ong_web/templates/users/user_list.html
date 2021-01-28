@@ -31,6 +31,9 @@
                               Email
                           </th>
                           <th>
+                            Administrador
+                        </th>
+                          <th>
                               Acciones
                           </th>
                         </thead>
@@ -51,8 +54,23 @@
                               <td>
                                 {{ user_object.email }}
                               </td>
+                                {% if user_object.is_admin == True %}
+                                <td>
+                                  <i class="material-icons" style="color: rgb(38, 192, 0);">
+                                      check_circle
+                                  </i>
+                                </td>
+                                {% else %}
+                                <td>
+                                  <i class="material-icons" style="color: gray;">
+                                      check_circle
+                                  </i>
+                                </td>
+                                {% endif %}
                               <td>
-                                <button type="button" class="btn btn-info">Editar</button>
+                                <a href="{% url 'dashboard:user:edit_user' user_object.id %}">
+                                    <button type="button" class="btn btn-info">Editar</button>
+                                </a>
                                 <button type="button" class="btn btn-default" disabled>Eliminar</button>
                               </td>
                             </tr>
@@ -90,6 +108,9 @@
                             Email
                         </th>
                         <th>
+                            Administrador
+                        </th>
+                        <th>
                             Acciones
                         </th>
                       </thead>
@@ -110,8 +131,23 @@
                           <td>
                             {{ user_object.email }}
                           </td>
+                          {% if user_object.is_admin == True %}
                           <td>
-                            <button type="button" class="btn btn-info">Editar</button>
+                            <i class="material-icons" style="color: greenyellow;">
+                                check_circle
+                            </i>
+                          </td>
+                          {% else %}
+                          <td>
+                            <i class="material-icons" style="color: gray;">
+                                check_circle
+                            </i>
+                          </td>
+                          {% endif %}
+                          <td>
+                            <a href="{% url 'dashboard:user:edit_user' user_object.id %}">
+                                <button type="button" class="btn btn-info">Editar</button>
+                            </a>
                             <button type="button" class="btn btn-danger">Eliminar</button>
                           </td>
                         </tr>
@@ -126,7 +162,15 @@
             </div>
         </div>
 
+    </br>
+    <p style="float: right; margin-right: 50px;">
+        <button type="button" class="btn btn-success">
+            <a style="text-decoration: none; color:white;" href="{% url 'register' %}">Agregar Autorizado</a>
+            </button>
+    </p>
 {% endblock content %}
+
+
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}

@@ -6,9 +6,6 @@ app_name = 'dashboard'
 
 urlpatterns = [
 
-    # The home page
-    path('', views.index, name='home'),
-
     path(
         'user/',
         include('apps.dashboard.users.urls', namespace='users'),

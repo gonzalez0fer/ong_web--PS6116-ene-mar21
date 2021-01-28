@@ -47,7 +47,10 @@ INSTALLED_APPS = [
     'apps.main.users.apps.UsersConfig',
 ]
 
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    'extra_views',
+    'widget_tweaks',
+]
 
 INSTALLED_APPS = INSTALLED_APPS + DJANGO_APPS + THIRD_PARTY_APPS
 

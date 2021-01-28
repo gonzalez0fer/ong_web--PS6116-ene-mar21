@@ -11,4 +11,10 @@ urlpatterns = [
         name='list_users'
         ),
 
+    path(
+        '<int:pk>', 
+        views.UserUpdateProfile.as_view(), 
+        name='edit_user'
+        ),
+
 ]
