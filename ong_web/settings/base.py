@@ -46,6 +46,11 @@ DJANGO_APPS = [
 INSTALLED_APPS = [
     'apps.main.users.apps.UsersConfig',
     'apps.main.refectories.apps.RefectoriesConfig',
+    'apps.main.cupboards.apps.CupboardsConfig',
+    'apps.main.cupboard_managements.apps.CupboardManagementsConfig',
+    'apps.main.water_tanks.apps.WaterTanksConfig',
+    'apps.main.water_managements.apps.WaterManagementsConfig',
+    'apps.main.suppliers.apps.SuppliersConfig',
 ]
 
 THIRD_PARTY_APPS = [
