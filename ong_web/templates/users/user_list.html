@@ -11,8 +11,8 @@
             <div class="col-md-12">
                 <div class="card card-plain">
                   <div class="card-header card-header-info">
-                    <h4 class="card-title mt-0"> Tu Usuario</h4>
-                    <p class="card-category"> Aqui padras editar tus datos.</p>
+                    <h4 class="card-title mt-0"> Usuarios Administradores</h4>
+                    <p class="card-category"> Aqui podras editar los datos de todos los usuarios administradores.</p>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -33,6 +33,9 @@
                           <th>
                             Administrador
                         </th>
+                        <th>
+                            Comedor Asignado
+                        </th>
                           <th>
                               Acciones
                           </th>
@@ -40,41 +43,73 @@
                         <tbody>
   
                             {% for user_object in object_list %}
-                            {% if user_object.id == user.id %}
-                            <tr>
-                            <td>
-                                {{ user_object.id }}
-                                </td>
-                              <td>
-                                {{ user_object.name }}
-                              </td>
-                              <td>
-                                {{ user_object.last_name }}
-                              </td>
-                              <td>
-                                {{ user_object.email }}
-                              </td>
-                                {% if user_object.is_admin == True %}
-                                <td>
-                                  <i class="material-icons" style="color: rgb(38, 192, 0);">
-                                      check_circle
-                                  </i>
-                                </td>
-                                {% else %}
-                                <td>
-                                  <i class="material-icons" style="color: gray;">
-                                      check_circle
-                                  </i>
-                                </td>
+                                {% if user_object.is_admin %}
+                                    {% if user_object.id == user.id %}
+                                    <tr style="background-color: #26c5da2a;">
+                                        <td>
+                                            {{ user_object.id }}
+                                            </td>
+                                        <td>
+                                            {{ user_object.name }}
+                                        </td>
+                                        <td>
+                                            {{ user_object.last_name }}
+                                        </td>
+                                        <td>
+                                            {{ user_object.email }}
+                                        </td>
+                                                {% if user_object.is_admin == True %}
+                                                    <td>
+                                                    <i class="material-icons" style="color: rgb(38, 192, 0);">
+                                                        check_circle
+                                                    </i>
+                                                    </td>
+                                                {% endif %}
+                                        <td>
+                                            {{ user_object.refectory }}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'dashboard:user:edit_user' user_object.id %}">
+                                                <button type="button" class="btn btn-info">Editar</button>
+                                            </a>
+                                            <button type="button" class="btn btn-default" disabled>Eliminar</button>
+                                        </td>
+                                        </tr>
+
+                                    {% else %}
+
+                                        <tr>
+                                        <td>
+                                            {{ user_object.id }}
+                                            </td>
+                                        <td>
+                                            {{ user_object.name }}
+                                        </td>
+                                        <td>
+                                            {{ user_object.last_name }}
+                                        </td>
+                                        <td>
+                                            {{ user_object.email }}
+                                        </td>
+                                                {% if user_object.is_admin == True %}
+                                                    <td>
+                                                    <i class="material-icons" style="color: rgb(38, 192, 0);">
+                                                        check_circle
+                                                    </i>
+                                                    </td>
+                                                {% endif %}
+                                        <td>
+                                            {{ user_object.refectory }}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'dashboard:user:edit_user' user_object.id %}">
+                                                <button type="button" class="btn btn-info">Editar</button>
+                                            </a>
+                                            <button type="button" class="btn btn-default" disabled>Eliminar</button>
+                                        </td>
+                                        </tr>
+                                    {% endif %}
                                 {% endif %}
-                              <td>
-                                <a href="{% url 'dashboard:user:edit_user' user_object.id %}">
-                                    <button type="button" class="btn btn-info">Editar</button>
-                                </a>
-                                <button type="button" class="btn btn-default" disabled>Eliminar</button>
-                              </td>
-                            </tr>
-                            {% endif %}
                             {% endfor %}
   
                         </tbody>
@@ -89,7 +124,7 @@
               <div class="card card-plain">
                 <div class="card-header card-header-info">
                   <h4 class="card-title mt-0"> Tabla de Usuarios Autorizados</h4>
-                  <p class="card-category"> Aqui se listan todos los encargados creados por usted.</p>
+                  <p class="card-category"> Aqui se listan todos los encargados creados por los administradores.</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -111,13 +146,16 @@
                             Administrador
                         </th>
                         <th>
+                            Comedor Asignado
+                        </th>
+                        <th>
                             Acciones
                         </th>
                       </thead>
                       <tbody>
 
                         {% for user_object in object_list %}
-                        {% if user_object.id is not user.id %}
+                        {% if not user_object.is_admin %}
                         <tr>
                         <td>
                             {{ user_object.id }}
@@ -145,6 +183,9 @@
                           </td>
                           {% endif %}
                           <td>
+                            {{ user_object.refectory }}
+                        </td>
+                          <td>
                             <a href="{% url 'dashboard:user:edit_user' user_object.id %}">
                                 <button type="button" class="btn btn-info">Editar</button>
                             </a>
@@ -163,10 +204,16 @@
         </div>
 
     </br>
+</br>
+    <p style="float: left; margin-left: 50px;">
+        <a  href="{% url 'home' %}">
+        <button type="button" class="btn btn-default">Regresar</button>
+        </a>
+    </p>
     <p style="float: right; margin-right: 50px;">
-        <button type="button" class="btn btn-success">
-            <a style="text-decoration: none; color:white;" href="{% url 'register' %}">Agregar Autorizado</a>
-            </button>
+        <a  href="{% url 'register' %}">
+        <button type="button" class="btn btn-success">Agregar Autorizado</button>
+        </a>
     </p>
 {% endblock content %}
 

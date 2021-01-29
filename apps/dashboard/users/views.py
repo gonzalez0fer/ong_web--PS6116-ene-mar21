@@ -2,7 +2,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView 
-from extra_views import UpdateWithInlinesView
 from apps.main.users.models import CustomUser, UserProfile
 from .forms import CustomUserForm, UserProfileForm
 from django.http import HttpResponse
@@ -22,7 +21,8 @@ class UsersList(ListView):
         context['object_list'] = []
         for i in query:
             context['object_list'].append({'id':i.id,'name':i.profile.name, 
-            'last_name':i.profile.last_name, 'email':i.email, 'is_admin':i.is_superuser})
+            'last_name':i.profile.last_name, 'email':i.email, 
+            'is_admin':i.is_superuser, 'refectory':i.profile.refectory})
         return context  
 
 class UserUpdateProfile(UpdateView):

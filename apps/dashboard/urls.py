@@ -11,6 +11,11 @@ urlpatterns = [
         include('apps.dashboard.users.urls', namespace='users'),
         ),
 
+    path(
+        'refectory/',
+        include('apps.dashboard.refectories.urls', namespace='refectories'),
+        ),
+
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 ]

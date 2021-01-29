@@ -45,6 +45,7 @@ DJANGO_APPS = [
 
 INSTALLED_APPS = [
     'apps.main.users.apps.UsersConfig',
+    'apps.main.refectories.apps.RefectoriesConfig',
 ]
 
 THIRD_PARTY_APPS = [

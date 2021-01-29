@@ -75,8 +75,13 @@
               <span class="text-danger">{{ form.password2.errors }}</span>
 
               <br />
+              <p class="pull-left">
+                <a  href="{% url 'dashboard:user:list_users' %}">
+                <button type="button" class="btn btn-default">Regresar</button>
+                </a>
+            </p>
 
-              <button type="submit" name="register" class="btn btn-info pull-left">Registrar</button>
+              <button type="submit" name="register" class="btn btn-info pull-right">Registrar</button>
 
               &nbsp; &nbsp; 
 
