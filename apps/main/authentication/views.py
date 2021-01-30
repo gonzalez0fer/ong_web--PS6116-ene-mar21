@@ -52,6 +52,7 @@ def login_view(request):
 
     return render(request, "accounts/login.html", {"form": form, "msg" : msg})
 
+
 @login_required(login_url="/login/")
 def register_user(request):
 
@@ -66,13 +67,12 @@ def register_user(request):
             raw_password = form.cleaned_data.get("password1")
             user = authenticate(username=username, password=raw_password)
 
-            msg     = 'Usuario autorizado creado con exito!'
+            msg     = 'Usuario autorizado creado con exito!... espere a ser redireccionado.'
             success = True
-            
-            #return redirect("/login/")
+            return redirect("/dashboard/user/")
 
         else:
-            msg = 'Form is not valid'    
+            msg = 'Datos invalidos.'    
     else:
         form = SignUpForm()
 

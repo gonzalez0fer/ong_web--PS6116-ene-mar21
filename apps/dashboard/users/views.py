@@ -25,6 +25,7 @@ class UsersList(ListView):
             'is_admin':i.is_superuser, 'refectory':i.profile.refectory})
         return context  
 
+
 class UserUpdateProfile(UpdateView):
     form_class = CustomUserForm
     model = CustomUser 
@@ -67,7 +68,6 @@ class UserUpdateProfile(UpdateView):
         )
 
         if form.is_valid() and profile_form.is_valid():
-            print('LO LOG')
             return self.form_valid(form, profile_form)
         else:
             return self.form_invalid(form, profile_form)

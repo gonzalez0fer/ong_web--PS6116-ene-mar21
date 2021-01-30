@@ -1,0 +1,94 @@
+{% extends "layouts/base.html" %}
+{% load widget_tweaks %}
+{% block title %} Page User {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+
+
+            <div class="row">
+                <div class="col-md-8">
+                  <div class="card">
+                    <div class="card-header card-header-info">
+                      <h4 class="card-title">Crea un Comedor</h4>
+                      <p class="card-category">Completa los datos.</p>
+                    </div>
+                    <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                            
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label class="bmd-label-floating">Nombre</label>
+                                {% render_field form.name class="form-control" %}
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                  <label class="bmd-label-floating">Capacidad del Comedor (num. personas)</label>
+                                  {% render_field form.capacity class="form-control" %}
+                                </div>
+                              </div>
+                          </div>
+
+                          <br />
+                          <div class="row" style="background-color: #26c5da28; border-radius: 5%;">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label class="bmd-label-floating">Capacidad del Tanque (litros)</label>
+                                {% render_field water_tank_form.capacity class="form-control" %}
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                  <label class="bmd-label-floating">Cantidad de Litros Actuales</label>
+                                  {% render_field water_tank_form.current_liters class="form-control" %}
+                                </div>
+                              </div>
+                          </div>
+                        <br />
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label class="bmd-label-floating">Direccion</label>
+                              {% render_field form.address class="form-control" %}
+                            </div>
+                          </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                              <label>Descripcion</label>
+                              <div class="form-group">
+                                <label class="bmd-label-floating"></label>
+                                {% render_field form.description class="form-control" %}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <p class="pull-left">
+                            <a  href="{% url 'dashboard:refectory:list_refectories' %}">
+                            <button type="button" class="btn btn-default">Regresar</button>
+                            </a>
+                        </p>
+                        <button type="submit" class="btn btn-info pull-right">Crear Comedor</button>
+                        <div class="clearfix"></div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
