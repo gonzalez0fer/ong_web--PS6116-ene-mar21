@@ -17,6 +17,16 @@ urlpatterns = [
         ),
 
     path(
+        'cupboard/',
+        include('apps.dashboard.cupboards.urls', namespace='cupboards'),
+        ),
+
+    path(
+        'cupboard-management/',
+        include('apps.dashboard.cupboard_managements.urls', namespace='cupboard_managements'),
+        ),
+
+    path(
         'supplier/',
         include('apps.dashboard.suppliers.urls', namespace='suppliers'),
         ),

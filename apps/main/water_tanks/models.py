@@ -4,17 +4,25 @@ from datetime import datetime
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from model_utils.models import TimeStampedModel
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 from apps.main.refectories.models import Refectory
+
 
 class WaterTank(TimeStampedModel):
     
     capacity = models.IntegerField(
+        validators=[
+            MinValueValidator(0)
+        ]
     )
 
     current_liters = models.IntegerField(
         blank = True,
         null = True,
+        validators=[
+            MinValueValidator(0),
+        ]
     )
 
     last_fill_date = models.DateTimeField(

@@ -57,6 +57,9 @@
                                             {{ refectory_object.mandated }}
                                         </td>
                                         <td>
+                                            <a href="{% url 'dashboard:cupboard:list_cupboard' refectory_object.id %}">
+                                                <button type="button" class="btn btn-warning"><i class="material-icons">kitchen</i> Inventario</button>
+                                            </a>
                                             <a href="{% url 'dashboard:refectory:edit_refectory' refectory_object.id %}">
                                                 <button type="button" class="btn btn-info">Editar</button>
                                             </a>

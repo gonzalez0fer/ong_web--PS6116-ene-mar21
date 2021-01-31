@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, CreateView
 from django.http import HttpResponse
 
-from .forms import RefectoryForm, WaterTankForm
+from .forms import RefectoryForm, WaterTankForm, WaterExtraFieldsForm
 from apps.main.refectories.models import Refectory
 from apps.main.users.models import CustomUser
 
@@ -14,9 +14,7 @@ class RefectoriesListView(ListView):
     queryset = Refectory.objects.all()
 
     def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
         query = Refectory.objects.order_by('id')
         
         context['object_list'] = []
@@ -30,7 +28,6 @@ class RefectoriesListView(ListView):
                         mandated = mandated + ' - '
             else:
                 mandated = '(por asignar)'
-            print(i.name,' ',i.water_tank.capacity )
             context['object_list'].append({'id':i.id, 'name':i.name, 
             'address':i.address, 'capacity':i.water_tank.capacity,'mandated':mandated })
         return context  
@@ -110,6 +107,12 @@ class RefectoryUpdateView(UpdateView):
                     'current_liters':water_tank.current_liters,
                 }
             )
+            context['water_extra_fields'] = WaterExtraFieldsForm(
+                initial = {'water_percent':(water_tank.current_liters * 100)//water_tank.capacity,
+                })
+
+            print( context['water_extra_fields'].initial )
+
         return context
 
     def post(self, request, *args, **kwargs):

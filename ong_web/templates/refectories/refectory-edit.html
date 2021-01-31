@@ -14,7 +14,7 @@
                 <div class="col-md-8">
                   <div class="card">
                     <div class="card-header card-header-info">
-                      <h4 class="card-title">Edita el Comedor</h4>
+                      <h4 class="card-title">Edita el Comedor {{form.name.initial}}</h4>
                       <p class="card-category">Completa los datos.</p>
                     </div>
                     <div class="card-body">
@@ -84,6 +84,42 @@
                     </div>
                   </div>
                 </div>
+                <div class="col-md-4">
+                    
+                    <div class="card card-profile">
+                        <div class="card-avatar">
+                            <a href="">
+                              <img class="img" src="/static/assets/img/flats/refectory.png" />
+                            </a>
+                          </div>
+                            <div class="card-body">
+                                {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%}
+
+                                <h4 class="card-title">
+                                    Comedor:
+                                    <strong>{{form.name.initial}}</strong> 
+                                </br>
+                                    Direccion: 
+                                    {{form.address.initial}}
+                                </br>
+                                    Capacidad total en los tanques:
+                                    <strong>{{water_tank_form.capacity.initial}} lts</strong>
+                                </br>
+                                    Litros de agua actuales:
+                                    <strong>{{water_tank_form.current_liters.initial}} lts</strong>
+
+                                </h4>
+                              </div>    
+                                
+
+                          
+                    </div>
+                  </div>
+                    
+                    
+                    
+                    
+
               </div>
 
 

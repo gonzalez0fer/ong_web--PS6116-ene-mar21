@@ -21,4 +21,15 @@ class WaterTankForm(forms.ModelForm):
                 'capacity',
                 'current_liters',
                 ]
+
+    def clean(self):
+        super(WaterTankForm, self).clean()
+        capacity = self.cleaned_data.get('capacity')
+        current_liters = self.cleaned_data.get('current_liters')
+
+        if current_liters > capacity:
+            self._errors['current_liters'] = self.error_class([
+                'Over capacity'])     
         
+class WaterExtraFieldsForm(forms.Form):
+    water_percentage = forms.IntegerField()

@@ -20,8 +20,7 @@ class SuppliersListView(ListView):
         for i in query:
             context['object_list'].append({'id':i.id, 'company_name':i.company_name, 
             'company_contact_name':i.company_contact_name, 'company_rif':i.company_rif,
-            'company_address':i.company_address, 'company_phone':i.company_phone,
-            'company_description':i.company_description,})
+            'company_phone':i.company_phone})
 
         return context  
 
