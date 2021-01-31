@@ -18,7 +18,9 @@ class CupboardManagementListView(ListView):
         context['object_list'] = []
         context['refectory_data'] = []
 
-        cupboard = Cupboard.objects.filter(refectory__id=self.kwargs['pk']).order_by('created')
+        refectory = Refectory.objects.get(id=self.kwargs['pk'])
+        cupboard = Cupboard.objects.filter(refectory=refectory).order_by('created')
+        
 
         for j in cupboard:
             query = CupboardManagement.objects.filter(cupboard=j).order_by('created')
@@ -35,12 +37,14 @@ class CupboardManagementListView(ListView):
                         'created':i.created,
                         'created_by':i.created_by.profile.name,
                 })
-
-        context['refectory_data'].append({
-            'id':cupboard[0].refectory.id,
-            'refectory_name': cupboard[0].refectory.name,
-            'refectory_address': cupboard[0].refectory.address,
-            })
+        try:
+            context['refectory_data'].append({
+                'id':refectory.id,
+                'refectory_name': refectory.name,
+                'refectory_address': refectory.address,
+                })
+        except:
+            pass
         return context 
 
 
