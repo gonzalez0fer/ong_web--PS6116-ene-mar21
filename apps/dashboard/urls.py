@@ -16,6 +16,12 @@ urlpatterns = [
         include('apps.dashboard.refectories.urls', namespace='refectories'),
         ),
 
+    path(
+        'supplier/',
+        include('apps.dashboard.suppliers.urls', namespace='suppliers'),
+        ),
+
+
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 ]
