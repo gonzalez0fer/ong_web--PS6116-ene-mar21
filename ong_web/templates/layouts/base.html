@@ -42,8 +42,11 @@
 
 <body class="">
   <div class="wrapper ">
-
-    {% include 'includes/sidebar.html' %}
+    {% if user.is_superuser %}
+        {% include 'includes/sidebar.html' %}
+    {% else %}
+        {% include 'includes/sidebar_guest.html' %}
+    {% endif %}
 
     <div class="main-panel">
 

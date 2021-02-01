@@ -17,4 +17,11 @@ urlpatterns = [
         name='edit_user'
         ),
 
+    path(
+        'profile/', 
+        views.UserUpdateSingleProfile.as_view(), 
+        name='edit_profile'
+        ),
+
+
 ]

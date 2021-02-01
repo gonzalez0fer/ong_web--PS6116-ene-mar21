@@ -66,11 +66,19 @@
                             </div>
                           </div>
                         </div>
+                        {% if user.is_superuser %}
                         <p class="pull-left">
                             <a  href="{% url 'dashboard:user:list_users' %}">
                             <button type="button" class="btn btn-default">Regresar</button>
                             </a>
                         </p>
+                        {% else %}
+                        <p class="pull-left">
+                            <a  href="/">
+                            <button type="button" class="btn btn-default">Regresar</button>
+                            </a>
+                        </p>
+                        {% endif %}
                         <button type="submit" class="btn btn-info pull-right">Salvar Perfil</button>
                         <div class="clearfix"></div>
                       </form>
