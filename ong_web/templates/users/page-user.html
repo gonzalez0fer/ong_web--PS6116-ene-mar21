@@ -105,12 +105,16 @@
                             {{profile_form.address.initial}}
 
                         </h4>
-                      </div>   
+                      </div>  
+                    
+                    {% if user.is_superuser %}
                     <p class="pull-left">
                         <a  href="">
                         <button type="button" class="btn btn-success">Asignar Comedor</button>
                         </a>
                     </p>
+                    {% endif %}
+
                   </div>
                 </div>
               </div>

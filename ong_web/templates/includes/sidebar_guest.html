@@ -13,52 +13,41 @@
               <p>Dashboard</p>
             </a>
           </li>
-
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false"><i class="material-icons">food_bank</i>Comedores</a>
-            <div class="dropdown-menu">
-
-              <a class="dropdown-item" href="{% url 'dashboard:refectory:list_refectories' %}">
-                  <i class="material-icons">restaurant</i> 
-                  <p>Ver Comedores</p>
-                </a>
-
-                <a class="dropdown-item" href="">
-                    <i class="material-icons">kitchen</i> 
-                    <p>Ver Inventario</p>
-                  </a>
+          {% url 'dashboard:user:edit_profile' as user_view %} 
+          <li class="nav-item {% if request.path == user_view %} active {% endif %}">
+            <a class="nav-link" href="{% url 'dashboard:user:edit_profile' %}">
+              <i class="material-icons">person</i>
+              <p>Mi Usuario</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="">
+              <i class="material-icons">opacity</i>
+              <p>Agua</p>
+            </a>
           </li>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false"><i class="material-icons">opacity</i>Agua</a>
-            <div class="dropdown-menu">
-
-              <a class="dropdown-item" href="">
-                  <i class="material-icons">water_damage</i> 
-                  <p>Ver Tanques</p>
-                </a>
+          {% if user.profile.refectory %}
+          {% url 'dashboard:cupboard:list_products' as cupboard_view %} 
+          <li class="nav-item {% if request.path == cupboard_view %} active {% endif %} ">
+            <a class="nav-link" href="{% url 'dashboard:cupboard:list_products'%}">
+              <i class="material-icons">kitchen</i>
+              <p>Inventario</p>
+            </a>
           </li>
+          {% endif %}
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false"><i class="material-icons">home_repair_service
-            </i>Mantenimiento</a>
-            <div class="dropdown-menu">
-
-              <a class="dropdown-item" href="">
-                  <i class="material-icons">science</i> 
-                  <p>Ver Suministros</p>
-                </a>
-
-                <a class="dropdown-item" href="">
-                    <i class="material-icons">construction</i> 
-                    <p>Ver Mantenimientos</p>
-                  </a>
+          <li class="nav-item">
+            <a class="nav-link" href="">
+              <i class="material-icons">science</i>
+              <p>Suministros</p>
+            </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'dashboard:supplier:list_suppliers' %}">
-              <i class="material-icons">engineering</i>
-              <p>Proveedores</p>
+            <a class="nav-link" href="">
+              <i class="material-icons">home_repair_service</i>
+              <p>Mantenimiento</p>
             </a>
           </li>
 

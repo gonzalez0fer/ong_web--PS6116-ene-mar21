@@ -71,11 +71,20 @@
                 </div>
             </br>
         </br>
+            {% if user.is_superuser %}
             <p style="float: left; margin-left: 50px;">
                 <a  href="{% url 'dashboard:refectory:list_refectories' %}">
                 <button type="button" class="btn btn-default">Regresar</button>
                 </a>
             </p>
+            {% else %}
+            <p style="float: left; margin-left: 50px;">
+                <a  href="/">
+                <button type="button" class="btn btn-default">Regresar</button>
+                </a>
+            </p>
+            {% endif %}
+
             <p style="float: right; margin-right: 50px;">
                 <a  href="{% url 'dashboard:cupboard_managements:list_cupboard_management' refectory_data.0.id %}">
                 <button type="button" class="btn btn-success">Ver Todas las Operaciones</button>

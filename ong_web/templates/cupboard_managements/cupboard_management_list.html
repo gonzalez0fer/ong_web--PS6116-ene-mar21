@@ -81,11 +81,19 @@
                 </div>
             </br>
         </br>
+            {% if user.is_superuser %}
             <p style="float: left; margin-left: 50px;">
                 <a  href="{% url 'dashboard:cupboard:list_cupboard' refectory_data.0.id %}">
                 <button type="button" class="btn btn-default">Regresar</button>
                 </a>
             </p>
+            {% else %}
+            <p style="float: left; margin-left: 50px;">
+                <a  href="{% url 'dashboard:cupboard:list_products' %}">
+                <button type="button" class="btn btn-default">Regresar</button>
+                </a>
+            </p>
+            {% endif %}
 
               </div>
             </br>

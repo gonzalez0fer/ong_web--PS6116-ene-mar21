@@ -11,4 +11,10 @@ urlpatterns = [
         name='list_cupboard'
         ),
 
+    path(
+        'products/', 
+        views.CupboardsSingleListView.as_view(), 
+        name='list_products'
+        ),
+
 ]
