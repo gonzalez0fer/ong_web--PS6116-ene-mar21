@@ -31,6 +31,11 @@ urlpatterns = [
         include('apps.dashboard.suppliers.urls', namespace='suppliers'),
         ),
 
+    path(
+        'water_tanks/',
+        include('apps.dashboard.water_tanks.urls', namespace='water_tanks'),
+        ),
+
 
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
