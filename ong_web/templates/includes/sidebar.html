@@ -1,15 +1,15 @@
     <div class="sidebar" data-color="azure" data-background-color="white" data-image="/static/assets/img/sidebar-1.jpg">
       <div class="logo">
         <a href="/dashboard" class="simple-text logo-normal">
-          ONG-web
+          <img src="https://masverdemashumano.org/wp-content/uploads/2020/08/Logo-VerdeHumano.png" alt="+Verde +Humano" style="max-width: 245px">
         </a>
       </div>
       {% if user.is_authenticated %}
       <div class="sidebar-wrapper">
-        <ul class="nav">
+        <ul class="nav" >
           <li class="nav-item {% if 'index' == segment %} active {% endif %}">
             <a class="nav-link" href="/dashboard">
-              <i class="material-icons">dashboard</i>
+              <i class="material-icons" >dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>

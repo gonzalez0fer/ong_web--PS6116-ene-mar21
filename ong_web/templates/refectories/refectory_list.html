@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-plain">
-                  <div class="card-header card-header-info">
+                  <div class="card-header card-header-success">
                     <h4 class="card-title mt-0">Comedores</h4>
                     <p class="card-category"> Aqui podrás editar los datos de todos los comedores creados por los usuarios administradores.</p>
                   </div>
@@ -58,7 +58,7 @@
                                         </td>
                                         <td>
                                             <a href="{% url 'dashboard:cupboard:list_cupboard' refectory_object.id %}">
-                                                <button type="button" class="btn btn-warning"><i class="material-icons">kitchen</i> Inventario</button>
+                                                <button type="button" class="btn" style='background-color: #37005D'"><i class="material-icons">kitchen</i> Inventario</button>
                                             </a>
                                             <a href="{% url 'dashboard:refectory:edit_refectory' refectory_object.id %}">
                                                 <button type="button" class="btn btn-info">Editar</button>
