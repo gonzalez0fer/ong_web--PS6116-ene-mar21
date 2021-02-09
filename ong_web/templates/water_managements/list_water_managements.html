@@ -18,20 +18,23 @@
                     <div class="table-responsive">
                       <table class="table table-hover">
                         <thead class="">
-                          <th>
+<th>
                                 ID
                           </th>
                           <th>
-                              Comedor
+                              Operacion
                           </th>
                           <th>
-                              Capacidad
+                              Volumen
                           </th>
                           <th>
-                              Nivel actual
+                              Precio
                           </th>
                           <th>
-                              Último llenado
+                              Resonsable
+                          </th>
+                          <th>
+                              Fecha
                           </th>
                           <th>
                               Acciones
@@ -45,25 +48,27 @@
                                             {{ i.id }}
                                         </td>
                                         <td>
-                                            {{ i.refectory_name }}
+                                            {{ i.operation_type }}
                                         </td>
                                         <td>
-                                            {{ i.capacity }} <!--OJO ESTO ES CAPACIDAD DE COMEDORES POR LO QUE VEO-->
+                                            {{ i.water_liters }} <!--OJO ESTO ES CAPACIDAD DE COMEDORES POR LO QUE VEO-->
                                         </td>
                                         <td>
-                                            {{ i.current_liters }} <!--OJO ESTO ES CAPACIDAD DE COMEDORES POR LO QUE VEO-->
+                                            {{ i.water_amount }} <!--OJO ESTO DEBERIA SER DEL OBJETO WATER TANK PERO LO ENTIENDE (?)-->
                                         </td>
                                         <td>
-                                            {{ i.last_fill_date }} <!--OJO ESTO DEBERIA SER DEL OBJETO WATER TANK PERO LO ENTIENDE (?)-->
-                                        </td>
+                                            {{ i.created_by_id }}
+                                        </td> 
                                         <td>
-                                            <a href="{% url 'dashboard:water_managements:water_management_list' i.id %}">
-                                                <button type="button" class="btn btn-info">Ver Operaciones</button>
-                                            </a>
+                                            {{ i.created }}
+                                        </td> 
+                                        <td>
+                                            <button type="button" class="btn btn-info">Editar</button>
                                             <button type="button" class="btn btn-danger">Eliminar</button>
                                         </td>
                                     </tr>
                             {% endfor %}
+
                         </tbody>
                       </table>
                     </div>
