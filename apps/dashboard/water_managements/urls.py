@@ -6,12 +6,12 @@ app_name = "water_managements"
 
 urlpatterns = [
     path(
-        '<pk>', 
+        '<int:pk>', 
         views.WaterManagementList.as_view(), 
         name='water_management_list'
         ),
     path(
-        '', 
+        'create/', 
         views.WaterManagementCreateView.as_view(), 
         name='water_management_create'
         ),    

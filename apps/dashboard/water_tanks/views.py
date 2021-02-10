@@ -36,3 +36,25 @@ class TanksListView(ListView):
                     'refectory_name':refectory
             })  
         return context
+
+class WaterTankSingleListView(ListView):
+    template_name = ""
+     
+    def get_object(self):
+        return Refectory.objects.get(pk=self.request.user.profile.refectory.id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = WaterTank.objects.filter(refectory_id=self.request.user.profile.refectory.id).order_by('id')
+        
+        context['object_list'] = []
+
+        for i in query:
+            
+            context['object_list'].append({
+                    'id':i.id, 
+                    'capacity':i.capacity,
+                    'current_liters':i.current_liters,
+                    'last_fill_date':i.last_fill_date,
+            })  
+        return context

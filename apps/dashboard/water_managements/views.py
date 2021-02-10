@@ -38,6 +38,7 @@ class WaterManagementList(ListView):
                     'water_liters':i.water_liters,
                     'water_amount':i.water_amount,
                     'created_by_id':i.created_by_id,
+                    'created':i.created,
                     'tank_id':i.cupboard_id,
             })
         return context
@@ -46,16 +47,15 @@ class WaterManagementCreateView(CreateView):
     model = WaterManagement
     form_class = WaterManagementForm
     template_name = "water_managements/water_managements-create.html"
-    success_url = ""
+    success_url = "/dashboard/water_tanks/"
 
     def get_context_data(self, **kwargs):
         context = super(WaterManagementCreateView, self).get_context_data(**kwargs)
 
     def post(self, request, *args, **kwargs):
-
         self.object = None
         form = self.get_form()
-        
+
         if form.is_valid():
             return self.form_valid(form)
         else:
@@ -63,8 +63,8 @@ class WaterManagementCreateView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.created_by_id = self.request.user
-        self.object.cupboard_id = self.request.user.profile.refectory.cupboard.id
+        self.object.created_by_id = self.request.user.id
+        self.object.cupboard_id = 1 #provisional hasta que se pueda asignar comedores a usuarios
         #validaciones
         self.object.save()
         # water_tank_object = water_tank_form.save(commit=False)

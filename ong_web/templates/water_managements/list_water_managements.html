@@ -45,17 +45,18 @@
                                             {{ i.id }}
                                         </td>
                                         <td>
-                                            {{ i.operation_type }}
+                                            {% if i.operation_type == "ingreso"%}
+                                                {{ i.water_liters }}
+                                            {% endif %}
                                         </td>
                                         <td>
-                                            {{ i.water_liters }} <!--OJO ESTO ES CAPACIDAD DE COMEDORES POR LO QUE VEO-->
-                                        </td>
+                                            {% if i.operation_type == "consumo"%}
+                                                {{ i.water_liters }}
+                                            {% endif %}
+                                        </td>                                       
                                         <td>
                                             {{ i.water_amount }} <!--OJO ESTO DEBERIA SER DEL OBJETO WATER TANK PERO LO ENTIENDE (?)-->
                                         </td>
-                                        <td>
-                                            {{ i.created_by_id }}
-                                        </td> 
                                         <td>
                                             {{ i.created }}
                                         </td> 
