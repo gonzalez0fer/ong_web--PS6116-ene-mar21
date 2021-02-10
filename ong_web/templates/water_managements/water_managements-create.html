@@ -1,0 +1,89 @@
+{% extends "layouts/base.html" %}
+{% load widget_tweaks %}
+{% block title %} Page User {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-7">
+    <div class="card">
+      <div class="card-header card-header-info">
+        <h4 class="card-title">Realiza una Operación de "Entrada" o "Salida"</h4>
+            <p class="card-category">Completa los datos.</p>
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+                          
+          <br />
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+               <label for="operation_type">Tipo de operación</label>
+                  <select name= "operation_type" class="form-control" id="operation_type">
+                    <option value="none">Selecciona...</option>
+                    <option value="ingreso">Entrada</option>
+                    <option value="consumo">Salida</option>
+                  </select>
+              </div>
+                  
+              <div class="col-md-13">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Litros de Agua</label>
+                   <input type="number" class="form-control" id="water_liters">
+                </div>
+              </div>
+            </div>
+
+            </br>      
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Cantidad</label>
+                  <input type="number" class="form-control" id="water_amounut">
+              </div>
+            </div>
+          </div>
+
+          <br />
+          <p class="pull-left">
+            <a  href=" 'home' %}"> <!--{% url dashboard:water_managements:water_management_list-->
+              <button type="button" class="btn btn-default">Regresar</button>
+            </a>
+          </p>
+          <button type="submit" class="btn btn-success pull-right">Realizar Operación</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="card card-profile">
+      <div class="card-avatar">
+          <a href="">
+              <img class="img" src="/static/assets/img/flats/water.png" />
+          </a>
+      </div>
+      <div class="card-body">      
+        <h4 class="card-title">
+          Aquí podras realizar una operacion en el sistema donde
+          indiques algun ingreso o egreso generado por la venta o
+          compra de agua para el tanque.
+        </h4>
+        </br>
+        <h4>
+          <strong>No olvides que para registrar ingresos debes 
+          seleccionar el tipo de operación "Entrada" y para 
+          egresos "Salida".</strong>
+        </h4>
+      </div>   
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

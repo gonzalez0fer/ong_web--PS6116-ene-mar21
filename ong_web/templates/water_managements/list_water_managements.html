@@ -10,28 +10,25 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-plain">
-                  <div class="card-header card-header-success">
-                    <h4 class="card-title mt-0">Tanques de agua</h4>
-                    <p class="card-category"> Aquí podrás verificar los datos de todos los tanques de agua creados por los usuarios administradores.</p>
+                  <div class="card-header card-header-info">
+                    <h4 class="card-title mt-0">Operaciones en el tanque del comedor {{refectory_data.0.refectory_name}}</h4>
+                    <p class="card-category"> Aquí podras ver todas las operaciones de entrada y salida realizadas en el tanque de agua.</p>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
                       <table class="table table-hover">
                         <thead class="">
-<th>
+                          <th>
                                 ID
                           </th>
                           <th>
-                              Operacion
+                              Entrada
                           </th>
                           <th>
-                              Volumen
+                              Salida
                           </th>
                           <th>
                               Precio
-                          </th>
-                          <th>
-                              Resonsable
                           </th>
                           <th>
                               Fecha
@@ -83,8 +80,13 @@
     </br>
 </br>
     <p style="float: left; margin-left: 50px;">
-        <a  href="{% url 'home' %}">
+        <a  href="{% url 'dashboard:water_tanks:tanks_list' %}">
         <button type="button" class="btn btn-default">Regresar</button>
+        </a>
+    </p>
+    <p style="float: right; margin-right: 50px;">
+        <a  href="{% url 'dashboard:water_managements:water_management_create' %}">
+        <button type="button" class="btn btn-success">Agregar Operación</button>
         </a>
     </p>
 

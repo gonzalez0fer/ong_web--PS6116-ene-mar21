@@ -11,7 +11,7 @@ urlpatterns = [
         name='water_management_list'
         ),
     path(
-        '<fk>', 
+        '', 
         views.WaterManagementCreateView.as_view(), 
         name='water_management_create'
         ),    

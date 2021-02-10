@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="card card-plain">
-                  <div class="card-header card-header-success">
+                  <div class="card-header card-header-info">
                     <h4 class="card-title mt-0">Alacena del comedor {{refectory_data.0.refectory_name}}</h4>
                     <p class="card-category"> Aqui podras ver todos los productos guardados en el deposito del comedor.</p>
                   </div>
@@ -58,7 +58,7 @@
                                         </td>
                                         <td>
                                             <a href="{% url 'dashboard:cupboard_managements:list_cupboard_single_management' product_object.id %}">
-                                                <button type="button" class="btn btn-info">Ver Operaciones</button>
+                                                <button type="button" class="btn"style='background-color: #37005D'>Ver Operaciones</button>
                                             </a>
                                         </td>
                                         </tr>

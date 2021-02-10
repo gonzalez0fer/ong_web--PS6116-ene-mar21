@@ -45,7 +45,7 @@ class WaterManagementList(ListView):
 class WaterManagementCreateView(CreateView):
     model = WaterManagement
     form_class = WaterManagementForm
-    template_name = ""
+    template_name = "water_managements/water_managements-create.html"
     success_url = ""
 
     def get_context_data(self, **kwargs):
