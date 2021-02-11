@@ -12,3 +12,15 @@ class WaterManagementForm(forms.ModelForm):
                 'water_liters',
                 'water_amount',
                 ]
+
+    def clean(self):
+        super(WaterManagementForm, self).clean()
+        water_liters = self.cleaned_data.get('water_liters')
+        water_amount = self.cleaned_data.get('water_amount')
+
+        if water_liters <= 0:
+            self._errors['water_liters'] = self.error_class([
+                'Volumen menor o igual a 0'])
+        elif water_amount < 0:
+            self._errors['water_amount'] = self.error_class([
+                'Volumen menor a 0'])            
