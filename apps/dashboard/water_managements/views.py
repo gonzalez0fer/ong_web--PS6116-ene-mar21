@@ -65,6 +65,13 @@ class WaterManagementCreateView(CreateView):
         self.object = form.save(commit=False)
         self.object.created_by_id = self.request.user.id
         self.object.cupboard_id = 1 #provisional hasta que se pueda asignar comedores a usuarios
+        tank = WaterTank.objects.get(id=1)
+        if self.object.operation_type == 'ingreso':
+            tank.current_liters = tank.current_liters + self.object.water_liters    
+            tank.last_fill_date = self.object.created
+        else:
+            tank.current_liters = tank.current_liters - self.object.water_liters    
+        tank.save()
         #validaciones
         self.object.save()
         # water_tank_object = water_tank_form.save(commit=False)
