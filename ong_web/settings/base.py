@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'apps.main.water_tanks.apps.WaterTanksConfig',
     'apps.main.water_managements.apps.WaterManagementsConfig',
     'apps.main.suppliers.apps.SuppliersConfig',
+    'apps.main.maintenance.apps.MaintenanceConfig',
 ]
 
 THIRD_PARTY_APPS = [
