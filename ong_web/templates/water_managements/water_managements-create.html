@@ -94,7 +94,9 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
   <script>
-    var tank_info = "{{ tank_info | safe }}"
+    var tank_id = "{{ tank_info.id | safe }}"
+    var tank_capacity = "{{ tank_info.capacity | safe }}"
+    var tank_current_liters = "{{ tank_info.current_liters | safe }}"
   </script>
   <script src="/static/assets/js/water_managements-create.js"></script>
 {% endblock javascripts %}
