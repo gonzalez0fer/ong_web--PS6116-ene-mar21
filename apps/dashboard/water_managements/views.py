@@ -75,8 +75,8 @@ class WaterManagementCreateView(CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.created_by_id = self.request.user.id
-        self.object.cupboard_id = 1 #provisional hasta que se pueda asignar comedores a usuarios
-        tank = WaterTank.objects.get(id=1)
+        self.object.cupboard_id = self.kwargs['tank_id'] #provisional hasta que se pueda asignar comedores a usuarios
+        tank = WaterTank.objects.get(id=self.kwargs['tank_id'])
         if self.object.operation_type == 'ingreso':
             if self.object.water_liters > tank.capacity:
                 return self.form_invalid(form)    
