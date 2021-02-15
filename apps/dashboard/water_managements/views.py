@@ -28,6 +28,7 @@ class WaterManagementList(ListView):
         query = WaterManagement.objects.filter(cupboard=tank.id).order_by('created')
         
         context['object_list'] = []
+        context['tank_id'] = self.kwargs['pk']
 
         for i in query:
             
@@ -51,6 +52,16 @@ class WaterManagementCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(WaterManagementCreateView, self).get_context_data(**kwargs)
+
+        query = WaterTank.objects.get(id=self.kwargs['tank_id'])
+        
+        context['tank_info'] = {
+            'id' : self.kwargs['tank_id'],
+            'capacity' : query.capacity,
+            'current_liters' : query.current_liters,
+        }
+
+        return context
 
     def post(self, request, *args, **kwargs):
         self.object = None
