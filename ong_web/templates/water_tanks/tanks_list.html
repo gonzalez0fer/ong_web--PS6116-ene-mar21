@@ -11,63 +11,59 @@
             <div class="col-md-12">
                 <div class="card card-plain">
                   <div class="card-header card-header-info">
-                    <h4 class="card-title mt-0">Comedores</h4>
-                    <p class="card-category"> Aqui podrás editar los datos de todos los comedores creados por los usuarios administradores.</p>
+                    <h4 class="card-title mt-0">Tanques de agua</h4>
+                    <p class="card-category"> Aquí podrás verificar los datos de todos los tanques de agua creados por los usuarios administradores.</p>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
                       <table class="table table-hover">
                         <thead class="">
                           <th>
-                              ID
+                                ID
                           </th>
                           <th>
-                              Nombre
+                              Comedor
                           </th>
                           <th>
-                              Ciudad
+                              Capacidad
                           </th>
                           <th>
-                              Capacidad de los Tanques
+                              Nivel actual
                           </th>
                           <th>
-                            Encargados
-                        </th>
+                              Último llenado
+                          </th>
                           <th>
-                            Acciones
-                        </th>
+                              Acciones
+                          </th>
                         </thead>
                         <tbody>
-  
-                            {% for refectory_object in object_list %}
+
+                            {% for i in object_list %}
                                     <tr>
                                         <td>
-                                            {{ refectory_object.id }}
-                                            </td>
-                                        <td>
-                                            {{ refectory_object.name }}
+                                            {{ i.id }}
                                         </td>
                                         <td>
-                                            {{ refectory_object.address }}
+                                            {{ i.refectory_name }}
                                         </td>
                                         <td>
-                                            {{ refectory_object.capacity }}
+                                            {{ i.capacity }} <!--OJO ESTO ES CAPACIDAD DE COMEDORES POR LO QUE VEO-->
                                         </td>
                                         <td>
-                                            {{ refectory_object.mandated }}
+                                            {{ i.current_liters }} <!--OJO ESTO ES CAPACIDAD DE COMEDORES POR LO QUE VEO-->
                                         </td>
                                         <td>
-                                            <a href="{% url 'dashboard:cupboard:list_cupboard' refectory_object.id %}">
-                                                <button type="button" class="btn" style='background-color: #37005D'"><i class="material-icons">kitchen</i> Inventario</button>
-                                            </a>
-                                            <a href="{% url 'dashboard:refectory:edit_refectory' refectory_object.id %}">
-                                                <button type="button" class="btn btn-info">Editar</button>
+                                            {{ i.last_fill_date }} <!--OJO ESTO DEBERIA SER DEL OBJETO WATER TANK PERO LO ENTIENDE (?)-->
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'dashboard:water_managements:water_management_list' i.id %}">
+                                                <button type="button" class="btn" style='background-color: #37005D'>Ver Operaciones</button>
                                             </a>
                                             <button type="button" class="btn btn-danger">Eliminar</button>
                                         </td>
-                                        </tr>
+                                    </tr>
                             {% endfor %}
-  
                         </tbody>
                       </table>
                     </div>
@@ -86,11 +82,8 @@
         <button type="button" class="btn btn-default">Regresar</button>
         </a>
     </p>
-    <p style="float: right; margin-right: 50px;">
-        <a  href="{% url 'dashboard:refectory:create_refectory' %}">
-        <button type="button" class="btn btn-success">Agregar Comedor</button>
-        </a>
-    </p>
+    
+
 {% endblock content %}
 
 

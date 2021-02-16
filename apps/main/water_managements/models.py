@@ -6,7 +6,7 @@ from model_utils.models import TimeStampedModel
 from apps.main.water_tanks.models import WaterTank
 
 
-class CupboardManagement(TimeStampedModel):
+class WaterManagement(TimeStampedModel):
 
     class OperationType(models.TextChoices):
         """

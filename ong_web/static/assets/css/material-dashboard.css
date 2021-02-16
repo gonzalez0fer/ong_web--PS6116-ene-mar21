@@ -13189,7 +13189,7 @@ fieldset[disabled] .form-group .form-control {
 .navbar.bg-info .dropdown-item:hover,
 .navbar.bg-info .dropdown-item:focus {
   box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 188, 212, 0.4);
-  background-color: #00bcd4;
+  background-color: #37005D; /*Color Original: #00bcd4*/
   color: #fff;
 }
 
@@ -14597,8 +14597,8 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 .sidebar .nav li .dropdown-menu a:hover,
 .sidebar .nav li .dropdown-menu a:focus,
 .sidebar .nav li.active>[data-toggle="collapse"] {
-  background-color: rgba(200, 200, 200, 0.2);
-  color: #3C4858;
+  background-color: #37005D /*Color Original: rgba(200, 200, 200, 0.2)*/;
+  color: white;/*Color Original: #3C485*/
   box-shadow: none;
 }
 
@@ -14779,7 +14779,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 
 .sidebar[data-color="azure"] li.active>a {
-  background-color: #00bcd4;
+  background-color: #37005D; /*Color Original: #00bcd4*/
   box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 188, 212, 0.4);
 }
 
