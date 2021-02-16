@@ -1,0 +1,117 @@
+{% extends "layouts/base.html" %}
+{% load widget_tweaks %}
+{% block title %} Page User {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-7">
+    <div class="card">
+      <div class="card-header card-header-info">
+        <h4 class="card-title">Realiza una Operación de "Entrada" o "Salida"</h4>
+            <p class="card-category">Completa los datos.</p>
+      </div>
+      <div class="card-body">
+        <form onsubmit="return validate()" method="post">
+          {% csrf_token %}
+                          
+          <br/>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                 <label class="bmd-label-floating">Tipo de operación</label>
+                  <select id="operation_type" name="operation_type" class="form-control" id="operation_type">
+                    <option value="none">Seleccione tipo de operación... </option>
+                    <option value="ingreso">Entrada</option>
+                    <option value="consumo">Salida</option>
+                  </select>
+              </div>
+              <span id="operation_type_error" class="text-danger" style="display : none"></span>
+            </div>
+          </div>
+
+          <br/>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Nombre del producto</label>
+                 <input id="water_liters" type="number" class="form-control" name="product_name">
+              </div>
+              <span id="water_liters_error" class="text-danger" style="display : none"></span>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Cantidad de unidades</label>
+                 <input id="water_liters" type="number" class="form-control" name="product_quantity">
+              </div>
+              <span id="water_liters_error" class="text-danger" style="display : none"></span>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Precio Unitario (Bolívares)</label>
+                  <input id="water_amount" type="number" class="form-control" name="product_unitary_amount">
+              </div>
+              <span id="water_amount_error" class="text-danger" style="display : none"></span>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Precio Total (Bolívares)</label>
+                  <input id="water_amount" type="number" class="form-control" name="product_total_amount">
+              </div>
+              <span id="water_amount_error" class="text-danger" style="display : none"></span>
+            </div>
+          </div>
+
+          <br/>
+          <p class="pull-left">
+            <a  href="{% url 'dashboard:water_managements:water_management_list' tank_info.id %}"> <!--{% url dashboard:water_managements:water_management_list-->
+              <button type="button" class="btn btn-default">Regresar</button>
+            </a>
+          </p>
+          <button id="submit-button" type="submit" class="btn btn-success pull-right">Realizar Operación</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="card card-profile">
+      <div class="card-avatar">
+          <a href="">
+              <img class="img" src="/static/assets/img/flats/water.png" />
+          </a>
+      </div>
+      <div class="card-body">      
+        <h4 class="card-title">
+          Aquí podras realizar una operacion en el sistema donde
+          indiques algun ingreso o egreso generado por la venta o
+          compra de agua para el tanque.
+        </h4>
+        </br>
+        <h4>
+          <strong>No olvides que para registrar ingresos debes 
+          seleccionar el tipo de operación "Entrada" y para 
+          egresos "Salida".</strong>
+        </h4>
+      </div>   
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+  <script>
+    var tank_id = "{{ tank_info.id | safe }}"
+    var tank_capacity = "{{ tank_info.capacity | safe }}"
+    var tank_current_liters = "{{ tank_info.current_liters | safe }}"
+  </script>
+  <script src="/static/assets/js/water_managements-create.js"></script>
+{% endblock javascripts %}

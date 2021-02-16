@@ -2,12 +2,15 @@ from .                      import views
 from django.contrib         import admin
 from django.urls            import include, path, re_path
 
-app_name = "maintenance"
+app_name = "products"
 
 urlpatterns = [
     path(
-        'refectories', 
-        views.RefectoriesMaintenanceListView.as_view(), 
-        name='refectories_maintenance_list'
+        '<int:pk>', 
+        views.ProductsListView.as_view(), 
+        name='list_maintenance_product'
         ),
+
+  
+
 ]

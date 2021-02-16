@@ -60,12 +60,12 @@
             </i>Mantenimiento</a>
             <div class="dropdown-menu">
 
-              <a class="dropdown-item" href="">
+              <a class="dropdown-item" href="{% url 'dashboard:maintenance:refectories_maintenance_list' %}">
                   <i class="material-icons">science</i> 
                   <p>Ver Suministros</p>
                 </a>
 
-                <a class="dropdown-item" href="{% url 'dashboard:maintenance:maintenance_list' %}">
+                <a class="dropdown-item" href="{% url 'dashboard:maintenance:refectories_maintenance_list' %}">
                     <i class="material-icons">construction</i> 
                     <p>Ver Mantenimientos</p>
                   </a>

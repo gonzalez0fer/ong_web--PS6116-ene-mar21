@@ -1,0 +1,141 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card card-plain">
+                  <div class="card-header card-header-success">
+                    <h4 class="card-title mt-0">Operaciones de los productos de mantenimiento del comedor {{refectory_data.0.refectory_name}}</h4>
+                    <p class="card-category"> Aquí podrás ver todas las operaciones sobre los productos de mantenimiento usados en el comedor.</p>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead class="">
+                          <th>
+                              ID
+                          </th>
+                          <th>
+                              Producto
+                          </th>
+                          <th>
+                              Tipo de Operacion
+                          </th>
+                          <th>
+                              Cantidad
+                          </th>
+                          <th>
+                            Precio Unitario
+                        </th>
+                          <th>
+                            Precio Total
+                        </th>
+                        <th>
+                            Fecha
+                        </th>
+                        <th>
+                            Responsable
+                        </th>
+                        </thead>
+                        <tbody>
+  
+                            {% for product_object in object_list %}
+                                    <tr>
+                                        <td>
+                                            {{ product_object.id }}
+                                            </td>
+                                        <td>
+                                            {{ product_object.product_name }}
+                                        </td>
+                                        <td>
+                                            {{ product_object.operation_type }}
+                                        </td>
+                                        <td>
+                                            {{ product_object.product_quantity }}
+                                        </td>
+                                        <td>
+                                            {{ product_object.product_unitary_amount }}
+                                        </td>
+                                        <td>
+                                            {{ product_object.product_total_amount }}
+                                        </td>
+                                        <td>
+                                            {{ product_object.created }}
+                                        </td>
+                                        <td>
+                                            {{ product_object.created_by }}
+                                        </td>
+                                        </tr>
+                            {% endfor %}
+  
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+            </br>
+        </br>
+            {% if user.is_superuser %}
+            <p style="float: left; margin-left: 50px;">
+                <a  href="{% url 'dashboard:cupboard:list_cupboard' refectory_data.0.id %}">
+                <button type="button" class="btn btn-default">Regresar</button>
+                </a>
+                <a  href="{% url 'dashboard:product_managements:create' refectory_data.0.id %}">
+                    <button type="button" class="btn btn-default">Realizar operación</button>
+                </a>
+            </p>
+            {% else %}
+            <p style="float: left; margin-left: 50px;">
+                <a  href="{% url 'dashboard:cupboard:list_products' %}">
+                <button type="button" class="btn btn-default">Regresar</button>
+                </a>
+            </p>
+            {% endif %}
+
+              </div>
+            </br>
+        </br>
+
+        <div class="col-md-4">
+                    
+            <div class="card card-profile">
+                <div class="card-avatar">
+                    <a href="">
+                      <img class="img" src="/static/assets/img/flats/refectory.png" />
+                    </a>
+                  </div>
+                    <div class="card-body">
+
+                        <h4 class="card-title">
+                            Comedor:
+                            <strong>{{refectory_data.0.refectory_name}}</strong> 
+                        </br>
+                            Direccion: 
+                            {{refectory_data.0.refectory_address}}
+
+                        </h4>
+                      </div>    
+                        
+
+                  
+            </div>
+          </div>
+
+
+
+
+        </div>
+
+
+{% endblock content %}
+
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

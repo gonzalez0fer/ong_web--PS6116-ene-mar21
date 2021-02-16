@@ -40,6 +40,18 @@ urlpatterns = [
         'maintenance/',
         include('apps.dashboard.maintenance.urls', namespace='maintenance'),
         ),
+    path(
+        'products/',
+        include('apps.dashboard.products.urls', namespace='products'),
+        ),
+    path(
+        'product-managements/',
+        include('apps.dashboard.product_managements.urls', namespace='product_managements'),
+        ),
+   
+    
+    
+    
 
 
     # Matches any html file

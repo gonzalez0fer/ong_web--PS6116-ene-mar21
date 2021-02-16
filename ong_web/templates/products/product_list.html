@@ -1,0 +1,126 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card card-plain">
+                  <div class="card-header card-header-success">
+                    <h4 class="card-title mt-0">Inventario de mantenimiento del comedor {{refectory_data.0.refectory_name}}</h4>
+                    <p class="card-category"> Aqui podras ver todos los productos de mantenimiento del comedor.</p>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead class="">
+                          <th>
+                              ID
+                          </th>
+                          <th>
+                              Producto
+                          </th>
+                          <th>
+                              Cantidad
+                          </th>
+
+                        <th>
+                            Acciones
+                        </th>
+                        </thead>
+                        <tbody>
+  
+                            {% for product_object in object_list %}
+                                    <tr>
+                                        <td>
+                                            {{ product_object.id }}
+                                            </td>
+                                        <td>
+                                            {{ product_object.product_name }}
+                                        </td>
+
+                                        <td>
+                                            {{ product_object.total_product_quantity }}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'dashboard:cupboard_managements:list_cupboard_single_management' product_object.id %}">
+                                                <button type="button" class="btn btn-info">Ver Operaciones</button>
+                                            </a>
+                                        </td>
+                                        </tr>
+                            {% endfor %}
+  
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+            </br>
+        </br>
+            {% if user.is_superuser %}
+            <p style="float: left; margin-left: 50px;">
+                <a  href="{% url 'dashboard:refectory:list_refectories' %}">
+                <button type="button" class="btn btn-default">Regresar</button>
+                </a>
+            </p>
+            {% else %}
+            <p style="float: left; margin-left: 50px;">
+                <a  href="/">
+                <button type="button" class="btn btn-default">Regresar</button>
+                </a>
+            </p>
+            {% endif %}
+
+            <p style="float: right; margin-right: 50px;">
+                <a  href="{% url 'dashboard:product_managements:list_product_management' refectory_data.0.id %}">
+                <button type="button" class="btn btn-success">Ver Todas las Operaciones</button>
+                </a>
+            </p>
+
+
+
+              </div>
+            </br>
+        </br>
+
+        <div class="col-md-4">
+                    
+            <div class="card card-profile">
+                <div class="card-avatar">
+                    <a href="">
+                      <img class="img" src="/static/assets/img/flats/refectory.png" />
+                    </a>
+                  </div>
+                    <div class="card-body">
+
+                        <h4 class="card-title">
+                            Comedor:
+                            <strong>{{refectory_data.0.refectory_name}}</strong> 
+                        </br>
+                            Direccion: 
+                            {{refectory_data.0.refectory_address}}
+
+                        </h4>
+                      </div>    
+                        
+
+                  
+            </div>
+          </div>
+
+
+
+
+        </div>
+
+
+{% endblock content %}
+
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
