@@ -14,5 +14,10 @@ urlpatterns = [
         '<int:tank_id>/create', 
         views.WaterManagementCreateView.as_view(), 
         name='water_management_create'
-        ),    
+        ),
+    path(
+        '<int:tank_id>/<int:pk>/update', 
+        views.WaterManagementUpdateView.as_view(), 
+        name='water_management_update'
+        ),             
 ]

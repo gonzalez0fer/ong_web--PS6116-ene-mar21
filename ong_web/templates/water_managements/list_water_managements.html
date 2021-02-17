@@ -67,6 +67,7 @@
                                             {{ i.created }}
                                         </td> 
                                         <td>
+                                            <a  href="{% url 'dashboard:water_managements:water_management_update' tank_id i.id %}">
                                             <button type="button" class="btn btn-info">Editar</button>
                                             {% if user.is_superuser %}
                                             <button type="button" class="btn btn-danger">Eliminar</button>
