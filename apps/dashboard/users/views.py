@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, FormView 
 from apps.main.users.models import CustomUser, UserProfile
-from .forms import CustomUserForm, UserProfileForm
+from .forms import CustomUserForm, UserProfileForm, UserAssignRefectoryForm
 from django.http import HttpResponse
 
 from django.utils.decorators import method_decorator
@@ -25,9 +25,13 @@ class UsersList(ListView):
 
         context['object_list'] = []
         for i in query:
+            if not i.profile.refectory:
+                refectory = '(sin asignar)'
+            else:
+                refectory = i.profile.refectory
             context['object_list'].append({'id':i.id,'name':i.profile.name, 
             'last_name':i.profile.last_name, 'email':i.email, 
-            'is_admin':i.is_superuser, 'refectory':i.profile.refectory})
+            'is_admin':i.is_superuser, 'refectory':refectory})
         return context  
 
 @method_decorator([login_required, superuser_required], name='dispatch')
@@ -42,7 +46,6 @@ class UserUpdateProfile(UpdateView):
     def get_context_data(self, **kwargs):
 
         context = super(UserUpdateProfile, self).get_context_data(**kwargs)
-        print(self.request.user.is_superuser, self.kwargs['pk'])
 
         custom_user = get_object_or_404(CustomUser, pk=self.kwargs['pk'])
 
@@ -166,3 +169,11 @@ class UserUpdateSingleProfile(UpdateView):
                 profile_form=profile_form
             )
         )
+
+
+
+class UserAssignRefectory(UpdateView):
+    model = UserProfile
+    template_name = 'users/assign_refectory.html'
+    form_class = UserAssignRefectoryForm
+    success_url = "/dashboard/user/"
