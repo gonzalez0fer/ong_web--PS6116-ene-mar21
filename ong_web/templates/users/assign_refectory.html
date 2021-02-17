@@ -1,0 +1,32 @@
+{% load widget_tweaks %}
+
+
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Asigna un Comedor</h2>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form method="post" action="{% url 'dashboard:user:assign_refectory' object.id %}">
+            {% csrf_token %}
+          
+            <div class="modal-body">
+              {% for field in form %}
+                <div class="form-group">
+                  <label for="{{ field.id_for_label }}">Comedor a Asignar</label>
+                  {% render_field field class="form-control" placeholder=field.label %}
+                </div>
+              {% endfor %}
+            </div>
+          
+            <div class="modal-footer">
+                <button class="btn btn-default pull-left" type="button" data-dismiss="modal">Cancelar</button>
+              <button class="submit-btn btn btn-primary" type="submit">Asignar</button>
+            </div>
+          
+          </form>
+    </div>
+
+</div>

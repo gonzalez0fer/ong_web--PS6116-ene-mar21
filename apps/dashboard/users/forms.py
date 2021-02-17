@@ -11,12 +11,17 @@ class CustomUserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = [            
+        fields = [  
                 'name',
                 'last_name',
                 'address',
                 'about',
                 ]
         
-
+class UserAssignRefectoryForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = [
+            'refectory',
+        ]
 

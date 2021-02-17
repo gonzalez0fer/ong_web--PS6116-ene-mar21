@@ -23,5 +23,10 @@ urlpatterns = [
         name='edit_profile'
         ),
 
+    path(
+        'assign/<int:pk>', 
+        views.UserAssignRefectory.as_view(), 
+        name='assign_refectory'
+        ),
 
 ]

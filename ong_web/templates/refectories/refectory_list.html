@@ -54,7 +54,15 @@
                                             {{ refectory_object.capacity }}
                                         </td>
                                         <td>
-                                            {{ refectory_object.mandated }}
+                                            <ul>
+
+                                                {% for i in refectory_object.mandated %}
+                                            
+                                                    <li>{{i}}</li>
+
+                                                {% endfor %}
+
+                                            </ul>
                                         </td>
                                         <td>
                                             <a href="{% url 'dashboard:cupboard:list_cupboard' refectory_object.id %}">
