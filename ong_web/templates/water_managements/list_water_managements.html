@@ -93,10 +93,11 @@
         <a  href="{% url 'dashboard:water_tanks:tanks_list' %}">
         <button type="button" class="btn btn-default">Regresar</button>
         </a>
-        {% endif %}
+        {% else %}
         <a  href="{% url 'dashboard:water_tanks:tanks_list_guest' %}">
         <button type="button" class="btn btn-default">Regresar</button>
         </a>
+        {% endif %}
     </p>
     <p style="float: right; margin-right: 50px;">
         <a  href="{% url 'dashboard:water_managements:water_management_create' tank_id %}">
