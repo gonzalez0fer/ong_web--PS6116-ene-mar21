@@ -38,17 +38,25 @@ class WaterManagementList(ListView):
                     'operation_type':i.operation_type,
                     'water_liters':i.water_liters,
                     'water_amount':i.water_amount,
+                    'water_price_total':i.water_price_total,
                     'created_by_id':i.created_by_id,
                     'created':i.created,
                     'tank_id':i.cupboard_id,
             })
         return context
 
+
 class WaterManagementCreateView(CreateView):
     model = WaterManagement
     form_class = WaterManagementForm
     template_name = "water_managements/water_managements-create.html"
-    success_url = "/dashboard/water_tanks/"
+    
+    def get_success_url(self):
+        if self.request.user.is_superuser:
+            success_url = "/dashboard/water_tanks/"
+        else:
+            success_url = "/dashboard/water_tanks/tank/"   
+        return success_url
 
     def get_context_data(self, **kwargs):
         context = super(WaterManagementCreateView, self).get_context_data(**kwargs)
@@ -75,6 +83,7 @@ class WaterManagementCreateView(CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.created_by_id = self.request.user.id
+        self.object.water_price_total = self.object.water_liters * self.object.water_amount
         self.object.cupboard_id = self.kwargs['tank_id'] #provisional hasta que se pueda asignar comedores a usuarios
         tank = WaterTank.objects.get(id=self.kwargs['tank_id'])
         if self.object.operation_type == 'ingreso':

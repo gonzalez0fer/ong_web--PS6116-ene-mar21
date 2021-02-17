@@ -12,7 +12,7 @@
                 <div class="card card-plain">
                   <div class="card-header card-header-info">
                     <h4 class="card-title mt-0">Tanques de Agua</h4>
-                    <p class="card-category"> Aquí podrás verificar los datos de los tanques de agua pertenecientes a todos los puntos de distribución</p>
+                    <p class="card-category"> Aquí podrás verificar los datos de los tanques de agua pertenecientes al punto de distribución {{ user.profile.refectory }}</p>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -20,9 +20,6 @@
                         <thead class="">
                           <th>
                                 ID
-                          </th>
-                          <th>
-                              Comedor
                           </th>
                           <th>
                               Capacidad (Litros)
@@ -35,7 +32,7 @@
                           </th>
                           <th>
                               Acciones
-                          </th>
+                          </th>                          
                         </thead>
                         <tbody>
 
@@ -45,22 +42,18 @@
                                             {{ i.id }}
                                         </td>
                                         <td>
-                                            {{ i.refectory_name }}
+                                            {{ i.capacity }} 
                                         </td>
                                         <td>
-                                            {{ i.capacity }} <!--OJO ESTO ES CAPACIDAD DE COMEDORES POR LO QUE VEO-->
+                                            {{ i.current_liters }} 
                                         </td>
                                         <td>
-                                            {{ i.current_liters }} <!--OJO ESTO ES CAPACIDAD DE COMEDORES POR LO QUE VEO-->
-                                        </td>
-                                        <td>
-                                            {{ i.last_fill_date }} <!--OJO ESTO DEBERIA SER DEL OBJETO WATER TANK PERO LO ENTIENDE (?)-->
+                                            {{ i.last_fill_date }} 
                                         </td>
                                         <td>
                                             <a href="{% url 'dashboard:water_managements:water_management_list' i.id %}">
                                                 <button type="button" class="btn" style='background-color: #37005D'>Ver Operaciones</button>
                                             </a>
-                                            <button type="button" class="btn btn-danger">Eliminar</button>
                                         </td>
                                     </tr>
                             {% endfor %}
