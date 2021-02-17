@@ -23,7 +23,10 @@ class RefectoriesListView(ListView):
             mandated = []
             if len(i.user_asigned.all()) > 0:
                 for j in i.user_asigned.all():
-                    mandated.append (str(j.name)+' '+str(j.last_name))
+                    if j.name and j.last_name:
+                        mandated.append (str(j.name)+' '+str(j.last_name)+' - '+'('+str(j.user.email)+')')
+                    else:
+                        mandated.append('(nombre sin asignar) - '+'('+str(j.user.email)+')')
             else:
                 mandated.append('(por asignar)')
                             
