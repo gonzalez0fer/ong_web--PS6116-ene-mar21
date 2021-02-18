@@ -13,6 +13,7 @@ from apps.main.water_tanks.models import WaterTank
 from apps.main.users.models import CustomUser
 from apps.main.water_tanks.models import WaterTank
 from apps.main.refectories.models import Refectory
+from apps.dashboard.refectories.forms import WaterExtraFieldsForm
 
 @method_decorator([login_required, superuser_required], name='dispatch')
 class TanksListView(ListView):
@@ -55,4 +56,9 @@ class WaterTankSingleListView(ListView):
                     'current_liters':i.current_liters,
                     'last_fill_date':i.last_fill_date,
             })  
+
+            context['water_extra_fields'] = WaterExtraFieldsForm(
+                initial = {'water_percent':(i.current_liters * 100)//i.capacity,
+                })
+
         return context

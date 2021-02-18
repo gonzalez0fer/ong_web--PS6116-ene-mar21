@@ -15,7 +15,7 @@ from apps.main.users.decorators import superuser_required
 class UsersList(ListView):
     template_name = "users/user_list.html"
     queryset = CustomUser.objects.all()
-
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
