@@ -10,9 +10,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-plain">
-                  <div class="card-header card-header-success">
-                    <h4 class="card-title mt-0">Tanques de agua</h4>
-                    <p class="card-category"> Aquí podrás verificar los datos de todos los tanques de agua creados por los usuarios administradores.</p>
+                  <div class="card-header card-header-info">
+                    <h4 class="card-title mt-0">Tanques de Agua</h4>
+                    <p class="card-category"> Aquí podrás verificar los datos de los tanques de agua pertenecientes a todos los puntos de distribución</p>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -25,10 +25,10 @@
                               Comedor
                           </th>
                           <th>
-                              Capacidad
+                              Capacidad (Litros)
                           </th>
                           <th>
-                              Nivel actual
+                              Nivel actual (Litros)
                           </th>
                           <th>
                               Último llenado
@@ -39,35 +39,30 @@
                         </thead>
                         <tbody>
 
-                            {% for refectory_object in object_list %}
+                            {% for i in object_list %}
                                     <tr>
                                         <td>
-                                            {{ refectory_object.id }}
+                                            {{ i.id }}
                                         </td>
                                         <td>
-                                            {{ refectory_object.name }}
+                                            {{ i.refectory_name }}
                                         </td>
                                         <td>
-                                            {{ refectory_object.capacity }} <!--OJO ESTO ES CAPACIDAD DE COMEDORES POR LO QUE VEO-->
+                                            {{ i.capacity }} <!--OJO ESTO ES CAPACIDAD DE COMEDORES POR LO QUE VEO-->
                                         </td>
                                         <td>
-                                            {{ refectory_object.current_liters }} <!--OJO ESTO DEBERIA SER DEL OBJETO WATER TANK PERO LO ENTIENDE (?)-->
+                                            {{ i.current_liters }} <!--OJO ESTO ES CAPACIDAD DE COMEDORES POR LO QUE VEO-->
                                         </td>
                                         <td>
-                                            {{ refectory_object.id }}
-                                        </td> 
+                                            {{ i.last_fill_date }} <!--OJO ESTO DEBERIA SER DEL OBJETO WATER TANK PERO LO ENTIENDE (?)-->
+                                        </td>
                                         <td>
-                                            <a> <!--<a href="{% url 'dashboard:cupboard:list_cupboard' refectory_object.id %}">-->
-                                                <button type="button" class="btn" style='background-color: #37005D' >Inspeccionar</button>
+                                            <a href="{% url 'dashboard:water_managements:water_management_list' i.id %}">
+                                                <button type="button" class="btn" style='background-color: #37005D'>Ver Operaciones</button>
                                             </a>
-                                            <a href="{% url 'dashboard:refectory:edit_refectory' refectory_object.id %}">
-                                                <button type="button" class="btn btn-info">Editar</button>
-                                            </a>
-                                            <button type="button" class="btn btn-danger">Eliminar</button>
                                         </td>
                                     </tr>
                             {% endfor %}
-
                         </tbody>
                       </table>
                     </div>
@@ -86,6 +81,7 @@
         <button type="button" class="btn btn-default">Regresar</button>
         </a>
     </p>
+    
 
 {% endblock content %}
 

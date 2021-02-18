@@ -1,7 +1,8 @@
     <div class="sidebar" data-color="azure" data-background-color="white" data-image="/static/assets/img/sidebar-1.jpg">
       <div class="logo">
         <a href="/dashboard" class="simple-text logo-normal">
-          <img src="https://masverdemashumano.org/wp-content/uploads/2020/08/Logo-VerdeHumano.png" alt="+Verde +Humano" style="max-width: 245px">
+         <img class="img" src="/static/assets/img/logo/Agua-Segura-Logo-Med.png"/>
+          <!-- <img src="https://masverdemashumano.org/wp-content/uploads/2020/08/Logo-VerdeHumano.png" alt="+Verde +Humano" style="max-width: 245px">-->
         </a>
       </div>
       {% if user.is_authenticated %}
@@ -20,12 +21,15 @@
               <p>Mi Usuario</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="">
+          {% if user.profile.refectory %}
+          {% url 'dashboard:water_tanks:tanks_list_guest' as tanks_view %} 
+          <li class="nav-item {% if request.path == tanks_view %} active {% endif %}">
+            <a class="nav-link" href="{% url 'dashboard:water_tanks:tanks_list_guest'%}">
               <i class="material-icons">opacity</i>
               <p>Agua</p>
             </a>
           </li>
+          {% endif %}
 
           {% if user.profile.refectory %}
           {% url 'dashboard:cupboard:list_products' as cupboard_view %} 

@@ -6,7 +6,7 @@ from model_utils.models import TimeStampedModel
 from apps.main.water_tanks.models import WaterTank
 
 
-class CupboardManagement(TimeStampedModel):
+class WaterManagement(TimeStampedModel):
 
     class OperationType(models.TextChoices):
         """
@@ -37,7 +37,12 @@ class CupboardManagement(TimeStampedModel):
         null = True,
     )
 
-    water_amount = models.IntegerField(
+    water_amount = models.FloatField(
+        blank = True,
+        null = True,
+    )
+
+    water_price_total = models.FloatField(
         blank = True,
         null = True,
     )

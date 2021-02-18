@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-md-8">
                   <div class="card">
-                    <div class="card-header card-header-success">
+                    <div class="card-header card-header-info">
                       <h4 class="card-title">Edita el Comedor {{form.name.initial}}</h4>
                       <p class="card-category">Completa los datos.</p>
                     </div>
@@ -78,7 +78,7 @@
                             <button type="button" class="btn btn-default">Regresar</button>
                             </a>
                         </p>
-                        <button type="submit" class="btn btn-info pull-right">Salvar</button>
+                        <button type="submit" class="btn btn-success pull-right">Salvar</button>
                         <div class="clearfix"></div>
                       </form>
                     </div>
@@ -93,34 +93,55 @@
                             </a>
                           </div>
                             <div class="card-body">
-                                {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%}
-
+        
                                 <h4 class="card-title">
-                                    Comedor:
+                                    <strong>COMEDOR</strong> 
+                                </br>
+                            </br>
+                                    Aqui encontraras y podras editar la informacion completa del comedor
                                     <strong>{{form.name.initial}}</strong> 
                                 </br>
+                            </br>
                                     Direccion: 
                                     {{form.address.initial}}
                                 </br>
-                                    Capacidad total en los tanques:
-                                    <strong>{{water_tank_form.capacity.initial}} lts</strong>
-                                </br>
-                                    Litros de agua actuales:
-                                    <strong>{{water_tank_form.current_liters.initial}} lts</strong>
-
+                                    Capacidad:
+                                    <strong>{{form.capacity.initial}} personas</strong>
                                 </h4>
+                            </br>
+                            <div class="row">
+    
+                                <div class="col-md-5" style="background-color: rgba(153, 160, 160, 0.219); position: relative;">
+                                    <h4 class="" style="position: absolute; top:50%; margin: 0;   -ms-transform: translateY(-50%); transform: translateY(-50%);">
+                                        Capacidad del tanque
+                                    </br>
+                                        <strong>{{ water_tank_form.capacity.initial }} lts.</strong> 
+                                    </br>
+                                    </br>
+                                        Litros actuales
+                                        </br>   
+                                        <strong>{{ water_tank_form.current_liters.initial }} lts.</strong> 
+    
+                                    </h4>                           
+                                </div>
+                                <div class="col-md-7" style="background-color: rgba(153, 160, 160, 0.295); position: relative;">
+        
+                                    <h4 style="margin-top: 10px;">Nivel del tanque</h4>        
+                                    {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%}                            
+                                </div>
+                            </br>
+        
+                            </div>
+    
+    
+    
                               </div>    
-                                
-
-                          
+                            
                     </div>
+                    
                   </div>
                     
-                    
-                    
-                    
-
-              </div>
+            </div>
 
 
 

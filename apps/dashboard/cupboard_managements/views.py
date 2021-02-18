@@ -35,7 +35,7 @@ class CupboardManagementListView(ListView):
                         'product_weight':i.product_weight,
                         'product_amount':i.product_amount,
                         'created':i.created,
-                        'created_by':i.created_by.profile.name,
+                        'created_by':i.created_by.profile.name + ' '+i.created_by.profile.last_name,
                 })
         try:
             context['refectory_data'].append({
@@ -62,6 +62,12 @@ class CupboardManagementListSingleView(ListView):
         context['refectory_data'] = []
 
         for i in query:
+
+
+            if i.created_by.profile.name and i.created_by.profile.last_name:
+                mandated = (str(i.created_by.profile.name)+' '+str(i.created_by.profile.last_name)+' - '+'('+str(i.created_by.email)+')')
+            else:
+                mandated =('(nombre sin asignar) - '+'('+str(i.created_by.email)+')')
             
             context['object_list'].append({
                     'id':i.id,
@@ -71,7 +77,7 @@ class CupboardManagementListSingleView(ListView):
                     'product_weight':i.product_weight,
                     'product_amount':i.product_amount,
                     'created':i.created,
-                    'created_by':i.created_by.profile.name,
+                    'created_by':mandated,
             })
 
         context['refectory_data'].append({

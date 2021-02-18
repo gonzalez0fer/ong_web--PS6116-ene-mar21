@@ -1,5 +1,6 @@
 {% extends "layouts/base.html" %}
 {% load widget_tweaks %}
+{% load static %}
 {% block title %} Page User {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
@@ -8,12 +9,10 @@
 {% block content %}
 
 
-
-
             <div class="row">
                 <div class="col-md-8">
                   <div class="card">
-                    <div class="card-header card-header-success">
+                    <div class="card-header card-header-info">
                       <h4 class="card-title">Edita el Perfil del usuario: {{form.email.initial}}</h4>
                       <p class="card-category">Completa el perfil.</p>
                     </div>
@@ -79,7 +78,7 @@
                             </a>
                         </p>
                         {% endif %}
-                        <button type="submit" class="btn btn-info pull-right">Salvar Perfil</button>
+                        <button type="submit" class="btn btn-success pull-right">Salvar Perfil</button>
                         <div class="clearfix"></div>
                       </form>
                     </div>
@@ -95,23 +94,29 @@
                     <div class="card-body">
 
                         <h4 class="card-title">
+                            Id:
+                            <strong>{{object.id}}</strong> 
+                        </br>
                             Nombre:
-                            <strong>{{profile_form.name.initial}} {{profile_form.last_name.initial}}</strong> 
+                            <strong>{{profile_form.name.initial|default_if_none:"(sin asignar)" }} {{profile_form.last_name.initial|default_if_none:"" }}</strong> 
                         </br>
                             Email:
                             <strong>{{form.email.initial}}</strong>
                         </br>
                             Direccion:
-                            {{profile_form.address.initial}}
+                            {{profile_form.address.initial|default_if_none:"(sin asignar)" }}
+
+                        </br>
+                    </br>
+                        Comedor asignado:
+                        <strong>{{object.profile.refectory|default_if_none:"(sin asignar)" }}</strong>
 
                         </h4>
                       </div>  
                     
                     {% if user.is_superuser %}
                     <p class="pull-left">
-                        <a  href="">
-                        <button type="button" class="btn btn-success">Asignar Comedor</button>
-                        </a>
+                        <button type="button" class="bs-modal btn btn-sm btn-success" onclick="open_modal('{% url 'dashboard:user:assign_refectory' view.kwargs.pk %}')">Asignar Comedor</button>
                     </p>
                     {% endif %}
 
@@ -119,9 +124,27 @@
                 </div>
               </div>
 
+<div class="modal fade" id='assign_refectory' role="dialog">
 
+
+</div>
+
+
+{% block extrajs %}
+<script type="text/javascript">
+    var $ = jQuery.noConflict()
+    function open_modal(url){
+        $('#assign_refectory').load(url, function(){
+            $(this).modal('show');
+
+        });
+    }
+
+</script>
+
+{% endblock extrajs %}
 
 {% endblock content %}
 
-<!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+
+
