@@ -7,7 +7,8 @@ class ProductManagementForm(ModelForm):
     class Meta:
         model = ProductManagement
         fields = ['product', 'operation_type','product_quantity','product_unitary_amount', 'product_total_amount']
-        
+    
+    """
     def clean(self):
         super(ProductForm, self).clean()
         product_quantity = self.cleaned_data.get('product_quantity')
@@ -23,6 +24,7 @@ class ProductManagementForm(ModelForm):
         if product_total_amount < 0:
             self._errors['product_total_amount'] = self.error_class([
                 'Cantidad negativa'])
+    """
 
 
 class ProductForm(ModelForm):
@@ -30,6 +32,7 @@ class ProductForm(ModelForm):
         model = Product
         fields=['product_name','total_product_quantity']
     
+    """
     def clean(self):
         super(ProductForm, self).clean()
         quantity = self.cleaned_data.get('total_product_quantity')
@@ -37,3 +40,4 @@ class ProductForm(ModelForm):
         if quantity < 0:
             self._errors['total_product_quantity'] = self.error_class([
                 'Cantidad negativa'])  
+    """

@@ -85,7 +85,7 @@ class ProductManagementCreateView(CreateView):
     model = ProductManagement
     queryset = ProductManagement.objects.all()
     form_class = ProductManagementForm
-    template_name = "product_managementS/product_management_create.html"
+    template_name = "product_managements/product_management_create.html"
     success_url = "/dashboard/refectory/"
 
     def get_context_data(self, **kwargs):
@@ -104,19 +104,19 @@ class ProductManagementCreateView(CreateView):
         product_form = ProductForm(request.POST)
         
         if form.is_valid() and product_form.is_valid():
-            return self.form_valid(form, pfoduct_form)
+            return self.form_valid(form, product_form)
         else:
             return self.form_invalid(form, product_form)
 
-    def form_valid(self, form, water_tank_form):
+    def form_valid(self, form, product_form):
         self.object = form.save(commit=False)
         self.object.created_by = self.request.user
         self.object.save()
-
-        product__object = product_form.save(commit=False)
+        
+        product_object = product_form.save(commit=False)
         product_object.product_name = self.object.product
-        product_object.total_product_quantity = self.object.product_quantity,
-        product_object.refectory.id = self.kwargs['refectory_data.0.id'] 
+        product_object.total_product_quantity = self.object.product_quantity
+        #product_object.refectory.id = self.kwargs['pk'] 
         product_object.created_by = self.request.user
         product_object.save()
         return super().form_valid(form)
