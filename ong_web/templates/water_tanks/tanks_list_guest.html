@@ -8,7 +8,7 @@
 {% block content %}
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <div class="card card-plain">
                   <div class="card-header card-header-info">
                     <h4 class="card-title mt-0">Tanques de Agua</h4>
@@ -48,7 +48,7 @@
                                             {{ i.current_liters }} 
                                         </td>
                                         <td>
-                                            {{ i.last_fill_date }} 
+                                            {{ i.last_fill_date|default_if_none:"--"  }} 
                                         </td>
                                         <td>
                                             <a href="{% url 'dashboard:water_managements:water_management_list' i.id %}">
@@ -62,7 +62,60 @@
                     </div>
                   </div>
                 </div>
+            </div>
+
+            <div class="col-md-4">
+                    
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <a href="">
+                          <img class="img" src="/static/assets/img/flats/water.png" />
+                        </a>
+                      </div>
+                        <div class="card-body">
+    
+                            <h4 class="card-title">
+                                <strong>AGUA</strong> 
+                            </br>
+                        </br>
+                                Aqui encontraras la informacion relativa a las operaciones de los tanques de agua del comedor
+                                <strong>{{ user.profile.refectory }}</strong> 
+    
+                            </h4>
+                        </br>
+                        <div class="row">
+
+                            <div class="col-md-5" style="background-color: rgba(153, 160, 160, 0.219); position: relative;">
+                                <h4 class="" style="position: absolute; top:50%; margin: 0;   -ms-transform: translateY(-50%); transform: translateY(-50%);">
+                                    Capacidad del tanque
+                                </br>
+                                    <strong>{{ object_list.0.capacity }} lts.</strong> 
+                                </br>
+                                </br>
+                                    Litros actuales
+                                    </br>   
+                                    <strong>{{ object_list.0.current_liters }} lts.</strong> 
+
+                                </h4>                           
+                            </div>
+                            <div class="col-md-7" style="background-color: rgba(153, 160, 160, 0.295); position: relative;">
+    
+                                <h4 style="margin-top: 10px;">Nivel del tanque</h4>        
+                                {% include 'includes/water_tank.html' with water_percent=10 %}                            
+                            </div>
+                        </br>
+    
+                        </div>
+
+
+
+                          </div>    
+                        
+                </div>
+                
               </div>
+
+
             </br>
         </br>
 
