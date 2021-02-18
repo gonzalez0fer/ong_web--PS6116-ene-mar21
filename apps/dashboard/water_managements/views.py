@@ -38,17 +38,25 @@ class WaterManagementList(ListView):
                     'operation_type':i.operation_type,
                     'water_liters':i.water_liters,
                     'water_amount':i.water_amount,
+                    'water_price_total':i.water_price_total,
                     'created_by_id':i.created_by_id,
                     'created':i.created,
                     'tank_id':i.cupboard_id,
             })
         return context
 
+
 class WaterManagementCreateView(CreateView):
     model = WaterManagement
     form_class = WaterManagementForm
     template_name = "water_managements/water_managements-create.html"
-    success_url = "/dashboard/water_tanks/"
+    
+    def get_success_url(self):
+        if self.request.user.is_superuser:
+            success_url = "/dashboard/water_tanks/"
+        else:
+            success_url = "/dashboard/water_tanks/tank/"   
+        return success_url
 
     def get_context_data(self, **kwargs):
         context = super(WaterManagementCreateView, self).get_context_data(**kwargs)
@@ -75,8 +83,10 @@ class WaterManagementCreateView(CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.created_by_id = self.request.user.id
-        self.object.cupboard_id = self.kwargs['tank_id'] #provisional hasta que se pueda asignar comedores a usuarios
+        self.object.water_price_total = self.object.water_liters * self.object.water_amount
+        self.object.cupboard_id = self.kwargs['tank_id']
         tank = WaterTank.objects.get(id=self.kwargs['tank_id'])
+        #validaciones
         if self.object.operation_type == 'ingreso':
             if self.object.water_liters > tank.capacity:
                 return self.form_invalid(form)    
@@ -87,12 +97,7 @@ class WaterManagementCreateView(CreateView):
                 return self.form_invalid(form)                
             tank.current_liters = tank.current_liters - self.object.water_liters    
         tank.save()
-        #validaciones
         self.object.save()
-        # water_tank_object = water_tank_form.save(commit=False)
-        # water_tank_object.refectory = self.object
-        # water_tank_object.created_by = self.request.user
-        # water_tank_object.save()
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -101,3 +106,81 @@ class WaterManagementCreateView(CreateView):
                 form=form,
             )
         ) 
+
+class WaterManagementUpdateView(UpdateView):
+    form_class = WaterManagementForm
+    model = WaterManagement 
+    queryset = WaterManagement.objects.all()
+    template_name = "water_managements/water_managements-update.html"
+
+    def get_success_url(self):
+        if self.request.user.is_superuser:
+            success_url = "/dashboard/water_tanks/"
+        else:
+            success_url = "/dashboard/water_tanks/tank/"   
+        return success_url
+
+    def get_context_data(self, **kwargs):
+
+        context = super(WaterManagementUpdateView, self).get_context_data(**kwargs)
+        water_operation = get_object_or_404(WaterManagement, pk=self.kwargs['pk'])
+        query = WaterTank.objects.get(id=self.kwargs['tank_id'])
+        context['tank_info'] = {
+            'id' : self.kwargs['tank_id'],
+            'capacity' : query.capacity,
+            'current_liters' : query.current_liters,
+        }        
+        return context
+
+    def post(self, request, *args, **kwargs):
+
+        self.object = self.get_object()
+        temp = self.object.water_liters #valor actual
+        temp_operation = self.object.operation_type
+        form = self.get_form()
+
+        if form.is_valid():
+            return self.form_valid(form, temp, temp_operation)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form, temp, temp_operation):
+        self.object = form.save(commit=False)
+        self.object.water_price_total = self.object.water_liters * self.object.water_amount
+        tank = WaterTank.objects.get(id=self.kwargs['tank_id'])
+        #validaciones
+        # si no se cambia el tipo de operacion
+        if temp_operation == self.object.operation_type:
+            if self.object.operation_type == 'ingreso':
+                if self.object.water_liters > tank.capacity:
+                    return self.form_invalid(form)
+                # restar litros ingresados antiguos     
+                tank.current_liters = (tank.current_liters - temp) + self.object.water_liters
+            else:
+                if self.object.water_liters > tank.current_liters:
+                    return self.form_invalid(form)
+                # sumar litros egresados antiguos                
+                tank.current_liters = (tank.current_liters + temp) - self.object.water_liters
+        #si cambia el tipo de operacion en la edicion
+        else:
+            if self.object.operation_type == 'ingreso':
+                if self.object.water_liters > tank.capacity:
+                    return self.form_invalid(form)
+                # operacion inversa     
+                tank.current_liters = (tank.current_liters + temp) + self.object.water_liters
+            else:
+                if self.object.water_liters > tank.current_liters:
+                    return self.form_invalid(form)
+                # operacion inversa                
+                tank.current_liters = (tank.current_liters - temp) - self.object.water_liters                        
+        tank.save()
+        return super().form_valid(form)
+
+
+
+    def form_invalid(self, form):
+        return self.render_to_response(
+            self.get_context_data(
+                form=form,
+            )
+        )

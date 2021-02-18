@@ -11,8 +11,8 @@
             <div class="col-md-12">
                 <div class="card card-plain">
                   <div class="card-header card-header-info">
-                    <h4 class="card-title mt-0">Tanques de agua</h4>
-                    <p class="card-category"> Aquí podrás verificar los datos de todos los tanques de agua creados por los usuarios administradores.</p>
+                    <h4 class="card-title mt-0">Tanques de Agua</h4>
+                    <p class="card-category"> Aquí podrás verificar los datos de los tanques de agua pertenecientes a todos los puntos de distribución</p>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -25,10 +25,10 @@
                               Comedor
                           </th>
                           <th>
-                              Capacidad
+                              Capacidad (Litros)
                           </th>
                           <th>
-                              Nivel actual
+                              Nivel actual (Litros)
                           </th>
                           <th>
                               Último llenado
@@ -60,7 +60,6 @@
                                             <a href="{% url 'dashboard:water_managements:water_management_list' i.id %}">
                                                 <button type="button" class="btn" style='background-color: #37005D'>Ver Operaciones</button>
                                             </a>
-                                            <button type="button" class="btn btn-danger">Eliminar</button>
                                         </td>
                                     </tr>
                             {% endfor %}

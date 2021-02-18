@@ -1,0 +1,138 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card card-plain">
+                  <div class="card-header card-header-info">
+                    <h4 class="card-title mt-0">Tanques de Agua</h4>
+                    <p class="card-category"> Aquí podrás verificar los datos de los tanques de agua pertenecientes al punto de distribución {{ user.profile.refectory }}</p>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead class="">
+                          <th>
+                                ID
+                          </th>
+                          <th>
+                              Capacidad (Litros)
+                          </th>
+                          <th>
+                              Nivel actual (Litros)
+                          </th>
+                          <th>
+                              Último llenado
+                          </th>
+                          <th>
+                              Acciones
+                          </th>                          
+                        </thead>
+                        <tbody>
+
+                            {% for i in object_list %}
+                                    <tr>
+                                        <td>
+                                            {{ i.id }}
+                                        </td>
+                                        <td>
+                                            {{ i.capacity }} 
+                                        </td>
+                                        <td>
+                                            {{ i.current_liters }} 
+                                        </td>
+                                        <td>
+                                            {{ i.last_fill_date|default_if_none:"--"  }} 
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'dashboard:water_managements:water_management_list' i.id %}">
+                                                <button type="button" class="btn" style='background-color: #37005D'>Ver Operaciones</button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                            {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                    
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <a href="">
+                          <img class="img" src="/static/assets/img/flats/water.png" />
+                        </a>
+                      </div>
+                        <div class="card-body">
+    
+                            <h4 class="card-title">
+                                <strong>AGUA</strong> 
+                            </br>
+                        </br>
+                                Aqui encontraras la informacion relativa a las operaciones de los tanques de agua del comedor
+                                <strong>{{ user.profile.refectory }}</strong> 
+    
+                            </h4>
+                        </br>
+                        <div class="row">
+
+                            <div class="col-md-5" style="background-color: rgba(153, 160, 160, 0.219); position: relative;">
+                                <h4 class="" style="position: absolute; top:50%; margin: 0;   -ms-transform: translateY(-50%); transform: translateY(-50%);">
+                                    Capacidad del tanque
+                                </br>
+                                    <strong>{{ object_list.0.capacity }} lts.</strong> 
+                                </br>
+                                </br>
+                                    Litros actuales
+                                    </br>   
+                                    <strong>{{ object_list.0.current_liters }} lts.</strong> 
+
+                                </h4>                           
+                            </div>
+                            <div class="col-md-7" style="background-color: rgba(153, 160, 160, 0.295); position: relative;">
+    
+                                <h4 style="margin-top: 10px;">Nivel del tanque</h4>        
+                                {% include 'includes/water_tank.html' with water_percent=10 %}                            
+                            </div>
+                        </br>
+    
+                        </div>
+
+
+
+                          </div>    
+                        
+                </div>
+                
+              </div>
+
+
+            </br>
+        </br>
+
+        </div>
+
+    </br>
+</br>
+    <p style="float: left; margin-left: 50px;">
+        <a  href="{% url 'home' %}">
+        <button type="button" class="btn btn-default">Regresar</button>
+        </a>
+    </p>
+    
+
+{% endblock content %}
+
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

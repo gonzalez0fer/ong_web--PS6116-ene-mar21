@@ -10,4 +10,9 @@ urlpatterns = [
         views.TanksListView.as_view(), 
         name='tanks_list'
         ),
+    path(
+        'tank/', 
+        views.WaterTankSingleListView.as_view(), 
+        name='tanks_list_guest'
+        ),
 ]
