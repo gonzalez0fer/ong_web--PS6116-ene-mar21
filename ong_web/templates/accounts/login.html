@@ -7,23 +7,23 @@
 
 {% block content %}
 
-  <div class="row">
+  <div class="row" style="justify-content: center; display: flex;">
     <div class="col-md-5">
       <div class="card">
         <div class="card-header card-header-info">
-          <h4 class="card-title">
-            Login
+          <h4 class="card-title" style="justify-content: center; display: flex;">
+            Inicar Sesión
           </h4>
         </div>
         <div class="card-body">
 
-          <h6 class="card-category">
+          <!-- <h6 class="card-category">
               {% if msg %}
                 <span class="text-danger">{{ msg }}</span>
               {% else %}
                   Use default credentials: test / ApS12_ZZs8
               {% endif %}  
-          </h6>
+          </h6> -->
           
           <br />
 
@@ -34,7 +34,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label class="bmd-label-floating">Email</label>
+                  <label class="bmd-label-floating">Correo</label>
                   {{ form.email }}
                 </div>
               </div>
@@ -45,15 +45,18 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label class="bmd-label-floating">Password</label>
+                  <label class="bmd-label-floating">Contraseña</label>
                   {{ form.password }}
                 </div>
               </div>
             </div>
 
             <br />
-
-            <button type="submit" name="login" class="btn btn-info pull-left">Inicia Sesión</button>
+            <div style="justify-content: flex-end; display: flex;">
+              <button type="submit" name="login" class="btn btn-info pull-left">
+                Aceptar
+              </button>
+            </div>
 
             &nbsp; &nbsp; 
 
