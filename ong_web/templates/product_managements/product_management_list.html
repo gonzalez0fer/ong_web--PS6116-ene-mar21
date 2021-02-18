@@ -81,22 +81,17 @@
                 </div>
             </br>
         </br>
-            {% if user.is_superuser %}
-            <p style="float: left; margin-left: 50px;">
-                <a  href="{% url 'dashboard:cupboard:list_cupboard' refectory_data.0.id %}">
-                <button type="button" class="btn btn-default">Regresar</button>
-                </a>
+            {% comment %} aqui va validacion de super usuario para regresar {% endcomment %}
                 <a  href="{% url 'dashboard:product_managements:create' refectory_data.0.id %}">
                     <button type="button" class="btn btn-default">Realizar operación</button>
                 </a>
             </p>
-            {% else %}
             <p style="float: left; margin-left: 50px;">
-                <a  href="{% url 'dashboard:cupboard:list_products' %}">
+                <a  href="{% url 'dashboard:products:list_maintenance_product' refectory_data.0.id %}">
                 <button type="button" class="btn btn-default">Regresar</button>
                 </a>
             </p>
-            {% endif %}
+
 
               </div>
             </br>

@@ -17,11 +17,12 @@ class ProductManagement(TimeStampedModel):
         NONE        =   'none'
 
 
-    product =  models.ForeignKey(
+    product_cod =  models.ForeignKey(
         Product, 
         blank=True, 
         null=True, 
         related_name='product',
+        to_field='product_name',
         on_delete = models.SET_NULL,
         ) 
 

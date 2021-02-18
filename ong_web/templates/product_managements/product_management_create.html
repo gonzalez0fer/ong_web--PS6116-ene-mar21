@@ -22,13 +22,12 @@
             <div class="col">
               <div class="form-group">
                  <label class="bmd-label-floating">Tipo de operación</label>
-                  <select id="operation_type" name="operation_type" class="form-control" id="operation_type">
+                  <select id="operation_type" name="operation_type" class="form-control">
                     <option value="none">Seleccione tipo de operación... </option>
                     <option value="ingreso">Entrada</option>
                     <option value="consumo">Salida</option>
                   </select>
               </div>
-              <span id="operation_type_error" class="text-danger" style="display : none"></span>
             </div>
           </div>
 
@@ -37,10 +36,9 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="bmd-label-floating">Nombre del producto1</label>
-                 <input id="water_liters" type="text" class="form-control" name="product_name">
+                <label class="bmd-label-floating">Nombre del producto</label>
+                 <input id="product_cod" type="text" class="form-control" name="product_cod">
               </div>
-              <span id="water_liters_error" class="text-danger" style="display : none"></span>
             </div>
             <!--
             <div class="col-md-6">
@@ -56,24 +54,21 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Cantidad de unidades</label>
-                 <input id="water_liters" type="number" class="form-control" name="product_quantity">
+                 <input id="product_quantity" type="number" class="form-control" name="product_quantity">
               </div>
-              <span id="water_liters_error" class="text-danger" style="display : none"></span>
             </div>
 
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Precio Unitario (Bolívares)</label>
-                  <input id="water_amount" type="number" class="form-control" name="product_unitary_amount">
+                  <input id="product_unitary_amount" type="number" class="form-control" name="product_unitary_amount">
               </div>
-              <span id="water_amount_error" class="text-danger" style="display : none"></span>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Precio Total (Bolívares)</label>
-                  <input id="water_amount" type="number" class="form-control" name="product_total_amount">
+                  <input id="product_total_amount" type="number" class="form-control" name="product_total_amount">
               </div>
-              <span id="water_amount_error" class="text-danger" style="display : none"></span>
             </div>
           </div>
 
@@ -118,10 +113,4 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-  <script>
-    var tank_id = "{{ tank_info.id | safe }}"
-    var tank_capacity = "{{ tank_info.capacity | safe }}"
-    var tank_current_liters = "{{ tank_info.current_liters | safe }}"
-  </script>
-  <script src="/static/assets/js/water_managements-create.js"></script>
 {% endblock javascripts %}

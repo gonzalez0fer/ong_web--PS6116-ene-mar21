@@ -7,12 +7,6 @@ app_name = "product-managements"
 urlpatterns = [
     path(
         '<int:pk>', 
-        views.ProductManagementListSingleView.as_view(), 
-        name='list_product_single_management'
-        ),
-
-    path(
-        'refectory/<int:pk>', 
         views.ProductManagementListView.as_view(), 
         name='list_product_management'
         ),

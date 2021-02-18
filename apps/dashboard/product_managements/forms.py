@@ -6,7 +6,7 @@ from apps.main.products.models import Product
 class ProductManagementForm(ModelForm):
     class Meta:
         model = ProductManagement
-        fields = ['product', 'operation_type','product_quantity','product_unitary_amount', 'product_total_amount']
+        fields = ['product_cod', 'operation_type','product_quantity','product_unitary_amount', 'product_total_amount']
     
     """
     def clean(self):
@@ -27,11 +27,7 @@ class ProductManagementForm(ModelForm):
     """
 
 
-class ProductForm(ModelForm):
-    class Meta:
-        model = Product
-        fields=['product_name','total_product_quantity']
-    
+
     """
     def clean(self):
         super(ProductForm, self).clean()
