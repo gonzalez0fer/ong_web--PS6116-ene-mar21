@@ -85,35 +85,52 @@ class ProductManagementCreateView(CreateView):
     queryset = ProductManagement.objects.all()
     form_class = ProductManagementForm
     template_name = "product_managements/product_management_create.html"
-    success_url = "/dashboard/maintenance/refectories"
+
+    def get_success_url(self):
+        success_url = "/dashboard/products/1" #necesito que esto sea dinamico
+        return success_url
 
     def get_context_data(self, **kwargs):
-
         context = super(ProductManagementCreateView, self).get_context_data(**kwargs)
+        context['refectory'] = {
+            'id' : self.kwargs['pk'],
+        }
+        return context 
 
     def post(self, request, *args, **kwargs):
 
         self.object = None
         form = self.get_form()
-        test = ProductManagementForm(request.POST)
-        query, created = Product.objects.get_or_create(product_name=test.data['product_cod'])
+        product_form = ProductManagementForm(request.POST)
+        product, created = Product.objects.get_or_create(product_name=product_form.data['product_cod'])
 
         if form.is_valid():
-            return self.form_valid(form, query, created)
+            return self.form_valid(form, product, created)
         else:
             return self.form_invalid(form)
 
-    def form_valid(self, form, query, created):
-        print("ESTOY AQUI")
+    def form_valid(self, form, product, created):
         self.object = form.save(commit=False)
-        print(query)
+        #si no existia el producto, se creo en el get or create
         if created:
-            query.total_product_quantity = self.object.product_quantity
-            query.created_by = self.request.user
-            query.refectory_id = 1
-            query.save()
+            product.total_product_quantity = self.object.product_quantity
+            product.created_by = self.request.user
+            product.refectory_id = self.kwargs['pk']
+        #ya existia el producto
+        else:
+            if self.object.operation_type == 'ingreso':    
+                product.total_product_quantity = product.total_product_quantity + self.object.product_quantity
+                product.created_by = self.request.user
+                product.refectory_id = self.kwargs['pk']                    
+            else:
+                #si intento sacar mas de lo que hay
+                if self.object.product_quantity > product.total_product_quantity:
+                    return self.form_invalid(form)
+                product.total_product_quantity = product.total_product_quantity - self.object.product_quantity
+                product.created_by = self.request.user
+                product.refectory_id = self.kwargs['pk']                
 
-
+        product.save()
         self.object.created_by = self.request.user
         self.object.save()
         return super().form_valid(form)
