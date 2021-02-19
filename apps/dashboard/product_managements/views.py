@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.urls import reverse_lazy
 from django.views.generic import ListView,CreateView
 from django.http import HttpResponse
@@ -87,7 +87,7 @@ class ProductManagementCreateView(CreateView):
     template_name = "product_managements/product_management_create.html"
 
     def get_success_url(self):
-        success_url = "/dashboard/products/1" #necesito que esto sea dinamico
+        success_url = reverse('dashboard:products:list_maintenance_product',kwargs={'pk':self.kwargs['pk']}) 
         return success_url
 
     def get_context_data(self, **kwargs):
