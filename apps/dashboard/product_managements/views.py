@@ -111,6 +111,7 @@ class ProductManagementCreateView(CreateView):
 
     def form_valid(self, form, product, created):
         self.object = form.save(commit=False)
+        self.object.product_total_amount = self.object.product_quantity * self.object.product_unitary_amount
         #si no existia el producto, se creo en el get or create
         if created:
             product.total_product_quantity = self.object.product_quantity
