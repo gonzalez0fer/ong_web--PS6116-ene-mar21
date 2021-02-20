@@ -109,7 +109,10 @@ class ProductManagementCreateView(CreateView):
 
         self.object = None
         form = self.get_form()
-        product, created = Product.objects.get_or_create(product_name=form.data['product_cod'])
+        product, created = Product.objects.get_or_create(product_name=form.data['product_cod'],refectory_id=self.kwargs['pk'])
+        form.data._mutable = True
+        form.data['product_cod'] = product.id
+        form.data._mutable = False
 
         if form.is_valid():
             return self.form_valid(form, product, created)
@@ -118,6 +121,7 @@ class ProductManagementCreateView(CreateView):
 
     def form_valid(self, form, product, created):
         self.object = form.save(commit=False)
+        self.object.product_name = product.product_name
         self.object.product_total_amount = self.object.product_quantity * self.object.product_unitary_amount
         #si no existia el producto, se creo en el get or create
         if created:

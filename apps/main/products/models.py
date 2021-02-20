@@ -9,7 +9,6 @@ from apps.main.refectories.models import Refectory
 class Product(TimeStampedModel):
 
     product_name = models.CharField(
-        unique=True,
         max_length=100, 
         blank=True, 
         null=True

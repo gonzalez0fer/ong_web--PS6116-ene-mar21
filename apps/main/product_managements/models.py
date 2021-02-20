@@ -22,9 +22,14 @@ class ProductManagement(TimeStampedModel):
         blank=True, 
         null=True, 
         related_name='product',
-        to_field='product_name',
         on_delete = models.SET_NULL,
-        ) 
+        )
+
+    product_name = models.CharField(
+        max_length=100, 
+        blank=True, 
+        null=True
+    )    
 
     operation_type = models.CharField(
         max_length=10, 
