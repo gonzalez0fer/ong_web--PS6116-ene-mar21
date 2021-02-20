@@ -92,6 +92,14 @@ class ProductManagementCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(ProductManagementCreateView, self).get_context_data(**kwargs)
+        query = Product.objects.filter(refectory_id=self.kwargs['pk']).order_by('product_name')
+
+        context['product_info'] = []
+        for i in query:
+            context['product_info'].append({
+                'product_name': i.product_name,
+            })
+
         context['refectory'] = {
             'id' : self.kwargs['pk'],
         }
@@ -101,8 +109,7 @@ class ProductManagementCreateView(CreateView):
 
         self.object = None
         form = self.get_form()
-        product_form = ProductManagementForm(request.POST)
-        product, created = Product.objects.get_or_create(product_name=product_form.data['product_cod'])
+        product, created = Product.objects.get_or_create(product_name=form.data['product_cod'])
 
         if form.is_valid():
             return self.form_valid(form, product, created)

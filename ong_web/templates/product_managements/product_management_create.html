@@ -37,7 +37,12 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Nombre del producto</label>
-                 <input id="product_cod" type="text" class="form-control" name="product_cod">
+                <input type="text" list="product_list" name="product_cod" id="product_cod" class="form-control">
+                  <datalist id="product_list">
+                    {% for i in product_info %}
+                      <option>{{i.product_name}}</option>
+                    {% endfor %}  
+                  </datalist>
               </div>
             </div>
             <!--
@@ -107,4 +112,16 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+<script type="text/javascript">
+
+  function forceInputUppercase(e)
+  {
+    var start = e.target.selectionStart;
+    var end = e.target.selectionEnd;
+    e.target.value = e.target.value.toUpperCase();
+    e.target.setSelectionRange(start, end);
+  }
+
+  document.getElementById("product_cod").addEventListener("keyup", forceInputUppercase, false);
+</script>
 {% endblock javascripts %}
