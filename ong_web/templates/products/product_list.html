@@ -10,9 +10,9 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="card card-plain">
-                  <div class="card-header card-header-success">
-                    <h4 class="card-title mt-0">Inventario de mantenimiento del comedor {{refectory_data.0.refectory_name}}</h4>
-                    <p class="card-category"> Aqui podras ver todos los productos de mantenimiento del comedor.</p>
+                  <div class="card-header card-header-success" style="background: linear-gradient(60deg, #26c6da, #00acc1);">
+                    <h4 class="card-title mt-0">Inventario de mantenimiento del punto de distribución {{refectory_data.0.refectory_name}}</h4>
+                    <p class="card-category"> Aqui podras ver todos los productos de mantenimiento del punto de distribución.</p>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -28,9 +28,9 @@
                               Cantidad
                           </th>
 
-                        <th>
+                        <!-- <th>
                             Acciones
-                        </th>
+                        </th> -->
                         </thead>
                         <tbody>
   
@@ -46,11 +46,11 @@
                                         <td>
                                             {{ product_object.total_product_quantity }}
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             <a href="{% url 'dashboard:product_managements:list_product_management' refectory_data.0.id %}">
                                                 <button type="button" class="btn btn-info">Ver Operaciones</button>
                                             </a>
-                                        </td>
+                                        </td> -->
                                         </tr>
                             {% endfor %}
   
@@ -75,14 +75,6 @@
             </p>
             {% endif %}
 
-            <p style="float: right; margin-right: 50px;">
-                <a  href="{% url 'dashboard:product_managements:list_product_management' refectory_data.0.id %}">
-                <button type="button" class="btn btn-success">Ver Todas las Operaciones</button>
-                </a>
-            </p>
-
-
-
               </div>
             </br>
         </br>
@@ -92,20 +84,23 @@
             <div class="card card-profile">
                 <div class="card-avatar">
                     <a href="">
-                      <img class="img" src="/static/assets/img/flats/refectory.png" />
+                      <img class="img" src="/static/assets/img/flats/chemical.png" />
                     </a>
                   </div>
                     <div class="card-body">
-
-                        <h4 class="card-title">
-                            Comedor:
-                            <strong>{{refectory_data.0.refectory_name}}</strong> 
+                      <h4 class="card-title">
+                        Punto de distribución:
+                        <strong>{{refectory_data.0.refectory_name}}</strong> 
                         </br>
-                            Direccion: 
-                            {{refectory_data.0.refectory_address}}
-
-                        </h4>
-                      </div>    
+                        Direccion: 
+                        {{refectory_data.0.refectory_address}}
+                      </h4>
+                      <p style="float: right; margin-right: 25px; margin-top: 15px;">
+                        <a  href="{% url 'dashboard:product_managements:list_product_management' refectory_data.0.id %}">
+                        <button type="button" class="btn btn-success">Ver Todas las Operaciones</button>
+                        </a>
+                      </p>
+                    </div>    
                         
 
                   

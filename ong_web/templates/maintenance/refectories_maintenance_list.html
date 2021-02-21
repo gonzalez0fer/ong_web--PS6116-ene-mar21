@@ -10,9 +10,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-plain">
-                  <div class="card-header card-header-success">
-                    <h4 class="card-title mt-0">Comedores</h4>
-                    <p class="card-category"> Aqui podrás editar los datos de todos los comedores creados por los usuarios administradores.</p>
+                  <div class="card-header card-header-success" style="background: linear-gradient(60deg, #26c6da, #00acc1);">
+                    <h4 class="card-title mt-0">Puntos de distribucion</h4>
+                    <p class="card-category"> Aquí se encuentran los puntos de distribucion disponibles.</p>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -27,9 +27,9 @@
                           <th>
                               Ciudad
                           </th>
-                          <th>
+                          <!-- <th>
                               Capacidad de los Tanques
-                          </th>
+                          </th> -->
                           <th>
                             Encargados
                         </th>
@@ -50,20 +50,20 @@
                                         <td>
                                             {{ refectory_object.address }}
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             {{ refectory_object.capacity }}
-                                        </td>
+                                        </td> -->
                                         <td>
                                             {{ refectory_object.mandated }}
                                         </td>
                                         <td>
                                             <a href="{% url 'dashboard:products:list_maintenance_product' refectory_object.id %}">
-                                                <button type="button" class="btn" style='background-color: #37005D'><i class="material-icons">kitchen</i> Inventario</button>
+                                                <button type="button" class="btn" style='background-color: #37005D'><i class="material-icons">kitchen</i> Ver Productos de Mantenimiento</button>
                                             </a>
-                                            <a href="{% url 'dashboard:refectory:edit_refectory' refectory_object.id %}">
+                                            <!-- <a href="{% url 'dashboard:refectory:edit_refectory' refectory_object.id %}">
                                                 <button type="button" class="btn btn-info">Editar</button>
                                             </a>
-                                            <button type="button" class="btn btn-danger">Eliminar</button>
+                                            <button type="button" class="btn btn-danger">Eliminar</button> -->
                                         </td>
                                         </tr>
                             {% endfor %}
@@ -86,11 +86,11 @@
         <button type="button" class="btn btn-default">Regresar</button>
         </a>
     </p>
-    <p style="float: right; margin-right: 50px;">
+    <!-- <p style="float: right; margin-right: 50px;">
         <a  href="{% url 'dashboard:refectory:create_refectory' %}">
-        <button type="button" class="btn btn-success">Agregar Comedor</button>
+        <button type="button" class="btn btn-success">Agregar Punto de distribucion</button>
         </a>
-    </p>
+    </p> -->
 {% endblock content %}
 
 
