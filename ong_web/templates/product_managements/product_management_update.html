@@ -1,0 +1,118 @@
+{% extends "layouts/base.html" %}
+{% load widget_tweaks %}
+{% block title %} Page User {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-7">
+    <div class="card">
+      <div class="card-header card-header-info">
+        <h4 class="card-title">Actualiza una Operación de "Entrada" o "Salida"</h4>
+            <p class="card-category">Modifica los datos.</p>
+      </div>
+      <div class="card-body">
+        <form onsubmit="return validate()" method="post">
+          {% csrf_token %}
+                          
+          <br/>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                 <label class="bmd-label-floating">Tipo de operación</label>
+                  {% render_field form.operation_type class="form-control" name="operation_type" id="operation_type" %}
+              </div>
+            </div>
+          </div>
+
+          <br/>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Nombre del producto</label>
+                  {% render_field form.product_name class="form-control" name="product_name" id="product_name" readonly="True" %}
+              </div>
+            </div>
+            <!--
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Nombre del producto2</label>
+                 <input id="water_liters" type="text" class="form-control" name="product">
+              </div>
+              <span id="water_liters_error" class="text-danger" style="display : none"></span>
+            </div>
+          -->
+           
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Cantidad de unidades</label>
+                  {% render_field form.product_quantity class="form-control" name="product_quantity" id="product_quantity" %}                
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Precio Unitario (Bolívares)</label>
+                  {% render_field form.product_unitary_amount class="form-control" name="product_unitary_amount" id="product_unitary_amount" %}                  
+              </div>
+            </div>
+          </div>
+
+          <br/>
+          <p class="pull-left">
+            <a  href="{% url 'dashboard:product-managements:list_product_management' refectory_info.refectory_id %}"> 
+              <button type="button" class="btn btn-default">Regresar</button>
+            </a>
+          </p>
+          <button id="submit-button" type="submit" class="btn btn-success pull-right">Actualizar Operación</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="card card-profile">
+      <div class="card-avatar">
+          <a href="">
+              <img class="img" src="/static/assets/img/flats/water.png" />
+          </a>
+      </div>
+      <div class="card-body">      
+        <h4 class="card-title">
+          Aquí podras realizar una operacion en el sistema donde
+          indiques algun ingreso o egreso generado por la venta o
+          compra de agua para el tanque.
+        </h4>
+        </br>
+        <h4>
+          <strong>No olvides que para registrar ingresos debes 
+          seleccionar el tipo de operación "Entrada" y para 
+          egresos "Salida".</strong>
+        </h4>
+      </div>   
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script type="text/javascript">
+
+  function forceInputUppercase(e)
+  {
+    var start = e.target.selectionStart;
+    var end = e.target.selectionEnd;
+    e.target.value = e.target.value.toUpperCase();
+    e.target.setSelectionRange(start, end);
+  }
+
+  document.getElementById("product_cod").addEventListener("keyup", forceInputUppercase, false);
+</script>
+{% endblock javascripts %}
