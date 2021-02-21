@@ -47,6 +47,12 @@ class WaterManagement(TimeStampedModel):
         null = True,
     )
 
+    operation_description = models.CharField(
+        max_length=30, 
+        blank = True,
+        null = True,
+    )    
+
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         blank = True,
