@@ -75,9 +75,6 @@
                                             {{ product_object.created_by }}
                                         </td>
                                         <td>
-                                            {{ product_object.created_by }}
-                                        </td>
-                                        <td>
                                             <a  href="{% url 'dashboard:product_managements:update' refectory_data.0.id product_object.id%}">
                                                 <button type="button" class="btn btn-info">Editar</button>
                                                 {% if user.is_superuser %}

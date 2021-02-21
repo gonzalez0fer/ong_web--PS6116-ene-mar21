@@ -22,18 +22,7 @@
             <div class="col">
               <div class="form-group">
                  <label class="bmd-label-floating">Tipo de operación</label>
-                  <select id="operation_type" name="operation_type" class="form-control">
-                    {% if prod_operation_info.operation_type == "ingreso"%}
-                    <option value="none">Seleccione tipo de operación... </option>
-                    <option selected="true" value="ingreso">Entrada</option>
-                    <option value="consumo">Salida</option>
-                    {% endif %}
-                    {% if prod_operation_info.operation_type == "consumo"%}
-                    <option value="none">Seleccione tipo de operación... </option>
-                    <option  value="ingreso">Entrada</option>
-                    <option selected="true" value="consumo">Salida</option>
-                    {% endif %}
-                  </select>
+                  {% render_field form.operation_type class="form-control" name="operation_type" id="operation_type" %}
               </div>
             </div>
           </div>
@@ -44,12 +33,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Nombre del producto</label>
-                <input type="text" list="product_list" name="product_cod" id="product_cod" class="form-control">
-                  <datalist id="product_list">
-                    {% for i in prod_operation_info.products %}
-                      <option>{{i.product_name}}</option>
-                    {% endfor %}  
-                  </datalist>
+                  {% render_field form.product_name class="form-control" name="product_name" id="product_name" readonly="True" %}
               </div>
             </div>
             <!--
@@ -66,21 +50,21 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Cantidad de unidades</label>
-                 <input id="product_quantity" value="{% prod_operation_info.product_quantity %}" type="number" class="form-control" name="product_quantity">
+                  {% render_field form.product_quantity class="form-control" name="product_quantity" id="product_quantity" %}                
               </div>
             </div>
 
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Precio Unitario (Bolívares)</label>
-                  <input id="product_unitary_amount" value="{% prod_operation_info.product_unitary_amount %}" type="number" class="form-control" name="product_unitary_amount">
+                  {% render_field form.product_unitary_amount class="form-control" name="product_unitary_amount" id="product_unitary_amount" %}                  
               </div>
             </div>
           </div>
 
           <br/>
           <p class="pull-left">
-            <a  href="{% url 'dashboard:product-managements:list_product_management' 1 %}"> <!--{% url dashboard:water_managements:water_management_list-->
+            <a  href="{% url 'dashboard:product-managements:list_product_management' refectory_info.refectory_id %}"> 
               <button type="button" class="btn btn-default">Regresar</button>
             </a>
           </p>

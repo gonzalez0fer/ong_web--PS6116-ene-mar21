@@ -6,17 +6,17 @@ app_name = "product-managements"
 
 urlpatterns = [
     path(
-        '<int:pk>', 
+        '<int:refectory_id>', 
         views.ProductManagementListView.as_view(), 
         name='list_product_management'
         ),
     path(
-        '<int:pk>/create',
+        '<int:refectory_id>/create',
         views.ProductManagementCreateView.as_view(),
         name='create'
     ),
     path(
-        '<int:pk>/<int:product_id>/update',
+        '<int:refectory_id>/<int:pk>/update',
         views.ProductManagementUpdateView.as_view(),
         name='update'
     )
