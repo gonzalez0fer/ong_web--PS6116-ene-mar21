@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.urls import reverse_lazy
-from django.views.generic import ListView,CreateView
+from django.views.generic import ListView,CreateView,UpdateView
 from django.http import HttpResponse
 
 from .forms import ProductManagementForm
@@ -12,12 +12,11 @@ from apps.main.product_managements.models import ProductManagement
 class ProductManagementListView(ListView):
     template_name = "product_managements/product_management_list.html"
     queryset = ProductManagement.objects.all()
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context['object_list'] = []
-        context['refectory_data'] = []
+        context['refectory_data'] = []   
 
         refectory = Refectory.objects.get(id=self.kwargs['pk'])
         product = Product.objects.filter(refectory=refectory.id).order_by('created')
@@ -25,7 +24,6 @@ class ProductManagementListView(ListView):
 
         for j in product:
             query = ProductManagement.objects.filter(product_cod=j).order_by('created')
-            
             for i in query:
                 context['object_list'].append({
                         'id':i.id,
@@ -36,6 +34,7 @@ class ProductManagementListView(ListView):
                         'product_total_amount':i.product_total_amount,
                         'created': i.created,
                         'created_by':i.created_by.profile.name,
+                        'product_id': j.id
                 })
         try:
             context['refectory_data'].append({
@@ -153,3 +152,97 @@ class ProductManagementCreateView(CreateView):
                 form=form,
             )
         )
+
+class ProductManagementUpdateView(UpdateView):
+    form_class = ProductManagementForm
+    model = ProductManagement 
+    queryset = ProductManagement.objects.all()
+    template_name = "product_managements/product_management_update.html"
+    
+    def get_success_url(self):
+        if self.request.user.is_superuser:
+            success_url = "/dashboard/water_tanks/"
+        else:
+            success_url = "/dashboard/water_tanks/tank/"   
+        return success_url
+    
+    
+    def get_context_data(self, **kwargs):
+
+        context = super(ProductManagementUpdateView, self).get_context_data(**kwargs)
+        product_operation = ProductManagement.objects.get(id=self.kwargs['product_id'])
+        query1 = Product.objects.get(refectory_id=self.kwargs['pk'])
+        #query2 = Product.objects.get(product_name = product_operation.product_name)
+        #query3 = ProductManagement.objects.get(id="product_id")
+        #query1 = Product.objects.get(id=product_operation.product_cod)
+        #query2 = ProductManagement.objects.get(id=product_operation)
+        
+        products = []
+        for i in query1:
+            products.append(i)
+        
+
+        context['prod_operation_info'] = {
+            'product_name': product_operation.product_name,
+            'operation_type': product_operation.operation_type,
+            'product_unitary_amount': product_operation.product_unitary_amount,
+            'product_quantity': product_operation.product_quantity,
+            'products' : products,
+            'refectory_id': self.kwargs['pk']
+        }        
+        return context
+    """
+    def post(self, request, *args, **kwargs):
+
+        self.object = self.get_object()
+        temp = self.object.product_quantity #valor actual
+        temp_operation = self.object.operation_type
+        form = self.get_form()
+
+        if form.is_valid():
+            return self.form_valid(form, temp, temp_operation)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form, temp, temp_operation):
+        self.object = form.save(commit=False)
+        self.object.product_total_amount = self.object.product_unitary_amount * self.object.total_product_quantity
+        product_operation = ProductManagement.objects.get(id=self.kwargs['product_id'])
+        product = product_operation.product_cod
+        #validaciones
+        # si no se cambia el tipo de operacion
+        if temp_operation == self.object.operation_type:
+            if self.object.operation_type == 'ingreso':
+                if self.object.quantity < 0:
+                    return self.form_invalid(form)
+                # restar litros ingresados antiguos     
+                product.total_product_quantity = (product.total_product_quantity - temp) + self.object.product_quantity
+            else:
+                if self.object.product_quantity > product.total_product_quantity:
+                    return self.form_invalid(form)
+                # sumar litros egresados antiguos                
+                product.total_product_quantity = (product.total_product_quantity + temp) - self.object.product_quantity
+        #si cambia el tipo de operacion en la edicion
+        else:
+            if self.object.operation_type == 'ingreso':
+                if product.product_quantity < 0:
+                    return self.form_invalid(form)
+                # operacion inversa     
+                product.total_product_quantity = (product.total_product_quantity + temp) + product.product_quantity
+            else:
+                if product.product_quantity < 0:
+                    return self.form_invalid(form)
+                # operacion inversa                
+                product.total_product_quantity = (product.total_product_quantity - temp) - product.product_quantity                        
+        product.save()
+        return super().form_valid(form)
+
+
+
+    def form_invalid(self, form):
+        return self.render_to_response(
+            self.get_context_data(
+                form=form,
+            )
+        )
+    """

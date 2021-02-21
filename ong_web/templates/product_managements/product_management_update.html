@@ -1,0 +1,134 @@
+{% extends "layouts/base.html" %}
+{% load widget_tweaks %}
+{% block title %} Page User {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-7">
+    <div class="card">
+      <div class="card-header card-header-info">
+        <h4 class="card-title">Actualiza una Operación de "Entrada" o "Salida"</h4>
+            <p class="card-category">Modifica los datos.</p>
+      </div>
+      <div class="card-body">
+        <form onsubmit="return validate()" method="post">
+          {% csrf_token %}
+                          
+          <br/>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                 <label class="bmd-label-floating">Tipo de operación</label>
+                  <select id="operation_type" name="operation_type" class="form-control">
+                    {% if prod_operation_info.operation_type == "ingreso"%}
+                    <option value="none">Seleccione tipo de operación... </option>
+                    <option selected="true" value="ingreso">Entrada</option>
+                    <option value="consumo">Salida</option>
+                    {% endif %}
+                    {% if prod_operation_info.operation_type == "consumo"%}
+                    <option value="none">Seleccione tipo de operación... </option>
+                    <option  value="ingreso">Entrada</option>
+                    <option selected="true" value="consumo">Salida</option>
+                    {% endif %}
+                  </select>
+              </div>
+            </div>
+          </div>
+
+          <br/>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Nombre del producto</label>
+                <input type="text" list="product_list" name="product_cod" id="product_cod" class="form-control">
+                  <datalist id="product_list">
+                    {% for i in prod_operation_info.products %}
+                      <option>{{i.product_name}}</option>
+                    {% endfor %}  
+                  </datalist>
+              </div>
+            </div>
+            <!--
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Nombre del producto2</label>
+                 <input id="water_liters" type="text" class="form-control" name="product">
+              </div>
+              <span id="water_liters_error" class="text-danger" style="display : none"></span>
+            </div>
+          -->
+           
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Cantidad de unidades</label>
+                 <input id="product_quantity" value="{% prod_operation_info.product_quantity %}" type="number" class="form-control" name="product_quantity">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Precio Unitario (Bolívares)</label>
+                  <input id="product_unitary_amount" value="{% prod_operation_info.product_unitary_amount %}" type="number" class="form-control" name="product_unitary_amount">
+              </div>
+            </div>
+          </div>
+
+          <br/>
+          <p class="pull-left">
+            <a  href="{% url 'dashboard:product-managements:list_product_management' 1 %}"> <!--{% url dashboard:water_managements:water_management_list-->
+              <button type="button" class="btn btn-default">Regresar</button>
+            </a>
+          </p>
+          <button id="submit-button" type="submit" class="btn btn-success pull-right">Actualizar Operación</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="card card-profile">
+      <div class="card-avatar">
+          <a href="">
+              <img class="img" src="/static/assets/img/flats/water.png" />
+          </a>
+      </div>
+      <div class="card-body">      
+        <h4 class="card-title">
+          Aquí podras realizar una operacion en el sistema donde
+          indiques algun ingreso o egreso generado por la venta o
+          compra de agua para el tanque.
+        </h4>
+        </br>
+        <h4>
+          <strong>No olvides que para registrar ingresos debes 
+          seleccionar el tipo de operación "Entrada" y para 
+          egresos "Salida".</strong>
+        </h4>
+      </div>   
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script type="text/javascript">
+
+  function forceInputUppercase(e)
+  {
+    var start = e.target.selectionStart;
+    var end = e.target.selectionEnd;
+    e.target.value = e.target.value.toUpperCase();
+    e.target.setSelectionRange(start, end);
+  }
+
+  document.getElementById("product_cod").addEventListener("keyup", forceInputUppercase, false);
+</script>
+{% endblock javascripts %}

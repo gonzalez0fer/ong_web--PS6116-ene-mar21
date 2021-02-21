@@ -14,6 +14,12 @@ urlpatterns = [
         '<int:pk>/create',
         views.ProductManagementCreateView.as_view(),
         name='create'
+    ),
+    path(
+        '<int:pk>/<int:product_id>/update',
+        views.ProductManagementUpdateView.as_view(),
+        name='update'
     )
+    
 
 ]
