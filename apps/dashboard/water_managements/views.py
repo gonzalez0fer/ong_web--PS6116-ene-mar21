@@ -31,15 +31,15 @@ class WaterManagementList(ListView):
         context['tank_id'] = self.kwargs['pk']
 
         for i in query:
-            
             context['object_list'].append({
                     'id':i.id,
                     'date':i.created,
                     'operation_type':i.operation_type,
+                    'operation_description':i.operation_description,
                     'water_liters':i.water_liters,
                     'water_amount':i.water_amount,
                     'water_price_total':i.water_price_total,
-                    'created_by_id':i.created_by_id,
+                    'created_by':i.created_by.profile.name + ' '+i.created_by.profile.last_name,
                     'created':i.created,
                     'tank_id':i.cupboard_id,
             })
@@ -82,7 +82,7 @@ class WaterManagementCreateView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.created_by_id = self.request.user.id
+        self.object.created_by = self.request.user
         self.object.water_price_total = self.object.water_liters * self.object.water_amount
         self.object.cupboard_id = self.kwargs['tank_id']
         tank = WaterTank.objects.get(id=self.kwargs['tank_id'])
