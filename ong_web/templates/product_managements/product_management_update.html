@@ -24,6 +24,7 @@
                  <label class="bmd-label-floating">Tipo de operación</label>
                   {% render_field form.operation_type class="form-control" name="operation_type" id="operation_type" %}
               </div>
+              <span id="operation_type_error" class="text-danger" style="display : none"></span>
             </div>
           </div>
 
@@ -52,6 +53,7 @@
                 <label class="bmd-label-floating">Cantidad de unidades</label>
                   {% render_field form.product_quantity class="form-control" name="product_quantity" id="product_quantity" %}                
               </div>
+              <span id="product_quantity_error" class="text-danger" style="display : none"></span>
             </div>
 
             <div class="col-md-6">
@@ -59,6 +61,7 @@
                 <label class="bmd-label-floating">Precio Unitario (Bolívares)</label>
                   {% render_field form.product_unitary_amount class="form-control" name="product_unitary_amount" id="product_unitary_amount" %}                  
               </div>
+              <span id="product_unitary_amount_error" class="text-danger" style="display : none"></span>
             </div>
           </div>
 
@@ -103,16 +106,15 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-<script type="text/javascript">
-
-  function forceInputUppercase(e)
-  {
-    var start = e.target.selectionStart;
-    var end = e.target.selectionEnd;
-    e.target.value = e.target.value.toUpperCase();
-    e.target.setSelectionRange(start, end);
-  }
-
-  document.getElementById("product_cod").addEventListener("keyup", forceInputUppercase, false);
+<script>
+  var products = [
+    {% for prod in product_info %}
+      {
+        product_name: "{{prod.product_name}}",
+        product_quantity: "{{prod.product_quantity}}",
+      },
+    {% endfor %}
+  ]
 </script>
+<script src="/static/assets/js/products/product_management_update.js"></script>
 {% endblock javascripts %}

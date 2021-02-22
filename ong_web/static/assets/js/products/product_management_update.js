@@ -2,7 +2,7 @@ function validate() {
     error = false
 
     operation_type = document.getElementById("operation_type").value
-    product_cod = document.getElementById("product_cod").value
+    product_name = document.getElementById("product_name").value
     product_quantity = document.getElementById("product_quantity").value
     product_unitary_amount = document.getElementById("product_unitary_amount").value
 
@@ -16,15 +16,15 @@ function validate() {
         document.getElementById("operation_type_error").style.display = "none"
     }
 
-    // Verificar que el nombre del producto sea valido
-    if (product_cod == "") {
-        document.getElementById("product_cod_error").innerHTML = "Debe introducir nombre del producto"
-        document.getElementById("product_cod_error").style.display = "block"
-        error = true
-    }
-    else {
-        document.getElementById("product_cod_error").style.display = "none"
-    }
+    // // Verificar que el nombre del producto sea valido
+    // if (product_cod == "") {
+    //     document.getElementById("product_cod_error").innerHTML = "Debe introducir nombre del producto"
+    //     document.getElementById("product_cod_error").style.display = "block"
+    //     error = true
+    // }
+    // else {
+    //     document.getElementById("product_cod_error").style.display = "none"
+    // }
 
     console.log(product_quantity)
     // Verificar que la cantidad del producto sea valida
@@ -59,7 +59,7 @@ function validate() {
 
     // Verificar que, si la operacion es de consumo...
     if (operation_type == "consumo") {
-        const found = products.find(product => product.product_name == product_cod);
+        const found = products.find(product => product.product_name == product_name);
 
         // ... Existe el producto a consumir...
         if (!found) {
