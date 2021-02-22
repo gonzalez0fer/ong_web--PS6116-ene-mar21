@@ -27,6 +27,9 @@
                           <th style="width: 30px;">
                               Cantidad
                           </th>
+                          <th style="width: 30px;">
+                              Unidad
+                          </th>
 
                         <!-- <th>
                             Acciones
@@ -45,6 +48,9 @@
 
                                         <td>
                                             {{ product_object.total_product_quantity }}
+                                        </td>
+                                        <td>
+                                            {{ product_object.product_unit }}
                                         </td>
                                         <!-- <td>
                                             <a href="{% url 'dashboard:product_managements:list_product_management' refectory_data.0.id %}">

@@ -29,7 +29,10 @@
                           </th>
                           <th>
                               Salida
-                          </th>                          
+                          </th>
+                          <th>
+                              Unidad
+                          </th>                           
                           <th>
                             Precio Unitario
                         </th>
@@ -72,7 +75,10 @@
                                                {{ product_object.product_quantity }}
                                             
                                         </td>
-                                            {% endif %}                                        
+                                            {% endif %}   
+                                        <td>
+                                            {{ product_object.product_unit }}
+                                        </td>                                     
                                         <td>
                                             {{ product_object.product_unitary_amount }}
                                         </td>

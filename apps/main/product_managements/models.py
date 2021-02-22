@@ -29,7 +29,13 @@ class ProductManagement(TimeStampedModel):
         max_length=100, 
         blank=True, 
         null=True
-    )    
+    )
+
+    product_unit =  models.CharField(
+        max_length=10, 
+        blank=True, 
+        null=True
+    )   
 
     operation_type = models.CharField(
         max_length=10, 
