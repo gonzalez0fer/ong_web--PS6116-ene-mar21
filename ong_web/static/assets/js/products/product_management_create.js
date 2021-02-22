@@ -63,7 +63,6 @@ function validate() {
 
         // ... Existe el producto a consumir...
         if (!found) {
-            window.alert("Oh boi,not again");
             document.getElementById("operation_type_error").innerHTML = "El producto seleccionado no se pudo encontrar"
             document.getElementById("operation_type_error").style.display = "block"
             error = true
