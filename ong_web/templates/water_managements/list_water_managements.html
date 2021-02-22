@@ -27,9 +27,9 @@
                           <th style="width: 85px;">
                               Salida (Litros)
                           </th>
-                          <th style="width: 100px;">
+{% comment %}             <th style="width: 100px;">
                               Descripción
-                          </th>                          
+                          </th> {% endcomment %}                          
                           <th style="width: 120px;">
                               Precio Unitario(Bs/$)
                           </th>
@@ -63,9 +63,9 @@
                                                 {{ i.water_liters }}
                                             {% endif %}
                                         </td>
-                                        <td>
+                                        {% comment %} <td>
                                             {{ i.operation_description }} 
-                                        </td>                                                                               
+                                        </td> {% endcomment %}                                                                               
                                         <td>
                                             {{ i.water_amount }} 
                                         </td>
