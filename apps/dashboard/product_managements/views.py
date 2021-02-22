@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.urls import reverse_lazy
-from django.views.generic import ListView,CreateView
+from django.views.generic import ListView,CreateView,UpdateView
 from django.http import HttpResponse
 
 from .forms import ProductManagementForm
@@ -12,20 +12,18 @@ from apps.main.product_managements.models import ProductManagement
 class ProductManagementListView(ListView):
     template_name = "product_managements/product_management_list.html"
     queryset = ProductManagement.objects.all()
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context['object_list'] = []
-        context['refectory_data'] = []
+        context['refectory_data'] = []   
 
-        refectory = Refectory.objects.get(id=self.kwargs['pk'])
+        refectory = Refectory.objects.get(id=self.kwargs['refectory_id'])
         product = Product.objects.filter(refectory=refectory.id).order_by('created')
         
 
         for j in product:
             query = ProductManagement.objects.filter(product_cod=j).order_by('created')
-            
             for i in query:
                 context['object_list'].append({
                         'id':i.id,
@@ -36,6 +34,7 @@ class ProductManagementListView(ListView):
                         'product_total_amount':i.product_total_amount,
                         'created': i.created,
                         'created_by':i.created_by.profile.name,
+                        'product_id': j.id
                 })
         try:
             context['refectory_data'].append({
@@ -87,12 +86,12 @@ class ProductManagementCreateView(CreateView):
     template_name = "product_managements/product_management_create.html"
 
     def get_success_url(self):
-        success_url = reverse('dashboard:products:list_maintenance_product',kwargs={'pk':self.kwargs['pk']}) 
+        success_url = reverse('dashboard:products:list_maintenance_product',kwargs={'pk':self.kwargs['refectory_id']}) 
         return success_url
 
     def get_context_data(self, **kwargs):
         context = super(ProductManagementCreateView, self).get_context_data(**kwargs)
-        query = Product.objects.filter(refectory_id=self.kwargs['pk']).order_by('product_name')
+        query = Product.objects.filter(refectory_id=self.kwargs['refectory_id']).order_by('product_name')
 
         context['product_info'] = []
         for i in query:
@@ -102,7 +101,7 @@ class ProductManagementCreateView(CreateView):
             })
 
         context['refectory'] = {
-            'id' : self.kwargs['pk'],
+            'id' : self.kwargs['refectory_id'],
         }
         return context 
 
@@ -110,7 +109,7 @@ class ProductManagementCreateView(CreateView):
 
         self.object = None
         form = self.get_form()
-        product, created = Product.objects.get_or_create(product_name=form.data['product_cod'],refectory_id=self.kwargs['pk'])
+        product, created = Product.objects.get_or_create(product_name=form.data['product_cod'],refectory_id=self.kwargs['refectory_id'])
         form.data._mutable = True
         form.data['product_cod'] = product.id
         form.data._mutable = False
@@ -128,25 +127,107 @@ class ProductManagementCreateView(CreateView):
         if created:
             product.total_product_quantity = self.object.product_quantity
             product.created_by = self.request.user
-            product.refectory_id = self.kwargs['pk']
+            product.refectory_id = self.kwargs['refectory_id']
         #ya existia el producto
         else:
             if self.object.operation_type == 'ingreso':    
                 product.total_product_quantity = product.total_product_quantity + self.object.product_quantity
                 product.created_by = self.request.user
-                product.refectory_id = self.kwargs['pk']                    
+                product.refectory_id = self.kwargs['refectory_id']                    
             else:
                 #si intento sacar mas de lo que hay
                 if self.object.product_quantity > product.total_product_quantity:
                     return self.form_invalid(form)
                 product.total_product_quantity = product.total_product_quantity - self.object.product_quantity
                 product.created_by = self.request.user
-                product.refectory_id = self.kwargs['pk']                
+                product.refectory_id = self.kwargs['refectory_id']                
 
         product.save()
         self.object.created_by = self.request.user
         self.object.save()
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return self.render_to_response(
+            self.get_context_data(
+                form=form,
+            )
+        )
+
+class ProductManagementUpdateView(UpdateView):
+    form_class = ProductManagementForm
+    model = ProductManagement 
+    queryset = ProductManagement.objects.all()
+    template_name = "product_managements/product_management_update.html"
+
+    def get_success_url(self):
+        success_url = reverse('dashboard:products:list_maintenance_product',kwargs={'pk':self.kwargs['refectory_id']}) 
+        return success_url
+    
+    
+    def get_context_data(self, **kwargs):
+
+        context = super(ProductManagementUpdateView, self).get_context_data(**kwargs)
+        query1 = Product.objects.filter(refectory_id=self.kwargs['refectory_id']).order_by('product_name')
+        
+        context['product_info'] = []
+        for i in query1:
+            context['product_info'].append({
+                'product_name': i.product_name,
+            })
+
+        context['refectory_info'] = {
+            'refectory_id':self.kwargs['refectory_id'],
+        }    
+                
+        return context
+
+    def post(self, request, *args, **kwargs):
+
+        self.object = self.get_object()
+        temp = self.object.product_quantity #valor actual
+        temp_operation = self.object.operation_type
+        form = self.get_form()
+
+        if form.is_valid():
+            return self.form_valid(form, temp, temp_operation)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form, temp, temp_operation):
+        self.object = form.save(commit=False)
+        self.object.product_total_amount = self.object.product_unitary_amount * self.object.product_quantity
+        product = Product.objects.get(product_name=self.object.product_name,refectory_id=self.kwargs['refectory_id'])
+        self.object.product_cod = product
+        #validaciones
+        # si no se cambia el tipo de operacion
+        if temp_operation == self.object.operation_type:
+            if self.object.operation_type == 'ingreso':
+                if self.object.product_quantity < 0:
+                    return self.form_invalid(form)
+                # restar litros ingresados antiguos     
+                product.total_product_quantity = (product.total_product_quantity - temp) + self.object.product_quantity
+            else:
+                if self.object.product_quantity > product.total_product_quantity:
+                    return self.form_invalid(form)
+                # sumar litros egresados antiguos                
+                product.total_product_quantity = (product.total_product_quantity + temp) - self.object.product_quantity
+        #si cambia el tipo de operacion en la edicion
+        else:
+            if self.object.operation_type == 'ingreso':
+                if self.object.product_quantity < 0:
+                    return self.form_invalid(form)
+                # operacion inversa     
+                product.total_product_quantity = (product.total_product_quantity + temp) + self.object.product_quantity
+            else:
+                if self.object.product_quantity < 0:
+                    return self.form_invalid(form)
+                # operacion inversa                
+                product.total_product_quantity = (product.total_product_quantity - temp) - self.object.product_quantity                       
+        product.save()
+        return super().form_valid(form)
+
+
 
     def form_invalid(self, form):
         return self.render_to_response(
