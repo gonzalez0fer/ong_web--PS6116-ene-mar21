@@ -10,13 +10,13 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-plain">
-                  <div class="card-header card-header-success" style="background: linear-gradient(60deg, #26c6da, #00acc1);">
+                  <div class="card-header card-header-info">
                     <h4 class="card-title mt-0">Operaciones de los productos de mantenimiento del punto de distribución {{refectory_data.0.refectory_name}}</h4>
                     <p class="card-category"> Aquí podrás ver todas las operaciones sobre los productos de mantenimiento usados en el punto de distribución.</p>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-hover">
+                      <table id="product_management_list" class="table table-hover">
                         <thead class="">
                           <th>
                               ID
@@ -164,4 +164,6 @@
 
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script src="/static/assets/js/products/product_management_list.js"></script>
+{% endblock javascripts %}
