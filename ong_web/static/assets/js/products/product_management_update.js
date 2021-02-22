@@ -6,6 +6,8 @@ function validate() {
     product_quantity = document.getElementById("product_quantity").value
     product_unitary_amount = document.getElementById("product_unitary_amount").value
 
+    console.log(op_count)
+
     // Verificar si la operacion es valida
     if (operation_type != "ingreso" && operation_type != "consumo") {
         document.getElementById("operation_type_error").innerHTML = "Debe seleccionar una opción"
@@ -26,14 +28,13 @@ function validate() {
     //     document.getElementById("product_cod_error").style.display = "none"
     // }
 
-    console.log(product_quantity)
     // Verificar que la cantidad del producto sea valida
     if (product_quantity == "") {
         document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad válida"
         document.getElementById("product_quantity_error").style.display = "block"
         error = true
     }
-    else if (parseInt(product_quantity) < 0) {
+    else if (parseInt(product_quantity) <= 0) {
         document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad mayor o igual a 0"
         document.getElementById("product_quantity_error").style.display = "block"
         error = true
@@ -61,6 +62,12 @@ function validate() {
     if (operation_type == "consumo") {
         const found = products.find(product => product.product_name == product_name);
 
+        if (parseInt(op_count) == 1) {
+            document.getElementById("operation_type_error").innerHTML = "No puedes revertir la única ooperación existente"
+            document.getElementById("operation_type_error").style.display = "block"
+            error = true
+        }
+
         // ... Existe el producto a consumir...
         if (!found) {
             document.getElementById("operation_type_error").innerHTML = "El producto seleccionado no se pudo encontrar"
@@ -72,8 +79,6 @@ function validate() {
                 document.getElementById("product_quantity_error").innerHTML = "La cantidad pedida excede la cantidad disponible"
                 document.getElementById("product_quantity_error").style.display = "block"
                 error = true
-            } else {
-                document.getElementById("operation_type_error").style.display = "none"
             }
         }
     }

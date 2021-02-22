@@ -107,6 +107,7 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 <script>
+  var op_count = "{{ product_code_operation | safe }}";
   var products = [
     {% for prod in product_info %}
       {

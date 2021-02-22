@@ -33,8 +33,8 @@ function validate() {
         document.getElementById("product_quantity_error").style.display = "block"
         error = true
     }
-    else if (parseInt(product_quantity) < 0) {
-        document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad mayor o igual a 0"
+    else if (parseInt(product_quantity) <= 0) {
+        document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad mayor a 0"
         document.getElementById("product_quantity_error").style.display = "block"
         error = true
     }
