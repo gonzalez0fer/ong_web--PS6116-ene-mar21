@@ -174,10 +174,12 @@ class ProductManagementUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
 
         context = super(ProductManagementUpdateView, self).get_context_data(**kwargs)
-        query1 = Product.objects.filter(refectory_id=self.kwargs['refectory_id']).order_by('product_name')
-        
+        product_info = Product.objects.filter(refectory_id=self.kwargs['refectory_id']).order_by('product_name')
+        product_operation = ProductManagement.objects.filter(product_cod_id=context['object'].product_cod_id)
+
+        context['product_code_operation'] = len(product_operation)
         context['product_info'] = []
-        for i in query1:
+        for i in product_info:
             context['product_info'].append({
                 'product_name': i.product_name,
                 "product_quantity": i.total_product_quantity,
@@ -185,8 +187,7 @@ class ProductManagementUpdateView(UpdateView):
 
         context['refectory_info'] = {
             'refectory_id':self.kwargs['refectory_id'],
-        }    
-                
+        } 
         return context
 
     def post(self, request, *args, **kwargs):
