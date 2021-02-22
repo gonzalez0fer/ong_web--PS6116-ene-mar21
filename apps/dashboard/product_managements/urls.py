@@ -19,7 +19,12 @@ urlpatterns = [
         '<int:refectory_id>/<int:pk>/update',
         views.ProductManagementUpdateView.as_view(),
         name='update'
-    )
+    ),
+    path(
+        '<int:refectory_id>/<int:pk>/delete', 
+        views.DeleteProductManagementOperation, 
+        name='delete'
+        ),      
     
 
 ]

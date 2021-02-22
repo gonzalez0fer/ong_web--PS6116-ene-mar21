@@ -52,7 +52,7 @@
                                     <tr>
                                         <td>
                                             {{ product_object.id }}
-                                            </td>
+                                        </td>
                                         <td>
                                             {{ product_object.product_name }}
                                         </td>
@@ -88,8 +88,11 @@
                                         <td>
                                             <a  href="{% url 'dashboard:product_managements:update' refectory_data.0.id product_object.id%}">
                                                 <button type="button" class="btn btn-info">Editar</button>
+                                            </a>
                                                 {% if user.is_superuser %}
+                                            <a  href="{% url 'dashboard:product_managements:delete' refectory_data.0.id product_object.id%}">
                                                 <button type="button" class="btn btn-danger">Eliminar</button>
+                                            </a>
                                                 {% endif %}
                                         </td>
                                         </tr>

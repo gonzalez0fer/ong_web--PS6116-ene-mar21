@@ -1,3 +1,4 @@
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.urls import reverse_lazy
 from django.views.generic import ListView,CreateView,UpdateView
@@ -240,3 +241,21 @@ class ProductManagementUpdateView(UpdateView):
                 form=form,
             )
         )
+
+def DeleteProductManagementOperation(request, refectory_id, pk):
+    product_op = get_object_or_404(ProductManagement, id = pk)
+    product = Product.objects.get(product_name=product_op.product_name,refectory_id=refectory_id)
+
+    if product_op.operation_type == 'ingreso':
+        product.total_product_quantity -= product_op.product_quantity
+
+
+    else:
+        product.total_product_quantity += product_op.product_quantity
+
+    product.save()
+    if product.total_product_quantity == 0:
+        product.delete()
+    
+    product_op.delete()
+    return HttpResponseRedirect("/dashboard/products/"+str(refectory_id))
