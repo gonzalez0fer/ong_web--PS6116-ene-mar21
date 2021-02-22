@@ -11,6 +11,7 @@ class WaterManagementForm(forms.ModelForm):
                 'operation_type',
                 'water_liters',
                 'water_amount',
+                'operation_description',
                 ]
 
     def clean(self):

@@ -1,0 +1,167 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-plain">
+                  <div class="card-header card-header-success" style="background: linear-gradient(60deg, #26c6da, #00acc1);">
+                    <h4 class="card-title mt-0">Operaciones de los productos de mantenimiento del punto de distribución {{refectory_data.0.refectory_name}}</h4>
+                    <p class="card-category"> Aquí podrás ver todas las operaciones sobre los productos de mantenimiento usados en el punto de distribución.</p>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead class="">
+                          <th>
+                              ID
+                          </th>
+                          <th>
+                              Producto
+                          </th>
+                          <th>
+                              Entrada
+                          </th>
+                          <th>
+                              Salida
+                          </th>                          
+                          <th>
+                            Precio Unitario
+                        </th>
+                          <th>
+                            Precio Total
+                        </th>
+                        <th>
+                            Fecha
+                        </th>
+                        <th>
+                            Responsable
+                        </th>
+                        <th>
+                            Acciones
+                        </th>
+                        </thead>
+                        <tbody>
+  
+                            {% for product_object in object_list %}
+                                    <tr>
+                                        <td>
+                                            {{ product_object.id }}
+                                        </td>
+                                        <td>
+                                            {{ product_object.product_name }}
+                                        </td>
+                                        {% if product_object.operation_type == "ingreso"%}
+                                        <td>
+                                                {{ product_object.product_quantity }}    
+                                        </td>
+                                        <td>
+                                            -            
+                                        </td>
+                                            {% endif %}
+                                            {% if product_object.operation_type == "consumo" %}
+                                        <td>
+                                            -
+                                        </td>
+                                        <td>    
+                                               {{ product_object.product_quantity }}
+                                            
+                                        </td>
+                                            {% endif %}                                        
+                                        <td>
+                                            {{ product_object.product_unitary_amount }}
+                                        </td>
+                                        <td>
+                                            {{ product_object.product_total_amount }}
+                                        </td>
+                                        <td>
+                                            {{ product_object.created }}
+                                        </td>
+                                        <td>
+                                            {{ product_object.created_by }}
+                                        </td>
+                                        <td>
+                                            <a  href="{% url 'dashboard:product_managements:update' refectory_data.0.id product_object.id%}">
+                                                <button type="button" class="btn btn-info">Editar</button>
+                                            </a>
+                                                {% if user.is_superuser %}
+                                            <a  href="{% url 'dashboard:product_managements:delete' refectory_data.0.id product_object.id%}">
+                                                <button type="button" class="btn btn-danger">Eliminar</button>
+                                            </a>
+                                                {% endif %}
+                                        </td>
+                                        </tr>
+                            {% endfor %}
+  
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+            </br>
+        </br>
+            {% comment %} aqui va validacion de super usuario para regresar {% endcomment %}
+            <p style="float: right; margin-right: 50px;">
+                <a  href="{% url 'dashboard:product_managements:create' refectory_data.0.id %}">
+                    <button type="button" class="btn btn-success">Realizar operación</button>
+                </a>
+            </p>
+            <p style="float: left; margin-left: 50px;">
+                {% if user.is_superuser %}
+                <a  href="{% url 'dashboard:products:list_maintenance_product' refectory_data.0.id %}">
+                <button type="button" class="btn btn-default">Regresar</button>
+                </a>
+                {% else %}
+                <a  href="{% url 'dashboard:products:list_maintenance_product_guest' %}">
+                <button type="button" class="btn btn-default">Regresar</button>
+                </a>
+                {% endif %}
+            </p>
+
+
+              </div>
+            </br>
+        </br>
+
+        <!-- <div class="col-md-4">
+                    
+            <div class="card card-profile">
+                <div class="card-avatar">
+                    <a href="">
+                      <img class="img" src="/static/assets/img/flats/refectory.png" />
+                    </a>
+                  </div>
+                    <div class="card-body">
+
+                        <h4 class="card-title">
+                            Punto de distribución:
+                            <strong>{{refectory_data.0.refectory_name}}</strong> 
+                        </br>
+                            Direccion: 
+                            {{refectory_data.0.refectory_address}}
+
+                        </h4>
+                      </div>    
+                        
+
+                  
+            </div>
+          </div> -->
+
+
+
+
+        </div>
+
+
+{% endblock content %}
+
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -27,6 +27,9 @@
                           <th style="width: 85px;">
                               Salida (Litros)
                           </th>
+                          <th style="width: 100px;">
+                              Descripción
+                          </th>                          
                           <th style="width: 120px;">
                               Precio Unitario(Bs/$)
                           </th>
@@ -34,8 +37,11 @@
                               Precio Total(Bs/$)
                           </th>
                           <th style="width: 110px;">
-                              Fecha
+                              Responsable
                           </th>
+                          <th style="width: 110px;">
+                              Fecha
+                          </th>                          
                           <th style="width: 155px;">
                               Acciones
                           </th>
@@ -56,21 +62,29 @@
                                             {% if i.operation_type == "consumo"%}
                                                 {{ i.water_liters }}
                                             {% endif %}
-                                        </td>                                       
+                                        </td>
+                                        <td>
+                                            {{ i.operation_description }} 
+                                        </td>                                                                               
                                         <td>
                                             {{ i.water_amount }} 
                                         </td>
                                         <td>
                                             {{ i.water_price_total }} 
-                                        </td>                                        
+                                        </td>
+                                        <td>
+                                            {{ i.created_by }} 
+                                        </td>                                          
                                         <td>
                                             {{ i.created }}
                                         </td> 
                                         <td>
                                             <a  href="{% url 'dashboard:water_managements:water_management_update' tank_id i.id %}">
-                                            <button type="button" class="btn btn-info">Editar</button>
+                                                <button type="button" class="btn-sm btn-info">Editar</button>
                                             {% if user.is_superuser %}
-                                            <button type="button" class="btn btn-danger">Eliminar</button>
+                                            <a href="{% url 'dashboard:water_managements:water_management_delete' i.id %}">
+                                                <button type="button" class="btn-sm btn-danger">Eliminar</button>
+                                            </a>
                                             {% endif %}
                                         </td>
                                     </tr>

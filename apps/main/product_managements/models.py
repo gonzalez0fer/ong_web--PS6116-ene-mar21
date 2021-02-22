@@ -3,10 +3,10 @@ from django.db import models
 from datetime import datetime  
 from model_utils.models import TimeStampedModel
 
-from apps.main.water_tanks.models import WaterTank
+from apps.main.products.models import Product
 
 
-class WaterManagement(TimeStampedModel):
+class ProductManagement(TimeStampedModel):
 
     class OperationType(models.TextChoices):
         """
@@ -17,13 +17,19 @@ class WaterManagement(TimeStampedModel):
         NONE        =   'none'
 
 
-    cupboard =  models.ForeignKey(
-        WaterTank, 
+    product_cod =  models.ForeignKey(
+        Product, 
         blank=True, 
         null=True, 
-        related_name='water',
+        related_name='product',
         on_delete = models.SET_NULL,
-        ) 
+        )
+
+    product_name = models.CharField(
+        max_length=100, 
+        blank=True, 
+        null=True
+    )    
 
     operation_type = models.CharField(
         max_length=10, 
@@ -32,30 +38,25 @@ class WaterManagement(TimeStampedModel):
         default = OperationType.NONE
     )
 
-    water_liters = models.IntegerField(
+    product_quantity = models.IntegerField(
         blank = True,
         null = True,
     )
 
-    water_amount = models.FloatField(
+    product_unitary_amount = models.IntegerField(
         blank = True,
         null = True,
     )
 
-    water_price_total = models.FloatField(
+    product_total_amount = models.IntegerField(
         blank = True,
         null = True,
     )
-
-    operation_description = models.CharField(
-        max_length=30, 
-        blank = True,
-        null = True,
-    )    
 
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         blank = True,
         null = True,
         on_delete = models.SET_NULL,
+        related_name = 'user_creator'
         )

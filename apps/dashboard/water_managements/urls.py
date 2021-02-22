@@ -19,5 +19,11 @@ urlpatterns = [
         '<int:tank_id>/<int:pk>/update', 
         views.WaterManagementUpdateView.as_view(), 
         name='water_management_update'
-        ),             
+        ),      
+
+    path(
+        '<int:pk>/delete', 
+        views.DeleteWaterOperation, 
+        name='water_management_delete'
+        ),  
 ]

@@ -1,6 +1,7 @@
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import UpdateView, CreateView
 from django.http import HttpResponse
 
@@ -31,15 +32,15 @@ class WaterManagementList(ListView):
         context['tank_id'] = self.kwargs['pk']
 
         for i in query:
-            
             context['object_list'].append({
                     'id':i.id,
                     'date':i.created,
                     'operation_type':i.operation_type,
+                    'operation_description':i.operation_description,
                     'water_liters':i.water_liters,
                     'water_amount':i.water_amount,
                     'water_price_total':i.water_price_total,
-                    'created_by_id':i.created_by_id,
+                    'created_by':i.created_by.profile.name + ' '+i.created_by.profile.last_name,
                     'created':i.created,
                     'tank_id':i.cupboard_id,
             })
@@ -82,7 +83,7 @@ class WaterManagementCreateView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.created_by_id = self.request.user.id
+        self.object.created_by = self.request.user
         self.object.water_price_total = self.object.water_liters * self.object.water_amount
         self.object.cupboard_id = self.kwargs['tank_id']
         tank = WaterTank.objects.get(id=self.kwargs['tank_id'])
@@ -184,3 +185,23 @@ class WaterManagementUpdateView(UpdateView):
                 form=form,
             )
         )
+
+
+def DeleteWaterOperation(request,pk):
+    water_op = get_object_or_404(WaterManagement, id = pk)
+    tank = WaterTank.objects.get(id=water_op.cupboard.id)
+    last_filled = WaterManagement.objects.exclude(id=water_op.id).filter(operation_type='ingreso', cupboard=tank).order_by('-created')
+
+    if water_op.operation_type == 'ingreso':
+        tank.current_liters -= water_op.water_liters
+        tank.last_fill_date = last_filled[0].created
+
+    else:
+        tank.current_liters += water_op.water_liters
+
+    tank.save()
+
+    water_op.delete()
+    return HttpResponseRedirect("/dashboard/water_managements/"+str(tank.id))
+
+    

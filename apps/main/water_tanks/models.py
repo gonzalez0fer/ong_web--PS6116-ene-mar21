@@ -8,7 +8,6 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 from apps.main.refectories.models import Refectory
 
-
 class WaterTank(TimeStampedModel):
     
     capacity = models.IntegerField(
