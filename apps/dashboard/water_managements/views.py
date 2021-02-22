@@ -1,6 +1,7 @@
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import UpdateView, CreateView
 from django.http import HttpResponse
 
@@ -184,3 +185,23 @@ class WaterManagementUpdateView(UpdateView):
                 form=form,
             )
         )
+
+
+def DeleteWaterOperation(request,pk):
+    water_op = get_object_or_404(WaterManagement, id = pk)
+    tank = WaterTank.objects.get(id=water_op.cupboard.id)
+    last_filled = WaterManagement.objects.exclude(id=water_op.id).filter(operation_type='ingreso', cupboard=tank).order_by('-created')
+
+    if water_op.operation_type == 'ingreso':
+        tank.current_liters -= water_op.water_liters
+        tank.last_fill_date = last_filled[0].created
+
+    else:
+        tank.current_liters += water_op.water_liters
+
+    tank.save()
+
+    water_op.delete()
+    return HttpResponseRedirect("/dashboard/water_managements/"+str(tank.id))
+
+    
