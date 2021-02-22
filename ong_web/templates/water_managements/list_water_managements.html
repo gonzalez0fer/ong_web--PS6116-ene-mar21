@@ -16,27 +16,33 @@
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-hover">
+                      <table id="list_water_managements" class="table table-hover">
                         <thead class="">
-                          <th>
+                          <th style="width: 30px;">
                                 ID
                           </th>
-                          <th>
+                          <th style="width: 95px;">
                               Entrada (Litros)
                           </th>
-                          <th>
+                          <th style="width: 85px;">
                               Salida (Litros)
                           </th>
-                          <th>
+                          <th style="width: 100px;">
+                              Descripción
+                          </th>                          
+                          <th style="width: 120px;">
                               Precio Unitario(Bs/$)
                           </th>
-                          <th>
+                          <th style="width: 105px;">
                               Precio Total(Bs/$)
                           </th>
-                          <th>
-                              Fecha
+                          <th style="width: 110px;">
+                              Responsable
                           </th>
-                          <th>
+                          <th style="width: 110px;">
+                              Fecha
+                          </th>                          
+                          <th style="width: 155px;">
                               Acciones
                           </th>
                         </thead>
@@ -56,59 +62,64 @@
                                             {% if i.operation_type == "consumo"%}
                                                 {{ i.water_liters }}
                                             {% endif %}
-                                        </td>                                       
+                                        </td>
+                                        <td>
+                                            {{ i.operation_description }} 
+                                        </td>                                                                               
                                         <td>
                                             {{ i.water_amount }} 
                                         </td>
                                         <td>
                                             {{ i.water_price_total }} 
-                                        </td>                                        
+                                        </td>
+                                        <td>
+                                            {{ i.created_by }} 
+                                        </td>                                          
                                         <td>
                                             {{ i.created }}
                                         </td> 
                                         <td>
                                             <a  href="{% url 'dashboard:water_managements:water_management_update' tank_id i.id %}">
-                                            <button type="button" class="btn btn-info">Editar</button>
+                                                <button type="button" class="btn-sm btn-info">Editar</button>
                                             {% if user.is_superuser %}
-                                            <button type="button" class="btn btn-danger">Eliminar</button>
+                                            <a href="{% url 'dashboard:water_managements:water_management_delete' i.id %}">
+                                                <button type="button" class="btn-sm btn-danger">Eliminar</button>
+                                            </a>
                                             {% endif %}
                                         </td>
                                     </tr>
                             {% endfor %}
-
+                            
                         </tbody>
                       </table>
                     </div>
+                    <p style="float: left; margin-left: 50px;">
+                        {% if user.is_superuser %}
+                        <a  href="{% url 'dashboard:water_tanks:tanks_list' %}">
+                        <button type="button" class="btn btn-default">Regresar</button>
+                        </a>
+                        {% else %}
+                        <a  href="{% url 'dashboard:water_tanks:tanks_list_guest' %}">
+                        <button type="button" class="btn btn-default">Regresar</button>
+                        </a>
+                        {% endif %}
+                    </p>
+                    <p style="float: right; margin-right: 50px;">
+                        <a  href="{% url 'dashboard:water_managements:water_management_create' tank_id %}">
+                        <button type="button" class="btn btn-success">Agregar Operación</button>
+                        </a>
+                    </p>
                   </div>
+                  
                 </div>
               </div>
-            </br>
-        </br>
-
         </div>
-
-    </br>
-</br>
-    <p style="float: left; margin-left: 50px;">
-        {% if user.is_superuser %}
-        <a  href="{% url 'dashboard:water_tanks:tanks_list' %}">
-        <button type="button" class="btn btn-default">Regresar</button>
-        </a>
-        {% else %}
-        <a  href="{% url 'dashboard:water_tanks:tanks_list_guest' %}">
-        <button type="button" class="btn btn-default">Regresar</button>
-        </a>
-        {% endif %}
-    </p>
-    <p style="float: right; margin-right: 50px;">
-        <a  href="{% url 'dashboard:water_managements:water_management_create' tank_id %}">
-        <button type="button" class="btn btn-success">Agregar Operación</button>
-        </a>
-    </p>
 
 {% endblock content %}
 
 
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+    <script src="/static/assets/js/list_water_managements.js"></script>
+{% endblock javascripts %}

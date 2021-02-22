@@ -14,8 +14,8 @@
               <p>Dashboard</p>
             </a>
           </li>
-          {% url 'register' as register_view %} 
 
+          {% url 'register' as register_view %} 
           <li class="nav-item dropdown {% if request.path == register_view %} active {% endif %}">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false"><i class="material-icons">person</i> Usuarios</a>
             <div class="dropdown-menu">
@@ -28,8 +28,6 @@
                   <p>Ver Usuarios</p>
                 </a>
           </li>
-
-
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false"><i class="material-icons">food_bank</i>Comedores</a>
@@ -46,14 +44,12 @@
                   </a>
           </li>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false"><i class="material-icons">opacity</i>Agua</a>
-            <div class="dropdown-menu">
-
-              <a class="dropdown-item" href="{% url 'dashboard:water_tanks:tanks_list' %}">
-                  <i class="material-icons">water_damage</i> 
-                  <p>Ver Tanques</p>
-              </a>
+          {% url 'dashboard:water_tanks:tanks_list' as water_tanks_view %} 
+          <li class="nav-item {% if request.path == water_tanks_view %} active {% endif %}">
+            <a class="nav-link" href="{% url 'dashboard:water_tanks:tanks_list' %}">
+              <i class="material-icons">opacity</i>
+              <p>Agua</p>
+            </a>
           </li>
 
           <li class="nav-item dropdown">
@@ -78,7 +74,6 @@
               <p>Proveedores</p>
             </a>
           </li>
-
 
           <li class="nav-item" style="position: absolute; bottom: 5%;">
             <a class="nav-link" href="{% url 'logout' %}" >
