@@ -6,6 +6,7 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
+
 <div class="row">
   <div class="col-md-7">
     <div class="card">
@@ -28,6 +29,7 @@
                     <option value="consumo">Salida</option>
                   </select>
               </div>
+              <span id="operation_type_error" class="text-danger" style="display : none"></span>
             </div>
           </div>
 
@@ -44,6 +46,7 @@
                     {% endfor %}  
                   </datalist>
               </div>
+              <span id="product_cod_error" class="text-danger" style="display : none"></span>
             </div>
             <!--
             <div class="col-md-6">
@@ -61,6 +64,7 @@
                 <label class="bmd-label-floating">Cantidad de unidades</label>
                  <input id="product_quantity" type="number" class="form-control" name="product_quantity">
               </div>
+              <span id="product_quantity_error" class="text-danger" style="display : none"></span>
             </div>
 
             <div class="col-md-6">
@@ -68,6 +72,7 @@
                 <label class="bmd-label-floating">Precio Unitario (Bolívares)</label>
                   <input id="product_unitary_amount" type="number" class="form-control" name="product_unitary_amount">
               </div>
+              <span id="product_unitary_amount_error" class="text-danger" style="display : none"></span>
             </div>
           </div>
 
@@ -88,14 +93,14 @@
     <div class="card card-profile">
       <div class="card-avatar">
           <a href="">
-              <img class="img" src="/static/assets/img/flats/water.png" />
+              <img class="img" src="/static/assets/img/flats/chemical.png" />
           </a>
       </div>
       <div class="card-body">      
         <h4 class="card-title">
           Aquí podras realizar una operacion en el sistema donde
           indiques algun ingreso o egreso generado por la venta o
-          compra de agua para el tanque.
+          compra de productos para el mantenimiento de los equipos.
         </h4>
         </br>
         <h4>
@@ -124,4 +129,15 @@
 
   document.getElementById("product_cod").addEventListener("keyup", forceInputUppercase, false);
 </script>
+<script>
+  var products = [
+    {% for prod in product_info %}
+      {
+        product_name: "{{prod.product_name}}",
+        product_quantity: "{{prod.product_quantity}}",
+      },
+    {% endfor %}
+  ]
+</script>
+<script src="/static/assets/js/products/product_management_create.js"></script>
 {% endblock javascripts %}

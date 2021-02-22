@@ -97,7 +97,8 @@ class ProductManagementCreateView(CreateView):
         context['product_info'] = []
         for i in query:
             context['product_info'].append({
-                'product_name': i.product_name,
+                "product_name": i.product_name,
+                "product_quantity": i.total_product_quantity,
             })
 
         context['refectory'] = {

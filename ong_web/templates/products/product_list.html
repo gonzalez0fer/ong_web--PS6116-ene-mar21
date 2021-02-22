@@ -16,15 +16,15 @@
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-hover">
+                      <table id="product_list" class="table table-hover">
                         <thead class="">
-                          <th>
+                          <th style="width: 30px;">
                               ID
                           </th>
-                          <th>
+                          <th style="width: 60px;">
                               Producto
                           </th>
-                          <th>
+                          <th style="width: 30px;">
                               Cantidad
                           </th>
 
@@ -118,4 +118,6 @@
 
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<!-- <script src="/static/assets/js/products/product_list.js"></script> -->
+{% endblock javascripts %}
