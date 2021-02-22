@@ -86,7 +86,10 @@ class ProductManagementCreateView(CreateView):
     template_name = "product_managements/product_management_create.html"
 
     def get_success_url(self):
-        success_url = reverse('dashboard:products:list_maintenance_product',kwargs={'pk':self.kwargs['refectory_id']}) 
+        if self.request.user.is_superuser:
+            success_url = reverse('dashboard:products:list_maintenance_product',kwargs={'pk':self.kwargs['refectory_id']}) 
+        else:
+            success_url = "/dashboard/products/maintenance/"   
         return success_url
 
     def get_context_data(self, **kwargs):
@@ -161,9 +164,11 @@ class ProductManagementUpdateView(UpdateView):
     template_name = "product_managements/product_management_update.html"
 
     def get_success_url(self):
-        success_url = reverse('dashboard:products:list_maintenance_product',kwargs={'pk':self.kwargs['refectory_id']}) 
+        if self.request.user.is_superuser:
+            success_url = reverse('dashboard:products:list_maintenance_product',kwargs={'pk':self.kwargs['refectory_id']}) 
+        else:
+            success_url = "/dashboard/products/maintenance/"   
         return success_url
-    
     
     def get_context_data(self, **kwargs):
 

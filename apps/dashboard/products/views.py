@@ -45,9 +45,6 @@ class ProductsSingleListView(ListView):
     template_name = "products/product_list.html"
     queryset = Product.objects.all()
 
-    def get_object(self):
-        return Refectory.objects.get(pk=self.request.user.profile.refectory.id)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         refectory = Refectory.objects.get(id=self.request.user.profile.refectory.id)
@@ -61,9 +58,7 @@ class ProductsSingleListView(ListView):
             context['object_list'].append({
                     'id':i.id, 
                     'product_name':i.product_name,
-                    'total_product_weight':i.total_product_weight,
                     'total_product_quantity':i.total_product_quantity,
-                    'total_product_investment':i.total_product_investment,
             })
 
         context['refectory_data'].append({

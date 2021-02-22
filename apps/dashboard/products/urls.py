@@ -10,6 +10,12 @@ urlpatterns = [
         views.ProductsListView.as_view(), 
         name='list_maintenance_product'
         ),
+    path(
+        'maintenance/', 
+        views.ProductsSingleListView.as_view(), 
+        name='list_maintenance_product_guest'
+        ),
+    
 
   
 

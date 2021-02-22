@@ -25,11 +25,11 @@
                               Producto
                           </th>
                           <th>
-                              Tipo de Operacion
+                              Entrada
                           </th>
                           <th>
-                              Cantidad
-                          </th>
+                              Salida
+                          </th>                          
                           <th>
                             Precio Unitario
                         </th>
@@ -56,12 +56,23 @@
                                         <td>
                                             {{ product_object.product_name }}
                                         </td>
+                                        {% if product_object.operation_type == "ingreso"%}
                                         <td>
-                                            {{ product_object.operation_type }}
+                                                {{ product_object.product_quantity }}    
                                         </td>
                                         <td>
-                                            {{ product_object.product_quantity }}
+                                            -            
                                         </td>
+                                            {% endif %}
+                                            {% if product_object.operation_type == "consumo" %}
+                                        <td>
+                                            -
+                                        </td>
+                                        <td>    
+                                               {{ product_object.product_quantity }}
+                                            
+                                        </td>
+                                            {% endif %}                                        
                                         <td>
                                             {{ product_object.product_unitary_amount }}
                                         </td>
@@ -98,9 +109,15 @@
                 </a>
             </p>
             <p style="float: left; margin-left: 50px;">
+                {% if user.is_superuser %}
                 <a  href="{% url 'dashboard:products:list_maintenance_product' refectory_data.0.id %}">
                 <button type="button" class="btn btn-default">Regresar</button>
                 </a>
+                {% else %}
+                <a  href="{% url 'dashboard:products:list_maintenance_product_guest' %}">
+                <button type="button" class="btn btn-default">Regresar</button>
+                </a>
+                {% endif %}
             </p>
 
 
