@@ -34,9 +34,8 @@ class ProductManagementListView(ListView):
                         'product_unitary_amount':i.product_unitary_amount,
                         'product_total_amount':i.product_total_amount,
                         'created': i.created,
-                        'created_by':i.created_by.profile.name,
-                        'product_id': j.id,
-                        'product_unit':i.product_unit,
+                        'created_by':str(i.created_by.profile.name) + ' ' + str(i.created_by.profile.last_name),
+                        'product_id': j.id
                 })
         try:
             context['refectory_data'].append({

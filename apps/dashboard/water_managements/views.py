@@ -40,7 +40,7 @@ class WaterManagementList(ListView):
                     'water_liters':i.water_liters,
                     'water_amount':i.water_amount,
                     'water_price_total':i.water_price_total,
-                    'created_by':i.created_by.profile.name + ' '+i.created_by.profile.last_name,
+                    'created_by':str(i.created_by.profile.name) + ' ' + str(i.created_by.profile.last_name),
                     'created':i.created,
                     'tank_id':i.cupboard_id,
             })
