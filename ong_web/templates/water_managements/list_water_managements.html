@@ -21,25 +21,25 @@
                           <th style="width: 30px;">
                                 ID
                           </th>
-                          <th style="width: 95px;">
+                          <th style="width: 65px;">
                               Entrada (Litros)
                           </th>
-                          <th style="width: 85px;">
+                          <th style="width: 65px;">
                               Salida (Litros)
                           </th>
-{% comment %}             <th style="width: 100px;">
+                          <th style="width: 100px;">
                               Descripción
-                          </th> {% endcomment %}                          
+                          </th>                          
                           <th style="width: 120px;">
-                              Precio Unitario(Bs/$)
+                              Precio Unitario (Bs/$)
                           </th>
                           <th style="width: 105px;">
-                              Precio Total(Bs/$)
+                              Precio Total (Bs/$)
                           </th>
                           <th style="width: 110px;">
                               Responsable
                           </th>
-                          <th style="width: 110px;">
+                          <th style="width: 120px;">
                               Fecha
                           </th>                          
                           <th style="width: 155px;">
@@ -63,9 +63,9 @@
                                                 {{ i.water_liters }}
                                             {% endif %}
                                         </td>
-                                        {% comment %} <td>
-                                            {{ i.operation_description }} 
-                                        </td> {% endcomment %}                                                                               
+                                        <td>
+                                            {{ i.operation_description.capitalize }} 
+                                        </td>                                                                               
                                         <td>
                                             {{ i.water_amount }} 
                                         </td>

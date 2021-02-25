@@ -19,16 +19,31 @@
                           
           <br/>
           <div class="row">
-            <div class="col">
+            <div class="col-md-6">
               <div class="form-group">
                  <label class="bmd-label-floating">Tipo de operación</label>
-                  <select id="operation_type" name="operation_type" class="form-control" id="operation_type">
+                  <select id="operation_type" name="operation_type" class="form-control">
                     <option value="none">Seleccione tipo de operación... </option>
                     <option value="ingreso">Entrada</option>
                     <option value="consumo">Salida</option>
                   </select>
               </div>
               <span id="operation_type_error" class="text-danger" style="display : none"></span>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                 <label class="bmd-label-floating">Descripción</label>
+                  <select id="operation_description" name="operation_description" class="form-control">
+                    <option value="none">Seleccione la descripción adecuada... </option>
+                    <option value="cisterna">Cisterna</option>
+                    <option value="tuberias">Tuberías</option>
+                    <option value="mantenimiento">Mantenimiento</option>
+                    <option value="venta">Venta</option>
+                    <option value="uso interno">Uso interno</option>
+                  </select>
+              </div>
+              <span id="operation_description_error" class="text-danger" style="display : none"></span>
             </div>
           </div>
 
