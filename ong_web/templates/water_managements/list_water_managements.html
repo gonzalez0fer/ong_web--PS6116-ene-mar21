@@ -64,7 +64,7 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                            {{ i.operation_description.capitalize }} 
+                                            {{ i.operation_description }} 
                                         </td>                                                                               
                                         <td>
                                             {{ i.water_amount }} 
@@ -80,10 +80,10 @@
                                         </td> 
                                         <td>
                                             <a  href="{% url 'dashboard:water_managements:water_management_update' tank_id i.id %}">
-                                                <button type="button" class="btn-sm btn-info">Editar</button>
+                                                <button type="button" class="btn-sm btn-info" style="cursor : pointer">Editar</button>
                                             {% if user.is_superuser %}
                                             <a href="{% url 'dashboard:water_managements:water_management_delete' i.id %}">
-                                                <button type="button" class="btn-sm btn-danger">Eliminar</button>
+                                                <button type="button" class="btn-sm btn-danger" style="cursor : pointer">Eliminar</button>
                                             </a>
                                             {% endif %}
                                         </td>

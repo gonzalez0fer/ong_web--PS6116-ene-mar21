@@ -36,11 +36,11 @@
                  <label class="bmd-label-floating">Descripción</label>
                   <select id="operation_description" name="operation_description" class="form-control">
                     <option value="none">Seleccione la descripción adecuada... </option>
-                    <option value="cisterna">Cisterna</option>
-                    <option value="tuberias">Tuberías</option>
-                    <option value="mantenimiento">Mantenimiento</option>
-                    <option value="venta">Venta</option>
-                    <option value="uso interno">Uso interno</option>
+                    <option value="Cisterna">Cisterna</option>
+                    <option value="Tuberias">Tuberías</option>
+                    <option value="Mantenimiento">Mantenimiento</option>
+                    <option value="Venta">Venta</option>
+                    <option value="Uso interno">Uso interno</option>
                   </select>
               </div>
               <span id="operation_description_error" class="text-danger" style="display : none"></span>
@@ -113,5 +113,5 @@
     var tank_capacity = "{{ tank_info.capacity | safe }}"
     var tank_current_liters = "{{ tank_info.current_liters | safe }}"
   </script>
-  <script src="/static/assets/js/water_managements-create.js"></script>
+  <script src="/static/assets/js/water_managements.js"></script>
 {% endblock javascripts %}
