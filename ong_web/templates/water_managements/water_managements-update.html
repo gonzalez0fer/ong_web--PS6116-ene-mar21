@@ -19,12 +19,20 @@
                           
           <br/>
           <div class="row">
-            <div class="col">
+            <div class="col-md-6">
               <div class="form-group">
                  <label class="bmd-label-floating">Tipo de operación</label>
                   {% render_field form.operation_type class="form-control" name="operation_type" id="operation_type" %}
               </div>
               <span id="operation_type_error" class="text-danger" style="display : none"></span>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                 <label class="bmd-label-floating">Descripción</label>
+                 {% render_field form.operation_description class="form-control" name="operation_description" id="operation_description" %}
+              </div>
+              <span id="operation_description_error" class="text-danger" style="display : none"></span>
             </div>
           </div>
 
@@ -34,7 +42,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Litros de Agua</label>
-                 {% render_field form.water_liters class="form-control" name="water_liters" id="water_liters" %}
+                 {% render_field form.water_liters class="form-control" name="water_liters" id="water_liters_update" %}
               </div>
               <span id="water_liters_error" class="text-danger" style="display : none"></span>
             </div>
@@ -71,7 +79,7 @@
       <div class="card-body">      
         <h4 class="card-title">
           Aquí podras realizar una operacion en el sistema donde
-          indiques algun ingreso o egreso generado por la venta o
+          modifiques algun ingreso o egreso generado por la venta o
           compra de agua para el tanque.
         </h4>
         </br>
@@ -93,6 +101,7 @@
     var tank_id = "{{ tank_info.id | safe }}"
     var tank_capacity = "{{ tank_info.capacity | safe }}"
     var tank_current_liters = "{{ tank_info.current_liters | safe }}"
+    var original_quantity = "{{ form.water_liters.value | safe }}"
   </script>
-  <script src="/static/assets/js/water_managements-create.js"></script>
+  <script src="/static/assets/js/water_managements.js"></script>
 {% endblock javascripts %}

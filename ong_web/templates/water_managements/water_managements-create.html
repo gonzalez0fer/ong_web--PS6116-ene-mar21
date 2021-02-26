@@ -19,16 +19,31 @@
                           
           <br/>
           <div class="row">
-            <div class="col">
+            <div class="col-md-6">
               <div class="form-group">
                  <label class="bmd-label-floating">Tipo de operación</label>
-                  <select id="operation_type" name="operation_type" class="form-control" id="operation_type">
+                  <select id="operation_type" name="operation_type" class="form-control">
                     <option value="none">Seleccione tipo de operación... </option>
                     <option value="ingreso">Entrada</option>
                     <option value="consumo">Salida</option>
                   </select>
               </div>
               <span id="operation_type_error" class="text-danger" style="display : none"></span>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                 <label class="bmd-label-floating">Descripción</label>
+                  <select id="operation_description" name="operation_description" class="form-control">
+                    <option value="none">Seleccione la descripción adecuada... </option>
+                    <option value="Cisterna">Cisterna</option>
+                    <option value="Tuberia">Tuberías</option>
+                    <option value="Mantenimiento">Mantenimiento</option>
+                    <option value="Venta">Venta</option>
+                    <option value="Uso Interno">Uso interno</option>
+                  </select>
+              </div>
+              <span id="operation_description_error" class="text-danger" style="display : none"></span>
             </div>
           </div>
 
@@ -98,5 +113,5 @@
     var tank_capacity = "{{ tank_info.capacity | safe }}"
     var tank_current_liters = "{{ tank_info.current_liters | safe }}"
   </script>
-  <script src="/static/assets/js/water_managements-create.js"></script>
+  <script src="/static/assets/js/water_managements.js"></script>
 {% endblock javascripts %}
