@@ -22,22 +22,6 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                 <label class="bmd-label-floating">Tipo de operación</label>
-                  <select id="operation_type" name="operation_type" class="form-control">
-                    <option value="none">Seleccione tipo de operación... </option>
-                    <option value="ingreso">Entrada</option>
-                    <option value="consumo">Salida</option>
-                  </select>
-              </div>
-              <span id="operation_type_error" class="text-danger" style="display : none"></span>
-            </div>
-          </div>
-
-          <br/>
-
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
                 <label class="bmd-label-floating">Nombre del producto</label>
                 <input type="text" list="product_list" name="product_cod" id="product_cod" class="form-control">
                   <datalist id="product_list">
@@ -47,6 +31,38 @@
                   </datalist>
               </div>
               <span id="product_cod_error" class="text-danger" style="display : none"></span>
+            </div>
+          </div>
+
+          <br/>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Tipo de operación</label>
+                 <select id="operation_type" name="operation_type" class="form-control">
+                   <option value="none">Seleccione tipo de operación... </option>
+                   <option value="ingreso">Entrada</option>
+                   <option value="consumo">Salida</option>
+                 </select>
+              </div>
+              <span id="operation_type_error" class="text-danger" style="display : none"></span>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Unidad</label>
+                 <select id="product_unit" name="product_unit" class="form-control">
+                   <option value="none">Seleccione tipo de unidad... </option>
+                   <option value="Kg">Kg</option>
+                   <option value="g">g</option>
+                   <option value="L">L</option>
+                   <option value="ml">ml</option>
+                   <option value="Unidad(es)">Unidad(es)</option>
+                   <option value="Pieza(s)">Pieza(s)</option>
+                 </select>
+              </div>
+              <span id="product_unit_error" class="text-danger" style="display : none"></span>
             </div>
             <!--
             <div class="col-md-6">
