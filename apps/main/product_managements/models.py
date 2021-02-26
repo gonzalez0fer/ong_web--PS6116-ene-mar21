@@ -42,10 +42,9 @@ class ProductManagement(TimeStampedModel):
     )
 
     product_unit =  models.CharField(
-        max_length=20, 
-        null=False, 
-        choices=OperationUnit.choices, 
-        default = OperationUnit.UNIDADES
+        max_length=200, 
+        blank=True, 
+        null=True
     )   
 
     operation_type = models.CharField(
