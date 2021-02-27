@@ -14,7 +14,17 @@ class ProductManagement(TimeStampedModel):
         """
         INGRESO     =   'ingreso'
         CONSUMO     =   'consumo'
-        NONE        =   'none'
+
+    class OperationUnit(models.TextChoices):
+        """
+        	Every type of issue
+        """
+        KILOGRAMO = 'Kg',
+        GRAMO = 'g',
+        LITROS = 'L',
+        MILILITROS = 'ml',
+        UNIDADES = 'Unidad(es)',
+        PIEZAS = 'Pieza(s)'
 
 
     product_cod =  models.ForeignKey(
@@ -33,15 +43,16 @@ class ProductManagement(TimeStampedModel):
 
     product_unit =  models.CharField(
         max_length=10, 
-        blank=True, 
-        null=True
-    )   
+        null=False, 
+        choices=OperationUnit.choices, 
+        default = OperationUnit.UNIDADES
+    )
 
     operation_type = models.CharField(
         max_length=10, 
         null=False, 
         choices=OperationType.choices, 
-        default = OperationType.NONE
+        default = OperationType.INGRESO
     )
 
     product_quantity = models.IntegerField(
@@ -49,12 +60,12 @@ class ProductManagement(TimeStampedModel):
         null = True,
     )
 
-    product_unitary_amount = models.IntegerField(
+    product_unitary_amount = models.FloatField(
         blank = True,
         null = True,
     )
 
-    product_total_amount = models.IntegerField(
+    product_total_amount = models.FloatField(
         blank = True,
         null = True,
     )

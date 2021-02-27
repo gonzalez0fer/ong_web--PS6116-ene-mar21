@@ -221,8 +221,6 @@ class ProductManagementUpdateView(UpdateView):
                 product.total_product_quantity = (product.total_product_quantity - temp) + self.object.product_quantity
                 product.product_unit = self.object.product_unit
             else:
-                if self.object.product_quantity > product.total_product_quantity:
-                    return self.form_invalid(form)
                 # sumar litros egresados antiguos                
                 product.total_product_quantity = (product.total_product_quantity + temp) - self.object.product_quantity
                 product.product_unit = self.object.product_unit
