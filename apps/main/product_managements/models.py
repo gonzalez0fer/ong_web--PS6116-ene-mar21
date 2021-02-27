@@ -42,10 +42,11 @@ class ProductManagement(TimeStampedModel):
     )
 
     product_unit =  models.CharField(
-        max_length=200, 
-        blank=True, 
-        null=True
-    )   
+        max_length=10, 
+        null=False, 
+        choices=OperationUnit.choices, 
+        default = OperationUnit.UNIDADES
+    )
 
     operation_type = models.CharField(
         max_length=10, 
@@ -59,12 +60,12 @@ class ProductManagement(TimeStampedModel):
         null = True,
     )
 
-    product_unitary_amount = models.IntegerField(
+    product_unitary_amount = models.FloatField(
         blank = True,
         null = True,
     )
 
-    product_total_amount = models.IntegerField(
+    product_total_amount = models.FloatField(
         blank = True,
         null = True,
     )
