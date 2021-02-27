@@ -48,7 +48,7 @@ function validate() {
         document.getElementById("product_unitary_amount_error").style.display = "block"
         error = true
     }
-    else if (parseInt(product_unitary_amount) < 0) {
+    else if (parseFloat(product_unitary_amount) < 0) {
         document.getElementById("product_unitary_amount_error").innerHTML = "Debe introducir precio mayor o igual a 0"
         document.getElementById("product_unitary_amount_error").style.display = "block"
         error = true

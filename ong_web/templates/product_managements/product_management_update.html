@@ -69,7 +69,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Precio Unitario (Bolívares)</label>
-                  {% render_field form.product_unitary_amount class="form-control" name="product_unitary_amount" id="product_unitary_amount" %}                  
+                  {% render_field form.product_unitary_amount class="form-control" name="product_unitary_amount" id="product_unitary_amount" type="number" step="0.01" %}                  
               </div>
               <span id="product_unitary_amount_error" class="text-danger" style="display : none"></span>
             </div>
