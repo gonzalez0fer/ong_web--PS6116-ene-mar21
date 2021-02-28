@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from apps.main.users.decorators import superuser_required
 
 from .forms import WaterManagementForm
+from apps.dashboard.refectories.forms import WaterTankForm, WaterExtraFieldsForm
 
 from apps.main.refectories.models import Refectory
 from apps.main.users.models import CustomUser
@@ -44,6 +45,20 @@ class WaterManagementList(ListView):
                     'created':i.created,
                     'tank_id':i.cupboard_id,
             })
+
+        if 'water_tank_form' not in context:
+            
+            context['water_tank_form'] = WaterTankForm(
+                instance = tank,
+                initial = {
+                    'capacity':tank.capacity,
+                    'current_liters':tank.current_liters,
+                }
+            )
+            context['water_extra_fields'] = WaterExtraFieldsForm(
+                initial = {'water_percent':(tank.current_liters * 100)//tank.capacity,
+                })
+
         return context
 
 
@@ -88,7 +103,7 @@ class WaterManagementCreateView(CreateView):
         self.object.cupboard_id = self.kwargs['tank_id']
         tank = WaterTank.objects.get(id=self.kwargs['tank_id'])
         #validaciones
-        if self.object.operation_type == 'ingreso':
+        if self.kwargs['op_type'] == 0:
             if self.object.water_liters > tank.capacity:
                 return self.form_invalid(form)    
             tank.current_liters = tank.current_liters + self.object.water_liters    

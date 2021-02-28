@@ -19,17 +19,7 @@
                           
           <br/>
           <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                 <label class="bmd-label-floating">Tipo de operación</label>
-                  <select id="operation_type" name="operation_type" class="form-control">
-                    <option value="none">Seleccione tipo de operación... </option>
-                    <option value="ingreso">Entrada</option>
-                    <option value="consumo">Salida</option>
-                  </select>
-              </div>
-              <span id="operation_type_error" class="text-danger" style="display : none"></span>
-            </div>
+
 
             <div class="col-md-6">
               <div class="form-group">
@@ -80,28 +70,6 @@
     </div>
   </div>
 
-  <div class="col-md-5">
-    <div class="card card-profile">
-      <div class="card-avatar">
-          <a href="">
-              <img class="img" src="/static/assets/img/flats/water.png" />
-          </a>
-      </div>
-      <div class="card-body">      
-        <h4 class="card-title">
-          Aquí podras realizar una operacion en el sistema donde
-          indiques algun ingreso o egreso generado por la venta o
-          compra de agua para el tanque.
-        </h4>
-        </br>
-        <h4>
-          <strong>No olvides que para registrar ingresos debes 
-          seleccionar el tipo de operación "Entrada" y para 
-          egresos "Salida".</strong>
-        </h4>
-      </div>   
-    </div>
-  </div>
 </div>
 
 {% endblock content %}
