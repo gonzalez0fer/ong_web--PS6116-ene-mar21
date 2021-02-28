@@ -262,6 +262,7 @@ class WaterManagementRegisterSell(CreateView):
             'id' : query.id,
             'capacity' : query.capacity,
             'current_liters' : query.current_liters,
+            'operation': 0,
             'sell_operation': True,
             'sell_price': query.refectory.capacity,
         }
