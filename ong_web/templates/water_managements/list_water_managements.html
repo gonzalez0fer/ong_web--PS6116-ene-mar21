@@ -34,7 +34,7 @@
                     <br>
                   <div class="card-header card-header-info">
                     <h4 class="card-title mt-0">Operaciones en el Tanque del punto de distribución {{refectory_data.0.refectory_name}}</h4>
-                    <p class="card-category"> Aquí podras ver todas las operaciones de entrada y salida realizadas en el tanque de agua.</p>
+                    <p class="card-category"> Aquí podras ver todas las operaciones de Ingreso y Egreso realizadas en el tanque de agua.</p>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -44,10 +44,10 @@
                                 ID
                           </th>
                           <th style="width: 65px;">
-                              Entrada (Litros)
+                              Ingreso (Litros)
                           </th>
                           <th style="width: 65px;">
-                              Salida (Litros)
+                              Egreso (Litros)
                           </th>
                           <th style="width: 100px;">
                               Descripción
@@ -75,12 +75,12 @@
                                             {{ i.id }}
                                         </td>
                                         <td>
-                                            {% if i.operation_type == "ingreso"%}
+                                            {% if i.operation_type == "Ingreso"%}
                                                 {{ i.water_liters }}
                                             {% endif %}
                                         </td>
                                         <td>
-                                            {% if i.operation_type == "consumo"%}
+                                            {% if i.operation_type == "Egreso"%}
                                                 {{ i.water_liters }}
                                             {% endif %}
                                         </td>
@@ -171,7 +171,7 @@
                   <div class="card-body">      
                     <h4 class="card-title">
                       Aquí podras realizar una operacion en el sistema donde
-                      indiques algun ingreso o egreso generado por la venta o
+                      indiques algun Ingreso o egreso generado por la venta o
                       compra de agua para el tanque.
                     </h4>
                     <div class="row">

@@ -12,8 +12,8 @@ class ProductManagement(TimeStampedModel):
         """
         	Every type of issue
         """
-        INGRESO     =   'ingreso'
-        CONSUMO     =   'consumo'
+        Ingreso     =   'Ingreso'
+        Egreso     =   'Egreso'
 
     class OperationUnit(models.TextChoices):
         """
@@ -52,7 +52,7 @@ class ProductManagement(TimeStampedModel):
         max_length=10, 
         null=False, 
         choices=OperationType.choices, 
-        default = OperationType.INGRESO
+        default = OperationType.Ingreso
     )
 
     product_quantity = models.IntegerField(

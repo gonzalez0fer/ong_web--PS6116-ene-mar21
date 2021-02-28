@@ -25,10 +25,10 @@
                               Producto
                           </th>
                           <th>
-                              Entrada
+                              Ingreso
                           </th>
                           <th>
-                              Salida
+                              Egreso
                           </th>
                           <th>
                               Unidad
@@ -59,7 +59,7 @@
                                         <td>
                                             {{ product_object.product_name }}
                                         </td>
-                                        {% if product_object.operation_type == "ingreso"%}
+                                        {% if product_object.operation_type == "Ingreso"%}
                                         <td>
                                                 {{ product_object.product_quantity }}    
                                         </td>
@@ -67,7 +67,7 @@
                                             -            
                                         </td>
                                             {% endif %}
-                                            {% if product_object.operation_type == "consumo" %}
+                                            {% if product_object.operation_type == "Egreso" %}
                                         <td>
                                             -
                                         </td>
