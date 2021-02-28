@@ -17,7 +17,9 @@
     margin-left:-20px;
     margin-right:-20px;
     }
-    
+    .btn.btn-default.action:hover{
+        background-color: #4caf50;
+    }
 
 </style>
 
@@ -26,7 +28,8 @@
 {% block content %}
 
         <div class="row">
-            <div class="col-md-8">
+            <!-- <div class="col-md-8"> -->
+            <div class="col">
                 <div class="card card-plain">
                     <br>
                   <div class="card-header card-header-info">
@@ -49,10 +52,10 @@
                           <th style="width: 100px;">
                               Descripción
                           </th>                          
-                          <th style="width: 120px;">
+                          <th style="width: 115px;">
                               Precio Unitario (Bs/$)
                           </th>
-                          <th style="width: 105px;">
+                          <th style="width: 95px;">
                               Precio Total (Bs/$)
                           </th>
                           <th style="width: 110px;">
@@ -61,12 +64,11 @@
                           <th style="width: 120px;">
                               Fecha
                           </th>                          
-                          <th style="width: 155px;">
+                          <th style="width: 180px;">
                               Acciones
                           </th>
                         </thead>
                         <tbody>
-
                             {% for i in object_list %}
                                     <tr>
                                         <td>
@@ -99,66 +101,66 @@
                                         </td> 
                                         <td>
                                             {% if user.is_superuser %}
-                                            <a  href="{% url 'dashboard:water_managements:water_management_update' tank_id i.id %}" >
-                                                <button type="button" class="btn-info" style="cursor : pointer " title="Editar">
-                                                    Editar</button>
-                                            </a>
-                                            <a href="{% url 'dashboard:water_managements:water_management_delete' i.id %}">
-                                                <button type="button" class="btn-danger" style="cursor : pointer; margin-left: 5px;" title="Eliminar">
-                                                    Eliminar</button>
-                                                
-                                            </a>
+                                                <a  href="{% url 'dashboard:water_managements:water_management_update' tank_id i.id %}" >
+                                                    <button type="button" class="btn btn-info" style="cursor : pointer " title="Editar">Editar</button>
+                                                </a>
+                                                <a href="{% url 'dashboard:water_managements:water_management_delete' i.id %}">
+                                                    <button type="button" class="btn btn-danger" style="cursor : pointer; margin-left: 5px;" title="Eliminar">Eliminar</button>
+                                                </a>
                                             {% else %}
-                                            <a  href="{% url 'dashboard:water_managements:water_management_update_guest' i.id %}" >
-                                                <button type="button" class="btn-info" style="cursor : pointer " title="Editar">
-                                                    Editar</button>
-                                            </a>
+                                                <a  href="{% url 'dashboard:water_managements:water_management_update_guest' i.id %}" >
+                                                    <button type="button" class="btn btn-info" style="cursor : pointer " title="Editar">Editar</button>
+                                                </a>
                                             {% endif %}
                                         </td>
                                     </tr>
-                            {% endfor %}
-                            
+                            {% endfor %}  
                         </tbody>
                       </table>
                     </div>
 
-                    <p class="bttn-row">
+                    <p style="float: left; margin-left: 50px;">
                         {% if user.is_superuser %}
-                        <a  href="{% url 'dashboard:water_managements:water_management_create' tank_id 0 %}">
-                        <button type="button" class="btn btn-info app-button">Cargar</button>
-                        </a>
-                        <a  href="{% url 'dashboard:water_managements:water_management_create' tank_id 1 %}">
-                            <button type="button" class="btn btn-success app-button">Vaciar</button>
-                        </a>
+                            <a  href="{% url 'dashboard:water_tanks:tanks_list' %}">
+                                <button type="button" class="btn btn-default action">Regresar</button>
+                            </a>
                         {% else %}
-                        <a  href="{% url 'dashboard:water_managements:water_management_create_guest' 0 %}">
-                        <button type="button" class="btn btn-info app-button">Cargar</button>
-                        </a>
-                        <a  href="{% url 'dashboard:water_managements:water_management_create_guest' 1 %}">
-                            <button type="button" class="btn btn-success app-button">Vaciar</button>
-                        </a>
+                        {% comment %} redireccion a home {% endcomment %}
+                            <a  href="/dashboard">
+                                <button type="button" class="btn btn-default action">Regresar</button>
+                            </a>
                         {% endif %}
                     </p>
-
-                  </div>
-
-                  <br>
-                  <br>
-
-                  <p style="float: left; margin-left: 50px;">
-                    {% if user.is_superuser %}
-                    <a  href="{% url 'dashboard:water_tanks:tanks_list' %}">
-                    <button type="button" class="btn btn-default">Regresar</button>
-                    </a>
-                    {% else %}
-                    {% comment %} redireccion a home {% endcomment %}
-                    <a  href="/dashboard">
-                    <button type="button" class="btn btn-default">Regresar</button>
-                    </a>
-                    {% endif %}
-                </p>                  
+                    <p class="bttn-row">
+                        {% if user.is_superuser %}
+                            <a href="{% url 'dashboard:water_managements:water_management_create' tank_id 0 %}">
+                                <button type="button" class="btn btn-default action">Registrar Ingreso</button>
+                            </a>
+                            <a href="{% url 'dashboard:water_managements:water_management_create' tank_id 1 %}">
+                                <button type="button" class="btn btn-default action">Registrar Egreso</button>
+                            </a>
+                            <a href="">
+                                <button type="button" class="btn btn-default action">Reporte</button>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'dashboard:water_managements:water_management_create_guest' 0 %}">
+                                <button type="button" class="btn btn-default action">Registrar Ingreso</button>
+                            </a>
+                            <a href="{% url 'dashboard:water_managements:water_management_create_guest' 1 %}">
+                                <button type="button" class="btn btn-default action">Registrar Egreso</button>
+                            </a>
+                            <a href="{% url 'dashboard:water_managements:water_management_sell' %}">
+                                <button type="button" class="btn btn-default action"> Registrar Venta</button>
+                            </a>
+                            <a href="">
+                                <button type="button" class="btn btn-default action">Reporte</button>
+                            </a>
+                        {% endif %}
+                    </p>
+                  </div>                 
                 </div>
               </div>
+              <!--
               <div class="col-md-4">
                 <div class="card card-profile">
                   <div class="card-avatar">
@@ -173,7 +175,6 @@
                       compra de agua para el tanque.
                     </h4>
                     <div class="row">
-    
                         <div class="col-md-5" style="background-color: rgba(153, 160, 160, 0.219); position: relative;">
                             <h4 class="" style="position: absolute; top:50%; margin: 0;   -ms-transform: translateY(-50%); transform: translateY(-50%);">
                                 Capacidad del tanque
@@ -192,13 +193,12 @@
                             <h4 style="margin-top: 10px;">Nivel del tanque</h4>        
                             {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%}                            
                         </div>
-                    </br>
-
+                        </br>
                     </div>
                   </div>   
                 </div>
               </div>
-
+              -->
         </div>
 
 {% endblock content %}
