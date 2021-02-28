@@ -55,6 +55,11 @@ urlpatterns = [
         'product-managements/',
         include('apps.dashboard.product_managements.urls', namespace='product_managements'),
         ),
+
+    path(
+        'equipments/',
+        include('apps.dashboard.equipments.urls', namespace='equipments'),
+        ),
    
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
