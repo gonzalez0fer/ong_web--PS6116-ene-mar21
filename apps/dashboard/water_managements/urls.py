@@ -10,8 +10,15 @@ urlpatterns = [
         views.WaterManagementList.as_view(), 
         name='water_management_list'
         ),
+
     path(
-        '<int:tank_id>/create', 
+        'operations', 
+        views.WaterManagementListGuest.as_view(), 
+        name='water_management_list_guest'
+        ),
+
+    path(
+        '<int:tank_id>/<int:op_type>/create', 
         views.WaterManagementCreateView.as_view(), 
         name='water_management_create'
         ),
@@ -20,6 +27,12 @@ urlpatterns = [
         'create/sell', 
         views.WaterManagementRegisterSell.as_view(), 
         name='water_management_sell'
+        ),
+
+    path(
+        '<int:op_type>/create', 
+        views.WaterManagementCreateViewGuest.as_view(), 
+        name='water_management_create_guest'
         ),
 
     path(
