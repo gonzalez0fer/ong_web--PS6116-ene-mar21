@@ -98,14 +98,20 @@
                                             {{ i.created }}
                                         </td> 
                                         <td>
+                                            {% if user.is_superuser %}
                                             <a  href="{% url 'dashboard:water_managements:water_management_update' tank_id i.id %}" >
                                                 <button type="button" class="btn-info" style="cursor : pointer " title="Editar">
                                                     Editar</button>
-                                            {% if user.is_superuser %}
+                                            </a>
                                             <a href="{% url 'dashboard:water_managements:water_management_delete' i.id %}">
                                                 <button type="button" class="btn-danger" style="cursor : pointer; margin-left: 5px;" title="Eliminar">
                                                     Eliminar</button>
                                                 
+                                            </a>
+                                            {% else %}
+                                            <a  href="{% url 'dashboard:water_managements:water_management_update_guest' i.id %}" >
+                                                <button type="button" class="btn-info" style="cursor : pointer " title="Editar">
+                                                    Editar</button>
                                             </a>
                                             {% endif %}
                                         </td>

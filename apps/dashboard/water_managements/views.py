@@ -245,13 +245,7 @@ class WaterManagementRegisterSell(CreateView):
     model = WaterManagement
     form_class = WaterManagementForm
     template_name = "water_managements/water_managements-create.html"
-    
-    def get_success_url(self):
-        if self.request.user.is_superuser:
-            success_url = "/dashboard/water_tanks/"
-        else:
-            success_url = "/dashboard/water_tanks/tank/"   
-        return success_url
+    success_url = "/dashboard/water_managements/operations"
 
     def get_context_data(self, **kwargs):
         context = super(WaterManagementRegisterSell, self).get_context_data(**kwargs)
@@ -298,7 +292,8 @@ class WaterManagementRegisterSell(CreateView):
                 form=form,
             )
         ) 
-
+        
+@method_decorator([login_required, superuser_required], name='dispatch')
 class WaterManagementUpdateView(UpdateView):
     form_class = WaterManagementForm
     model = WaterManagement 
@@ -340,6 +335,71 @@ class WaterManagementUpdateView(UpdateView):
         self.object = form.save(commit=False)
         self.object.water_price_total = self.object.water_liters * self.object.water_amount
         tank = WaterTank.objects.get(id=self.kwargs['tank_id'])
+        #validaciones
+        # si no se cambia el tipo de operacion
+        if temp_operation == self.object.operation_type:
+            if self.object.operation_type == 'ingreso':
+                if self.object.water_liters > tank.capacity:
+                    return self.form_invalid(form)
+                # restar litros ingresados antiguos     
+                tank.current_liters = (tank.current_liters - temp) + self.object.water_liters
+            else:
+                if self.object.water_liters > tank.current_liters:
+                    return self.form_invalid(form)
+                # sumar litros egresados antiguos                
+                tank.current_liters = (tank.current_liters + temp) - self.object.water_liters
+        #si cambia el tipo de operacion en la edicion
+        else:
+            if self.object.operation_type == 'ingreso':
+                if self.object.water_liters > tank.capacity:
+                    return self.form_invalid(form)
+                # operacion inversa     
+                tank.current_liters = (tank.current_liters + temp) + self.object.water_liters
+            else:
+                if self.object.water_liters > tank.current_liters:
+                    return self.form_invalid(form)
+                # operacion inversa                
+                tank.current_liters = (tank.current_liters - temp) - self.object.water_liters                        
+        tank.save()
+        return super().form_valid(form)
+
+
+class WaterManagementUpdateViewGuest(UpdateView):
+    form_class = WaterManagementForm
+    model = WaterManagement 
+    queryset = WaterManagement.objects.all()
+    template_name = "water_managements/water_managements-update.html"
+    success_url = "/dashboard/water_managements/operations"
+
+    def get_context_data(self, **kwargs):
+
+        context = super(WaterManagementUpdateViewGuest, self).get_context_data(**kwargs)
+
+        query = WaterTank.objects.get(refectory_id=self.request.user.profile.refectory.id)
+
+        context['tank_info'] = {
+            'id' : query.id,
+            'capacity' : query.capacity,
+            'current_liters' : query.current_liters,
+        }        
+        return context
+
+    def post(self, request, *args, **kwargs):
+
+        self.object = self.get_object()
+        temp = self.object.water_liters #valor actual
+        temp_operation = self.object.operation_type
+        form = self.get_form()
+
+        if form.is_valid():
+            return self.form_valid(form, temp, temp_operation)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form, temp, temp_operation):
+        self.object = form.save(commit=False)
+        self.object.water_price_total = self.object.water_liters * self.object.water_amount
+        tank = WaterTank.objects.get(refectory_id=self.request.user.profile.refectory.id)
         #validaciones
         # si no se cambia el tipo de operacion
         if temp_operation == self.object.operation_type:
