@@ -68,6 +68,7 @@ class WaterManagementCreateView(CreateView):
             'id' : self.kwargs['tank_id'],
             'capacity' : query.capacity,
             'current_liters' : query.current_liters,
+            'sell_operation': False,
         }
 
         return context
@@ -97,6 +98,63 @@ class WaterManagementCreateView(CreateView):
             if self.object.water_liters > tank.current_liters:
                 return self.form_invalid(form)                
             tank.current_liters = tank.current_liters - self.object.water_liters    
+        tank.save()
+        self.object.save()
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return self.render_to_response(
+            self.get_context_data(
+                form=form,
+            )
+        ) 
+
+class WaterManagementRegisterSell(CreateView):
+    model = WaterManagement
+    form_class = WaterManagementForm
+    template_name = "water_managements/water_managements-create.html"
+    
+    def get_success_url(self):
+        if self.request.user.is_superuser:
+            success_url = "/dashboard/water_tanks/"
+        else:
+            success_url = "/dashboard/water_tanks/tank/"   
+        return success_url
+
+    def get_context_data(self, **kwargs):
+        context = super(WaterManagementCreateView, self).get_context_data(**kwargs)
+
+        query = WaterTank.objects.get(refectory_id=self.request.user.profile.refectory.id)
+        
+        context['tank_info'] = {
+            'id' : query.id,
+            'capacity' : query.capacity,
+            'current_liters' : query.current_liters,
+            'sell_operation': True,
+            'sell_price': query.refectory.capacity,
+        }
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.created_by = self.request.user
+        self.object.water_price_total = self.object.water_liters * self.object.water_amount
+        self.object.cupboard_id = self.request.user.profile.refectory.id
+        tank = WaterTank.objects.get(refectory_id=self.request.user.profile.refectory.id)
+        #validaciones
+        if self.object.water_liters > tank.current_liters:
+            return self.form_invalid(form)                
+        tank.current_liters = tank.current_liters - self.object.water_liters    
         tank.save()
         self.object.save()
         return super().form_valid(form)

@@ -15,6 +15,13 @@ urlpatterns = [
         views.WaterManagementCreateView.as_view(), 
         name='water_management_create'
         ),
+
+    path(
+        'create/sell', 
+        views.WaterManagementRegisterSell.as_view(), 
+        name='water_management_sell'
+        ),
+
     path(
         '<int:tank_id>/<int:pk>/update', 
         views.WaterManagementUpdateView.as_view(), 

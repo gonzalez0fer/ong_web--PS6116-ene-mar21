@@ -14,8 +14,8 @@ class Refectory(TimeStampedModel):
         blank=True, 
         null=True
         )
-
-    capacity = models.IntegerField(
+    #este campo ahora sera el precio del agua fijado por cada comedor (admin)
+    capacity = models.FloatField(
         blank=True, 
         null=True
         )
