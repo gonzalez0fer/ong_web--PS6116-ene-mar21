@@ -83,6 +83,7 @@ class WaterManagementCreateView(CreateView):
             'id' : self.kwargs['tank_id'],
             'capacity' : query.capacity,
             'current_liters' : query.current_liters,
+            'operation': self.kwargs['op_type'],
         }
 
         return context
@@ -103,7 +104,7 @@ class WaterManagementCreateView(CreateView):
         self.object.cupboard_id = self.kwargs['tank_id']
         tank = WaterTank.objects.get(id=self.kwargs['tank_id'])
         #validaciones
-        if self.kwargs['op_type'] == 0:
+        if self.object.operation_type == 'ingreso':
             if self.object.water_liters > tank.capacity:
                 return self.form_invalid(form)    
             tank.current_liters = tank.current_liters + self.object.water_liters    

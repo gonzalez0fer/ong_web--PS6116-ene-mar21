@@ -18,8 +18,19 @@
           {% csrf_token %}
                           
           <br/>
-          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                 <label class="bmd-label-floating">Tipo de operación</label>
+                 {% if tank_info.operation == 0 %}
+                  <input type="text" value="ingreso" id="operation_type" name="operation_type" class="form-control" readonly>
+                  {% else %}
+                  <input type="text" value="consumo" id="operation_type" name="operation_type" class="form-control" readonly>
+                  {% endif %}
+              </div>
+              <span id="operation_type_error" class="text-danger" style="display : none"></span>
+            </div>    
 
+        <br/>      
 
             <div class="col-md-6">
               <div class="form-group">
@@ -35,7 +46,6 @@
               </div>
               <span id="operation_description_error" class="text-danger" style="display : none"></span>
             </div>
-          </div>
 
           <br/>
 

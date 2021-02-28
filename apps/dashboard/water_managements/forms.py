@@ -7,7 +7,8 @@ from apps.main.water_managements.models import WaterManagement
 class WaterManagementForm(forms.ModelForm):
     class Meta:
         model = WaterManagement
-        fields = [            
+        fields = [
+                'operation_type',            
                 'water_liters',
                 'water_amount',
                 'operation_description',
