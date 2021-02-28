@@ -30,7 +30,7 @@
                 <div class="card card-plain">
                     <br>
                   <div class="card-header card-header-info">
-                    <h4 class="card-title mt-0">Operaciones en el Tanque</h4>
+                    <h4 class="card-title mt-0">Operaciones en el Tanque del punto de distribución {{refectory_data.0.refectory_name}}</h4>
                     <p class="card-category"> Aquí podras ver todas las operaciones de entrada y salida realizadas en el tanque de agua.</p>
                   </div>
                   <div class="card-body">
@@ -117,12 +117,21 @@
                     </div>
 
                     <p class="bttn-row">
+                        {% if user.is_superuser %}
                         <a  href="{% url 'dashboard:water_managements:water_management_create' tank_id 0 %}">
                         <button type="button" class="btn btn-info app-button">Cargar</button>
                         </a>
                         <a  href="{% url 'dashboard:water_managements:water_management_create' tank_id 1 %}">
                             <button type="button" class="btn btn-success app-button">Vaciar</button>
                         </a>
+                        {% else %}
+                        <a  href="{% url 'dashboard:water_managements:water_management_create_guest' 0 %}">
+                        <button type="button" class="btn btn-info app-button">Cargar</button>
+                        </a>
+                        <a  href="{% url 'dashboard:water_managements:water_management_create_guest' 1 %}">
+                            <button type="button" class="btn btn-success app-button">Vaciar</button>
+                        </a>
+                        {% endif %}
                     </p>
 
                   </div>
@@ -136,7 +145,8 @@
                     <button type="button" class="btn btn-default">Regresar</button>
                     </a>
                     {% else %}
-                    <a  href="{% url 'dashboard:water_tanks:tanks_list_guest' %}">
+                    {% comment %} redireccion a home {% endcomment %}
+                    <a  href="/dashboard">
                     <button type="button" class="btn btn-default">Regresar</button>
                     </a>
                     {% endif %}

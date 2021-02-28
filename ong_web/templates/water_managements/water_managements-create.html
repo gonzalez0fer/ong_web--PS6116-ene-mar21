@@ -69,9 +69,15 @@
 
           <br/>
           <p class="pull-left">
+            {% if user.is_superuser %}
             <a  href="{% url 'dashboard:water_managements:water_management_list' tank_info.id %}"> <!--{% url dashboard:water_managements:water_management_list-->
               <button type="button" class="btn btn-default">Regresar</button>
             </a>
+            {% else %}
+            <a  href="{% url 'dashboard:water_managements:water_management_list_guest' %}"> <!--{% url dashboard:water_managements:water_management_list-->
+              <button type="button" class="btn btn-default">Regresar</button>
+            </a>
+            {% endif %}
           </p>
           <button id="submit-button" type="submit" class="btn btn-success pull-right">Realizar Operación</button>
           <div class="clearfix"></div>

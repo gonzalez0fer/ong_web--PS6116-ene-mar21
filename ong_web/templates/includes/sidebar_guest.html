@@ -22,9 +22,9 @@
             </a>
           </li>
           {% if user.profile.refectory %}
-          {% url 'dashboard:water_tanks:tanks_list_guest' as tanks_view %} 
+          {% url 'dashboard:water_managements:water_management_list_guest' as tanks_view %} 
           <li class="nav-item {% if request.path == tanks_view %} active {% endif %}">
-            <a class="nav-link" href="{% url 'dashboard:water_tanks:tanks_list_guest'%}">
+            <a class="nav-link" href="{% url 'dashboard:water_managements:water_management_list_guest'%}">
               <i class="material-icons">opacity</i>
               <p>Agua</p>
             </a>
