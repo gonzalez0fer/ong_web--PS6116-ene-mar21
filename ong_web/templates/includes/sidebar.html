@@ -44,8 +44,8 @@
                   </a>
           </li>
 
-          {% url 'dashboard:water_tanks:tanks_list' as water_tanks_view %} 
-          <li class="nav-item {% if request.path == water_tanks_view %} active {% endif %}">
+          {% url 'dashboard:water_tanks:tanks_list' as water_tanks_view %}
+          <li class="nav-item {% if water_tanks_view == request.path or 'water_managements' in request.path %} active {% endif %}">
             <a class="nav-link" href="{% url 'dashboard:water_tanks:tanks_list' %}">
               <i class="material-icons">opacity</i>
               <p>Agua</p>
