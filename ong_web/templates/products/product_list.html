@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="card card-plain">
-                  <div class="card-header card-header-success" style="background: linear-gradient(60deg, #26c6da, #00acc1);">
+                  <div class="card-header card-header-info" >
                     <h4 class="card-title mt-0">Inventario de mantenimiento del punto de distribución {{refectory_data.0.refectory_name}}</h4>
                     <p class="card-category"> Aqui podras ver todos los productos de mantenimiento del punto de distribución.</p>
                   </div>
@@ -26,6 +26,9 @@
                           </th>
                           <th style="width: 30px;">
                               Cantidad
+                          </th>
+                          <th style="width: 30px;">
+                              Unidad
                           </th>
 
                         <!-- <th>
@@ -45,6 +48,9 @@
 
                                         <td>
                                             {{ product_object.total_product_quantity }}
+                                        </td>
+                                        <td>
+                                            {{ product_object.product_unit }}
                                         </td>
                                         <!-- <td>
                                             <a href="{% url 'dashboard:product_managements:list_product_management' refectory_data.0.id %}">
@@ -81,7 +87,7 @@
 
         <div class="col-md-4">
                     
-            <div class="card card-profile">
+            <div class="card card-profile" style="width: fit-content;">
                 <div class="card-avatar">
                     <a href="">
                       <img class="img" src="/static/assets/img/flats/chemical.png" />
@@ -95,11 +101,9 @@
                         Direccion: 
                         {{refectory_data.0.refectory_address}}
                       </h4>
-                      <p style="float: right; margin-right: 25px; margin-top: 15px;">
-                        <a  href="{% url 'dashboard:product_managements:list_product_management' refectory_data.0.id %}">
+                      <a  href="{% url 'dashboard:product_managements:list_product_management' refectory_data.0.id %}">
                         <button type="button" class="btn btn-success">Ver Todas las Operaciones</button>
-                        </a>
-                      </p>
+                      </a>
                     </div>    
                         
 
@@ -119,5 +123,5 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-<!-- <script src="/static/assets/js/products/product_list.js"></script> -->
+<script src="/static/assets/js/products/product_list.js"></script>
 {% endblock javascripts %}

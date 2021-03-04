@@ -10,7 +10,7 @@
   <div class="col-md-7">
     <div class="card">
       <div class="card-header card-header-info">
-        <h4 class="card-title">Actualiza una Operación de "Entrada" o "Salida"</h4>
+        <h4 class="card-title">Actualiza una Operación de "Ingreso" o "Egreso"</h4>
             <p class="card-category">Modifica los datos.</p>
       </div>
       <div class="card-body">
@@ -21,10 +21,10 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                 <label class="bmd-label-floating">Tipo de operación</label>
-                  {% render_field form.operation_type class="form-control" name="operation_type" id="operation_type" %}
+                <label class="bmd-label-floating">Nombre del producto</label>
+                  {% render_field form.product_name class="form-control" name="product_name" id="product_name" readonly="True" %}
               </div>
-              <span id="operation_type_error" class="text-danger" style="display : none"></span>
+              
             </div>
           </div>
 
@@ -33,10 +33,20 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="bmd-label-floating">Nombre del producto</label>
-                  {% render_field form.product_name class="form-control" name="product_name" id="product_name" readonly="True" %}
+                <label class="bmd-label-floating">Tipo de operación</label>
+                 {% render_field form.operation_type class="form-control" name="operation_type" id="operation_type" %}
               </div>
+              <span id="operation_type_error" class="text-danger" style="display : none"></span>
             </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Unidad</label>
+                  {% render_field form.product_unit class="form-control" name="product_unit" id="product_unit"%}                
+              </div>
+              <span id="product_unit_error" class="text-danger" style="display : none"></span>
+            </div>
+
             <!--
             <div class="col-md-6">
               <div class="form-group">
@@ -59,7 +69,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Precio Unitario (Bolívares)</label>
-                  {% render_field form.product_unitary_amount class="form-control" name="product_unitary_amount" id="product_unitary_amount" %}                  
+                  {% render_field form.product_unitary_amount class="form-control" name="product_unitary_amount" id="product_unitary_amount" type="number" step="0.01" %}                  
               </div>
               <span id="product_unitary_amount_error" class="text-danger" style="display : none"></span>
             </div>
@@ -71,7 +81,7 @@
               <button type="button" class="btn btn-default">Regresar</button>
             </a>
           </p>
-          <button id="submit-button" type="submit" class="btn btn-success pull-right">Actualizar Operación</button>
+          <button id="submit-button" type="submit" class="btn btn-success pull-right">Actualizar</button>
           <div class="clearfix"></div>
         </form>
       </div>
@@ -82,20 +92,19 @@
     <div class="card card-profile">
       <div class="card-avatar">
           <a href="">
-              <img class="img" src="/static/assets/img/flats/water.png" />
+              <img class="img" src="/static/assets/img/flats/chemical.png" />
           </a>
       </div>
       <div class="card-body">      
         <h4 class="card-title">
-          Aquí podras realizar una operacion en el sistema donde
-          indiques algun ingreso o egreso generado por la venta o
-          compra de agua para el tanque.
+          Aquí podras realizar una operación en el sistema donde
+          indiques algún Ingreso o egreso de productos de mantenimiento
         </h4>
         </br>
         <h4>
-          <strong>No olvides que para registrar ingresos debes 
-          seleccionar el tipo de operación "Entrada" y para 
-          egresos "Salida".</strong>
+          <strong>No olvides que para registrar Ingresos debes 
+          seleccionar el tipo de operación "Ingreso" y para 
+          egresos "Egreso".</strong>
         </h4>
       </div>   
     </div>
@@ -108,6 +117,9 @@
 {% block javascripts %}
 <script>
   var op_count = "{{ product_code_operation | safe }}";
+  var old_operation = "{{ object.operation_type | safe }}";
+  var old_quantity = "{{ object.product_quantity | safe }}";
+  
   var products = [
     {% for prod in product_info %}
       {

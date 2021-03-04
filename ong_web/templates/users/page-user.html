@@ -13,8 +13,8 @@
                 <div class="col-md-8">
                   <div class="card">
                     <div class="card-header card-header-info">
-                      <h4 class="card-title">Edita el Perfil del usuario: {{form.email.initial}}</h4>
-                      <p class="card-category">Completa el perfil.</p>
+                      <h4 class="card-title">Editar perfil: <b>{{form.email.initial}}</b></h4>
+                      <p class="card-category">Completa los datos solicitados para completar el registro</p>
                     </div>
                     <div class="card-body">
                     <form method="post">
@@ -78,7 +78,7 @@
                             </a>
                         </p>
                         {% endif %}
-                        <button type="submit" class="btn btn-success pull-right">Salvar Perfil</button>
+                        <button type="submit" class="btn btn-success pull-right">Guardar</button>
                         <div class="clearfix"></div>
                       </form>
                     </div>
@@ -92,7 +92,6 @@
                       </a>
                     </div>
                     <div class="card-body">
-
                         <h4 class="card-title">
                             Id:
                             <strong>{{object.id}}</strong> 
@@ -107,16 +106,15 @@
                             {{profile_form.address.initial|default_if_none:"(sin asignar)" }}
 
                         </br>
-                    </br>
+                        </br>
                         Comedor asignado:
                         <strong>{{object.profile.refectory|default_if_none:"(sin asignar)" }}</strong>
-
                         </h4>
-                      </div>  
+                    </div>  
                     
                     {% if user.is_superuser %}
                     <p class="pull-left">
-                        <button type="button" class="bs-modal btn btn-sm btn-success" onclick="open_modal('{% url 'dashboard:user:assign_refectory' view.kwargs.pk %}')">Asignar Comedor</button>
+                        <button type="button" class=" btn btn-warning" onclick="open_modal('{% url 'dashboard:user:assign_refectory' view.kwargs.pk %}')">Asignar Comedor</button>
                     </p>
                     {% endif %}
 

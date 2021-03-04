@@ -19,6 +19,11 @@ class Product(TimeStampedModel):
         null = True,
     )
 
+    product_unit =  models.CharField(
+        max_length=10, 
+        blank=True, 
+        null=True
+    )    
 
     refectory = models.ForeignKey(
         Refectory, 

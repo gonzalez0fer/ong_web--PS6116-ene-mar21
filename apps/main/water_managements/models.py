@@ -12,9 +12,19 @@ class WaterManagement(TimeStampedModel):
         """
         	Every type of issue
         """
-        INGRESO     =   'ingreso'
-        CONSUMO     =   'consumo'
-        NONE        =   'none'
+        Ingreso     =   'Ingreso'
+        Egreso     =   'Egreso'
+
+    class OperationDescription(models.TextChoices):
+        """
+        	Every type of issue
+        """
+        CISTERNA     =   'Cisterna'
+        TUBERIA     =   'Tuberia'
+        MANTENIMIENTO = 'Mantenimiento'
+        VENTA = 'Venta'
+        USO_INTERNO = 'Uso Interno'
+
 
 
     cupboard =  models.ForeignKey(
@@ -29,7 +39,7 @@ class WaterManagement(TimeStampedModel):
         max_length=10, 
         null=False, 
         choices=OperationType.choices, 
-        default = OperationType.NONE
+        default = OperationType.Ingreso
     )
 
     water_liters = models.IntegerField(
@@ -48,9 +58,10 @@ class WaterManagement(TimeStampedModel):
     )
 
     operation_description = models.CharField(
-        max_length=30, 
-        blank = True,
-        null = True,
+        max_length=20, 
+        null=False, 
+        choices=OperationDescription.choices, 
+        default = OperationDescription.VENTA
     )    
 
     created_by = models.ForeignKey(

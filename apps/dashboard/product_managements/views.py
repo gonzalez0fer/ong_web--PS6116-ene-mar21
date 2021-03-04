@@ -34,7 +34,7 @@ class ProductManagementListView(ListView):
                         'product_unitary_amount':i.product_unitary_amount,
                         'product_total_amount':i.product_total_amount,
                         'created': i.created,
-                        'created_by':i.created_by.profile.name,
+                        'created_by':str(i.created_by.profile.name) + ' ' + str(i.created_by.profile.last_name),
                         'product_id': j.id
                 })
         try:
@@ -130,12 +130,14 @@ class ProductManagementCreateView(CreateView):
         #si no existia el producto, se creo en el get or create
         if created:
             product.total_product_quantity = self.object.product_quantity
+            product.product_unit = self.object.product_unit
             product.created_by = self.request.user
             product.refectory_id = self.kwargs['refectory_id']
         #ya existia el producto
         else:
-            if self.object.operation_type == 'ingreso':    
+            if self.object.operation_type == 'Ingreso':    
                 product.total_product_quantity = product.total_product_quantity + self.object.product_quantity
+                product.product_unit = self.object.product_unit
                 product.created_by = self.request.user
                 product.refectory_id = self.kwargs['refectory_id']                    
             else:
@@ -143,6 +145,7 @@ class ProductManagementCreateView(CreateView):
                 if self.object.product_quantity > product.total_product_quantity:
                     return self.form_invalid(form)
                 product.total_product_quantity = product.total_product_quantity - self.object.product_quantity
+                product.product_unit = self.object.product_unit
                 product.created_by = self.request.user
                 product.refectory_id = self.kwargs['refectory_id']                
 
@@ -207,31 +210,34 @@ class ProductManagementUpdateView(UpdateView):
         self.object.product_total_amount = self.object.product_unitary_amount * self.object.product_quantity
         product = Product.objects.get(product_name=self.object.product_name,refectory_id=self.kwargs['refectory_id'])
         self.object.product_cod = product
+        
         #validaciones
         # si no se cambia el tipo de operacion
         if temp_operation == self.object.operation_type:
-            if self.object.operation_type == 'ingreso':
+            if self.object.operation_type == 'Ingreso':
                 if self.object.product_quantity < 0:
                     return self.form_invalid(form)
                 # restar litros ingresados antiguos     
                 product.total_product_quantity = (product.total_product_quantity - temp) + self.object.product_quantity
+                product.product_unit = self.object.product_unit
             else:
-                if self.object.product_quantity > product.total_product_quantity:
-                    return self.form_invalid(form)
                 # sumar litros egresados antiguos                
                 product.total_product_quantity = (product.total_product_quantity + temp) - self.object.product_quantity
+                product.product_unit = self.object.product_unit
         #si cambia el tipo de operacion en la edicion
         else:
-            if self.object.operation_type == 'ingreso':
+            if self.object.operation_type == 'Ingreso':
                 if self.object.product_quantity < 0:
                     return self.form_invalid(form)
                 # operacion inversa     
                 product.total_product_quantity = (product.total_product_quantity + temp) + self.object.product_quantity
+                product.product_unit = self.object.product_unit
             else:
                 if self.object.product_quantity < 0:
                     return self.form_invalid(form)
                 # operacion inversa                
-                product.total_product_quantity = (product.total_product_quantity - temp) - self.object.product_quantity                       
+                product.total_product_quantity = (product.total_product_quantity - temp) - self.object.product_quantity
+                product.product_unit = self.object.product_unit                       
         product.save()
         return super().form_valid(form)
 
@@ -248,7 +254,7 @@ def DeleteProductManagementOperation(request, refectory_id, pk):
     product_op = get_object_or_404(ProductManagement, id = pk)
     product = Product.objects.get(product_name=product_op.product_name,refectory_id=refectory_id)
 
-    if product_op.operation_type == 'ingreso':
+    if product_op.operation_type == 'Ingreso':
         product.total_product_quantity -= product_op.product_quantity
 
 

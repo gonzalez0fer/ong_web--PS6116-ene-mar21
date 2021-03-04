@@ -11,7 +11,7 @@
   <div class="col-md-7">
     <div class="card">
       <div class="card-header card-header-info">
-        <h4 class="card-title">Realiza una Operación de "Entrada" o "Salida"</h4>
+        <h4 class="card-title">Realiza una Operación de "Ingreso" o "Egreso"</h4>
             <p class="card-category">Completa los datos.</p>
       </div>
       <div class="card-body">
@@ -22,22 +22,6 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                 <label class="bmd-label-floating">Tipo de operación</label>
-                  <select id="operation_type" name="operation_type" class="form-control">
-                    <option value="none">Seleccione tipo de operación... </option>
-                    <option value="ingreso">Entrada</option>
-                    <option value="consumo">Salida</option>
-                  </select>
-              </div>
-              <span id="operation_type_error" class="text-danger" style="display : none"></span>
-            </div>
-          </div>
-
-          <br/>
-
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
                 <label class="bmd-label-floating">Nombre del producto</label>
                 <input type="text" list="product_list" name="product_cod" id="product_cod" class="form-control">
                   <datalist id="product_list">
@@ -47,6 +31,38 @@
                   </datalist>
               </div>
               <span id="product_cod_error" class="text-danger" style="display : none"></span>
+            </div>
+          </div>
+
+          <br/>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Tipo de operación</label>
+                 <select id="operation_type" name="operation_type" class="form-control">
+                   <option value="none">Seleccione tipo de operación... </option>
+                   <option value="Ingreso">Ingreso</option>
+                   <option value="Egreso">Egreso</option>
+                 </select>
+              </div>
+              <span id="operation_type_error" class="text-danger" style="display : none"></span>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Unidad</label>
+                 <select id="product_unit" name="product_unit" class="form-control">
+                   <option value="none">Seleccione tipo de unidad... </option>
+                   <option value="Kg">Kg</option>
+                   <option value="g">g</option>
+                   <option value="L">L</option>
+                   <option value="ml">ml</option>
+                   <option value="Unidad(es)">Unidad(es)</option>
+                   <option value="Pieza(s)">Pieza(s)</option>
+                 </select>
+              </div>
+              <span id="product_unit_error" class="text-danger" style="display : none"></span>
             </div>
             <!--
             <div class="col-md-6">
@@ -70,7 +86,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Precio Unitario (Bolívares)</label>
-                  <input id="product_unitary_amount" type="number" class="form-control" name="product_unitary_amount">
+                  <input id="product_unitary_amount" type="number" step="0.01" class="form-control" name="product_unitary_amount">
               </div>
               <span id="product_unitary_amount_error" class="text-danger" style="display : none"></span>
             </div>
@@ -99,14 +115,14 @@
       <div class="card-body">      
         <h4 class="card-title">
           Aquí podras realizar una operacion en el sistema donde
-          indiques algun ingreso o egreso generado por la venta o
-          compra de productos para el mantenimiento de los equipos.
+          indiques algun Ingreso o egreso generado por la compra o
+          uso de productos para el mantenimiento de los equipos.
         </h4>
         </br>
         <h4>
-          <strong>No olvides que para registrar ingresos debes 
-          seleccionar el tipo de operación "Entrada" y para 
-          egresos "Salida".</strong>
+          <strong>No olvides que para registrar Ingresos debes 
+          seleccionar el tipo de operación "Ingreso" y para 
+          egresos "Egreso".</strong>
         </h4>
       </div>   
     </div>

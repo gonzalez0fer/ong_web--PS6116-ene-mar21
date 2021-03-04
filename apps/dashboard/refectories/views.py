@@ -113,8 +113,6 @@ class RefectoryUpdateView(UpdateView):
                 initial = {'water_percent':(water_tank.current_liters * 100)//water_tank.capacity,
                 })
 
-            print( context['water_extra_fields'].initial )
-
         return context
 
     def post(self, request, *args, **kwargs):

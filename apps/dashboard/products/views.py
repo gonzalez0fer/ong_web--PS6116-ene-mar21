@@ -30,6 +30,7 @@ class ProductsListView(ListView):
                     'id':i.id, 
                     'product_name':i.product_name,
                     'total_product_quantity':i.total_product_quantity,
+                    'product_unit':i.product_unit,
             })
 
         context['refectory_data'].append({
@@ -59,6 +60,7 @@ class ProductsSingleListView(ListView):
                     'id':i.id, 
                     'product_name':i.product_name,
                     'total_product_quantity':i.total_product_quantity,
+                    'product_unit':i.product_unit,
             })
 
         context['refectory_data'].append({
