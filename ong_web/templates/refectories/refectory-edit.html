@@ -14,7 +14,7 @@
                 <div class="col-md-8">
                   <div class="card">
                     <div class="card-header card-header-info">
-                      <h4 class="card-title">Edita el Comedor {{form.name.initial}}</h4>
+                      <h4 class="card-title">Editar información</h4>
                       <p class="card-category">Completa los datos.</p>
                     </div>
                     <div class="card-body">
@@ -78,7 +78,7 @@
                             <button type="button" class="btn btn-default">Regresar</button>
                             </a>
                         </p>
-                        <button type="submit" class="btn btn-success pull-right">Salvar</button>
+                        <button type="submit" class="btn btn-success pull-right">Guardar</button>
                         <div class="clearfix"></div>
                       </form>
                     </div>
@@ -95,11 +95,11 @@
                             <div class="card-body">
         
                                 <h4 class="card-title">
-                                    <strong>COMEDOR</strong> 
+                                    <strong>Comedor <b>{{form.name.initial}}</b></strong> 
                                 </br>
                             </br>
-                                    Aqui encontraras y podras editar la informacion completa del comedor
-                                    <strong>{{form.name.initial}}</strong> 
+                                <div style="text-align: justify; padding: 0px 25px;">
+                                    Aquí podrás conocer y modificar los datos con respecto al comedor.
                                 </br>
                             </br>
                                     Direccion: 
@@ -107,6 +107,7 @@
                                 </br>
                                     Capacidad:
                                     <strong>{{form.capacity.initial}} personas</strong>
+                                  </div>
                                 </h4>
                             </br>
                             <div class="row">
