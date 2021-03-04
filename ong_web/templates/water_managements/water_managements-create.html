@@ -41,11 +41,14 @@
               {% else %}
                 <select id="operation_description" name="operation_description" class="form-control">
                   <option value="none">Seleccione la descripción adecuada... </option>
+                  {% if tank_info.operation == 0 %}
                   <option value="Cisterna">Cisterna</option>
                   <option value="Tuberia">Tuberías</option>
+                  {% else %}
                   <option value="Mantenimiento">Mantenimiento</option>
                   <option value="Venta">Venta</option>
                   <option value="Uso Interno">Uso interno</option>
+                  {% endif %}
                 </select>
               {% endif %}
             </div>

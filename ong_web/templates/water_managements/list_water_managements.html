@@ -74,16 +74,25 @@
                                         <td>
                                             {{ i.id }}
                                         </td>
+                                        {% if i.operation_type == "Ingreso"%}
                                         <td>
-                                            {% if i.operation_type == "Ingreso"%}
+                                            
                                                 {{ i.water_liters }}
-                                            {% endif %}
                                         </td>
                                         <td>
+                                            -
+                                        </td>
+                                            {% endif %}
                                             {% if i.operation_type == "Egreso"%}
-                                                {{ i.water_liters }}
-                                            {% endif %}
+                                        <td>
+                                            -
                                         </td>
+                                        <td>
+                                            
+                                                {{ i.water_liters }}
+                                            
+                                        </td>
+                                            {% endif %}
                                         <td>
                                             {{ i.operation_description }} 
                                         </td>                                                                               
