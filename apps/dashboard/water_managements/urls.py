@@ -18,7 +18,7 @@ urlpatterns = [
         ),
 
     path(
-        '<int:tank_id><int:op_type>/create', 
+        '<int:tank_id>/<int:op_type>/create', 
         views.WaterManagementCreateView.as_view(), 
         name='water_management_create'
         ),
