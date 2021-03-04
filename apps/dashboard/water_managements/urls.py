@@ -6,7 +6,7 @@ app_name = "water_managements"
 
 urlpatterns = [
     path(
-        '<int:pk>/', 
+        '<int:pk>', 
         views.WaterManagementList.as_view(), 
         name='water_management_list'
         ),
@@ -18,7 +18,7 @@ urlpatterns = [
         ),
 
     path(
-        '<int:tank_id>/create/', 
+        '<int:tank_id><int:op_type>/create', 
         views.WaterManagementCreateView.as_view(), 
         name='water_management_create'
         ),
@@ -36,7 +36,7 @@ urlpatterns = [
         ),
 
     path(
-        '<int:tank_id>/<int:pk>/update/', 
+        '<int:tank_id>/<int:pk>/update', 
         views.WaterManagementUpdateView.as_view(), 
         name='water_management_update'
         ),
