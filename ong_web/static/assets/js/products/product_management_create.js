@@ -7,7 +7,7 @@ function validate() {
     product_unitary_amount = document.getElementById("product_unitary_amount").value
 
     // Verificar si la operacion es valida
-    if (operation_type != "ingreso" && operation_type != "consumo") {
+    if (operation_type != "Ingreso" && operation_type != "Egreso") {
         document.getElementById("operation_type_error").innerHTML = "Debe seleccionar una opción"
         document.getElementById("operation_type_error").style.display = "block"
         error = true
@@ -57,8 +57,8 @@ function validate() {
         document.getElementById("product_unitary_amount_error").style.display = "none"
     }
 
-    // Verificar que, si la operacion es de consumo...
-    if (operation_type == "consumo") {
+    // Verificar que, si la operacion es de Egreso...
+    if (operation_type == "Egreso") {
         const found = products.find(product => product.product_name == product_cod);
 
         // ... Existe el producto a consumir...

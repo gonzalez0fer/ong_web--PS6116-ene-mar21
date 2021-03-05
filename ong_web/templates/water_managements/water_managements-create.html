@@ -10,42 +10,47 @@
   <div class="col-md-7">
     <div class="card">
       <div class="card-header card-header-info">
-        <h4 class="card-title">Realiza una Operación de "Entrada" o "Salida"</h4>
+        <h4 class="card-title">Realiza una Operación de "Ingreso" o "Egreso"</h4>
             <p class="card-category">Completa los datos.</p>
       </div>
       <div class="card-body">
         <form onsubmit="return validate()" method="post">
-          {% csrf_token %}
-                          
+          {% csrf_token %}           
           <br/>
-            <div class="col-md-6">
-              <div class="form-group">
-                 <label class="bmd-label-floating">Tipo de operación</label>
-                 {% if tank_info.operation == 0 %}
-                  <input type="text" value="ingreso" id="operation_type" name="operation_type" class="form-control" readonly>
-                  {% else %}
-                  <input type="text" value="consumo" id="operation_type" name="operation_type" class="form-control" readonly>
-                  {% endif %}
-              </div>
-              <span id="operation_type_error" class="text-danger" style="display : none"></span>
-            </div>    
-
-        <br/>      
-
-            <div class="col-md-6">
-              <div class="form-group">
-                 <label class="bmd-label-floating">Descripción</label>
-                  <select id="operation_description" name="operation_description" class="form-control">
-                    <option value="none">Seleccione la descripción adecuada... </option>
-                    <option value="Cisterna">Cisterna</option>
-                    <option value="Tuberia">Tuberías</option>
-                    <option value="Mantenimiento">Mantenimiento</option>
-                    <option value="Venta">Venta</option>
-                    <option value="Uso Interno">Uso interno</option>
-                  </select>
-              </div>
-              <span id="operation_description_error" class="text-danger" style="display : none"></span>
+          <div class="col">
+            <div class="form-group">
+              <label class="bmd-label-floating">Tipo de operación</label>
+              {% if tank_info.operation == 0 %}
+                <input type="text" value="Ingreso" id="operation_type" name="operation_type" class="form-control" readonly>
+              {% else %}
+                <input type="text" value="Egreso" id="operation_type" name="operation_type" class="form-control" readonly>
+              {% endif %}
             </div>
+            <span id="operation_type_error" class="text-danger" style="display : none"></span>
+          </div>       
+
+          {% if tank_info.sell_operation %}
+            <br/>
+          {% endif %}
+
+          <div class="col">
+            <div class="form-group">
+              <label class="bmd-label-floating">Descripción</label>
+              {% if tank_info.sell_operation %}    
+                <input type="text" value="Venta" id="operation_description" name="operation_description" class="form-control" readonly>
+              {% else %}
+                <select id="operation_description" name="operation_description" class="form-control">
+                  <option value="none">Seleccione la descripción adecuada... </option>
+                  <option value="Cisterna">Cisterna</option>
+                  <option value="Tuberia">Tuberías</option>
+                  <option value="Mantenimiento">Mantenimiento</option>
+                  <option value="Venta">Venta</option>
+                  <option value="Uso Interno">Uso interno</option>
+                </select>
+              {% endif %}
+            </div>
+            <span id="operation_description_error" class="text-danger" style="display : none"></span>
+          </div>
 
           <br/>
 
@@ -61,7 +66,11 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Precio Unitario (Bolívares)</label>
+                {% if tank_info.sell_operation %}
+                  <input id="water_amount" type="number" value="{{ tank_info.sell_price }}" step="0.01" class="form-control" name="water_amount" readonly>
+                {% else %}
                   <input id="water_amount" type="number" step="0.01" class="form-control" name="water_amount">
+                {% endif %}
               </div>
               <span id="water_amount_error" class="text-danger" style="display : none"></span>
             </div>

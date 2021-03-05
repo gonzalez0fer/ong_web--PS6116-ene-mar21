@@ -12,8 +12,8 @@ class CupboardManagement(TimeStampedModel):
         """
         	Every type of issue
         """
-        INGRESO     =   'ingreso'
-        CONSUMO     =   'consumo'
+        Ingreso     =   'Ingreso'
+        Egreso     =   'Egreso'
         NONE        =   'none'
 
 

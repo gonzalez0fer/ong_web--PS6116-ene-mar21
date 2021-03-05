@@ -4,7 +4,7 @@
 <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Asigna un Comedor</h2>
+            <h2>Asignar comedor </h2>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -15,7 +15,9 @@
             <div class="modal-body">
               {% for field in form %}
                 <div class="form-group">
-                  <label for="{{ field.id_for_label }}">Comedor a Asignar</label>
+                  <label for="{{ field.id_for_label }}">Solo se mostraran los comedores que se encuentren registrados. <br>Para registrar un comedor dirijase a 
+                    Comedores -> Agregar comedor.
+                  </label>
                   {% render_field field class="form-control" placeholder=field.label %}
                 </div>
               {% endfor %}

@@ -12,7 +12,7 @@
       <div class="card">
         <div class="card-header card-header-info">
           <h4 class="card-title">
-            Crear una cuenta de autorizado
+            Registrar Usuario
           </h4>
         </div>
         <div class="card-body">
@@ -21,7 +21,7 @@
               {% if msg %}
                 <span class="text-danger">{{ msg }}</span>
               {% else %}
-                agrega todos los datos
+                Completar todos los campos
               {% endif %}  
           </h6>
           
@@ -41,7 +41,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="bmd-label-floating">Email</label>
+                    <label class="bmd-label-floating">Correo</label>
                     {{ form.email }}
                   </div>
                 </div>
@@ -53,7 +53,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="bmd-label-floating">Password</label>
+                    <label class="bmd-label-floating">Contraseña</label>
                     {{ form.password1 }}
                   </div>
                 </div>
@@ -65,7 +65,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="bmd-label-floating">Verifica el Password</label>
+                    <label class="bmd-label-floating">Verificar la contraseña</label>
                     {{ form.password2 }}
                   </div>
                 </div>
@@ -100,18 +100,18 @@
               <img class="img" src="/static/assets/img/flats/user.png" />
             </a>
           </div>
-          <div class="card-body">
-
-              <h4 class="card-title">
-                   Un usuario autorizado tendra permisos limitados a ejercer 
-                   control sobre un comedor, y podra ingresar al sistema una vez
-                   que tenga un comedor bajo su control. 
-              </h4>
-            </br>
-              <h4>
-                  <strong>No olvides asignarle un comedor
-                    desde el panel administrativo de usuario!!!</strong>
-              </h4>
+          <div class="card-body" style="text-align: justify;">
+            <div style="padding: 0px 30px;">
+                <h4 class="card-title" >
+                  Los usuarios a registrar tendra acciones limitadas y 
+                  podrán ingresar al sistema una vez se les asigne un comedor.
+                </h4>
+              </br>
+                <h4>
+                  <strong>Luego de registrar al usuario podras asignarle un comedor en: <br>
+                    Usuarios->Ver usuarios->Editar.</strong>
+                </h4>
+              </div>
             </div>   
         </div>
       </div>

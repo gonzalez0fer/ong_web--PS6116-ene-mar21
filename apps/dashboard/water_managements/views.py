@@ -163,7 +163,7 @@ class WaterManagementCreateView(CreateView):
         self.object.cupboard_id = self.kwargs['tank_id']
         tank = WaterTank.objects.get(id=self.kwargs['tank_id'])
         #validaciones
-        if self.object.operation_type == 'ingreso':
+        if self.object.operation_type == 'Ingreso':
             if self.object.water_liters > tank.capacity:
                 return self.form_invalid(form)    
             tank.current_liters = tank.current_liters + self.object.water_liters    
@@ -221,7 +221,7 @@ class WaterManagementCreateViewGuest(CreateView):
         tank = WaterTank.objects.get(refectory_id=self.request.user.profile.refectory.id)
         self.object.cupboard = tank
         #validaciones
-        if self.object.operation_type == 'ingreso':
+        if self.object.operation_type == 'Ingreso':
             if self.object.water_liters > tank.capacity:
                 return self.form_invalid(form)    
             tank.current_liters = tank.current_liters + self.object.water_liters    
@@ -256,7 +256,7 @@ class WaterManagementRegisterSell(CreateView):
             'id' : query.id,
             'capacity' : query.capacity,
             'current_liters' : query.current_liters,
-            'operation': 0,
+            'operation': 1,
             'sell_operation': True,
             'sell_price': query.refectory.capacity,
         }
@@ -338,7 +338,7 @@ class WaterManagementUpdateView(UpdateView):
         #validaciones
         # si no se cambia el tipo de operacion
         if temp_operation == self.object.operation_type:
-            if self.object.operation_type == 'ingreso':
+            if self.object.operation_type == 'Ingreso':
                 if self.object.water_liters > tank.capacity:
                     return self.form_invalid(form)
                 # restar litros ingresados antiguos     
@@ -350,7 +350,7 @@ class WaterManagementUpdateView(UpdateView):
                 tank.current_liters = (tank.current_liters + temp) - self.object.water_liters
         #si cambia el tipo de operacion en la edicion
         else:
-            if self.object.operation_type == 'ingreso':
+            if self.object.operation_type == 'Ingreso':
                 if self.object.water_liters > tank.capacity:
                     return self.form_invalid(form)
                 # operacion inversa     
@@ -403,7 +403,7 @@ class WaterManagementUpdateViewGuest(UpdateView):
         #validaciones
         # si no se cambia el tipo de operacion
         if temp_operation == self.object.operation_type:
-            if self.object.operation_type == 'ingreso':
+            if self.object.operation_type == 'Ingreso':
                 if self.object.water_liters > tank.capacity:
                     return self.form_invalid(form)
                 # restar litros ingresados antiguos     
@@ -415,7 +415,7 @@ class WaterManagementUpdateViewGuest(UpdateView):
                 tank.current_liters = (tank.current_liters + temp) - self.object.water_liters
         #si cambia el tipo de operacion en la edicion
         else:
-            if self.object.operation_type == 'ingreso':
+            if self.object.operation_type == 'Ingreso':
                 if self.object.water_liters > tank.capacity:
                     return self.form_invalid(form)
                 # operacion inversa     
@@ -441,9 +441,9 @@ class WaterManagementUpdateViewGuest(UpdateView):
 def DeleteWaterOperation(request,pk):
     water_op = get_object_or_404(WaterManagement, id = pk)
     tank = WaterTank.objects.get(id=water_op.cupboard.id)
-    last_filled = WaterManagement.objects.exclude(id=water_op.id).filter(operation_type='ingreso', cupboard=tank).order_by('-created')
+    last_filled = WaterManagement.objects.exclude(id=water_op.id).filter(operation_type='Ingreso', cupboard=tank).order_by('-created')
 
-    if water_op.operation_type == 'ingreso':
+    if water_op.operation_type == 'Ingreso':
         tank.current_liters -= water_op.water_liters
         tank.last_fill_date = last_filled[0].created
 

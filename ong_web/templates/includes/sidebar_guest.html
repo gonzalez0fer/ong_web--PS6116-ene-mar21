@@ -1,72 +1,68 @@
-    <div class="sidebar" data-color="azure" data-background-color="white" data-image="/static/assets/img/sidebar-1.jpg">
-      <div class="logo">
-        <a href="/dashboard" class="simple-text logo-normal">
-         <img class="img" src="/static/assets/img/logo/Agua-Segura-Logo-Med.png"/>
-          <!-- <img src="https://masverdemashumano.org/wp-content/uploads/2020/08/Logo-VerdeHumano.png" alt="+Verde +Humano" style="max-width: 245px">-->
+<div class="sidebar" data-color="azure" data-background-color="white" data-image="/static/assets/img/sidebar-1.jpg">
+  <div class="logo">
+    <a href="/dashboard" class="simple-text logo-normal">
+      <img class="img" src="/static/assets/img/logo/Agua-Segura-Logo-Med.png"/>
+      <!-- <img src="https://masverdemashumano.org/wp-content/uploads/2020/08/Logo-VerdeHumano.png" alt="+Verde +Humano" style="max-width: 245px">-->
+    </a>
+  </div>
+  {% if user.is_authenticated %}
+  <div class="sidebar-wrapper">
+    <ul class="nav">
+      <li class="nav-item {% if 'index' == segment %} active {% endif %}">
+        <a class="nav-link" href="/dashboard">
+          <i class="material-icons">dashboard</i>
+          <p>Inicio</p>
         </a>
-      </div>
-      {% if user.is_authenticated %}
-      <div class="sidebar-wrapper">
-        <ul class="nav">
-          <li class="nav-item {% if 'index' == segment %} active {% endif %}">
-            <a class="nav-link" href="/dashboard">
-              <i class="material-icons">dashboard</i>
-              <p>Dashboard</p>
-            </a>
-          </li>
-          {% url 'dashboard:user:edit_profile' as user_view %} 
-          <li class="nav-item {% if request.path == user_view %} active {% endif %}">
-            <a class="nav-link" href="{% url 'dashboard:user:edit_profile' %}">
-              <i class="material-icons">person</i>
-              <p>Mi Usuario</p>
-            </a>
-          </li>
-          {% if user.profile.refectory %}
-          {% url 'dashboard:water_managements:water_management_list_guest' as tanks_view %} 
-          <li class="nav-item {% if request.path == tanks_view %} active {% endif %}">
-            <a class="nav-link" href="{% url 'dashboard:water_managements:water_management_list_guest'%}">
-              <i class="material-icons">opacity</i>
-              <p>Agua</p>
-            </a>
-          </li>
-          {% endif %}
-
-          {% if user.profile.refectory %}
-          {% url 'dashboard:cupboard:list_products' as cupboard_view %} 
-          <li class="nav-item {% if request.path == cupboard_view %} active {% endif %} ">
-            <a class="nav-link" href="{% url 'dashboard:cupboard:list_products'%}">
-              <i class="material-icons">kitchen</i>
-              <p>Inventario</p>
-            </a>
-          </li>
-          {% endif %}
-
-          {% if user.profile.refectory %}
-          {% url 'dashboard:products:list_maintenance_product_guest' as products_maintenance %} 
-          <li class="nav-item {% if request.path == products_maintenance %} active {% endif %} ">
-            <a class="nav-link" href="{% url 'dashboard:products:list_maintenance_product_guest'%}">
-              <i class="material-icons">science</i>
-              <p>Suministros</p>
-            </a>
-          </li>
-          {% endif %}
-
-          <li class="nav-item">
-            <a class="nav-link" href="">
-              <i class="material-icons">home_repair_service</i>
-              <p>Mantenimiento</p>
-            </a>
-          </li>
-
-
-          <li class="nav-item" style="position: absolute; bottom: 5%;">
-            <a class="nav-link" href="{% url 'logout' %}" >
-              <i class="material-icons">directions_run</i>
-              <p>Logout</p>
-            </a>
-          </li>
-        </ul>
-      </div>
+      </li>
+      {% url 'dashboard:user:edit_profile' as user_view %} 
+      <li class="nav-item {% if request.path == user_view %} active {% endif %}">
+        <a class="nav-link" href="{% url 'dashboard:user:edit_profile' %}">
+          <i class="material-icons">person</i>
+          <p>Mi Usuario</p>
+        </a>
+      </li>
+      {% if user.profile.refectory %}
+      {% url 'dashboard:water_managements:water_management_list_guest' as tanks_view %} 
+      <li class="nav-item {% if request.path == tanks_view %} active {% endif %}">
+        <a class="nav-link" href="{% url 'dashboard:water_managements:water_management_list_guest'%}">
+          <i class="material-icons">opacity</i>
+          <p>Agua</p>
+        </a>
+      </li>
       {% endif %}
 
-    </div>
+      {% if user.profile.refectory %}
+      {% url 'dashboard:cupboard:list_products' as cupboard_view %} 
+      <li class="nav-item {% if request.path == cupboard_view %} active {% endif %} ">
+        <a class="nav-link" href="{% url 'dashboard:cupboard:list_products'%}">
+          <i class="material-icons">kitchen</i>
+          <p>Inventario</p>
+        </a>
+      </li>
+      {% endif %}
+
+      {% if user.profile.refectory %}
+      {% url 'dashboard:products:list_maintenance_product_guest' as products_maintenance %} 
+      <li class="nav-item {% if request.path == products_maintenance %} active {% endif %} ">
+        <a class="nav-link" href="{% url 'dashboard:products:list_maintenance_product_guest'%}">
+          <i class="material-icons">science</i>
+          <p>Suministros</p>
+        </a>
+      </li>
+      {% endif %}
+      <li class="nav-item">
+        <a class="nav-link" href="">
+          <i class="material-icons">home_repair_service</i>
+          <p>Mantenimiento</p>
+        </a>
+      </li>          
+      <li class="nav-item" style="position: absolute; bottom: 5%; width: 75%;">
+        <a class="nav-link" href="{% url 'logout' %}" >
+          <i class="material-icons">directions_run</i>
+          <p>Cerrar Sesión</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+  {% endif %}
+</div>

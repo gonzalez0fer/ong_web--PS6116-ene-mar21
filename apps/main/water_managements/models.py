@@ -12,8 +12,8 @@ class WaterManagement(TimeStampedModel):
         """
         	Every type of issue
         """
-        INGRESO     =   'ingreso'
-        CONSUMO     =   'consumo'
+        Ingreso     =   'Ingreso'
+        Egreso     =   'Egreso'
 
     class OperationDescription(models.TextChoices):
         """
@@ -39,7 +39,7 @@ class WaterManagement(TimeStampedModel):
         max_length=10, 
         null=False, 
         choices=OperationType.choices, 
-        default = OperationType.INGRESO
+        default = OperationType.Ingreso
     )
 
     water_liters = models.IntegerField(

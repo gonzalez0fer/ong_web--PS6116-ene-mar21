@@ -57,14 +57,14 @@ function liters_validation() {
     tank_capacity = parseInt(tank_capacity)
     tank_current_liters = parseInt(tank_current_liters)
 
-    if (operation_type == "ingreso") {
+    if (operation_type == "Ingreso") {
         if (tank_current_liters + parseInt(water_liters) > tank_capacity) {
             document.getElementById("water_liters_error").innerHTML = "Debe ingresar una cantidad válida para la capacidad del tanque"
             document.getElementById("water_liters_error").style.display = "block"
         }
     }
 
-    if (operation_type == "consumo") {
+    if (operation_type == "Egreso") {
         if (parseInt(water_liters) > tank_current_liters) {
             document.getElementById("water_liters_error").innerHTML = "No puede extraer más litros de la cantidad actual del tanque"
             document.getElementById("water_liters_error").style.display = "block"
@@ -152,14 +152,14 @@ function liters_update_validation() {
     tank_current_liters = parseInt(tank_current_liters)
     original_quantity = parseInt(original_quantity)
 
-    if (operation_type == "ingreso") {
+    if (operation_type == "Ingreso") {
         if (tank_current_liters - original_quantity + parseInt(water_liters) > tank_capacity) {
             document.getElementById("water_liters_error").innerHTML = "Debe ingresar una cantidad válida para la capacidad del tanque"
             document.getElementById("water_liters_error").style.display = "block"
         }
     }
 
-    if (operation_type == "consumo") {
+    if (operation_type == "Egreso") {
         if (parseInt(water_liters) > tank_current_liters) {
             document.getElementById("water_liters_error").innerHTML = "No puede extraer más litros de la cantidad actual del tanque"
             document.getElementById("water_liters_error").style.display = "block"
