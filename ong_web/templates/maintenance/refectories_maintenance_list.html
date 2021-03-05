@@ -27,9 +27,6 @@
                           <th>
                               Ciudad
                           </th>
-                          <!-- <th>
-                              Capacidad de los Tanques
-                          </th> -->
                           <th>
                             Encargados
                         </th>
@@ -50,9 +47,6 @@
                                         <td>
                                             {{ refectory_object.address }}
                                         </td>
-                                        <!-- <td>
-                                            {{ refectory_object.capacity }}
-                                        </td> -->
                                         <td>
                                             {{ refectory_object.mandated }}
                                         </td>
@@ -60,10 +54,9 @@
                                             <a href="{% url 'dashboard:products:list_maintenance_product' refectory_object.id %}">
                                                 <button type="button" class="btn" style='background-color: #37005D'><i class="material-icons">hardware</i> Ver Productos de Mantenimiento</button>
                                             </a>
-                                            <!-- <a href="{% url 'dashboard:refectory:edit_refectory' refectory_object.id %}">
-                                                <button type="button" class="btn btn-info">Editar</button>
+                                            <a href="{% url 'dashboard:equipments:list_equipments' refectory_object.id %}">
+                                                <button type="button" class="btn" style='background-color: #37005D'><i class="material-icons">cable</i> Ver Equipos</button>
                                             </a>
-                                            <button type="button" class="btn btn-danger">Eliminar</button> -->
                                         </td>
                                         </tr>
                             {% endfor %}

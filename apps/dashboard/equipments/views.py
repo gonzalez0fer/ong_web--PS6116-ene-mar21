@@ -4,18 +4,21 @@ from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, CreateView
 from django.http import HttpResponse
 
+from apps.main.refectories.models import Refectory
 from apps.main.equipments.models import Equipment
 from .forms import EquipmentForm
 
 class EquipmentsListView(ListView):
-    template_name = "suppliers/supplier_list.html"
+    template_name = "equipments/equipment_list.html"
     queryset = Equipment.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        query = Equipment.objects.get(refectory_id=self.kwargs['refectory_id'])
+        refectory = Refectory.objects.get(id=self.kwargs['refectory_id'])
+        query = Equipment.objects.filter(refectory_id=self.kwargs['refectory_id'])
         
         context['object_list'] = []
+        context['refectory_data'] = []
 
         for i in query:
             context['object_list'].append({
@@ -25,18 +28,27 @@ class EquipmentsListView(ListView):
                 'equipment_frequency':i.maintenance_frequency,
             })
 
+        context['refectory_data'].append({
+            'id':refectory.id,
+            'refectory_name': refectory.name,
+            'refectory_address': refectory.address,
+            })
+
         return context
 
 class EquipmentCreateView(CreateView):
     model = Equipment
     queryset = Equipment.objects.all()
     form_class = EquipmentForm
-    template_name = ""
+    template_name = "equipments/equipment_create.html"
     success_url = "/dashboard"
 
     def get_context_data(self, **kwargs):
 
         context = super(EquipmentCreateView, self).get_context_data(**kwargs)
+        context['refectory'] = {
+            'id' : self.kwargs['refectory_id'],
+        }
         return context
 
     def post(self, request, *args, **kwargs):
