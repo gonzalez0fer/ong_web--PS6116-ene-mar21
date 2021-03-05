@@ -29,9 +29,7 @@ class CupboardsListView(ListView):
             context['object_list'].append({
                     'id':i.id, 
                     'product_name':i.product_name,
-                    'total_product_weight':i.total_product_weight,
                     'total_product_quantity':i.total_product_quantity,
-                    'total_product_investment':i.total_product_investment,
             })
 
         context['refectory_data'].append({
@@ -40,8 +38,6 @@ class CupboardsListView(ListView):
             'refectory_address': refectory.address,
             })
         return context 
-
-
 
 class CupboardsSingleListView(ListView):
     template_name = "cupboards/cupboard_list.html"
@@ -63,9 +59,7 @@ class CupboardsSingleListView(ListView):
             context['object_list'].append({
                     'id':i.id, 
                     'product_name':i.product_name,
-                    'total_product_weight':i.total_product_weight,
                     'total_product_quantity':i.total_product_quantity,
-                    'total_product_investment':i.total_product_investment,
             })
 
         context['refectory_data'].append({

@@ -12,9 +12,8 @@ class CupboardManagement(TimeStampedModel):
         """
         	Every type of issue
         """
-        Ingreso     =   'Ingreso'
-        Egreso     =   'Egreso'
-        NONE        =   'none'
+        INGRESO     =   'Ingreso'
+        EGRESO     =   'Egreso'
 
 
     cupboard =  models.ForeignKey(
@@ -25,11 +24,17 @@ class CupboardManagement(TimeStampedModel):
         on_delete = models.SET_NULL,
         ) 
 
+    product_name = models.CharField(
+        max_length=100, 
+        blank=True, 
+        null=True
+    )
+
     operation_type = models.CharField(
         max_length=10, 
         null=False, 
         choices=OperationType.choices, 
-        default = OperationType.NONE
+        default = OperationType.INGRESO
     )
 
     product_quantity = models.IntegerField(
@@ -37,12 +42,12 @@ class CupboardManagement(TimeStampedModel):
         null = True,
     )
 
-    product_weight = models.IntegerField(
+    product_unitary_amount = models.FloatField(
         blank = True,
         null = True,
     )
 
-    product_amount = models.IntegerField(
+    product_total_amount = models.FloatField(
         blank = True,
         null = True,
     )

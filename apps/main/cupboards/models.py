@@ -14,17 +14,7 @@ class Cupboard(TimeStampedModel):
         null=True
         )
 
-    total_product_weight = models.IntegerField(
-        blank = True,
-        null = True,
-    )
-
     total_product_quantity = models.IntegerField(
-        blank = True,
-        null = True,
-    )
-
-    total_product_investment = models.IntegerField(
         blank = True,
         null = True,
     )
