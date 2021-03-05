@@ -424,9 +424,17 @@ class ProductManagementUpdateViewGuest(UpdateView):
 
 def DeleteProductManagementOperation(request, refectory_id, pk):
     product_op = get_object_or_404(ProductManagement, id = pk)
+    operation_list = ProductManagement.objects.filter(product_cod=product_op.product_cod).order_by('-created')
+    
+    if operation_list[0].created != product_op.created:
+        return HttpResponseRedirect("/dashboard/products/"+str(refectory_id))
+
     product = Product.objects.get(product_name=product_op.product_name,refectory_id=refectory_id)
 
+    
+
     if product_op.operation_type == 'Ingreso':
+
         product.total_product_quantity -= product_op.product_quantity
 
 
