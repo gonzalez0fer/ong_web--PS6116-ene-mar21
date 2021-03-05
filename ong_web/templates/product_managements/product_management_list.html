@@ -3,7 +3,26 @@
 {% block title %} UI Tables {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<style>
+    .app-button{
+        width: 150px;
+        margin:0 40px;
+        display:inline-block;
+        line-height: 60px;
+        border-radius: 50px;
+    }
+    .bttn-row{
+    text-align:center;
+    margin-left:-20px;
+    margin-right:-20px;
+    }
+    .btn.btn-default.action:hover{
+        background-color: #4caf50;
+    }
+
+</style>
+{% endblock stylesheets %}
 
 {% block content %}
 
@@ -92,14 +111,19 @@
                                             {{ product_object.created_by }}
                                         </td>
                                         <td>
+                                            {% if user.is_superuser %}
                                             <a  href="{% url 'dashboard:product_managements:update' refectory_data.0.id product_object.id%}">
                                                 <button type="button" class="btn btn-info">Editar</button>
                                             </a>
-                                                {% if user.is_superuser %}
+                                                
                                             <a  href="{% url 'dashboard:product_managements:delete' refectory_data.0.id product_object.id%}">
                                                 <button type="button" class="btn btn-danger">Eliminar</button>
                                             </a>
-                                                {% endif %}
+                                            {% else %}
+                                            <a  href="{% url 'dashboard:product_managements:update_guest' product_object.id%}">
+                                                <button type="button" class="btn btn-info">Editar</button>
+                                            </a>                                            
+                                            {% endif %}
                                         </td>
                                         </tr>
                             {% endfor %}
@@ -112,11 +136,6 @@
             </br>
         </br>
             {% comment %} aqui va validacion de super usuario para regresar {% endcomment %}
-            <p style="float: right; margin-right: 50px;">
-                <a  href="{% url 'dashboard:product_managements:create' refectory_data.0.id %}">
-                    <button type="button" class="btn btn-success">Realizar operación</button>
-                </a>
-            </p>
             <p style="float: left; margin-left: 50px;">
                 {% if user.is_superuser %}
                 <a  href="{% url 'dashboard:products:list_maintenance_product' refectory_data.0.id %}">
@@ -128,8 +147,23 @@
                 </a>
                 {% endif %}
             </p>
-
-
+            <p class="bttn-row">
+            {% if user.is_superuser %}
+                <a  href="{% url 'dashboard:product_managements:create' refectory_data.0.id 0 %}">
+                    <button type="button" class="btn btn-success">Registrar Ingreso</button>
+                </a>
+                <a  href="{% url 'dashboard:product_managements:create' refectory_data.0.id 1 %}">
+                    <button type="button" class="btn btn-success">Registrar Egreso</button>
+                </a>
+            {% else %}
+                <a  href="{% url 'dashboard:product_managements:create_guest' 0 %}">
+                    <button type="button" class="btn btn-success">Registrar Ingreso</button>
+                </a>                
+                <a  href="{% url 'dashboard:product_managements:create_guest' 1 %}">
+                    <button type="button" class="btn btn-success">Registrar Egreso</button>
+                </a>
+            {% endif %}
+            </p>
               </div>
             </br>
         </br>

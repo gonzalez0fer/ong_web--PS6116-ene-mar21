@@ -42,7 +42,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Unidad</label>
-                  {% render_field form.product_unit class="form-control" name="product_unit" id="product_unit"%}                
+                  {% render_field form.product_unit class="form-control" name="product_unit" id="product_unit" readonly="True"%}                
               </div>
               <span id="product_unit_error" class="text-danger" style="display : none"></span>
             </div>
@@ -77,9 +77,15 @@
 
           <br/>
           <p class="pull-left">
+            {% if user.is_superuser %}
             <a  href="{% url 'dashboard:product-managements:list_product_management' refectory_info.refectory_id %}"> 
               <button type="button" class="btn btn-default">Regresar</button>
             </a>
+            {% else %}
+            <a  href="{% url 'dashboard:product-managements:list_product_management_guest' %}"> 
+              <button type="button" class="btn btn-default">Regresar</button>
+            </a>
+            {% endif %}            
           </p>
           <button id="submit-button" type="submit" class="btn btn-success pull-right">Actualizar</button>
           <div class="clearfix"></div>

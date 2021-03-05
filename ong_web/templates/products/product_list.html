@@ -101,9 +101,15 @@
                         Direccion: 
                         {{refectory_data.0.refectory_address}}
                       </h4>
+                      {% if user.is_superuser %}
                       <a  href="{% url 'dashboard:product_managements:list_product_management' refectory_data.0.id %}">
                         <button type="button" class="btn btn-success">Ver Todas las Operaciones</button>
                       </a>
+                      {% else %}
+                      <a  href="{% url 'dashboard:product_managements:list_product_management_guest' %}">
+                        <button type="button" class="btn btn-success">Ver Todas las Operaciones</button>
+                      </a>
+                      {% endif %}                      
                     </div>    
                         
 
