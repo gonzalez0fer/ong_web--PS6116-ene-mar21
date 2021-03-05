@@ -445,7 +445,10 @@ def DeleteWaterOperation(request,pk):
 
     if water_op.operation_type == 'Ingreso':
         tank.current_liters -= water_op.water_liters
-        tank.last_fill_date = last_filled[0].created
+        if len(last_filled) == 0:
+            tank.last_fill_date = None
+        else:    
+            tank.last_fill_date = last_filled[0].created
 
     else:
         tank.current_liters += water_op.water_liters
