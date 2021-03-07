@@ -126,6 +126,15 @@ function validate() {
         error = true
     }
 
+    operation_type_error = document.getElementById("operation_type_error").style.display
+    operation_description_error = document.getElementById("operation_description_error").style.display
+    water_liters_error = document.getElementById("water_liters_error").style.display
+    water_amount_error = document.getElementById("water_amount_error").style.display
+
+    if (operation_type_error == "block" || operation_description_error == "block" || water_liters_error == "block" || water_amount_error == "block"){
+        error = true
+    }
+
     if (error) {
         return false
     }
