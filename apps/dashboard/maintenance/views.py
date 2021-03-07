@@ -1,3 +1,4 @@
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, CreateView
@@ -7,11 +8,12 @@ from django.contrib.auth.decorators import login_required
 from apps.main.users.decorators import superuser_required
 
 from .forms import MaintenanceForm
-from apps.dashboard.maintenance.forms import ProductManagementForm
+from apps.dashboard.product_managements.forms import ProductManagementForm
 from apps.main.maintenance.models import Maintenance
 from apps.main.refectories.models import Refectory
 from apps.main.products.models import Product
 from apps.main.product_managements.models import ProductManagement
+from apps.main.equipments.models import Equipment
 
 @method_decorator([login_required, superuser_required], name='dispatch')
 class MaintenanceList(ListView):
@@ -37,6 +39,8 @@ class MaintenanceList(ListView):
                     'created_by':str(i.created_by.profile.name) + ' ' + str(i.created_by.profile.last_name),
                     'created':i.created,
             })
+
+        context['equipment_id'] = self.kwargs['pk']
 
         context['refectory_data'].append({
             'id':refectory.id,
@@ -68,6 +72,8 @@ class MaintenanceListGuest(ListView):
                     'created_by':str(i.created_by.profile.name) + ' ' + str(i.created_by.profile.last_name),
                     'created':i.created,
             })
+        
+        context['equipment_id'] = self.kwargs['pk']
 
         context['refectory_data'].append({
             'id':refectory.id,
@@ -367,3 +373,15 @@ class MaintenanceUpdateViewGuest(UpdateView):
                 form=form,
             )
         )
+
+def DeleteMaintenance(request, refectory_id, pk):
+    maintenance_op = get_object_or_404(Maintenance, id = pk)
+    product_operation = ProductManagement.objects.get(id=maintenance_op.product_operation.id)
+    product = Product.objecs.get(refectory_id=refectory_id,product_name=product_operation.product_name)
+
+    product.total_product_quantity += product_operation.product_quantity 
+    product.save()    
+    product_operation.delete()
+    maintenance_op.delete()
+    return HttpResponseRedirect("/")
+    
