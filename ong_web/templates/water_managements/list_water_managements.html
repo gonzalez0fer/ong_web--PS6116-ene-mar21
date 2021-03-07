@@ -110,14 +110,14 @@
                                         <td>
                                             {% if user.is_superuser %}
                                                 <a  href="{% url 'dashboard:water_managements:water_management_update' tank_id i.id %}" >
-                                                    <button type="button" class="btn btn-info" style="cursor : pointer " title="Editar">Editar</button>
+                                                    <button type="button" class="btn-info" style="cursor : pointer " title="Editar">Editar</button>
                                                 </a>
                                                 <a href="{% url 'dashboard:water_managements:water_management_delete' i.id %}">
-                                                    <button type="button" class="btn btn-danger" style="cursor : pointer; margin-left: 5px;" title="Eliminar">Eliminar</button>
+                                                    <button type="button" class="btn-danger" style="cursor : pointer; margin-left: 5px;" title="Eliminar">Eliminar</button>
                                                 </a>
                                             {% else %}
                                                 <a  href="{% url 'dashboard:water_managements:water_management_update_guest' i.id %}" >
-                                                    <button type="button" class="btn btn-info" style="cursor : pointer " title="Editar">Editar</button>
+                                                    <button type="button" class="btn-info" style="cursor : pointer " title="Editar">Editar</button>
                                                 </a>
                                             {% endif %}
                                         </td>
@@ -167,6 +167,7 @@
                     </p>                
                 </div>
               </div>
+            </div>
               <div class="col-md-3">
                 <div class="card card-profile">
                   <div class="card-avatar">
@@ -183,11 +184,11 @@
                                 
                                 Capacidad del tanque
                             </br>
-                                <strong>{{ water_tank_form.capacity.initial }} lts.</strong> 
+                                <strong>{{ water_tank_form.capacity.initial }} L</strong> 
                             </br>
                                 Litros actuales
                                 </br>   
-                                <strong>{{ water_tank_form.current_liters.initial }} lts.</strong>                                 
+                                <strong>{{ water_tank_form.current_liters.initial }} L</strong>                                 
                             </h4>        
                             {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%}                             
                         </div>

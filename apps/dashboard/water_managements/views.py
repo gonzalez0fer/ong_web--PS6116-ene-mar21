@@ -165,7 +165,9 @@ class WaterManagementCreateView(CreateView):
         #validaciones
         if self.object.operation_type == 'Ingreso':
             if self.object.water_liters > tank.capacity:
-                return self.form_invalid(form)    
+                return self.form_invalid(form)
+            elif self.object.water_liters + tank.current_liters > tank.capacity:
+                return self.form_invalid(form)
             tank.current_liters = tank.current_liters + self.object.water_liters    
             tank.last_fill_date = self.object.created
         else:
@@ -223,6 +225,8 @@ class WaterManagementCreateViewGuest(CreateView):
         #validaciones
         if self.object.operation_type == 'Ingreso':
             if self.object.water_liters > tank.capacity:
+                return self.form_invalid(form)
+            elif self.object.water_liters + tank.current_liters > tank.capacity:
                 return self.form_invalid(form)    
             tank.current_liters = tank.current_liters + self.object.water_liters    
             tank.last_fill_date = self.object.created
@@ -341,6 +345,8 @@ class WaterManagementUpdateView(UpdateView):
             if self.object.operation_type == 'Ingreso':
                 if self.object.water_liters > tank.capacity:
                     return self.form_invalid(form)
+                elif self.object.water_liters + tank.current_liters > tank.capacity:
+                     return self.form_invalid(form)
                 # restar litros ingresados antiguos     
                 tank.current_liters = (tank.current_liters - temp) + self.object.water_liters
             else:
@@ -406,6 +412,8 @@ class WaterManagementUpdateViewGuest(UpdateView):
             if self.object.operation_type == 'Ingreso':
                 if self.object.water_liters > tank.capacity:
                     return self.form_invalid(form)
+                elif self.object.water_liters + tank.current_liters > tank.capacity:
+                     return self.form_invalid(form)
                 # restar litros ingresados antiguos     
                 tank.current_liters = (tank.current_liters - temp) + self.object.water_liters
             else:
