@@ -10,16 +10,37 @@ urlpatterns = [
         views.ProductManagementListView.as_view(), 
         name='list_product_management'
         ),
+
     path(
-        '<int:refectory_id>/create',
+        'operations', 
+        views.ProductManagementListViewGuest.as_view(), 
+        name='list_product_management_guest'
+        ),
+
+    path(
+        '<int:refectory_id>/<int:op_type>/create',
         views.ProductManagementCreateView.as_view(),
         name='create'
     ),
+
+    path(
+        '<int:op_type>/create',
+        views.ProductManagementCreateViewGuest.as_view(),
+        name='create_guest'
+    ),
+
     path(
         '<int:refectory_id>/<int:pk>/update',
         views.ProductManagementUpdateView.as_view(),
         name='update'
     ),
+
+    path(
+        '<int:pk>/update',
+        views.ProductManagementUpdateViewGuest.as_view(),
+        name='update_guest'
+    ),
+
     path(
         '<int:refectory_id>/<int:pk>/delete', 
         views.DeleteProductManagementOperation, 

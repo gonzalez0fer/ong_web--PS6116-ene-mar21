@@ -1,0 +1,176 @@
+{% extends "layouts/base.html" %}
+{% load widget_tweaks %}
+{% block title %} Page User {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-7">
+    <div class="card">
+      <div class="card-header card-header-info">
+        <h4 class="card-title">Agregar un Equipo al Inventario</h4>
+            <p class="card-category">Completa los datos</p>
+      </div>
+      <div class="card-body">
+        <form onsubmit="return validate()" method="post">
+          {% csrf_token %}
+                          
+          <br/>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label class="bmd-label-floating">Nombre del equipo</label>
+                <input type="text" name="name" id="name" class="form-control" required="true">
+              </div>
+              <span id="name_error" class="text-danger" style="display : none"></span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label class="bmd-label-floating">Frecuencia de Mantenimiento</label>
+                <select id="maintenance_frequency" name="maintenance_frequency" class="form-control" required="true">
+                  <option value="none">Selecciona Frecuencia de Mantenimiento... </option>
+                  <option value="Semanal">Semanal</option>
+                  <option value="Quincenal">Quincenal</option>
+                  <option value="Mensual">Mensual</option>
+                  <option value="Trimestral">Trimestral</option>
+                  <option value="Semestral">Semestral</option>
+                  <option value="Anual">Anual</option>
+                  <option value="Bienal">Bienal</option>
+                  <option value="Trienal">Trienal</option>
+                </select>
+              </div>
+              <span id="maintenance_frequency_error" class="text-danger" style="display : none"></span>
+            </div>
+          </div>
+
+          <br/>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Marca</label>
+                <input type="text" name="brand" id="brand" class="form-control" required="true">
+              </div>
+              <span id="brand_error" class="text-danger" style="display : none"></span>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Modelo</label>
+                <input id="equipment_model" name="equipment_model" class="form-control" >
+              </div>
+              <span id="equipment_model_error" class="text-danger" style="display : none"></span>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Potencia</label>
+                  <input id="power" name="power" type="number" step="0.01" class="form-control">
+              </div>
+              <span id="power_error" class="text-danger" style="display : none"></span>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Diámetro de Entrada</label>
+                <input name="inlet-diameter" id="inlet-diameter" type="number" step="0.01" class="form-control">
+              </div>
+              <span id="inlet-diameter_error" class="text-danger" style="display : none"></span>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Diámetro</label>
+                <input name="diameter" id="diameter" type="number" step="0.01" class="form-control">
+              </div>
+              <span id="diameter_error" class="text-danger" style="display : none"></span>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Alto</label>
+                <input name="height" id="height" type="number" step="0.01" class="form-control">
+              </div>
+              <span id="height_error" class="text-danger" style="display : none"></span>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Volumen</label>
+                <input name="volume" id="volume" type="number" step="0.01" class="form-control">
+              </div>
+              <span id="volume_error" class="text-danger" style="display : none"></span>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Medidas</label>
+                <input name="measurements" id="measurements" class="form-control">
+              </div>
+              <span id="measurements_error" class="text-danger" style="display : none"></span>
+            </div>    
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Flujo Máximo</label>
+                 <input id="flow" name="flow" type="number" step="0.01" class="form-control" >
+              </div>
+              <span id="flow_error" class="text-danger" style="display : none"></span>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Tamaño del bombillo</label>
+                 <input id="light_bulb_size" name="light_bulb_size" type="number" step="0.01" class="form-control" >
+              </div>
+              <span id="light_bulb_size_error" class="text-danger" style="display : none"></span>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Tamaño del cuarzo</label>
+                 <input id="quartz_size" name="quartz_size" type="number" step="0.01" class="form-control" >
+              </div>
+              <span id="quartz_size_error" class="text-danger" style="display : none"></span>
+            </div>
+          </div>
+          <br/>
+          <p class="pull-left">
+            <a  href="{% url 'dashboard:equipments:list_equipments' refectory.id %}"> <!--{% url dashboard:water_managements:water_management_list-->
+              <button type="button" class="btn btn-default">Regresar</button>
+            </a>
+          </p>
+          <button id="submit-button" type="submit" class="btn btn-success pull-right">Agregar Equipo</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="card card-profile">
+      <div class="card-avatar" style="max-width: 120px; max-height: 120px;">
+          <a href="">
+              <img class="img" src="/static/assets/img/flats/maintainance.png" />
+          </a>
+      </div>
+      <div class="card-body">      
+        <h4 class="card-title">
+          Aquí podrás agregar los equipos con los que cuenta el Punto de Distribución.
+          Estos equipos cuentan con ciertas características que son necesarias para completar el formulario.
+          Algunas otras pueden ser opcionales.
+        </h4>
+        </br>
+      </div>   
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+{% block javascripts %}{% endblock javascripts %}
