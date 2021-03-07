@@ -111,9 +111,11 @@
                 Direccion: 
                 {{refectory_data.0.refectory_address}}
               </h4>
+              {% if user.is_superuser %}
               <a  href="{% url 'dashboard:equipments:create_equipments' refectory_data.0.id %}">
                 <button type="button" class="btn btn-success">Agregar Equipo</button>
               </a>
+              {% endif %}
             </div> 
     </div>
   </div>
