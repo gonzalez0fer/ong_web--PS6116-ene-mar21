@@ -1,0 +1,134 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card card-plain">
+          <div class="card-header card-header-info" >
+            <h4 class="card-title mt-0">Inventario de Equipos del punto de distribución {{refectory_data.0.refectory_name}}</h4>
+            <p class="card-category"> Aqui podras ver todos los equipos con los que cuenta el punto de distribución.</p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table id="equipment_list" class="table table-hover">
+                <thead class="">
+                  <th style="width: 30px;">
+                    ID
+                  </th>
+                  <th style="width: 60px;">
+                    Equipo
+                  </th>
+                  <th style="width: 30px;">
+                    Marca
+                  </th>
+                  <th style="width: 30px;">
+                    Frecuencia
+                  </th>
+                  <th style="width: 30px;">
+                    Acciones
+                  </th>
+                </thead>
+                <tbody>
+                {% for equipment_object in object_list %}
+                  <tr>
+                    <td>
+                      {{ equipment_object.id }}
+                      </td>
+                    <td>
+                      {{ equipment_object.equipment_name }}
+                    </td>
+                    <td>
+                      {{ equipment_object.equipment_brand }}
+                    </td>
+                    <td>
+                      {{ equipment_object.equipment_frequency }}
+                    </td>
+                    <td>
+                      <a href="">
+                        <button type="button" class="btn btn-info">Inspeccionar</button>
+                      </a>
+                      <!-- <a href="">
+                        <button type="button" class="btn btn-info">Registrar Mantenimiento</button>
+                      </a>
+                      <a href="">
+                        <button type="button" class="btn btn-info">Historial de Mantenimientos</button>
+                      </a> -->
+                      {% if user.is_superuser %}
+                      <a  href="{% url 'dashboard:equipments:update_equipments' refectory_data.0.id equipment_object.id %}">
+                        <button type="button" class="btn btn-info">Actualizar</button>
+                      </a>
+                      <a  href="">
+                        <button type="button" class="btn btn-danger">Eliminar</button>
+                      </a>
+                      {% endif %}
+                    </td>
+                  </tr>
+                {% endfor %}
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+    </br>
+</br>
+    {% if user.is_superuser %}
+    <p style="float: left; margin-left: 50px;">
+      <a  href="{% url 'dashboard:maintenance:refectories_maintenance_list' %}">
+        <button type="button" class="btn btn-default">Regresar</button>
+      </a>
+    </p>
+    {% else %}
+    <p style="float: left; margin-left: 50px;">
+      <a  href="/">
+        <button type="button" class="btn btn-default">Regresar</button>
+      </a>
+    </p>
+    {% endif %}
+
+      </div>
+    </br>
+</br>
+
+<div class="col-md-4">
+    <div class="card card-profile" style="width: fit-content;">
+        <div class="card-avatar" style="max-width: 120px; max-height: 120px;">
+            <a href="">
+              <img class="img" src="/static/assets/img/flats/maintainance.png" />
+            </a>
+          </div>
+            <div class="card-body">
+              <h4 class="card-title">
+                Punto de distribución:
+                <strong>{{refectory_data.0.refectory_name}}</strong> 
+                </br>
+                Direccion: 
+                {{refectory_data.0.refectory_address}}
+              </h4>
+              <a  href="{% url 'dashboard:equipments:create_equipments' refectory_data.0.id %}">
+                <button type="button" class="btn btn-success">Agregar Equipo</button>
+              </a>
+            </div> 
+    </div>
+  </div>
+
+
+
+
+</div>
+
+
+{% endblock content %}
+
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script src="/static/assets/js/equipments/equipment_list.js"></script>
+{% endblock javascripts %}
