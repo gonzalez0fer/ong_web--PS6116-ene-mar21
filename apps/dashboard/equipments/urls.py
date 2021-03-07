@@ -12,6 +12,12 @@ urlpatterns = [
         ),
 
     path(
+        'list', 
+        views.EquipmentsListViewGuest.as_view(), 
+        name='list_equipments_guest'
+        ),    
+
+    path(
         '<int:refectory_id>/create', 
         views.EquipmentCreateView.as_view(), 
         name='create_equipments'
