@@ -135,7 +135,7 @@ class ProductManagementCreateView(CreateView):
             product.refectory_id = self.kwargs['refectory_id']
         #ya existia el producto
         else:
-            if self.object.operation_type == 'ingreso':    
+            if self.object.operation_type == 'Ingreso':    
                 product.total_product_quantity = product.total_product_quantity + self.object.product_quantity
                 product.product_unit = self.object.product_unit
                 product.created_by = self.request.user
@@ -214,7 +214,7 @@ class ProductManagementUpdateView(UpdateView):
         #validaciones
         # si no se cambia el tipo de operacion
         if temp_operation == self.object.operation_type:
-            if self.object.operation_type == 'ingreso':
+            if self.object.operation_type == 'Ingreso':
                 if self.object.product_quantity < 0:
                     return self.form_invalid(form)
                 # restar litros ingresados antiguos     
@@ -226,7 +226,7 @@ class ProductManagementUpdateView(UpdateView):
                 product.product_unit = self.object.product_unit
         #si cambia el tipo de operacion en la edicion
         else:
-            if self.object.operation_type == 'ingreso':
+            if self.object.operation_type == 'Ingreso':
                 if self.object.product_quantity < 0:
                     return self.form_invalid(form)
                 # operacion inversa     
@@ -254,7 +254,7 @@ def DeleteProductManagementOperation(request, refectory_id, pk):
     product_op = get_object_or_404(ProductManagement, id = pk)
     product = Product.objects.get(product_name=product_op.product_name,refectory_id=refectory_id)
 
-    if product_op.operation_type == 'ingreso':
+    if product_op.operation_type == 'Ingreso':
         product.total_product_quantity -= product_op.product_quantity
 
 

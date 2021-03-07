@@ -10,8 +10,8 @@
   <div class="col-md-7">
     <div class="card">
       <div class="card-header card-header-info">
-        <h4 class="card-title">Actualiza una Operación de "Entrada" o "Salida"</h4>
-            <p class="card-category">Modifica los datos.</p>
+        <h4 class="card-title">Modificar una operación en el tanque de agua.</h4>
+            <p class="card-category">Podrás modificar los datos ingresados anteriormente. </p>
       </div>
       <div class="card-body">
         <form onsubmit="return validate()" method="post">
@@ -68,7 +68,7 @@
             </a>
             {% endif %}
           </p>
-          <button id="submit-button" type="submit" class="btn btn-success pull-right">Actualizar Operación</button>
+          <button id="submit-button" type="submit" class="btn btn-success pull-right">Actualizar</button>
           <div class="clearfix"></div>
         </form>
       </div>
@@ -82,18 +82,18 @@
               <img class="img" src="/static/assets/img/flats/water.png" />
           </a>
       </div>
-      <div class="card-body">      
-        <h4 class="card-title">
-          Aquí podras realizar una operacion en el sistema donde
-          modifiques algun ingreso o egreso generado por la venta o
-          compra de agua para el tanque.
-        </h4>
-        </br>
-        <h4>
-          <strong>No olvides que para registrar ingresos debes 
-          seleccionar el tipo de operación "Entrada" y para 
-          egresos "Salida".</strong>
-        </h4>
+      <div class="card-body" style="text-align: justify;">  
+        <div style="padding: 0px 30px;">    
+          <h4 class="card-title">
+            Aquí podras modificar los datos sobre el ingreso o egreso generado por la venta/compra de agua para el tanque.
+          </h4>
+          </br>
+          <h4>
+            <strong>No olvides que para registrar los datos debes 
+              seleccionar el tipo de operación a realizar: "Ingreso"
+              o "Egreso" y luego darle al botón "Actualizar" para guardar los cambios realizados.</strong>
+          </h4>
+        </div>
       </div>   
     </div>
   </div>

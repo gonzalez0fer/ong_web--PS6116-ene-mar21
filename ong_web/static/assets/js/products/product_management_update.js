@@ -7,7 +7,7 @@ function validate() {
     product_unitary_amount = document.getElementById("product_unitary_amount").value
 
     // Verificar si la operacion es valida
-    if (operation_type != "ingreso" && operation_type != "consumo") {
+    if (operation_type != "Ingreso" && operation_type != "Egreso") {
         document.getElementById("operation_type_error").innerHTML = "Debe seleccionar una opción"
         document.getElementById("operation_type_error").style.display = "block"
         error = true
@@ -56,8 +56,8 @@ function validate() {
         document.getElementById("product_unitary_amount_error").style.display = "none"
     }
 
-    // Verificar que, si la nueva operacion es de ingreso...
-    if (operation_type == "ingreso") {
+    // Verificar que, si la nueva operacion es de Ingreso...
+    if (operation_type == "Ingreso") {
         // Caso: Ingreso -> Ingreso...
         if (operation_type == old_operation) {
             const found = products.find(product => product.product_name == product_name);
@@ -70,11 +70,11 @@ function validate() {
         }
     }
 
-    // Verificar que, si la nueva operacion es de consumo...
-    if (operation_type == "consumo") {
+    // Verificar que, si la nueva operacion es de Egreso...
+    if (operation_type == "Egreso") {
         const found = products.find(product => product.product_name == product_name);
 
-        // Caso: Consumo -> Consumo...
+        // Caso: Egreso -> Egreso...
         if (operation_type == old_operation) {
             // Si la cantidas nueva es mayor que la vieja, entonces nueva-vieja debe ser menor a disponible
             if (parseInt(old_quantity) < parseInt(product_quantity) && parseInt(product_quantity) - parseInt(old_quantity) > found.product_quantity) {
@@ -84,7 +84,7 @@ function validate() {
             }
         }
 
-        // Caso: Ingreso -> Consumo...
+        // Caso: Ingreso -> Egreso...
         if (operation_type != old_operation) {
             // La suma de la nueva cantidad, mas la vieja cantidad debe ser menor que la cantidad disponible
             if (found.product_quantity <= parseInt(old_quantity) + parseInt(product_quantity)){
