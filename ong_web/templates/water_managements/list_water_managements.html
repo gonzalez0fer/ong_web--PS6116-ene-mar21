@@ -167,37 +167,23 @@
                       </a>
                   </div>
                   <div class="card-body">      
-                    <h4 class="card-title">
-                      Aquí podras realizar una operacion en el sistema donde
-                      indiques algun ingreso o egreso generado por la venta o
-                      compra de agua para el tanque.
-                    </h4>
                     <div class="row">
     
                         <div class="col-md-12" style="background-color: rgba(153, 160, 160, 0.295); position: relative;">
 
-                            <h4 style="margin-top: 10px;">Nivel del tanque</h4>        
-                            {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%} 
-                            <h4 class="" style="position: relative; top:50%; margin: 0;   -ms-transform: translateY(-50%); transform: translateY(-50%);">
+                            <h4 style="margin-top: 10px;">
+                                
                                 Capacidad del tanque
                             </br>
                                 <strong>{{ water_tank_form.capacity.initial }} lts.</strong> 
                             </br>
-                            </br>
                                 Litros actuales
                                 </br>   
-                                <strong>{{ water_tank_form.current_liters.initial }} lts.</strong> 
-
-                            </h4>                             
+                                <strong>{{ water_tank_form.current_liters.initial }} lts.</strong>                                 
+                            </h4>        
+                            {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%}                             
                         </div>
                     </br>
-
-                    </div>
-                    <div class="row">
-
-                        <div class="col-md-12" style="background-color: rgba(153, 160, 160, 0.219); position: absolute;">
-                         
-                        </div>
 
                     </div>
                   </div>   
