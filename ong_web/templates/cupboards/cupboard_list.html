@@ -7,123 +7,95 @@
 
 {% block content %}
 
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card card-plain">
-                  <div class="card-header card-header-info">
-                    <h4 class="card-title mt-0">Alacena del comedor <b>{{refectory_data.0.refectory_name}}</b></h4>
-                    <p class="card-category"> Aqui podras ver todos los productos disponibles en el deposito del comedor.</p>
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-hover">
-                        <thead class="">
-                          <th>
-                              ID
-                          </th>
-                          <th>
-                              Producto
-                          </th>
-                          <th>
-                              Peso
-                          </th>
-                          <th>
-                              Cantidad
-                          </th>
-                          <th>
-                            Costo(Bs.)
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card card-plain">
+                <div class="card-header card-header-info">
+                <h4 class="card-title mt-0">Alacena del comedor <b>{{refectory_data.0.refectory_name}}</b></h4>
+                <p class="card-category"> Aqui podras ver todos los productos disponibles en el deposito del comedor.</p>
+                </div>
+                <div class="card-body">
+                <div class="table-responsive">
+                    <table id="cupboard_list" class="table table-hover">
+                    <thead class="">
+                        <th style="width : 50px">
+                            ID
                         </th>
                         <th>
-                            Acciones
+                            Producto
                         </th>
-                        </thead>
-                        <tbody>
-  
-                            {% for product_object in object_list %}
-                                    <tr>
-                                        <td>
-                                            {{ product_object.id }}
-                                            </td>
-                                        <td>
-                                            {{ product_object.product_name }}
-                                        </td>
-                                        <td>
-                                            {{ product_object.total_product_weight }}
-                                        </td>
-                                        <td>
-                                            {{ product_object.total_product_quantity }}
-                                        </td>
-                                        <td>
-                                            {{ product_object.total_product_investment }}
-                                        </td>
-                                        <td>
-                                        -
-                                        </td>
-                                        </tr>
-                            {% endfor %}
-  
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+                        <th>
+                            Cantidad
+                        </th>
+                    </thead>
+                    <tbody>
+                        {% for product_object in object_list %}
+                            <tr>
+                                <td>
+                                    {{ product_object.id }}
+                                    </td>
+                                <td>
+                                    {{ product_object.product_name }}
+                                </td>
+                                <td>
+                                    {{ product_object.total_product_quantity }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    </table>
                 </div>
+                </div>
+            </div>
+
             </br>
-        </br>
+            </br>
+
             {% if user.is_superuser %}
-            <p style="float: left; margin-left: 50px;">
-                <a  href="{% url 'dashboard:refectory:list_refectories' %}">
-                <button type="button" class="btn btn-default">Regresar</button>
-                </a>
-            </p>
+                <p style="float: left; margin-left: 50px;">
+                    <a  href="{% url 'dashboard:refectory:list_refectories' %}">
+                    <button type="button" class="btn btn-default">Regresar</button>
+                    </a>
+                </p>
             {% else %}
-            <p style="float: left; margin-left: 50px;">
-                <a  href="/">
-                <button type="button" class="btn btn-default">Regresar</button>
-                </a>
-            </p>
+                <p style="float: left; margin-left: 50px;">
+                    <a  href="/">
+                    <button type="button" class="btn btn-default">Regresar</button>
+                    </a>
+                </p>
             {% endif %}
+        </div>
 
-            <p style="float: right; margin-right: 50px;">
-                <a  href="{% url 'dashboard:cupboard_managements:list_cupboard_management' refectory_data.0.id %}">
-                <button type="button" class="btn btn-success">Ver Todas las Operaciones</button>
-                </a>
-            </p>
-
-
-
-              </div>
-            </br>
+        </br>
         </br>
 
-        <div class="col-md-4">
-                    
+        <div class="col-md-4">           
             <div class="card card-profile">
                 <div class="card-avatar">
                     <a href="">
-                      <img class="img" src="/static/assets/img/flats/cupboard.png" />
+                    <img class="img" src="/static/assets/img/flats/cupboard.png" />
                     </a>
-                  </div>
-                    <div class="card-body">
-
-                        <h4 class="card-title">
-                            Comedor:
-                            <strong>{{refectory_data.0.refectory_name}}</strong> 
-                        </br>
-                            Direccion: 
-                            {{refectory_data.0.refectory_address}}
-
-                        </h4>
-                      </div>    
-                        
-
-                  
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">Comedor: <strong>{{refectory_data.0.refectory_name}}</strong> 
+                    </br>
+                        Direccion: 
+                        {{refectory_data.0.refectory_address}}
+                    </h4>
+                    {% if user.is_superuser %}
+                        <a  href="{% url 'dashboard:cupboard_managements:list_cupboard_management' refectory_data.0.id %}">
+                            <button type="button" class="btn btn-success">Ver Todas las Operaciones</button>
+                        </a>
+                    {% else %}
+                        <a  href="{% url 'dashboard:cupboard_managements:list_cupboard_single_management' %}">
+                            <button type="button" class="btn btn-success">Ver Todas las Operaciones</button>
+                        </a>
+                    {% endif %}
+                </div>  
             </div>
-          </div>
-
-
-
-
         </div>
+
+    </div>
 
 
 {% endblock content %}
@@ -131,4 +103,6 @@
 
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+    <script src="/static/assets/js/cupboard_list.js"></script>
+{% endblock javascripts %}

@@ -3,38 +3,49 @@
 {% block title %} UI Tables {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<style>
+    .bttn-row{
+        text-align:center;
+        margin-left:-20px;
+        margin-right:-20px;
+        }
+        .btn.btn-default.action:hover{
+            background-color: #4caf50;
+        }
+    </style>
+{% endblock stylesheets %}
 
 {% block content %}
 
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card card-plain">
-                  <div class="card-header card-header-info">
-                    <h4 class="card-title mt-0">Operaciones de la alacena del comedor <b>{{refectory_data.0.refectory_name}}</b></h4>
-                    <p class="card-category"> Aqui podras ver todas las operaciones de los productos guardados en el deposito del comedor.</p>
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-hover">
-                        <thead class="">
-                          <th>
-                              ID
-                          </th>
-                          <th>
-                              Producto
-                          </th>
-                          <th>
-                              Tipo de Operacion
-                          </th>
-                          <th>
-                              Cantidad
-                          </th>
-                          <th>
-                            Peso
+    <div class="row">
+        <div class="col">
+            <div class="card card-plain">
+                <div class="card-header card-header-info">
+                <h4 class="card-title mt-0">Operaciones de la alacena del comedor <b>{{refectory_data.0.refectory_name}}</b></h4>
+                <p class="card-category"> Aqui podras ver todas las operaciones de los productos guardados en el deposito del comedor.</p>
+                </div>
+                <div class="card-body">
+                <div class="table-responsive">
+                    <table id="cupboard_management_list" class="table table-hover">
+                    <thead class="">
+                        <th>
+                            ID
                         </th>
-                          <th>
-                            Costo(Bs.)
+                        <th>
+                            Producto
+                        </th>
+                        <th>
+                            Ingreso (Kg)
+                        </th>
+                        <th>
+                            Egreso (Kg)
+                        </th>
+                        <th>
+                            Precio Unitario (Bs/$)
+                        </th>
+                        <th>
+                            Precio Total (Bs/$)
                         </th>
                         <th>
                             Fecha
@@ -42,97 +53,112 @@
                         <th>
                             Responsable
                         </th>
-                        </thead>
-                        <tbody>
-  
-                            {% for product_object in object_list %}
-                                    <tr>
-                                        <td>
-                                            {{ product_object.id }}
-                                            </td>
-                                        <td>
-                                            {{ product_object.product_name }}
-                                        </td>
-                                        <td>
-                                            {{ product_object.operation_type }}
-                                        </td>
-                                        <td>
-                                            {{ product_object.product_quantity }}
-                                        </td>
-                                        <td>
-                                            {{ product_object.product_weight }}
-                                        </td>
-                                        <td>
-                                            {{ product_object.product_amount }}
-                                        </td>
-                                        <td>
-                                            {{ product_object.created }}
-                                        </td>
-                                        <td>
-                                            {{ product_object.created_by }}
-                                        </td>
-                                        </tr>
-                            {% endfor %}
-  
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+                        <th>
+                            Acciones
+                        </th>
+                    </thead>
+                    <tbody>
+                        {% for product_object in object_list %}
+                            <tr>
+                                <td>
+                                    {{ product_object.id }}
+                                </td>
+                                <td>
+                                    {{ product_object.product_name }}
+                                </td>
+
+                                {% if product_object.operation_type == "Ingreso" %}
+                                    <td>
+                                        {{ product_object.product_quantity }}    
+                                    </td>
+                                    <td>
+                                        -            
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        -
+                                    </td>
+                                    <td>
+                                        {{ product_object.product_quantity }}
+                                    </td>
+                                {% endif %}
+                                <td>
+                                    {{ product_object.product_unitary_amount }}
+                                </td>
+                                <td>
+                                    {{ product_object.product_total_amount }}
+                                </td>
+                                <td>
+                                    {{ product_object.created }}
+                                </td>
+                                <td>
+                                    {{ product_object.created_by }}
+                                </td>
+                                <td>
+                                    {% if user.is_superuser %}
+                                        <a href="">
+                                            <button type="button" class="btn btn-info">Editar</button>
+                                        </a>    
+                                        <a href="">
+                                            <button type="button" class="btn btn-danger">Eliminar</button>
+                                        </a>
+                                    {% else %}
+                                        <a href="">
+                                            <button type="button" class="btn btn-info">Editar</button>
+                                        </a>                                            
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                    </table>
                 </div>
+                </div>
+            </div>
+
             </br>
-        </br>
+            </br>
+
             {% if user.is_superuser %}
-            <p style="float: left; margin-left: 50px;">
-                <a  href="{% url 'dashboard:cupboard:list_cupboard' refectory_data.0.id %}">
-                <button type="button" class="btn btn-default">Regresar</button>
-                </a>
-            </p>
+                <p style="float: left; margin-left: 50px;">
+                    <a  href="{% url 'dashboard:cupboard:list_cupboard' refectory_data.0.id %}">
+                    <button type="button" class="btn btn-default">Regresar</button>
+                    </a>
+                </p>
             {% else %}
-            <p style="float: left; margin-left: 50px;">
-                <a  href="{% url 'dashboard:cupboard:list_products' %}">
-                <button type="button" class="btn btn-default">Regresar</button>
-                </a>
-            </p>
+                <p style="float: left; margin-left: 50px;">
+                    <a  href="{% url 'dashboard:cupboard:list_products'%}">
+                    <button type="button" class="btn btn-default">Regresar</button>
+                    </a>
+                </p>
             {% endif %}
 
-              </div>
-            </br>
-        </br>
-
-        <div class="col-md-4">
-                    
-            <div class="card card-profile">
-                <div class="card-avatar">
-                    <a href="">
-                      <img class="img" src="/static/assets/img/flats/cupboard.png" />
+            <p class="bttn-row">
+                {% if user.is_superuser %}
+                    <a href="{% url 'dashboard:cupboard-management:create' refectory_data.0.id 0 %}">
+                        <button type="button" class="btn btn-default action">Registrar Ingreso</button>
                     </a>
-                  </div>
-                    <div class="card-body">
-
-                        <h4 class="card-title">
-                            Comedor:
-                            <strong>{{refectory_data.0.refectory_name}}</strong> 
-                        </br>
-                            Direccion: 
-                            {{refectory_data.0.refectory_address}}
-
-                        </h4>
-                      </div>    
-                        
-
-                  
-            </div>
-          </div>
-
-
-
+                    <a href="{% url 'dashboard:cupboard-management:create' refectory_data.0.id 1 %}">
+                        <button type="button" class="btn btn-default action">Registrar Egreso</button>
+                    </a>
+                {% else %}
+                    <a href="{% url 'dashboard:cupboard-management:create_guest' 0 %}">
+                        <button type="button" class="btn btn-default action">Registrar Ingreso</button>
+                    </a>
+                    <a href="{% url 'dashboard:cupboard-management:create_guest' 1 %}">
+                        <button type="button" class="btn btn-default action">Registrar Egreso</button>
+                    </a>
+                {% endif %}
+            </p>
 
         </div>
-
+    </div>
 
 {% endblock content %}
 
 
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+    <script src="/static/assets/js/cupboard_management_list.js"></script>
+{% endblock javascripts %}

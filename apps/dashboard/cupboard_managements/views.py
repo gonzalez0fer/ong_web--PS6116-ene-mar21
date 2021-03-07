@@ -94,7 +94,7 @@ class CupboardManagementCreateView(CreateView):
     model = CupboardManagement
     queryset = CupboardManagement.objects.all()
     form_class = CupboardManagementForm
-    template_name = ""
+    template_name = "cupboard_managements/cupboard_management_create.html"
 
     def get_success_url(self):
         if self.request.user.is_superuser:
@@ -173,7 +173,7 @@ class CupboardManagementCreateViewGuest(CreateView):
     model = CupboardManagement
     queryset = CupboardManagement.objects.all()
     form_class = CupboardManagementForm
-    template_name = ""
+    template_name = "cupboard_managements/cupboard_management_create.html"
     success_url = "/dashboard/cupboard-management/operations"
 
     def get_context_data(self, **kwargs):
