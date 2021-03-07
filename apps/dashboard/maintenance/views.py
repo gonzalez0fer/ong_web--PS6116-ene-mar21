@@ -16,6 +16,30 @@ from apps.main.product_managements.models import ProductManagement
 from apps.main.equipments.models import Equipment
 
 @method_decorator([login_required, superuser_required], name='dispatch')
+class RefectoriesMaintenanceListView(ListView):
+    template_name = "maintenance/refectories_maintenance_list.html"
+    queryset = Refectory.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = Refectory.objects.order_by('id')
+        
+        context['object_list'] = []
+
+        for i in query:
+            if len(i.user_asigned.all()) != 0:
+                mandated =''
+                for j in i.user_asigned.all():
+                    mandated = mandated + str(j.name)+' '+str(j.last_name)
+                    if j:
+                        mandated = mandated + ' - '
+            else:
+                mandated = '(por asignar)'
+            context['object_list'].append({'id':i.id, 'name':i.name, 
+            'address':i.address, 'capacity':i.water_tank.capacity,'mandated':mandated })
+        return context  
+
+@method_decorator([login_required, superuser_required], name='dispatch')
 class MaintenanceList(ListView):
     template_name = ""
     queryset = Maintenance.objects.all()

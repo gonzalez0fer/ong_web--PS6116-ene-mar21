@@ -5,6 +5,13 @@ from django.urls            import include, path, re_path
 app_name = "maintenance"
 
 urlpatterns = [
+
+    path(
+        'refectories', 
+        views.RefectoriesMaintenanceListView.as_view(), 
+        name='refectories_maintenance_list'
+    ),
+
     path(
         '<int:refectory_id>/<int:pk>/history', 
         views.MaintenanceList.as_view(), 

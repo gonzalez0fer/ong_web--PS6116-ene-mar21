@@ -30,7 +30,7 @@ class Maintenance(TimeStampedModel):
         Product, 
         blank=True, 
         null=True, 
-        related_name='product',
+        related_name='product_consumed',
         on_delete = models.SET_NULL,
     )
 
@@ -52,5 +52,5 @@ class Maintenance(TimeStampedModel):
         blank = True,
         null = True,
         on_delete = models.SET_NULL,
-        related_name = 'user_creator'
+        related_name = 'user_operator'
     )
