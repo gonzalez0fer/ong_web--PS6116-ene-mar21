@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, CreateView
@@ -41,7 +41,10 @@ class EquipmentCreateView(CreateView):
     queryset = Equipment.objects.all()
     form_class = EquipmentForm
     template_name = "equipments/equipment_create.html"
-    success_url = "/dashboard"
+    
+    def get_success_url(self, **kwargs):
+        succes_url = reverse('dashboard:equipments:list_equipments',kwargs={'refectory_id':self.kwargs['refectory_id']})
+        return succes_url
 
     def get_context_data(self, **kwargs):
 
@@ -80,11 +83,18 @@ class EquipmentUpdateView(UpdateView):
     model = Equipment 
     queryset = Equipment.objects.all()
     template_name = "equipments/equipment_update.html"
-    success_url = "/dashboard"
+
+    def get_success_url(self, **kwargs):
+        succes_url = reverse('dashboard:equipments:list_equipments',kwargs={'refectory_id':self.kwargs['refectory_id']})
+        return succes_url
 
     def get_context_data(self, **kwargs):
 
         context = super(EquipmentUpdateView, self).get_context_data(**kwargs)
+
+        context['refectory'] = {
+            'id' : self.kwargs['refectory_id'],
+        }
         return context
 
     def post(self, request, *args, **kwargs):
@@ -100,6 +110,7 @@ class EquipmentUpdateView(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
+
         return super().form_valid(form)
 
 

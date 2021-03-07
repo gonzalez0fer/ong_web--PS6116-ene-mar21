@@ -60,7 +60,7 @@
                         <button type="button" class="btn btn-info">Historial de Mantenimientos</button>
                       </a> -->
                       {% if user.is_superuser %}
-                      <a  href="{% url 'dashboard:equipments:update_equipments' refectory_data.0.id equipment_object.id%}">
+                      <a  href="{% url 'dashboard:equipments:update_equipments' refectory_data.0.id equipment_object.id %}">
                         <button type="button" class="btn btn-info">Actualizar</button>
                       </a>
                       <a  href="">

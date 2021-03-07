@@ -23,7 +23,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="bmd-label-floating">Nombre del equipo</label>
-                {% render_field form.name type="text" name="name" id="name" class="form-control" readonly="true" %}
+                {% render_field form.name name="name" id="name" class="form-control" readonly="true" %}
               </div>
               <span id="name_error" class="text-danger" style="display : none"></span>
             </div>
@@ -34,12 +34,6 @@
               <div class="form-group">
                 <label class="bmd-label-floating">Frecuencia de Mantenimiento</label>
                 {% render_field form.maintenance_frequency id="maintenance_frequency" name="maintenance_frequency" class="form-control" required="true" %}
-                  <option value="none">Selecciona Frecuencia de Mantenimiento... </option>
-                  <option value="Quincenal">Quincenal</option>
-                  <option value="Trimestral">Trimestral</option>
-                  <option value="Anual">Anual</option>
-                  <option value="Trienal">Trienal</option>
-                </select>
               </div>
               <span id="maintenance_frequency_error" class="text-danger" style="display : none"></span>
             </div>
@@ -51,7 +45,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Marca</label>
-                {% render_field form.brand type="text" name="brand" id="brand" class="form-control" required="true" %}
+                {% render_field form.brand name="brand" id="brand" class="form-control" required="true" %}
               </div>
               <span id="brand_error" class="text-danger" style="display : none"></span>
             </div>
@@ -67,7 +61,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Potencia</label>
-                {% render_field form.power id="power" name="power" type="number" step="0.01" class="form-control" %}
+                {% render_field form.power id="power" name="power" step="0.01" class="form-control" %}
               </div>
               <span id="power_error" class="text-danger" style="display : none"></span>
             </div>
@@ -75,7 +69,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Diámetro de Entrada</label>
-                {% render_field form.inlet_diameter name="inlet-diameter" id="inlet-diameter" type="number" step="0.01" class="form-control" %}
+                {% render_field form.inlet_diameter name="inlet-diameter" id="inlet-diameter" step="0.01" class="form-control" %}
               </div>
               <span id="inlet-diameter_error" class="text-danger" style="display : none"></span>
             </div>
@@ -83,7 +77,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Diámetro</label>
-              {% render_field form.diameter name="diameter" id="diameter" type="number" step="0.01" class="form-control" %}
+              {% render_field form.diameter name="diameter" id="diameter" step="0.01" class="form-control" %}
               </div>
               <span id="diameter_error" class="text-danger" style="display : none"></span>
             </div>
@@ -91,7 +85,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Alto</label>
-              {% render_field form.height name="height" id="height" type="number" step="0.01" class="form-control" %}
+              {% render_field form.height name="height" id="height" step="0.01" class="form-control" %}
               </div>
               <span id="height_error" class="text-danger" style="display : none"></span>
             </div>
@@ -99,7 +93,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Volumen</label>
-              {% render_field form.volume name="volume" id="volume" type="number" step="0.01" class="form-control" %}
+              {% render_field form.volume name="volume" id="volume" step="0.01" class="form-control" %}
               </div>
               <span id="volume_error" class="text-danger" style="display : none"></span>
             </div>
@@ -115,7 +109,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Flujo Máximo</label>
-                {% render_field form.flow id="flow" name="flow" type="number" step="0.01" class="form-control" %}
+                {% render_field form.flow id="flow" name="flow" step="0.01" class="form-control" %}
               </div>
               <span id="flow_error" class="text-danger" style="display : none"></span>
             </div>
@@ -123,15 +117,16 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Tamaño del bombillo</label>
-                {% render_field form.ligth_bulb_size id="light_bulb_size" name="light_bulb_size" type="number" step="0.01" class="form-control" %}
+                {% render_field form.light_bulb_size id="light_bulb_size" name="light_bulb_size" step="0.01" class="form-control" %}
               </div>
+              
               <span id="light_bulb_size_error" class="text-danger" style="display : none"></span>
             </div>
 
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Tamaño del cuarzo</label>
-                {% render_field form.quartz_size id="quartz_size" name="quartz_size" type="number" step="0.01" class="form-control" %}
+                {% render_field form.quartz_size id="quartz_size" name="quartz_size" step="0.01" class="form-control" %}
               </div>
               <span id="quartz_size_error" class="text-danger" style="display : none"></span>
             </div>
@@ -142,7 +137,7 @@
               <button type="button" class="btn btn-default">Regresar</button>
             </a>
           </p>
-          <button id="submit-button" type="submit" class="btn btn-success pull-right">Agregar Equipo</button>
+          <button id="submit-button" type="submit" class="btn btn-success pull-right">Actualizar Equipo</button>
           <div class="clearfix"></div>
         </form>
       </div>

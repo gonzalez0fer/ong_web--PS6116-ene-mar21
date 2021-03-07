@@ -8,6 +8,20 @@ from apps.main.products.models import Product
 
 class Equipment(TimeStampedModel):
 
+    class Periods(models.TextChoices):
+        """
+        	Every type of issue
+        """
+        SEMANAL = 'Semanal',
+        QUINCENAL = 'Quincenal',
+        MENSUAL = 'Mensual',
+        TRIMESTRAL = 'Trimestral',
+        SEMESTRAL = 'Semestral',
+        ANUAL = 'Anual'
+        BIENAL = 'Bienal'
+        TRIENAL = 'Trienal'
+
+
     name = models.CharField(
         max_length=100, 
         blank=True, 
@@ -57,13 +71,13 @@ class Equipment(TimeStampedModel):
         null=True
     )
 
-    spare_part = models.ForeignKey(
-        Product, 
-        blank=True, 
-        null=True, 
-        related_name='equipment',
-        on_delete = models.SET_NULL,
-        )
+    # spare_part = models.ForeignKey(
+    #     Product, 
+    #     blank=True, 
+    #     null=True, 
+    #     related_name='equipment',
+    #     on_delete = models.SET_NULL,
+    # )
     
     flow = models.FloatField(
         blank = True,
@@ -81,9 +95,10 @@ class Equipment(TimeStampedModel):
     )
 
     maintenance_frequency = models.CharField(
-        max_length=100, 
-        blank=True, 
-        null=True
+        max_length=20, 
+        null=False, 
+        choices=Periods.choices, 
+        default = Periods.SEMANAL
     )
 
     refectory = models.ForeignKey(

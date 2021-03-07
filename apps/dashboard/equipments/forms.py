@@ -17,7 +17,6 @@ class EquipmentForm(forms.ModelForm):
             'height',
             'volume',
             'measurements',
-            'spare_part',
             'flow',
             'light_bulb_size',
             'quartz_size',
