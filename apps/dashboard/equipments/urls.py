@@ -18,8 +18,8 @@ urlpatterns = [
         ),
 
     path(
-        '<int:pk>/update', 
-        views.EquipmentCreateView.as_view(), 
+        '<int:refectory_id>/<int:pk>/update', 
+        views.EquipmentUpdateView.as_view(), 
         name='update_equipments'
         ),
 

@@ -11,7 +11,7 @@
   <div class="col-md-7">
     <div class="card">
       <div class="card-header card-header-info">
-        <h4 class="card-title">Agregar un Equipo al Inventario</h4>
+        <h4 class="card-title">Actualizar los datos del Equipo</h4>
             <p class="card-category">Completa los datos</p>
       </div>
       <div class="card-body">
@@ -23,7 +23,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="bmd-label-floating">Nombre del equipo</label>
-                <input type="text" name="name" id="name" class="form-control" required="true">
+                {% render_field form.name type="text" name="name" id="name" class="form-control" readonly="true" %}
               </div>
               <span id="name_error" class="text-danger" style="display : none"></span>
             </div>
@@ -33,7 +33,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="bmd-label-floating">Frecuencia de Mantenimiento</label>
-                <select id="maintenance_frequency" name="maintenance_frequency" class="form-control" required="true">
+                {% render_field form.maintenance_frequency id="maintenance_frequency" name="maintenance_frequency" class="form-control" required="true" %}
                   <option value="none">Selecciona Frecuencia de Mantenimiento... </option>
                   <option value="Quincenal">Quincenal</option>
                   <option value="Trimestral">Trimestral</option>
@@ -51,7 +51,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Marca</label>
-                <input type="text" name="brand" id="brand" class="form-control" required="true">
+                {% render_field form.brand type="text" name="brand" id="brand" class="form-control" required="true" %}
               </div>
               <span id="brand_error" class="text-danger" style="display : none"></span>
             </div>
@@ -59,7 +59,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Modelo</label>
-                <input id="equipment_model" name="equipment_model" class="form-control" >
+                {% render_field form.equipment_model id="equipment_model" name="equipment_model" class="form-control" %}
               </div>
               <span id="equipment_model_error" class="text-danger" style="display : none"></span>
             </div>
@@ -67,7 +67,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Potencia</label>
-                  <input id="power" name="power" type="number" step="0.01" class="form-control">
+                {% render_field form.power id="power" name="power" type="number" step="0.01" class="form-control" %}
               </div>
               <span id="power_error" class="text-danger" style="display : none"></span>
             </div>
@@ -75,7 +75,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Diámetro de Entrada</label>
-                <input name="inlet-diameter" id="inlet-diameter" type="number" step="0.01" class="form-control">
+                {% render_field form.inlet_diameter name="inlet-diameter" id="inlet-diameter" type="number" step="0.01" class="form-control" %}
               </div>
               <span id="inlet-diameter_error" class="text-danger" style="display : none"></span>
             </div>
@@ -83,7 +83,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Diámetro</label>
-                <input name="diameter" id="diameter" type="number" step="0.01" class="form-control">
+              {% render_field form.diameter name="diameter" id="diameter" type="number" step="0.01" class="form-control" %}
               </div>
               <span id="diameter_error" class="text-danger" style="display : none"></span>
             </div>
@@ -91,7 +91,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Alto</label>
-                <input name="height" id="height" type="number" step="0.01" class="form-control">
+              {% render_field form.height name="height" id="height" type="number" step="0.01" class="form-control" %}
               </div>
               <span id="height_error" class="text-danger" style="display : none"></span>
             </div>
@@ -99,7 +99,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Volumen</label>
-                <input name="volume" id="volume" type="number" step="0.01" class="form-control">
+              {% render_field form.volume name="volume" id="volume" type="number" step="0.01" class="form-control" %}
               </div>
               <span id="volume_error" class="text-danger" style="display : none"></span>
             </div>
@@ -107,7 +107,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Medidas</label>
-                <input name="measurements" id="measurements" class="form-control">
+              {% render_field form.measurements name="measurements" id="measurements" class="form-control" %}
               </div>
               <span id="measurements_error" class="text-danger" style="display : none"></span>
             </div>    
@@ -115,7 +115,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Flujo Máximo</label>
-                 <input id="flow" name="flow" type="number" step="0.01" class="form-control" >
+                {% render_field form.flow id="flow" name="flow" type="number" step="0.01" class="form-control" %}
               </div>
               <span id="flow_error" class="text-danger" style="display : none"></span>
             </div>
@@ -123,7 +123,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Tamaño del bombillo</label>
-                 <input id="light_bulb_size" name="light_bulb_size" type="number" step="0.01" class="form-control" >
+                {% render_field form.ligth_bulb_size id="light_bulb_size" name="light_bulb_size" type="number" step="0.01" class="form-control" %}
               </div>
               <span id="light_bulb_size_error" class="text-danger" style="display : none"></span>
             </div>
@@ -131,7 +131,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Tamaño del cuarzo</label>
-                 <input id="quartz_size" name="quartz_size" type="number" step="0.01" class="form-control" >
+                {% render_field form.quartz_size id="quartz_size" name="quartz_size" type="number" step="0.01" class="form-control" %}
               </div>
               <span id="quartz_size_error" class="text-danger" style="display : none"></span>
             </div>

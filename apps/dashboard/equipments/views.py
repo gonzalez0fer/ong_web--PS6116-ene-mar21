@@ -79,7 +79,7 @@ class EquipmentUpdateView(UpdateView):
     form_class = EquipmentForm
     model = Equipment 
     queryset = Equipment.objects.all()
-    template_name = ""
+    template_name = "equipments/equipment_update.html"
     success_url = "/dashboard"
 
     def get_context_data(self, **kwargs):

@@ -16,7 +16,7 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table id="product_list" class="table table-hover">
+              <table id="equipment_list" class="table table-hover">
                 <thead class="">
                   <th style="width: 30px;">
                     ID
@@ -30,7 +30,7 @@
                   <th style="width: 30px;">
                     Frecuencia
                   </th>
-                  <th>
+                  <th style="width: 30px;">
                     Acciones
                   </th>
                 </thead>
@@ -51,16 +51,16 @@
                     </td>
                     <td>
                       <a href="">
-                        <button type="button" class="btn btn-info">Datos completos</button>
+                        <button type="button" class="btn btn-info">Inspeccionar</button>
                       </a>
-                      <a href="">
+                      <!-- <a href="">
                         <button type="button" class="btn btn-info">Registrar Mantenimiento</button>
                       </a>
                       <a href="">
                         <button type="button" class="btn btn-info">Historial de Mantenimientos</button>
-                      </a>
+                      </a> -->
                       {% if user.is_superuser %}
-                      <a  href="">
+                      <a  href="{% url 'dashboard:equipments:update_equipments' refectory_data.0.id equipment_object.id%}">
                         <button type="button" class="btn btn-info">Actualizar</button>
                       </a>
                       <a  href="">
@@ -98,7 +98,7 @@
 
 <div class="col-md-4">
     <div class="card card-profile" style="width: fit-content;">
-        <div class="card-avatar">
+        <div class="card-avatar" style="max-width: 120px; max-height: 120px;">
             <a href="">
               <img class="img" src="/static/assets/img/flats/maintainance.png" />
             </a>
@@ -130,5 +130,5 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-<!-- <script src="/static/assets/js/products/product_list.js"></script> -->
+<script src="/static/assets/js/equipments/equipment_list.js"></script>
 {% endblock javascripts %}
