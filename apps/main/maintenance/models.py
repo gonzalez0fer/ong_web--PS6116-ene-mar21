@@ -5,6 +5,7 @@ from model_utils.models import TimeStampedModel
 
 from apps.main.equipments.models import Equipment
 from apps.main.products.models import Product
+from apps.main.product_managements.models import ProductManagement
 
 class Maintenance(TimeStampedModel):
     #foreign key
@@ -36,6 +37,14 @@ class Maintenance(TimeStampedModel):
     product_quantity = models.IntegerField(
         blank = True,
         null = True,
+    )
+
+    product_operation =  models.ForeignKey(
+        ProductManagement, 
+        blank=True, 
+        null=True, 
+        related_name='product_operation',
+        on_delete = models.SET_NULL,
     )
 
     created_by = models.ForeignKey(
