@@ -50,12 +50,24 @@
         </a>
       </li>
       {% endif %}
-      <li class="nav-item">
+
+      {% if user.profile.refectory %}
+      {% url 'dashboard:equipments:list_equipments_guest' as equipments_maintenance %} 
+      <li class="nav-item {% if request.path == equipments_maintenance %} active {% endif %} ">
+        <a class="nav-link" href="{% url 'dashboard:equipments:list_equipments_guest'%}">
+          <i class="material-icons">build</i>
+          <p>Equipos</p>
+        </a>
+      </li>
+      {% endif %}
+
+      <!-- <li class="nav-item">
         <a class="nav-link" href="">
           <i class="material-icons">home_repair_service</i>
           <p>Mantenimiento</p>
         </a>
-      </li>          
+      </li>   -->
+
       <li class="nav-item" style="position: absolute; bottom: 5%; width: 75%;">
         <a class="nav-link" href="{% url 'logout' %}" >
           <i class="material-icons">directions_run</i>
