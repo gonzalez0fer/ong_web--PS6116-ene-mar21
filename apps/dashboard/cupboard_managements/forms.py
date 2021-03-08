@@ -4,4 +4,4 @@ from apps.main.cupboard_managements.models  import CupboardManagement
 class CupboardManagementForm(ModelForm):
     class Meta:
         model = CupboardManagement
-        fields = ['cupboard', 'product_name', 'operation_type','product_quantity','product_unitary_amount']
+        fields = ['product_name', 'operation_type','product_quantity','product_unitary_amount']

@@ -63,7 +63,9 @@ class CupboardManagementListSingleView(ListView):
         refectory = Refectory.objects.get(id=self.request.user.profile.refectory.id)
         cupboard = Cupboard.objects.filter(refectory_id=refectory.id).order_by('created')
         
-
+        context['object_list'] = []
+        context['refectory_data'] = []
+        
         for j in cupboard:
             query = CupboardManagement.objects.filter(cupboard=j).order_by('created')
             
@@ -124,10 +126,7 @@ class CupboardManagementCreateView(CreateView):
 
         self.object = None
         form = self.get_form()
-        product, created = Cupboard.objects.get_or_create(product_name=form.data['cupboard'],refectory_id=self.kwargs['refectory_id'])
-        form.data._mutable = True
-        form.data['cupboard'] = product.id
-        form.data._mutable = False
+        product, created = Cupboard.objects.get_or_create(product_name=form.data['product_name'],refectory_id=self.kwargs['refectory_id'])
 
         if form.is_valid():
             return self.form_valid(form, product, created)
@@ -136,7 +135,7 @@ class CupboardManagementCreateView(CreateView):
 
     def form_valid(self, form, product, created):
         self.object = form.save(commit=False)
-        self.object.product_name = product.product_name
+        self.object.cupboard = product
         self.object.product_total_amount = self.object.product_quantity * self.object.product_unitary_amount
         #si no existia el producto, se creo en el get or create
         if created:
@@ -197,10 +196,7 @@ class CupboardManagementCreateViewGuest(CreateView):
 
         self.object = None
         form = self.get_form()
-        product, created = Cupboard.objects.get_or_create(product_name=form.data['cupboard'],refectory_id=self.request.user.profile.refectory.id)
-        form.data._mutable = True
-        form.data['cupboard'] = product.id
-        form.data._mutable = False
+        product, created = Cupboard.objects.get_or_create(product_name=form.data['product_name'],refectory_id=self.request.user.profile.refectory.id)
 
         if form.is_valid():
             return self.form_valid(form, product, created)
@@ -209,7 +205,7 @@ class CupboardManagementCreateViewGuest(CreateView):
 
     def form_valid(self, form, product, created):
         self.object = form.save(commit=False)
-        self.object.product_name = product.product_name
+        self.object.cupboard = product
         self.object.product_total_amount = self.object.product_quantity * self.object.product_unitary_amount
         #si no existia el producto, se creo en el get or create
         if created:
