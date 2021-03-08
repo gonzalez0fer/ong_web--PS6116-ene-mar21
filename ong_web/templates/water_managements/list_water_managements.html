@@ -20,6 +20,9 @@
     .btn.btn-default.action:hover{
         background-color: #4caf50;
     }
+    .btn.btn-sm{
+        padding: 0.40625rem 0.8rem
+    }
 
 </style>
 
@@ -28,8 +31,7 @@
 {% block content %}
 
         <div class="row">
-            <!-- <div class="col-md-8"> -->
-            <div class="col">
+            <div class="col-md-9">
                 <div class="card card-plain">
                     <br>
                   <div class="card-header card-header-info">
@@ -111,14 +113,14 @@
                                         <td>
                                             {% if user.is_superuser %}
                                                 <a  href="{% url 'dashboard:water_managements:water_management_update' tank_id i.id %}" >
-                                                    <button type="button" class="btn btn-info" style="cursor : pointer " title="Editar">Editar</button>
+                                                    <button type="button" class="btn btn-info btn-sm" title="Editar">Editar</button>
                                                 </a>
                                                 <a href="{% url 'dashboard:water_managements:water_management_delete' i.id %}">
-                                                    <button type="button" class="btn btn-danger" style="cursor : pointer; margin-left: 5px;" title="Eliminar">Eliminar</button>
+                                                    <button type="button" class="btn btn-danger btn-sm" style="margin-left: 5px;" title="Eliminar">Eliminar</button>
                                                 </a>
                                             {% else %}
                                                 <a  href="{% url 'dashboard:water_managements:water_management_update_guest' i.id %}" >
-                                                    <button type="button" class="btn btn-info" style="cursor : pointer " title="Editar">Editar</button>
+                                                    <button type="button" class="btn btn-info btn-sm" title="Editar">Editar</button>
                                                 </a>
                                             {% endif %}
                                         </td>
@@ -165,12 +167,11 @@
                                 <button type="button" class="btn btn-default action">Reporte</button>
                             </a>
                         {% endif %}
-                    </p>
-                  </div>                 
+                    </p>                
                 </div>
               </div>
-              <!--
-              <div class="col-md-4">
+            </div>
+              <div class="col-md-3">
                 <div class="card card-profile">
                   <div class="card-avatar">
                       <a href="">
@@ -178,36 +179,24 @@
                       </a>
                   </div>
                   <div class="card-body">      
-                    <h4 class="card-title">
-                      Aquí podras realizar una operacion en el sistema donde
-                      indiques algun Ingreso o egreso generado por la venta o
-                      compra de agua para el tanque.
-                    </h4>
                     <div class="row">
-                        <div class="col-md-5" style="background-color: rgba(153, 160, 160, 0.219); position: relative;">
-                            <h4 class="" style="position: absolute; top:50%; margin: 0;   -ms-transform: translateY(-50%); transform: translateY(-50%);">
+                        <div class="card" style="background-color: rgba(153, 160, 160, 0.295); position: relative;">
+                            <h4 style="margin-top: 10px;">
                                 Capacidad del tanque
                             </br>
-                                <strong>{{ water_tank_form.capacity.initial }} lts.</strong> 
-                            </br>
+                                <strong>{{ water_tank_form.capacity.initial }} L</strong> 
                             </br>
                                 Litros actuales
-                                </br>   
-                                <strong>{{ water_tank_form.current_liters.initial }} lts.</strong> 
-
-                            </h4>                           
-                        </div>
-                        <div class="col-md-7" style="background-color: rgba(153, 160, 160, 0.295); position: relative;">
-
-                            <h4 style="margin-top: 10px;">Nivel del tanque</h4>        
-                            {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%}                            
+                            </br>   
+                                <strong>{{ water_tank_form.current_liters.initial }} L</strong>                                 
+                            </h4>        
+                            {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%}                             
                         </div>
                         </br>
                     </div>
                   </div>   
                 </div>
               </div>
-              -->
         </div>
 
 {% endblock content %}

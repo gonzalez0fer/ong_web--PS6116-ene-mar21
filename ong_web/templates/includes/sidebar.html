@@ -52,7 +52,15 @@
             </a>
           </li>
 
-          <li class="nav-item dropdown">
+          {% url 'dashboard:maintenance:refectories_maintenance_list' as maint_refect_view %}
+          <li class="nav-item {% if maint_refect_view == request.path or 'products' in request.path or 'product-managements' in request.path or 'maintenance' in request.path%} active {% endif %}">
+            <a class="nav-link" href="{% url 'dashboard:maintenance:refectories_maintenance_list' %}">
+              <i class="material-icons">home_repair_service</i>
+              <p>Mantenimiento</p>
+            </a>
+          </li>
+
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false"><i class="material-icons">home_repair_service
             </i>Mantenimiento</a>
             <div class="dropdown-menu">
@@ -66,14 +74,14 @@
                     <i class="material-icons">construction</i> 
                     <p>Ver Mantenimientos</p>
                   </a>
-          </li>
+          </li> -->
 
-          <li class="nav-item">
+{% comment %}           <li class="nav-item">
             <a class="nav-link" href="{% url 'dashboard:supplier:list_suppliers' %}">
               <i class="material-icons">engineering</i>
               <p>Proveedores</p>
             </a>
-          </li>
+          </li> {% endcomment %}
 
       <li class="nav-item" style="position: absolute; bottom: 5%; width: 75%;">
         <a class="nav-link" href="{% url 'logout' %}" >
