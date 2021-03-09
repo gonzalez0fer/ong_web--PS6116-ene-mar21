@@ -445,6 +445,16 @@ class WaterManagementUpdateViewGuest(UpdateView):
             )
         )
 
+class ModalTemplate(TemplateView):
+    template_name = "water_managements/water_managements-delete.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = WaterManagement.objects.get(pk=self.kwargs['pk'])
+        
+        context['operation_id'] = query.id
+        return context
+
 
 def DeleteWaterOperation(request,pk):
     water_op = get_object_or_404(WaterManagement, id = pk)
