@@ -243,7 +243,7 @@ class CupboardManagementUpdateView(UpdateView):
     form_class = CupboardManagementForm
     model = CupboardManagement 
     queryset = CupboardManagement.objects.all()
-    template_name = ""
+    template_name = "cupboard_managements/cupboard_management_update.html"
 
     def get_success_url(self):
         if self.request.user.is_superuser:
@@ -328,7 +328,7 @@ class CupboardManagementUpdateViewGuest(UpdateView):
     form_class = CupboardManagementForm
     model = CupboardManagement 
     queryset = CupboardManagement.objects.all()
-    template_name = ""
+    template_name = "cupboard_managements/cupboard_management_update.html"
     success_url = "/dashboard/cupboard-managements/operations"
     
     def get_context_data(self, **kwargs):
