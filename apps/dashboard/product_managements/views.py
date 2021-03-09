@@ -145,13 +145,15 @@ class ProductManagementCreateView(CreateView):
             product.product_unit = self.object.product_unit
             product.created_by = self.request.user
             product.refectory_id = self.kwargs['refectory_id']
+            product.is_spare_part = self.object.is_spare_part
         #ya existia el producto
         else:
             if self.object.operation_type == 'Ingreso':    
                 product.total_product_quantity = product.total_product_quantity + self.object.product_quantity
                 product.product_unit = self.object.product_unit
                 product.created_by = self.request.user
-                product.refectory_id = self.kwargs['refectory_id']                    
+                product.refectory_id = self.kwargs['refectory_id']
+                product.is_spare_part = self.object.is_spare_part                    
             else:
                 #si intento sacar mas de lo que hay
                 if self.object.product_quantity > product.total_product_quantity:
@@ -159,7 +161,8 @@ class ProductManagementCreateView(CreateView):
                 product.total_product_quantity = product.total_product_quantity - self.object.product_quantity
                 product.product_unit = self.object.product_unit
                 product.created_by = self.request.user
-                product.refectory_id = self.kwargs['refectory_id']                
+                product.refectory_id = self.kwargs['refectory_id']
+                product.is_spare_part = self.object.is_spare_part                
 
         product.save()
         self.object.created_by = self.request.user
@@ -221,13 +224,15 @@ class ProductManagementCreateViewGuest(CreateView):
             product.product_unit = self.object.product_unit
             product.created_by = self.request.user
             product.refectory_id = self.request.user.profile.refectory.id
+            product.is_spare_part = self.object.is_spare_part
         #ya existia el producto
         else:
             if self.object.operation_type == 'Ingreso':    
                 product.total_product_quantity = product.total_product_quantity + self.object.product_quantity
                 product.product_unit = self.object.product_unit
                 product.created_by = self.request.user
-                product.refectory_id = self.request.user.profile.refectory.id                  
+                product.refectory_id = self.request.user.profile.refectory.id
+                product.is_spare_part = self.object.is_spare_part                  
             else:
                 #si intento sacar mas de lo que hay
                 if self.object.product_quantity > product.total_product_quantity:
@@ -235,7 +240,8 @@ class ProductManagementCreateViewGuest(CreateView):
                 product.total_product_quantity = product.total_product_quantity - self.object.product_quantity
                 product.product_unit = self.object.product_unit
                 product.created_by = self.request.user
-                product.refectory_id = self.request.user.profile.refectory.id                
+                product.refectory_id = self.request.user.profile.refectory.id
+                product.is_spare_part = self.object.is_spare_part                
 
         product.save()
         self.object.created_by = self.request.user

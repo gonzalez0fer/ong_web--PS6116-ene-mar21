@@ -23,6 +23,10 @@ class Product(TimeStampedModel):
         max_length=10, 
         blank=True, 
         null=True
+    )
+
+    is_spare_part = models.BooleanField(
+        default=False
     )    
 
     refectory = models.ForeignKey(
