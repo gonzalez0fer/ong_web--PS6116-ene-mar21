@@ -452,7 +452,13 @@ class ModalTemplate(TemplateView):
         context = super().get_context_data(**kwargs)
         query = WaterManagement.objects.get(pk=self.kwargs['pk'])
         
-        context['operation_id'] = query.id
+        context['operation'] = {
+            'id':query.id,
+            'type':query.operation_type,
+            'description':query.operation_description,
+            'liters':query.water_liters,
+            'created':query.created,
+        }
         return context
 
 

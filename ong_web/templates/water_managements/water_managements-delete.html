@@ -10,6 +10,7 @@
             <div class="modal-body">
                 <div class="form-group">
                   <label>¿Está seguro que desea eliminar el registro seleccionado?</label>
+                  <p>El {{operation.type}} de {{operation.liters}} litros por concepto de {{operation.description}} y fecha {{operation.created}}</p>
                 </div>
             </div>
           
@@ -17,7 +18,7 @@
             
             <button class="btn btn-default pull-left" type="button" data-dismiss="modal">Cancelar</button>
 
-            <a href="{% url 'dashboard:water_managements:water_management_delete' operation_id %}">
+            <a href="{% url 'dashboard:water_managements:water_management_delete' operation.id %}">
               <button class="submit-btn btn btn-danger" type="button">Eliminar</button>
             </a>
             </div>
