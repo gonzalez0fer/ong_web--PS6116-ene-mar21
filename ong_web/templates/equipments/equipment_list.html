@@ -63,9 +63,7 @@
                       <a  href="{% url 'dashboard:equipments:update_equipments' refectory_data.0.id equipment_object.id %}">
                         <button type="button" class="btn btn-info">Actualizar</button>
                       </a>
-                      <a  href="">
-                        <button type="button" class="btn btn-danger">Eliminar</button>
-                      </a>
+                        <button type="button" class="btn btn-danger" onclick="open_modal('{% url 'dashboard:equipments:delete_equipments' refectory_data.0.id equipment_object.id %}')">Eliminar</button>
                       {% endif %}
                     </td>
                   </tr>
@@ -121,7 +119,7 @@
   </div>
 
 
-
+<div class="modal fade" id='delete_equipment' role="dialog">
 
 </div>
 
@@ -133,4 +131,13 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 <script src="/static/assets/js/equipments/equipment_list.js"></script>
+<script type="text/javascript">
+    var $ = jQuery.noConflict()
+    function open_modal(url){
+        $('#delete_equipment').load(url, function(){
+            $(this).modal('show');
+
+        });
+    }
+</script>
 {% endblock javascripts %}

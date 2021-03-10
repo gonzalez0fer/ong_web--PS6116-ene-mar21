@@ -22,7 +22,7 @@ class Maintenance(TimeStampedModel):
 
     comments = models.TextField(
         max_length=600,
-        blank=False,
+        blank=True,
         null=True,
     )
 
