@@ -37,7 +37,7 @@ urlpatterns = [
         ),
 
     path(
-        '<int:refectory_id>/<int:pk>/update', 
+        '<int:refectory_id>/<int:equipment_id>/<int:pk>/update', 
         views.MaintenanceUpdateView.as_view(), 
         name='maintenance_update'
         ),

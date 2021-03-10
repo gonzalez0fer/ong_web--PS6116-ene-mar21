@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView, CreateView
 
@@ -41,7 +41,7 @@ class RefectoriesMaintenanceListView(ListView):
 
 @method_decorator([login_required, superuser_required], name='dispatch')
 class MaintenanceList(ListView):
-    template_name = ""
+    template_name = "maintenance/maintenance_list.html"
     queryset = Maintenance.objects.all()
 
     def get_context_data(self, **kwargs):
@@ -49,13 +49,15 @@ class MaintenanceList(ListView):
         
         refectory = Refectory.objects.get(id=self.kwargs['refectory_id'])
         query = Maintenance.objects.filter(equipment=self.kwargs['pk']).order_by('created')
-        
+        equipment = Equipment.objects.get(id=self.kwargs['pk'])
+
         context['object_list'] = []
         context['refectory_data'] = []
 
         for i in query:
             context['object_list'].append({
                     'id':i.id,
+                    'equipment_name':i.equipment.name,
                     'activity':i.activity,
                     'comments':i.comments,
                     'product_name':i.product.product_name,
@@ -65,6 +67,7 @@ class MaintenanceList(ListView):
             })
 
         context['equipment_id'] = self.kwargs['pk']
+        context['equipment_name'] = equipment.name
 
         context['refectory_data'].append({
             'id':refectory.id,
@@ -74,7 +77,7 @@ class MaintenanceList(ListView):
         return context
 
 class MaintenanceListGuest(ListView):
-    template_name = ""
+    template_name = "maintenance/maintenance_list.html"
     queryset = Maintenance.objects.all()
 
     def get_context_data(self, **kwargs):
@@ -82,6 +85,7 @@ class MaintenanceListGuest(ListView):
         
         refectory = Refectory.objects.get(id=self.request.user.profile.refectory.id)
         query = Maintenance.objects.filter(equipment=self.kwargs['pk']).order_by('created')
+        equipment = Equipment.objects.get(id=self.kwargs['pk'])
         
         context['object_list'] = []
         context['refectory_data'] = []
@@ -89,6 +93,7 @@ class MaintenanceListGuest(ListView):
         for i in query:
             context['object_list'].append({
                     'id':i.id,
+                    'equipment_name':i.equipment.name,
                     'activity':i.activity,
                     'comments':i.comments,
                     'product_name':i.product.product_name,
@@ -98,6 +103,7 @@ class MaintenanceListGuest(ListView):
             })
         
         context['equipment_id'] = self.kwargs['pk']
+        context['equipment_name'] = equipment.name
 
         context['refectory_data'].append({
             'id':refectory.id,
@@ -110,13 +116,10 @@ class MaintenanceListGuest(ListView):
 class MaintenanceCreateView(CreateView):
     model = Maintenance
     form_class = MaintenanceForm
-    template_name = ""
+    template_name = "maintenance/maintenance_create.html"
     
     def get_success_url(self):
-        if self.request.user.is_superuser:
-            success_url = ""
-        else:
-            pass
+        success_url = reverse('dashboard:maintenance:maintenance_list',kwargs={'refectory_id':self.kwargs['refectory_id'],'pk':self.kwargs['pk']})
         return success_url
 
     def get_context_data(self, **kwargs):
@@ -128,12 +131,13 @@ class MaintenanceCreateView(CreateView):
 
         for i in query:
             context['product_info'].append({
-                "product_name": i.product_name,
-                "product_quantity": i.total_product_quantity,
+                'product_name': i.product_name,
+                'product_quantity': i.total_product_quantity,
             })
 
         context['refectory'] = {
             'id' : self.kwargs['refectory_id'],
+            'equipment_id':self.kwargs['pk'],
         }
 
         return context
@@ -142,14 +146,16 @@ class MaintenanceCreateView(CreateView):
         self.object = None
         form = self.get_form()
         product_used = Product.objects.get(refectory_id=self.kwargs['refectory_id'],product_name=form.data['product_name'])
+
         product_management_form = ProductManagementForm(
-            initial={
+            data={
                 'product_cod':product_used,
                 'product_name':product_used.product_name,
                 'product_unit':product_used.product_unit,
                 'operation_type':'Egreso',
                 'product_quantity':form.data['product_quantity'],
                 'product_unitary_amount':0,
+                'is_spare_part':product_used.is_spare_part,
         })
 
         if form.is_valid() and product_management_form.is_valid():
@@ -159,7 +165,7 @@ class MaintenanceCreateView(CreateView):
 
     def form_valid(self, form, product_management_form, product_used):
         self.object = form.save(commit=False)
-        self.object.equipment = self.kwargs['pk']
+        self.object.equipment_id = self.kwargs['pk']
         self.object.created_by = self.request.user
         self.object.product = product_used
         
@@ -174,7 +180,7 @@ class MaintenanceCreateView(CreateView):
         product_management_object.save()
 
         #buscar y guardar operacion registradad de product management
-        self.object.product_operation = product_management_object.id
+        self.object.product_operation = product_management_object
 
         self.object.save()
         return super().form_valid(form)
@@ -190,8 +196,11 @@ class MaintenanceCreateView(CreateView):
 class MaintenanceCreateViewGuest(CreateView):
     model = Maintenance
     form_class = MaintenanceForm
-    template_name = ""
-    success_url = ""
+    template_name = "maintenance/maintenance_create.html"
+
+    def get_success_url(self):
+        success_url = reverse('dashboard:maintenance:maintenance_list_guest',kwargs={'pk':self.kwargs['pk']})
+        return success_url
 
     def get_context_data(self, **kwargs):
         context = super(MaintenanceCreateViewGuest, self).get_context_data(**kwargs)
@@ -208,6 +217,7 @@ class MaintenanceCreateViewGuest(CreateView):
 
         context['refectory'] = {
             'id' : self.request.user.profile.refectory.id,
+            'equipment_id':self.kwargs['pk'],
         }
 
         return context
@@ -217,13 +227,14 @@ class MaintenanceCreateViewGuest(CreateView):
         form = self.get_form()
         product_used = Product.objects.get(refectory_id=self.request.user.profile.refectory.id,product_name=form.data['product_name'])
         product_management_form = ProductManagementForm(
-            initial={
+            data={
                 'product_cod':product_used,
                 'product_name':product_used.product_name,
                 'product_unit':product_used.product_unit,
                 'operation_type':'Egreso',
                 'product_quantity':form.data['product_quantity'],
                 'product_unitary_amount':0,
+                'is_spare_part':product_used.is_spare_part,
         })
 
         if form.is_valid() and product_management_form.is_valid():
@@ -233,7 +244,7 @@ class MaintenanceCreateViewGuest(CreateView):
 
     def form_valid(self, form, product_management_form, product_used):
         self.object = form.save(commit=False)
-        self.object.equipment = self.kwargs['pk']
+        self.object.equipment_id = self.kwargs['pk']
         self.object.created_by = self.request.user
         self.object.product = product_used
         
@@ -247,7 +258,7 @@ class MaintenanceCreateViewGuest(CreateView):
         product_used.save()
         product_management_object.save()
         #buscar y guardar operacion registradad de product management
-        product_operation = product_management_object.id
+        product_operation = product_management_object
         self.object.product_operation = product_operation
 
         self.object.save()
@@ -265,21 +276,18 @@ class MaintenanceCreateViewGuest(CreateView):
 class MaintenanceUpdateView(UpdateView):
     model = Maintenance
     form_class = MaintenanceForm
-    template_name = ""
+    template_name = "maintenance/maintenance_update.html"
     
     def get_success_url(self):
-        if self.request.user.is_superuser:
-            success_url = ""
-        else:
-            pass
+        success_url = reverse('dashboard:maintenance:maintenance_list',kwargs={'refectory_id':self.kwargs['refectory_id'],'pk':self.kwargs['equipment_id']})
         return success_url
 
     def get_context_data(self, **kwargs):
         context = super(MaintenanceUpdateView, self).get_context_data(**kwargs)
 
-        query = Product.objects.filter(refectory_id=self.kwargs['refectory_id']).order_by('product_name')
         product_operation = ProductManagement.objects.get(id=context['object'].product_operation.id)
-
+        query = Product.objects.filter(refectory_id=self.kwargs['refectory_id']).exclude(id=product_operation.product_cod.id).order_by('product_name')
+        
         context['product_info'] = []
         context['product_operation'] = product_operation
 
@@ -291,6 +299,7 @@ class MaintenanceUpdateView(UpdateView):
 
         context['refectory'] = {
             'id' : self.kwargs['refectory_id'],
+            'equipment_id':self.kwargs['equipment_id'],
         }
 
         return context
@@ -312,11 +321,12 @@ class MaintenanceUpdateView(UpdateView):
         self.object.product = product_used
         
         product_management_object = ProductManagement.objects.get(id=self.object.product_operation.id)
+        #TODO VALIDAR SI ES EL MISMO PRODUCTO O SE CAMBIO
         product_management_object.product_cod = product_used
         product_management_object.product_name = product_used.product_name
         product_management_object.product_quantity = self.object.product_quantity
         
-        #validacion de cantidad disponible
+        #TODO validacion de cantidad disponible
         product_used.total_product_quantity = (product_used.total_product_quantity + temp) - self.object.product_quantity 
         product_used.save()
 
@@ -336,14 +346,20 @@ class MaintenanceUpdateView(UpdateView):
 class MaintenanceUpdateViewGuest(UpdateView):
     model = Maintenance
     form_class = MaintenanceForm
-    template_name = ""
-    success_url = ""
+    template_name = "maintenance/maintenance_update.html"
+
+    def get_success_url(self):
+        query = Maintenance.objects.get(id=self.kwargs['pk'])
+        success_url = reverse('dashboard:maintenance:maintenance_list_guest',kwargs={'pk':query.equipment.id})
+        return success_url
+
 
     def get_context_data(self, **kwargs):
         context = super(MaintenanceUpdateViewGuest, self).get_context_data(**kwargs)
 
-        query = Product.objects.filter(refectory_id=self.request.user.profile.refectory.id).order_by('product_name')
+        
         product_operation = ProductManagement.objects.get(id=context['object'].product_operation.id)
+        query = Product.objects.filter(refectory_id=self.request.user.profile.refectory.id).exclude(id=product_operation.product_cod.id).order_by('product_name')
 
         context['product_info'] = []
         context['product_operation'] = product_operation
@@ -356,6 +372,7 @@ class MaintenanceUpdateViewGuest(UpdateView):
 
         context['refectory'] = {
             'id' : self.request.user.profile.refectory.id,
+            'equipment_id':context['object'].equipment.id,
         }
 
         return context
@@ -401,7 +418,7 @@ class MaintenanceUpdateViewGuest(UpdateView):
 def DeleteMaintenance(request, refectory_id, pk):
     maintenance_op = get_object_or_404(Maintenance, id = pk)
     product_operation = ProductManagement.objects.get(id=maintenance_op.product_operation.id)
-    product = Product.objecs.get(refectory_id=refectory_id,product_name=product_operation.product_name)
+    product = Product.objects.get(refectory_id=refectory_id,product_name=product_operation.product_name)
 
     product.total_product_quantity += product_operation.product_quantity 
     product.save()    

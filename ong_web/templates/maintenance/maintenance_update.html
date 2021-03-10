@@ -1,0 +1,120 @@
+{% extends "layouts/base.html" %}
+{% load widget_tweaks %}
+{% block title %} Actualizar Mantenimiento {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-7">
+    <div class="card">
+      <div class="card-header card-header-info">
+        <h4 class="card-title">Actualizar Mantenimiento del Equipo</h4>
+            <p class="card-category">Completa los datos.</p>
+      </div>
+      <div class="card-body">
+        <form onsubmit="return validate()" method="post">
+          {% csrf_token %}
+                          
+          <br/>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label class="bmd-label-floating">Actividad Realizada</label>
+                {% render_field form.activity class="form-control" name="activity" id="activity" %}
+              </div>
+              <span id="activity_error" class="text-danger" style="display : none"></span>
+            </div>
+          </div>
+
+          <br/>
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label class="bmd-label-floating">Comentarios</label>
+                {% render_field form.comments class="form-control" name="comments" id="comments" %}
+              </div>
+              <span id="comments_error" class="text-danger" style="display : none"></span>
+            </div>
+          </div>
+
+          <br/>
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label class="bmd-label-floating">Producto o Repuesto Utilizado</label>
+                    <select id="product_name" name="product_name" class="form-control">
+                        <option value="{{object.product_operation.product_name}}">{{object.product_operation.product_name}}</option>
+                        {% for i in product_info %}
+                        <option value="{{i.product_name}}">{{i.product_name}}</option>
+                        {% endfor %}
+                    </select>
+              </div>
+              <span id="product_name_error" class="text-danger" style="display : none"></span>
+            </div>
+          </div>
+
+          <br/>          
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label class="bmd-label-floating">Cantidad de Unidades</label>
+                {% render_field form.product_quantity class="form-control" name="product_quantity" id="product_quantity" %}
+              </div>
+              <span id="product_quantity_error" class="text-danger" style="display : none"></span>
+            </div>
+        </div>
+
+          <br/>
+          <p class="pull-left">
+            {% if user.is_superuser %}
+            <a  href="{% url 'dashboard:maintenance:maintenance_list' refectory.id refectory.equipment_id %}">
+              <button type="button" class="btn btn-default">Regresar</button>
+            </a>
+            {% else %}
+            <a  href="{% url 'dashboard:maintenance:maintenance_list_guest' refectory.equipment_id %}"> 
+              <button type="button" class="btn btn-default">Regresar</button>
+            </a>
+            {% endif %}            
+          </p>
+          <button id="submit-button" type="submit" class="btn btn-success pull-right">Actualizar Operación</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="card card-profile">
+      <div class="card-avatar">
+          <a href="">
+              <img class="img" src="/static/assets/img/flats/chemical.png" />
+          </a>
+      </div>
+      <div class="card-body">      
+        <h4 class="card-title">
+          Aquí podras realizar una operacion en el sistema donde
+          indiques algun Ingreso o egreso generado por la compra o
+          uso de productos para el mantenimiento de los equipos.
+        </h4>
+        </br>
+        <h4>
+          <strong>No olvides que para registrar Ingresos debes 
+          seleccionar el tipo de operación "Ingreso" y para 
+          egresos "Egreso".</strong>
+        </h4>
+      </div>   
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+{% endblock javascripts %}

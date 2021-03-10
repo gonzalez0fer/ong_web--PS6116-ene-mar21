@@ -25,7 +25,7 @@ urlpatterns = [
 
     path(
         '<int:pk>/detail', 
-        views.EquipmentDetailView.as_view(), 
+        views.EquipmentDetailViewGuest.as_view(), 
         name='detail_equipments_guest'
         ),  
 
