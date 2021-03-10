@@ -45,7 +45,13 @@ urlpatterns = [
         '<int:pk>/update', 
         views.WaterManagementUpdateViewGuest.as_view(), 
         name='water_management_update_guest'
-        ),       
+        ),
+
+    path(
+        '<int:pk>/delete/modal', 
+        views.ModalTemplate.as_view(), 
+        name='water_management_modal'
+        ), 
 
     path(
         '<int:pk>/delete', 
