@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render, reverse
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import UpdateView, CreateView
 
 from django.utils.decorators import method_decorator
@@ -415,7 +415,23 @@ class MaintenanceUpdateViewGuest(UpdateView):
             )
         )
 
-def DeleteMaintenance(request, refectory_id, pk):
+class ModalTemplate(TemplateView):
+    template_name = "maintenance/maintenance_delete.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = Maintenance.objects.get(pk=self.kwargs['pk'])
+        
+        context['operation'] = {
+            'id':query.id,
+            'equipment_id':query.equipment.id,
+            'activity':query.activity,
+            'created':query.created,
+            'refectory_id':self.kwargs['refectory_id'],
+        }
+        return context
+
+def DeleteMaintenance(request, refectory_id, equipment_id, pk):
     maintenance_op = get_object_or_404(Maintenance, id = pk)
     product_operation = ProductManagement.objects.get(id=maintenance_op.product_operation.id)
     product = Product.objects.get(refectory_id=refectory_id,product_name=product_operation.product_name)
@@ -424,5 +440,5 @@ def DeleteMaintenance(request, refectory_id, pk):
     product.save()    
     product_operation.delete()
     maintenance_op.delete()
-    return HttpResponseRedirect("/")
+    return HttpResponseRedirect("/dashboard/maintenance/"+str(refectory_id)+"/"+str(equipment_id)+"/history")
     

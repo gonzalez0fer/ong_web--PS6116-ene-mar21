@@ -93,9 +93,8 @@
                                                 <button type="button" class="btn btn-info">Editar</button>
                                             </a>
                                                 
-                                            <a  href="">
-                                                <button type="button" class="btn btn-danger">Eliminar</button>
-                                            </a>
+                                            <button type="button" class="btn btn-danger" onclick="open_modal('{% url 'dashboard:maintenance:maintenance_modal' refectory_data.0.id i.id %}')">Eliminar</button>
+
                                             {% else %}
                                             <a  href="{% url 'dashboard:maintenance:maintenance_update_guest' i.id %}">
                                                 <button type="button" class="btn btn-info">Editar</button>
@@ -145,34 +144,7 @@
             </br>
         </br>
 
-        <!-- <div class="col-md-4">
-                    
-            <div class="card card-profile">
-                <div class="card-avatar">
-                    <a href="">
-                      <img class="img" src="/static/assets/img/flats/refectory.png" />
-                    </a>
-                  </div>
-                    <div class="card-body">
-
-                        <h4 class="card-title">
-                            Punto de distribución:
-                            <strong>{{refectory_data.0.refectory_name}}</strong> 
-                        </br>
-                            Direccion: 
-                            {{refectory_data.0.refectory_address}}
-
-                        </h4>
-                      </div>    
-                        
-
-                  
-            </div>
-          </div> -->
-
-
-
-
+            <div class="modal fade" id='modal_delete' role="dialog">
         </div>
 
 
@@ -182,4 +154,14 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+    <script type="text/javascript">
+    var $ = jQuery.noConflict()
+    function open_modal(url){
+        $('#modal_delete').load(url, function(){
+            $(this).modal('show');
+
+        });
+    }
+
+    </script>
 {% endblock javascripts %}
