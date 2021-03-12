@@ -210,15 +210,14 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-    <script src="/static/assets/js/list_water_managements.js"></script>
+    <script src="/static/assets/js/water_managements/list_water_managements.js"></script>
     <script type="text/javascript">
-    var $ = jQuery.noConflict()
-    function open_modal(url){
-        $('#modal_delete').load(url, function(){
-            $(this).modal('show');
+        var $ = jQuery.noConflict()
+        function open_modal(url){
+            $('#modal_delete').load(url, function(){
+                $(this).modal('show');
 
-        });
-    }
-
+            });
+        }
     </script>
 {% endblock javascripts %}
