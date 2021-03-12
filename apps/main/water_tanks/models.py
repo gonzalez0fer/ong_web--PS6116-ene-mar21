@@ -12,7 +12,7 @@ class WaterTank(TimeStampedModel):
     
     capacity = models.IntegerField(
         validators=[
-            MinValueValidator(0)
+            MinValueValidator(1)
         ]
     )
 

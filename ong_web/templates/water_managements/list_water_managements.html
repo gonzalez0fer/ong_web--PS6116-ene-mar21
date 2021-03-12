@@ -150,9 +150,9 @@
                             <a href="{% url 'dashboard:water_managements:water_management_create' tank_id 1 %}">
                                 <button type="button" class="btn btn-default action">Registrar Egreso</button>
                             </a>
-                            <a href="">
+                            {% comment %} <a href="">
                                 <button type="button" class="btn btn-default action">Reporte</button>
-                            </a>
+                            </a> {% endcomment %}
                         {% else %}
                             <a href="{% url 'dashboard:water_managements:water_management_create_guest' 0 %}">
                                 <button type="button" class="btn btn-default action">Registrar Ingreso</button>
@@ -188,7 +188,11 @@
                             </br>
                                 Litros actuales
                             </br>   
-                                <strong>{{ water_tank_form.current_liters.initial }} L</strong>                                 
+                                <strong>{{ water_tank_form.current_liters.initial }} L</strong> 
+                            {% comment %} </br>
+                                Último Llenado
+                            </br>
+                                <strong>{{ last_filled }}</strong>   {% endcomment %}                             
                             </h4>        
                             {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%}                             
                         </div>

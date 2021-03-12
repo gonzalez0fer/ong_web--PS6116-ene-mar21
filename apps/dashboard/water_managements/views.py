@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render,reverse
 from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import UpdateView, CreateView
@@ -32,6 +32,7 @@ class WaterManagementList(ListView):
         
         context['object_list'] = []
         context['tank_id'] = self.kwargs['pk']
+        context['last_filled'] = tank.last_fill_date
         context['refectory_data'] = []
 
         for i in query:
@@ -82,6 +83,7 @@ class WaterManagementListGuest(ListView):
         
         context['object_list'] = []
         context['tank_id'] = tank.id
+        context['last_filled'] = tank.last_fill_date
         context['refectory_data'] = []
 
         for i in query:
@@ -126,10 +128,7 @@ class WaterManagementCreateView(CreateView):
     template_name = "water_managements/water_managements-create.html"
     
     def get_success_url(self):
-        if self.request.user.is_superuser:
-            success_url = "/dashboard/water_tanks/"
-        else:
-            success_url = "/dashboard/water_tanks/tank/"   
+        success_url = reverse('dashboard:water_managements:water_management_list',kwargs={'pk':self.kwargs['tank_id']})
         return success_url
 
     def get_context_data(self, **kwargs):
@@ -305,10 +304,7 @@ class WaterManagementUpdateView(UpdateView):
     template_name = "water_managements/water_managements-update.html"
 
     def get_success_url(self):
-        if self.request.user.is_superuser:
-            success_url = "/dashboard/water_tanks/"
-        else:
-            success_url = "/dashboard/water_managements/operations"
+        success_url = reverse('dashboard:water_managements:water_management_list',kwargs={'pk':self.kwargs['tank_id']})
         return success_url
 
     def get_context_data(self, **kwargs):
@@ -458,7 +454,11 @@ class ModalTemplate(TemplateView):
             'description':query.operation_description,
             'liters':query.water_liters,
             'created':query.created,
+            'tank_id':query.cupboard.id,
+            'tank_current_liters':query.cupboard.current_liters,
+            'tank_capacity':query.cupboard.capacity
         }
+        print(context)
         return context
 
 
@@ -468,6 +468,9 @@ def DeleteWaterOperation(request,pk):
     last_filled = WaterManagement.objects.exclude(id=water_op.id).filter(operation_type='Ingreso', cupboard=tank).order_by('-created')
 
     if water_op.operation_type == 'Ingreso':
+        if  tank.current_liters - water_op.water_liters <= 0:
+            #TODO meter mensaje de error
+            return HttpResponseRedirect("/dashboard/water_managements/"+str(tank.id))
         tank.current_liters -= water_op.water_liters
         if len(last_filled) == 0:
             tank.last_fill_date = None
@@ -475,6 +478,9 @@ def DeleteWaterOperation(request,pk):
             tank.last_fill_date = last_filled[0].created
 
     else:
+        if water_op.water_liters + tank.current_liters > tank.capacity:
+            #TODO meter mensaje de error
+            return HttpResponseRedirect("/dashboard/water_managements/"+str(tank.id))        
         tank.current_liters += water_op.water_liters
 
     tank.save()
