@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.urls import reverse_lazy
-from django.views.generic import ListView,CreateView,UpdateView
+from django.views.generic import ListView,CreateView,UpdateView,TemplateView
 from django.http import HttpResponse
 
 from django.utils.decorators import method_decorator
@@ -428,19 +428,35 @@ class ProductManagementUpdateViewGuest(UpdateView):
             )
         )
 
+class ModalTemplate(TemplateView):
+    template_name = "product_managements/product_management_delete.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = ProductManagement.objects.get(pk=self.kwargs['pk'])
+        product = Product.objects.get(pk=query.product_cod.id)
+        
+        context['operation'] = {
+            'id':query.id,
+            'type':query.operation_type,
+            'product_name':query.product_name,
+            'product_quantity':query.product_quantity,
+            'product_unit':query.product_unit,
+            'created':query.created,
+            'product_total_quantity':product.total_product_quantity,
+            'refectory_id':self.kwargs['refectory_id'],
+        }
+        return context
+
 def DeleteProductManagementOperation(request, refectory_id, pk):
     product_op = get_object_or_404(ProductManagement, id = pk)
-    operation_list = ProductManagement.objects.filter(product_cod=product_op.product_cod).order_by('-created')
-    
-    if operation_list[0].created != product_op.created:
-        return HttpResponseRedirect("/dashboard/products/"+str(refectory_id))
-
-    product = Product.objects.get(product_name=product_op.product_name,refectory_id=refectory_id)
-
-    
+    product = Product.objects.get(pk=product_op.product_cod.id)
+    #product = Product.objects.get(product_name=product_op.product_name,refectory_id=refectory_id)
 
     if product_op.operation_type == 'Ingreso':
-
+        if product.total_product_quantity - product_op.product_quantity < 0:
+            #TODO return a lista de operaciones y mensaje de error
+            return HttpResponseRedirect("/dashboard/products/"+str(refectory_id))
         product.total_product_quantity -= product_op.product_quantity
 
 
