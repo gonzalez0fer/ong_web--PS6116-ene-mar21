@@ -341,12 +341,18 @@ class WaterManagementUpdateView(UpdateView):
             if self.object.operation_type == 'Ingreso':
                 if self.object.water_liters > tank.capacity:
                     return self.form_invalid(form)
-                elif self.object.water_liters + tank.current_liters > tank.capacity:
-                     return self.form_invalid(form)
+                elif (tank.current_liters - temp) + self.object.water_liters > tank.capacity:
+                    return self.form_invalid(form)
+                elif (tank.current_liters - temp) + self.object.water_liters < 0:
+                    return self.form_invalid(form)
                 # restar litros ingresados antiguos     
                 tank.current_liters = (tank.current_liters - temp) + self.object.water_liters
             else:
                 if self.object.water_liters > tank.current_liters:
+                    return self.form_invalid(form)
+                elif (tank.current_liters + temp) - self.object.water_liters < 0:
+                    return self.form_invalid(form)
+                elif (tank.current_liters + temp) - self.object.water_liters > tank.capacity:
                     return self.form_invalid(form)
                 # sumar litros egresados antiguos                
                 tank.current_liters = (tank.current_liters + temp) - self.object.water_liters
@@ -355,10 +361,14 @@ class WaterManagementUpdateView(UpdateView):
             if self.object.operation_type == 'Ingreso':
                 if self.object.water_liters > tank.capacity:
                     return self.form_invalid(form)
+                elif (tank.current_liters + temp) + self.object.water_liters > tank.capacity:
+                    return self.form_invalid(form)
                 # operacion inversa     
                 tank.current_liters = (tank.current_liters + temp) + self.object.water_liters
             else:
                 if self.object.water_liters > tank.current_liters:
+                    return self.form_invalid(form)
+                elif (tank.current_liters - temp) - self.object.water_liters < 0:
                     return self.form_invalid(form)
                 # operacion inversa                
                 tank.current_liters = (tank.current_liters - temp) - self.object.water_liters                        
@@ -408,12 +418,18 @@ class WaterManagementUpdateViewGuest(UpdateView):
             if self.object.operation_type == 'Ingreso':
                 if self.object.water_liters > tank.capacity:
                     return self.form_invalid(form)
-                elif self.object.water_liters + tank.current_liters > tank.capacity:
-                     return self.form_invalid(form)
+                elif (tank.current_liters - temp) + self.object.water_liters > tank.capacity:
+                    return self.form_invalid(form)
+                elif (tank.current_liters - temp) + self.object.water_liters < 0:
+                    return self.form_invalid(form)
                 # restar litros ingresados antiguos     
                 tank.current_liters = (tank.current_liters - temp) + self.object.water_liters
             else:
                 if self.object.water_liters > tank.current_liters:
+                    return self.form_invalid(form)
+                elif (tank.current_liters + temp) - self.object.water_liters < 0:
+                    return self.form_invalid(form)
+                elif (tank.current_liters + temp) - self.object.water_liters > tank.capacity:
                     return self.form_invalid(form)
                 # sumar litros egresados antiguos                
                 tank.current_liters = (tank.current_liters + temp) - self.object.water_liters
@@ -422,13 +438,17 @@ class WaterManagementUpdateViewGuest(UpdateView):
             if self.object.operation_type == 'Ingreso':
                 if self.object.water_liters > tank.capacity:
                     return self.form_invalid(form)
+                elif (tank.current_liters + temp) + self.object.water_liters > tank.capacity:
+                    return self.form_invalid(form)
                 # operacion inversa     
                 tank.current_liters = (tank.current_liters + temp) + self.object.water_liters
             else:
                 if self.object.water_liters > tank.current_liters:
                     return self.form_invalid(form)
+                elif (tank.current_liters - temp) - self.object.water_liters < 0:
+                    return self.form_invalid(form)
                 # operacion inversa                
-                tank.current_liters = (tank.current_liters - temp) - self.object.water_liters                        
+                tank.current_liters = (tank.current_liters - temp) - self.object.water_liters                         
         tank.save()
         return super().form_valid(form)
 
@@ -458,7 +478,6 @@ class ModalTemplate(TemplateView):
             'tank_current_liters':query.cupboard.current_liters,
             'tank_capacity':query.cupboard.capacity
         }
-        print(context)
         return context
 
 
