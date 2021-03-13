@@ -47,7 +47,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="bmd-label-floating">Producto o Repuesto Utilizado</label>
-                    <select id="product_name" name="product_name" class="form-control">
+                    <select id="product_name" name="product_name" class="form-control" readonly>
                         <option value="{{object.product_operation.product_name}}">{{object.product_operation.product_name}}</option>
                         {% for i in product_info %}
                         <option value="{{i.product_name}}">{{i.product_name}}</option>
@@ -93,20 +93,18 @@
     <div class="card card-profile">
       <div class="card-avatar">
           <a href="">
-              <img class="img" src="/static/assets/img/flats/chemical.png" />
+              <img class="img" src="/static/assets/img/flats/maintainance.png" />
           </a>
       </div>
       <div class="card-body">      
         <h4 class="card-title">
-          Aquí podras realizar una operacion en el sistema donde
-          indiques algun Ingreso o egreso generado por la compra o
-          uso de productos para el mantenimiento de los equipos.
+          Aquí podrás registrar:
+           <li>Mantenimiento a realizar</li>
+           <li>Productos en el inventario, usados para el mantenimiento</li>
         </h4>
         </br>
         <h4>
-          <strong>No olvides que para registrar Ingresos debes 
-          seleccionar el tipo de operación "Ingreso" y para 
-          egresos "Egreso".</strong>
+          <strong>No olvides que los productos a usar y su disponibilidad deben estar registrados en los suministros de mantenimiento</strong>
         </h4>
       </div>   
     </div>
@@ -117,4 +115,16 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+<script>
+  var old_quantity = "{{ object.product_quantity | safe }}";
+  
+  var products = [
+    {% for prod in product_info %}
+      {
+        product_name: "{{prod.product_name}}",
+        product_quantity: "{{prod.product_quantity}}",
+      },
+    {% endfor %}
+  ]
+</script>
 {% endblock javascripts %}

@@ -92,20 +92,18 @@
     <div class="card card-profile">
       <div class="card-avatar">
           <a href="">
-              <img class="img" src="/static/assets/img/flats/chemical.png" />
+              <img class="img" src="/static/assets/img/flats/maintainance.png" />
           </a>
       </div>
       <div class="card-body">      
         <h4 class="card-title">
-          Aquí podras realizar una operacion en el sistema donde
-          indiques algun Ingreso o egreso generado por la compra o
-          uso de productos para el mantenimiento de los equipos.
+          Aquí podrás registrar:
+           <li>Mantenimiento a realizar</li>
+           <li>Productos en el inventario, usados para el mantenimiento</li>
         </h4>
         </br>
         <h4>
-          <strong>No olvides que para registrar Ingresos debes 
-          seleccionar el tipo de operación "Ingreso" y para 
-          egresos "Egreso".</strong>
+          <strong>No olvides que los productos a usar y su disponibilidad deben estar registrados en los suministros de mantenimiento</strong>
         </h4>
       </div>   
     </div>
@@ -116,4 +114,15 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+<script>
+  var products = [
+    {% for prod in product_info %}
+      {
+        product_name: "{{prod.product_name}}",
+        product_quantity: "{{prod.product_quantity}}",
+      },
+    {% endfor %}
+  ]
+</script>
+<script src="/static/assets/js/maintenance/maintenance.js"></script>
 {% endblock javascripts %}
