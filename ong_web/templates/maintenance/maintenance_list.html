@@ -115,7 +115,7 @@
             <p style="float: left; margin-left: 50px;">
                 {% if user.is_superuser %}
                 <a  href="{% url 'dashboard:equipments:list_equipments' refectory_data.0.id %}">
-                <button type="button" class="btn btn-default">Regresar</button>
+                <button type="button" class="btn btn-default action">Regresar</button>
                 </a>
                 {% else %}
                 <a  href="{% url 'dashboard:equipments:list_equipments_guest' %}">
@@ -126,17 +126,17 @@
             <p class="bttn-row">
             {% if user.is_superuser %}
                 <a  href="{% url 'dashboard:maintenance:maintenance_create' refectory_data.0.id equipment_id %}">
-                    <button type="button" class="btn btn-success">Registrar Mantenimiento</button>
+                    <button type="button" class="btn btn-default action">Registrar Mantenimiento</button>
                 </a>
                 <a  href="{% url 'dashboard:equipments:detail_equipments' refectory_data.0.id equipment_id %}">
-                    <button type="button" class="btn btn-success">Ver Detalles del Equipo</button>
+                    <button type="button" class="btn btn-default action">Ver Detalles del Equipo</button>
                 </a>
             {% else %}
                 <a  href="{% url 'dashboard:maintenance:maintenance_create_guest' equipment_id %}">
-                    <button type="button" class="btn btn-success">Registrar Mantenimiento</button>
+                    <button type="button" class="btn btn-default action">Registrar Mantenimiento</button>
                 </a>                
                 <a  href="{% url 'dashboard:equipments:detail_equipments_guest' equipment_id %}">
-                    <button type="button" class="btn btn-success">Ver Detalles del Equipo</button>
+                    <button type="button" class="btn btn-default action">Ver Detalles del Equipo</button>
                 </a>
             {% endif %}
             </p>
