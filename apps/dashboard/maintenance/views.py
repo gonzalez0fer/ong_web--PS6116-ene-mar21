@@ -286,7 +286,7 @@ class MaintenanceUpdateView(UpdateView):
         context = super(MaintenanceUpdateView, self).get_context_data(**kwargs)
 
         product_operation = ProductManagement.objects.get(id=context['object'].product_operation.id)
-        query = Product.objects.filter(refectory_id=self.kwargs['refectory_id']).exclude(id=product_operation.product_cod.id).order_by('product_name')
+        query = Product.objects.filter(refectory_id=self.kwargs['refectory_id']).order_by('product_name')
         
         context['product_info'] = []
         context['product_operation'] = product_operation
@@ -359,7 +359,7 @@ class MaintenanceUpdateViewGuest(UpdateView):
 
         
         product_operation = ProductManagement.objects.get(id=context['object'].product_operation.id)
-        query = Product.objects.filter(refectory_id=self.request.user.profile.refectory.id).exclude(id=product_operation.product_cod.id).order_by('product_name')
+        query = Product.objects.filter(refectory_id=self.request.user.profile.refectory.id).order_by('product_name')
 
         context['product_info'] = []
         context['product_operation'] = product_operation
