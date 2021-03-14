@@ -80,9 +80,9 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Diámetro de Entrada</label>
-                <input name="inlet-diameter" id="inlet-diameter" type="number" step="0.01" class="form-control">
+                <input name="inlet_diameter" id="inlet_diameter" type="number" step="0.01" class="form-control">
               </div>
-              <span id="inlet-diameter_error" class="text-danger" style="display : none"></span>
+              <span id="inlet_diameter_error" class="text-danger" style="display : none"></span>
             </div>
 
             <div class="col-md-6">
@@ -199,4 +199,6 @@
 </div>
 
 {% endblock content %}
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script src="/static/assets/js/equipments/equipment_create.js"></script>
+{% endblock javascripts %}
