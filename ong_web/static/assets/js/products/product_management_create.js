@@ -5,6 +5,7 @@ function validate() {
     product_cod = document.getElementById("product_cod").value
     product_quantity = document.getElementById("product_quantity").value
     product_unitary_amount = document.getElementById("product_unitary_amount").value
+    product_unit = document.getElementById("product_unit").value
 
     // Verificar si la operacion es valida
     if (operation_type != "Ingreso" && operation_type != "Egreso") {
@@ -14,6 +15,16 @@ function validate() {
     }
     else {
         document.getElementById("operation_type_error").style.display = "none"
+    }
+
+    // Verificar que las unidades del producto sean válidas
+    if (product_unit == "" || product_unit == "none") {
+        document.getElementById("product_unit_error").innerHTML = "Debe introducir las unidades del producto"
+        document.getElementById("product_unit_error").style.display = "block"
+        error = true
+    }
+    else {
+        document.getElementById("product_unit_error").style.display = "none"
     }
 
     // Verificar que el nombre del producto sea valido

@@ -75,11 +75,11 @@ class EquipmentsListViewGuest(ListView):
 @method_decorator([login_required, superuser_required], name='dispatch')
 class EquipmentDetailView(DetailView):
     model = Equipment
-    template_name = ""
+    template_name = "equipments/equipment_details.html"
 
 class EquipmentDetailViewGuest(DetailView):
     model = Equipment
-    template_name = ""
+    template_name = "equipments/equipment_details.html"
 
 
 @method_decorator([login_required, superuser_required], name='dispatch')

@@ -52,6 +52,7 @@
           <br/>
 
           <div class="row">
+
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Marca</label>
@@ -139,7 +140,19 @@
               </div>
               <span id="quartz_size_error" class="text-danger" style="display : none"></span>
             </div>
+
           </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label class="bmd-label-floating">Instrucciones</label>
+                <textarea id="instructions" name="instructions" class="form-control"></textarea>
+              </div>
+              <span id="instructions_error" class="text-danger" style="display : none"></span>
+            </div>
+          </div>
+          
           <br/>
           <p class="pull-left">
             <a  href="{% url 'dashboard:equipments:list_equipments' refectory.id %}"> <!--{% url dashboard:water_managements:water_management_list-->

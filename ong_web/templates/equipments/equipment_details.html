@@ -1,0 +1,106 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div style="display: flex; justify-content: center;">
+  <div class="card card-profile" style="width: 80%;">
+    <div class="card-body" style="text-align: justify; ">
+      <div style="padding: 0px 30px;">
+        {% if user.is_superuser %}
+          <h2 class="card-title " style="text-align: center; font-weight: bolder;">
+            {{object.name}}
+          </h2>
+          </br>
+          <h4>
+            <li>
+              <span style="font-weight: bold;">Marca:</span> {{object.brand}}
+            </li><br>
+            <li>
+              <span style="font-weight: bold;">Modelo:</span> {{object.equipment_model}}
+            </li><br>
+            <li>
+              <span style="font-weight: bold;">Potencia:</span> {{object.power}}
+            </li><br>
+            <li>
+              <span style="font-weight: bold;">Diámetro interno:</span> {{object.inlet_diameter}}
+            </li><br>
+            <li>
+              <span style="font-weight: bold;">Diámetro:</span> {{object.diameter}}
+            </li><br>
+            <li>
+              <span style="font-weight: bold;">Altura:</span> {{object.height}}
+            </li><br>
+            <li>
+              <span style="font-weight: bold;">Volume:</span> {{object.volume}}
+            </li><br>
+            <li>
+              <span style="font-weight: bold;">Medidas:</span> {{object.measurements}}
+            </li><br>
+            <li>
+              <span style="font-weight: bold;">Respuesto:</span> {{object.spare_part_name}}
+            </li><br>
+            <li>
+              <span style="font-weight: bold;">Flujo:</span> {{object.flow}}
+            </li><br>
+            <li>
+              <span style="font-weight: bold;">Tamaño del bombillo:</span> {{object.light_bulb_size}}
+            </li><br>
+            <li>
+              <span style="font-weight: bold;">Tamaño del cuarzo:</span> {{object.quartz_size}}
+            </li><br>
+            <li>
+              <span style="font-weight: bold;">Frecuencia de mantenimiento:</span> {{object.maintenance_frequency}}
+            </li><br>
+            <li>
+              <span style="font-weight: bold;">Instrucciones:</span> {{object.instructions}}
+            </li><br>
+          </h4>
+        {% else %}
+          <h2 class="card-title " style="text-align: center; font-weight: bolder;">
+            Bienvenido al Sistema de Inventarios para el Proyecto Agua Segura de la ONG +Verde +Humano
+          </h2>
+          </br>
+          <h4>
+            Este sistema te permitirá llevar un control con respecto al ingreso y egreso de agua de los tanques, 
+            ingreso y consumo de alimentos que manejan los comedores, ingreso y uso de suministros de mantenimiento y registro 
+            de mantenimientos a los equipos disponibles.<br><br>
+            Aquí te dejamos unos atajos: <br><br>
+          </h4>
+          <div class="bttn-row" style="display: flex; justify-content: space-evenly;">
+            <a  href="{% url 'dashboard:water_managements:water_management_sell' %}">
+              <button type="button" class="btn btn-info"> Registar Venta de Agua</button>  
+            </a>
+            <a  href="">
+              <button type="button" class="btn btn-info"> Ver Historial de Alimentos</button>  
+            </a>
+            <a  href="{% url 'dashboard:product_managements:list_product_management_guest' %}">
+              <button type="button" class="btn btn-info"> Ver Historial de Suministros</button>  
+            </a>
+            <a  href="{% url 'dashboard:equipments:list_equipments_guest' %}">
+              <button type="button" class="btn btn-info"> Ver Equipos</button>  
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>   
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      md.initDashboardPageCharts();
+
+    });
+  </script>
+
+{% endblock javascripts %}
