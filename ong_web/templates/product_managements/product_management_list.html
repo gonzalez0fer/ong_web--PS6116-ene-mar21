@@ -137,34 +137,32 @@
                     </div>
                   </div>
                 </div>
-            </br>
-        </br>
             {% comment %} aqui va validacion de super usuario para regresar {% endcomment %}
             <p style="float: left; margin-left: 50px;">
                 {% if user.is_superuser %}
                 <a  href="{% url 'dashboard:products:list_maintenance_product' refectory_data.0.id %}">
-                <button type="button" class="btn btn-default">Regresar</button>
+                <button type="button" class="btn btn-default action">Regresar</button>
                 </a>
                 {% else %}
                 <a  href="{% url 'dashboard:products:list_maintenance_product_guest' %}">
-                <button type="button" class="btn btn-default">Regresar</button>
+                <button type="button" class="btn btn-default action">Regresar</button>
                 </a>
                 {% endif %}
             </p>
             <p class="bttn-row">
             {% if user.is_superuser %}
                 <a  href="{% url 'dashboard:product_managements:create' refectory_data.0.id 0 %}">
-                    <button type="button" class="btn btn-success">Registrar Ingreso</button>
+                    <button type="button" class="btn btn-default action">Registrar Ingreso</button>
                 </a>
                 <a  href="{% url 'dashboard:product_managements:create' refectory_data.0.id 1 %}">
-                    <button type="button" class="btn btn-success">Registrar Egreso</button>
+                    <button type="button" class="btn btn-default action">Registrar Egreso</button>
                 </a>
             {% else %}
                 <a  href="{% url 'dashboard:product_managements:create_guest' 0 %}">
-                    <button type="button" class="btn btn-success">Registrar Ingreso</button>
+                    <button type="button" class="btn btn-default action">Registrar Ingreso</button>
                 </a>                
                 <a  href="{% url 'dashboard:product_managements:create_guest' 1 %}">
-                    <button type="button" class="btn btn-success">Registrar Egreso</button>
+                    <button type="button" class="btn btn-default action">Registrar Egreso</button>
                 </a>
             {% endif %}
             </p>
