@@ -134,11 +134,24 @@
             </div>
 
             <div class="col-md-6">
-              <div class="form-group">
+              <div class="form-group"  style="padding-top: 2.4em;">
                 <label class="bmd-label-floating">Tamaño del cuarzo</label>
                  <input id="quartz_size" name="quartz_size" type="number" step="0.01" class="form-control" >
               </div>
               <span id="quartz_size_error" class="text-danger" style="display : none"></span>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Repuesto</label>
+                 <select id="spare_part" name="spare_part" class="form-control">
+                    <option value="">Seleccione repuesto del equipo... </option>
+                    {% for i in spare_info %}
+                    <option value="{{i.id}}">{{i.product_name}}</option>
+                    {% endfor %}
+                </select>
+              </div>
+              <span id="spare_part_error" class="text-danger" style="display : none"></span>
             </div>
 
           </div>

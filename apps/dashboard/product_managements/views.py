@@ -40,7 +40,8 @@ class ProductManagementListView(ListView):
                         'product_unit':i.product_unit,
                         'created': i.created,
                         'created_by':str(i.created_by.profile.name) + ' ' + str(i.created_by.profile.last_name),
-                        'product_id': j.id
+                        'product_id': j.id,
+                        'is_maintenance': i.is_maintenance,
                 })
         try:
             context['refectory_data'].append({
@@ -78,7 +79,8 @@ class ProductManagementListViewGuest(ListView):
                         'product_unit':i.product_unit,
                         'created': i.created,
                         'created_by':str(i.created_by.profile.name) + ' ' + str(i.created_by.profile.last_name),
-                        'product_id': j.id
+                        'product_id': j.id,
+                        'is_maintenance': i.is_maintenance,
                 })
         try:
             context['refectory_data'].append({

@@ -74,6 +74,10 @@ class ProductManagement(TimeStampedModel):
         default=False
     )
 
+    is_maintenance = models.BooleanField(
+        default=False
+    )
+
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         blank = True,

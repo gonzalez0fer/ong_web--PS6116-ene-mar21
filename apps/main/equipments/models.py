@@ -78,12 +78,6 @@ class Equipment(TimeStampedModel):
         related_name='spare_equipment',
         on_delete = models.SET_NULL,
     )
-
-    spare_part_name = models.CharField(
-        max_length=100, 
-        blank=True, 
-        null=True
-    )
     
     flow = models.FloatField(
         blank = True,

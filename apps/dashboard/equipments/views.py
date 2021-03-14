@@ -103,6 +103,7 @@ class EquipmentCreateView(CreateView):
         
         for i in query:
             context['spare_info'].append({
+            'id':i.id,
             'product_name': i.product_name,
             })
 
@@ -123,9 +124,6 @@ class EquipmentCreateView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        # Para cuando se incluya repuesto en el form de crear
-        # spare_part = Product.objects.get(refectory_id=self.kwargs['refectory_id'],product_name=self.object.spare_part_name)
-        # self.object.spare_part = spare_part
         self.object.created_by = self.request.user
         self.object.refectory_id = self.kwargs['refectory_id']
         self.object.save()
@@ -153,6 +151,16 @@ class EquipmentUpdateView(UpdateView):
 
         context = super(EquipmentUpdateView, self).get_context_data(**kwargs)
 
+        query = Product.objects.filter(refectory_id=self.kwargs['refectory_id'],is_spare_part=True)
+
+        context['spare_info'] = []
+        
+        for i in query:
+            context['spare_info'].append({
+            'id':i.id,
+            'product_name': i.product_name,
+            })
+
         context['refectory'] = {
             'id' : self.kwargs['refectory_id'],
         }
@@ -171,9 +179,6 @@ class EquipmentUpdateView(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        # Para cuando se incluya repuesto en el form de actualizar
-        # spare_part = Product.objects.get(refectory_id=self.kwargs['refectory_id'],product_name=self.object.spare_part_name)
-        # self.object.spare_part = spare_part
         return super().form_valid(form)
 
 

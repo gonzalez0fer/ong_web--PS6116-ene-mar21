@@ -156,6 +156,7 @@ class MaintenanceCreateView(CreateView):
                 'product_quantity':form.data['product_quantity'],
                 'product_unitary_amount':0,
                 'is_spare_part':product_used.is_spare_part,
+                'is_maintenance':True,
         })
 
         if form.is_valid() and product_management_form.is_valid():
@@ -235,6 +236,7 @@ class MaintenanceCreateViewGuest(CreateView):
                 'product_quantity':form.data['product_quantity'],
                 'product_unitary_amount':0,
                 'is_spare_part':product_used.is_spare_part,
+                'is_maintenance':True,
         })
 
         if form.is_valid() and product_management_form.is_valid():

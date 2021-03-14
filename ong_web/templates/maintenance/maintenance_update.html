@@ -49,9 +49,9 @@
                 <label class="bmd-label-floating">Producto o Repuesto Utilizado</label>
                     <select id="product_name" name="product_name" class="form-control" readonly>
                         <option value="{{object.product_operation.product_name}}">{{object.product_operation.product_name}}</option>
-                        {% for i in product_info %}
+{% comment %}                         {% for i in product_info %}
                         <option value="{{i.product_name}}">{{i.product_name}}</option>
-                        {% endfor %}
+                        {% endfor %} {% endcomment %}
                     </select>
               </div>
               <span id="product_name_error" class="text-danger" style="display : none"></span>
