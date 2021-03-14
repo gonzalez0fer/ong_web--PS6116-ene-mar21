@@ -9,20 +9,23 @@ from apps.main.product_managements.models import ProductManagement
 
 class Maintenance(TimeStampedModel):
     #foreign key
-    equipment = models.CharField(
-        max_length=20,
-        null=False
+    equipment = models.ForeignKey(
+        Equipment, 
+        blank=True, 
+        null=True, 
+        related_name='maintenance_equipment',
+        on_delete = models.SET_NULL,
     )
 
-    activity = models.TextField(
-        max_length=600,
+    activity = models.CharField(
+        max_length=100,
         blank=True,
         null=True,
     )
 
-    comments = models.TextField(
-        max_length=600,
-        blank=False,
+    comments = models.CharField(
+        max_length=100,
+        blank=True,
         null=True,
     )
 

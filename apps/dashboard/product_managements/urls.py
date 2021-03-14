@@ -42,6 +42,12 @@ urlpatterns = [
     ),
 
     path(
+        '<int:refectory_id>/<int:pk>/delete/modal', 
+        views.ModalTemplate.as_view(), 
+        name='product_management_modal'
+        ),
+
+    path(
         '<int:refectory_id>/<int:pk>/delete', 
         views.DeleteProductManagementOperation, 
         name='delete'

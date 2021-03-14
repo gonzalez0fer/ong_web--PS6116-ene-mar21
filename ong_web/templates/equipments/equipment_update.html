@@ -124,14 +124,45 @@
             </div>
 
             <div class="col-md-6">
-              <div class="form-group">
+              <div class="form-group" style="padding-top: 2.4em;">
                 <label class="bmd-label-floating">Tamaño del cuarzo</label>
                 {% render_field form.quartz_size id="quartz_size" name="quartz_size" step="0.01" class="form-control" %}
               </div>
               <span id="quartz_size_error" class="text-danger" style="display : none"></span>
             </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Repuesto</label>
+                    <select id="spare_part" name="spare_part" class="form-control">
+                        {% if object.spare_part.id != None %}
+                        <option value="{{object.spare_part.id}}">{{object.spare_part.product_name}}</option>
+                        {% else %}
+                        <option value="">Seleccione repuesto del equipo... </option>
+                        {% endif %}
+                        {% for i in spare_info %}
+                        <option value="{{i.id}}">{{i.product_name}}</option>
+                        {% endfor %}
+                    </select>
+              </div>
+              <span id="spare_part_error" class="text-danger" style="display : none"></span>
+            </div>
           </div>
           <br/>
+
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label class="bmd-label-floating">Instrucciones</label>
+                {% render_field form.instructions id="instructions" name="instructions" class="form-control" %}
+              </div>
+              <span id="instructions_error" class="text-danger" style="display : none"></span>
+            </div>
+          </div>
+
+          <br/>
+
           <p class="pull-left">
             <a  href="{% url 'dashboard:equipments:list_equipments' refectory.id %}"> <!--{% url dashboard:water_managements:water_management_list-->
               <button type="button" class="btn btn-default">Regresar</button>

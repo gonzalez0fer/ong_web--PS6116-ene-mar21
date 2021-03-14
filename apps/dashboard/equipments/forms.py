@@ -21,4 +21,6 @@ class EquipmentForm(forms.ModelForm):
             'light_bulb_size',
             'quartz_size',
             'maintenance_frequency',
+            'spare_part',
+            'instructions',
             ]
