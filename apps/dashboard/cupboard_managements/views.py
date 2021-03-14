@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.urls import reverse_lazy
-from django.views.generic import ListView,CreateView,UpdateView
+from django.views.generic import ListView,CreateView,UpdateView,TemplateView
 from django.http import HttpResponse, HttpResponseRedirect
 
 from django.utils.decorators import method_decorator
@@ -403,21 +403,34 @@ class CupboardManagementUpdateViewGuest(UpdateView):
             )
         )
 
+class ModalTemplate(TemplateView):
+    template_name = "cupboard_managements/cupboard_management_delete.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = CupboardManagement.objects.get(pk=self.kwargs['pk'])
+        product = Cupboard.objects.get(pk=query.cupboard.id)
+        
+        context['operation'] = {
+            'id':query.id,
+            'type':query.operation_type,
+            'product_name':query.product_name,
+            'product_quantity':query.product_quantity,
+            'created':query.created,
+            'product_total_quantity':product.total_product_quantity,
+            'refectory_id':self.kwargs['refectory_id'],
+        }
+        return context
+
 def DeleteCupboardManagementOperation(request, refectory_id, pk):
     product_op = get_object_or_404(CupboardManagement, id = pk)
-    operation_list = CupboardManagement.objects.filter(cupboard=product_op.cupboard).order_by('-created')
+    product = Cupboard.objects.get(pk=product_op.cupboard.id)
     
-    if operation_list[0].created != product_op.created:
-        return HttpResponseRedirect("/dashboard/cupboard-management/"+str(refectory_id))
-
-    product = Cupboard.objects.get(product_name=product_op.product_name,refectory_id=refectory_id)
-
-    
-
     if product_op.operation_type == 'Ingreso':
-
+        if product.total_product_quantity - product_op.product_quantity < 0:
+            #TODO mensaje de error
+            return HttpResponseRedirect("/dashboard/cupboard-management/"+str(refectory_id))
         product.total_product_quantity -= product_op.product_quantity
-
 
     else:
         product.total_product_quantity += product_op.product_quantity
