@@ -44,7 +44,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Cantidad de unidades</label>
-                  {% render_field form.product_quantity class="form-control" name="product_quantity" id="product_quantity" %}                
+                  {% render_field form.product_quantity class="form-control" name="product_quantity" type="number" id="product_quantity" %}                
               </div>
               <span id="product_quantity_error" class="text-danger" style="display : none"></span>
             </div>
@@ -102,8 +102,8 @@
 {% block javascripts %}
     <script>
       var product_name = "{{ form.product_name.value | safe }}"
-      var operation_type = "{{ form.operation_type.value | safe }}"
-      var operation_quantity = "{{ form.product_quantity.value | safe }}"
+      var original_operation_type = "{{ form.operation_type.value | safe }}"
+      var original_operation_quantity = "{{ form.product_quantity.value | safe }}"
 
       var products = [
         {% for prod in product_info %}

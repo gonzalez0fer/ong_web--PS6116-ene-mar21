@@ -45,7 +45,7 @@ function quantity_validation() {
     product_quantity = document.getElementById("product_quantity").value
     operation_type = document.getElementById("operation_type").value
 
-    // Si el monto introducido es menor o igual a cero
+    // Si el monto introducido es menor a uno (1)
     if (parseInt(product_quantity) < 1) {
         document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad mayor a 0"
         document.getElementById("product_quantity_error").style.display = "block"
@@ -74,7 +74,7 @@ function quantity_validation() {
 function amount_validation() {
     product_unitary_amount = document.getElementById("product_unitary_amount").value
 
-    // Si el monto introducido es menor a cero
+    // Si el monto introducido es menor a cero (0)
     if (parseInt(product_unitary_amount) < 0) {
         document.getElementById("product_unitary_amount_error").innerHTML = "Debe introducir un precio igual o mayor a 0"
         document.getElementById("product_unitary_amount_error").style.display = "block"
@@ -141,41 +141,52 @@ function validate() {
     }
 }
 
-// Validación dinámica de la cantidad del producto al momento de actualizar
+// Validación dinámica de la actualización de la cantidad de productos
 function quantity_update_validation() {
-    product_quantity_update = document.getElementById("product_quantity").value
+    product_quantity_update = parseInt(document.getElementById("product_quantity").value)
     operation_type_update = document.getElementById("operation_type").value
 
     product = products.find(i => i.product_name == product_name);
     current_quantity = product.product_quantity
 
-    // Si el monto introducido es menor o igual a cero
+    // Si la cantidad de productos introducido es menor a uno (1)
     if (product_quantity_update < 1) {
         document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad mayor a 0"
         document.getElementById("product_quantity_error").style.display = "block"
     }
     else {
-        // Si la operación es "egreso", verifico el monto antes de la operación que se está modificando
-        if (operation_type_update == "Egreso") {
-            if (operation_type == "Ingreso") {
-                base_quantity = current_quantity - parseInt(operation_quantity)
-            }
-            else {
-                base_quantity = current_quantity + parseInt(operation_quantity)
-            }
+        document.getElementById("product_quantity_error").style.display = "none"
+    }
 
-            // Si el monto a egresar es mayor al monto disponible
-            if (product_quantity_update > base_quantity) {
-                document.getElementById("product_quantity_error").innerHTML = "La cantidad pedida excede la cantidad disponible"
-                document.getElementById("product_quantity_error").style.display = "block"
-            }
-            else {
-                document.getElementById("product_quantity_error").style.display = "none"
-            }
+    original_operation_quantity = parseInt(original_operation_quantity)
+    original_operation_type = original_operation_type
 
+    var base_quantity
+
+    // Dependiendo del tipo de operación, se hace una regresión acorde para tener la cantidad del producto disponible
+    if (original_operation_type == "Ingreso") {
+        base_quantity = current_quantity - original_operation_quantity
+    }
+    else {
+        base_quantity = current_quantity + original_operation_quantity
+    }
+
+    // Si el nuevo tipo de operación es "ingreso"
+    if (operation_type_update == "Ingreso") {
+
+        // Si, debido a la nueva cantidad ingresada, la cantidad del producto es menor a cero (0)
+        if (base_quantity + product_quantity_update < 0) {
+            document.getElementById("product_quantity_error").innerHTML = "Operación inválida"
+            document.getElementById("product_quantity_error").style.display = "block"
         }
-        else {
-            document.getElementById("product_quantity_error").style.display = "none"
+    }
+    // Si el nuevo tipo de operación es "egreso"
+    else {
+
+        // Si, debido a la nueva cantidad egresada, la cantidad del producto es menor a cero (0) 
+        if (base_quantity - product_quantity_update < 0) {
+            document.getElementById("product_quantity_error").innerHTML = "La cantidad pedida excede la cantidad disponible"
+            document.getElementById("product_quantity_error").style.display = "block"
         }
     }
 }
