@@ -487,7 +487,7 @@ def DeleteWaterOperation(request,pk):
     last_filled = WaterManagement.objects.exclude(id=water_op.id).filter(operation_type='Ingreso', cupboard=tank).order_by('-created')
 
     if water_op.operation_type == 'Ingreso':
-        if  tank.current_liters - water_op.water_liters <= 0:
+        if  tank.current_liters - water_op.water_liters < 0:
             #TODO meter mensaje de error
             return HttpResponseRedirect("/dashboard/water_managements/"+str(tank.id))
         tank.current_liters -= water_op.water_liters

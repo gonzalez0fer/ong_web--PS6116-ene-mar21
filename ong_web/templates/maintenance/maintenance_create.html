@@ -48,6 +48,7 @@
               <div class="form-group">
                 <label class="bmd-label-floating">Producto o Repuesto Utilizado</label>
                 <select id="product_name" name="product_name" class="form-control">
+                    <option value="">Seleccione un producto o repuesto...</option>
                     {% for i in product_info %}
                     <option value="{{i.product_name}}">{{i.product_name}}</option>
                     {% endfor %}

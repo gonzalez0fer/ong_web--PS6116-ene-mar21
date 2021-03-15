@@ -113,6 +113,7 @@ class ProductManagementCreateView(CreateView):
             context['product_info'].append({
                 "product_name": i.product_name,
                 "product_quantity": i.total_product_quantity,
+                "product_unit": i.product_unit,
             })
 
         context['refectory'] = {
@@ -193,6 +194,7 @@ class ProductManagementCreateViewGuest(CreateView):
             context['product_info'].append({
                 "product_name": i.product_name,
                 "product_quantity": i.total_product_quantity,
+                "product_unit": i.product_unit,
             })
 
         context['refectory'] = {
@@ -316,10 +318,12 @@ class ProductManagementUpdateView(UpdateView):
                 # restar litros ingresados antiguos     
                 product.total_product_quantity = (product.total_product_quantity - temp) + self.object.product_quantity
                 product.product_unit = self.object.product_unit
+                product.is_spare_part = self.object.is_spare_part
             else:
                 # sumar litros egresados antiguos                
                 product.total_product_quantity = (product.total_product_quantity + temp) - self.object.product_quantity
                 product.product_unit = self.object.product_unit
+                product.is_spare_part = self.object.is_spare_part
         #si cambia el tipo de operacion en la edicion
         else:
             if self.object.operation_type == 'Ingreso':
@@ -328,12 +332,14 @@ class ProductManagementUpdateView(UpdateView):
                 # operacion inversa     
                 product.total_product_quantity = (product.total_product_quantity + temp) + self.object.product_quantity
                 product.product_unit = self.object.product_unit
+                product.is_spare_part = self.object.is_spare_part
             else:
                 if self.object.product_quantity < 0:
                     return self.form_invalid(form)
                 # operacion inversa                
                 product.total_product_quantity = (product.total_product_quantity - temp) - self.object.product_quantity
-                product.product_unit = self.object.product_unit                       
+                product.product_unit = self.object.product_unit
+                product.is_spare_part = self.object.is_spare_part                       
         product.save()
         return super().form_valid(form)
 
@@ -399,10 +405,12 @@ class ProductManagementUpdateViewGuest(UpdateView):
                 # restar litros ingresados antiguos     
                 product.total_product_quantity = (product.total_product_quantity - temp) + self.object.product_quantity
                 product.product_unit = self.object.product_unit
+                product.is_spare_part = self.object.is_spare_part
             else:
                 # sumar litros egresados antiguos                
                 product.total_product_quantity = (product.total_product_quantity + temp) - self.object.product_quantity
                 product.product_unit = self.object.product_unit
+                product.is_spare_part = self.object.is_spare_part
         #si cambia el tipo de operacion en la edicion
         else:
             if self.object.operation_type == 'Ingreso':
@@ -411,12 +419,14 @@ class ProductManagementUpdateViewGuest(UpdateView):
                 # operacion inversa     
                 product.total_product_quantity = (product.total_product_quantity + temp) + self.object.product_quantity
                 product.product_unit = self.object.product_unit
+                product.is_spare_part = self.object.is_spare_part
             else:
                 if self.object.product_quantity < 0:
                     return self.form_invalid(form)
                 # operacion inversa                
                 product.total_product_quantity = (product.total_product_quantity - temp) - self.object.product_quantity
-                product.product_unit = self.object.product_unit                       
+                product.product_unit = self.object.product_unit
+                product.is_spare_part = self.object.is_spare_part                       
         product.save()
         return super().form_valid(form)
 
