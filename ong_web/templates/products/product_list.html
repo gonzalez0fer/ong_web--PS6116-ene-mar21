@@ -11,7 +11,7 @@
             <div class="col-md-8">
                 <div class="card card-plain">
                   <div class="card-header card-header-info" >
-                    <h4 class="card-title mt-0">Inventario de mantenimiento del punto de distribución {{refectory_data.0.refectory_name}}</h4>
+                    <h4 class="card-title mt-0">Inventario de mantenimiento del punto de distribución <b>{{refectory_data.0.refectory_name}}</b></h4>
                     <p class="card-category"> Aqui podras ver todos los productos de mantenimiento del punto de distribución.</p>
                   </div>
                   <div class="card-body">
@@ -87,14 +87,14 @@
 
         <div class="col-md-4">
                     
-            <div class="card card-profile" style="width: fit-content;">
+            <div class="card card-profile" >
                 <div class="card-avatar">
                     <a href="">
                       <img class="img" src="/static/assets/img/flats/chemical.png" />
                     </a>
                   </div>
                     <div class="card-body">
-                      <h4 class="card-title">
+                      <h4 class="card-title" style="padding-bottom: 20px;">
                         Punto de distribución:
                         <strong>{{refectory_data.0.refectory_name}}</strong> 
                         </br>
@@ -103,11 +103,11 @@
                       </h4>
                       {% if user.is_superuser %}
                       <a  href="{% url 'dashboard:product_managements:list_product_management' refectory_data.0.id %}">
-                        <button type="button" class="btn btn-success">Ver Todas las Operaciones</button>
+                        <button type="button" class="btn btn-warning">Ver Todas las Operaciones</button>
                       </a>
                       {% else %}
                       <a  href="{% url 'dashboard:product_managements:list_product_management_guest' %}">
-                        <button type="button" class="btn btn-success">Ver Todas las Operaciones</button>
+                        <button type="button" class="btn btn-warning">Ver Todas las Operaciones</button>
                       </a>
                       {% endif %}                      
                     </div>    

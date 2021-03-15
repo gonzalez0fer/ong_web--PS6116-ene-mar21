@@ -10,7 +10,7 @@
   <div class="col-md-7">
     <div class="card">
       <div class="card-header card-header-info">
-        <h4 class="card-title">Actualiza una Operación de "Ingreso" o "Egreso"</h4>
+        <h4 class="card-title">Editar una Operación de "Ingreso" o "Egreso"</h4>
         <p class="card-category">Modifica los datos.</p>
       </div>
       <div class="card-body">
@@ -43,7 +43,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="bmd-label-floating">Cantidad de unidades</label>
+                <label class="bmd-label-floating">Cantidad (Kg)</label>
                   {% render_field form.product_quantity class="form-control" name="product_quantity" type="number" id="product_quantity" %}                
               </div>
               <span id="product_quantity_error" class="text-danger" style="display : none"></span>
@@ -86,10 +86,10 @@
           </a>
       </div>
       <div class="card-body">      
-        <h4 class="card-title"></h4>
+        <h4 class="card-title">Modificar una acción de ingreso o egreso de los alimentos</h4>
         </br>
         <h4>
-          <strong></strong>
+        <strong>Se debe ingresar la cantidad de alimento en Kg.</strong>
         </h4>
       </div>   
     </div>

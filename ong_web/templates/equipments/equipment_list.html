@@ -11,7 +11,7 @@
     <div class="col-md-9">
         <div class="card card-plain">
           <div class="card-header card-header-info" >
-            <h4 class="card-title mt-0">Inventario de Equipos del punto de distribución {{refectory_data.0.refectory_name}}</h4>
+            <h4 class="card-title mt-0">Inventario de Equipos del punto de distribución <b>{{refectory_data.0.refectory_name}}</b></h4>
             <p class="card-category"> Aqui podras ver todos los equipos con los que cuenta el punto de distribución.</p>
           </div>
           <div class="card-body">
@@ -111,23 +111,23 @@
 </br>
 
 <div class="col-md-3">
-    <div class="card card-profile" style="width: fit-content;">
+    <div class="card card-profile" >
         <div class="card-avatar" style="max-width: 120px; max-height: 120px;">
             <a href="">
               <img class="img" src="/static/assets/img/flats/maintainance.png" />
             </a>
           </div>
             <div class="card-body">
-              <h4 class="card-title">
-                Punto de distribución:
-                <strong>{{refectory_data.0.refectory_name}}</strong> 
+              <h4 class="card-title" style="padding-bottom: 10px;">
+                Punto de distribución: 
+                <b>{{refectory_data.0.refectory_name}}</b>
                 </br>
                 Direccion: 
-                {{refectory_data.0.refectory_address}}
+                <b>{{refectory_data.0.refectory_address}}</b>
               </h4>
               {% if user.is_superuser %}
               <a  href="{% url 'dashboard:equipments:create_equipments' refectory_data.0.id %}">
-                <button type="button" class="btn btn-success">Agregar Equipo</button>
+                <button type="button" class="btn btn-warning">Agregar Equipo</button>
               </a>
               {% endif %}
             </div> 

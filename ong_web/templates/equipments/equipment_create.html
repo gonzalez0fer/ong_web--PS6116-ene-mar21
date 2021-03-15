@@ -22,7 +22,7 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label class="bmd-label-floating">Nombre del equipo</label>
+                <label class="bmd-label-floating">Nombre del equipo <b>*</b></label>
                 <input type="text" name="name" id="name" class="form-control">
               </div>
               <span id="name_error" class="text-danger" style="display : none"></span>
@@ -32,7 +32,7 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label class="bmd-label-floating">Frecuencia de Mantenimiento</label>
+                <label class="bmd-label-floating">Frecuencia de Mantenimiento  <b>*</b></label>
                 <select id="maintenance_frequency" name="maintenance_frequency" class="form-control">
                   <option value="none">Selecciona Frecuencia de Mantenimiento... </option>
                   <option value="Semanal">Semanal</option>
@@ -55,7 +55,7 @@
 
             <div class="col-md-6">
               <div class="form-group">
-                <label class="bmd-label-floating">Marca</label>
+                <label class="bmd-label-floating">Marca  <b>*</b></label>
                 <input type="text" name="brand" id="brand" class="form-control">
               </div>
               <span id="brand_error" class="text-danger" style="display : none"></span>
@@ -181,16 +181,15 @@
 
   <div class="col-md-5">
     <div class="card card-profile">
-      <div class="card-avatar" style="max-width: 120px; max-height: 120px;">
+      <div class="card-avatar" >
           <a href="">
               <img class="img" src="/static/assets/img/flats/maintainance.png" />
           </a>
       </div>
-      <div class="card-body">      
-        <h4 class="card-title">
-          Aquí podrás agregar los equipos con los que cuenta el Punto de Distribución.
-          Estos equipos cuentan con ciertas características que son necesarias para completar el formulario.
-          Algunas otras pueden ser opcionales.
+      <div class="card-body" style="padding: 45px;">      
+        <h4 class="card-title" style="text-align: justify";>
+          Aquí podrás agregar los equipos con los que cuenta el Punto de Distribución.<br>
+          <b>Los campos obligatorios a completar están señalados con un (*).</b>
         </h4>
         </br>
       </div>   

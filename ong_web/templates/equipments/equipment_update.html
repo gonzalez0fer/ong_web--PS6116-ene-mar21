@@ -22,7 +22,7 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label class="bmd-label-floating">Nombre del equipo</label>
+                <label class="bmd-label-floating">Nombre del equipo  <b>*</b></label>
                 {% render_field form.name name="name" id="name" class="form-control" readonly="true" %}
               </div>
               <span id="name_error" class="text-danger" style="display : none"></span>
@@ -32,7 +32,7 @@
           <div class="row">
             <div class="col">
               <div class="form-group">
-                <label class="bmd-label-floating">Frecuencia de Mantenimiento</label>
+                <label class="bmd-label-floating">Frecuencia de Mantenimiento  <b>*</b></label>
                 {% render_field form.maintenance_frequency id="maintenance_frequency" name="maintenance_frequency" class="form-control" required="true" %}
               </div>
               <span id="maintenance_frequency_error" class="text-danger" style="display : none"></span>
@@ -44,7 +44,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="bmd-label-floating">Marca</label>
+                <label class="bmd-label-floating">Marca  <b>*</b></label>
                 {% render_field form.brand name="brand" id="brand" class="form-control" required="true" %}
               </div>
               <span id="brand_error" class="text-danger" style="display : none"></span>
