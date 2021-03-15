@@ -147,7 +147,7 @@ function quantity_update_validation() {
     operation_type_update = document.getElementById("operation_type").value
 
     product = products.find(i => i.product_name == product_name);
-    current_quantity = product.product_quantity
+    current_quantity = parseInt(product.product_quantity)
 
     // Si la cantidad de productos introducido es menor a uno (1)
     if (product_quantity_update < 1) {
