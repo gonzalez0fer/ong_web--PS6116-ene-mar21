@@ -100,10 +100,7 @@ class ProductManagementCreateView(CreateView):
     template_name = "product_managements/product_management_create.html"
 
     def get_success_url(self):
-        if self.request.user.is_superuser:
-            success_url = reverse('dashboard:products:list_maintenance_product',kwargs={'pk':self.kwargs['refectory_id']}) 
-        else:
-            success_url = "/dashboard/products/maintenance/"   
+        success_url = reverse('dashboard:products:list_maintenance_product',kwargs={'pk':self.kwargs['refectory_id']})    
         return success_url
 
     def get_context_data(self, **kwargs):
@@ -127,7 +124,8 @@ class ProductManagementCreateView(CreateView):
 
         self.object = None
         form = self.get_form()
-        product, created = Product.objects.get_or_create(product_name=form.data['product_cod'],refectory_id=self.kwargs['refectory_id'])
+        product_name_upper = form.data['product_cod'].upper()
+        product, created = Product.objects.get_or_create(product_name=product_name_upper,refectory_id=self.kwargs['refectory_id'])
         form.data._mutable = True
         form.data['product_cod'] = product.id
         form.data._mutable = False
@@ -206,7 +204,8 @@ class ProductManagementCreateViewGuest(CreateView):
 
         self.object = None
         form = self.get_form()
-        product, created = Product.objects.get_or_create(product_name=form.data['product_cod'],refectory_id=self.request.user.profile.refectory.id)
+        product_name_upper = form.data['product_cod'].upper()
+        product, created = Product.objects.get_or_create(product_name=product_name_upper,refectory_id=self.request.user.profile.refectory.id)
         form.data._mutable = True
         form.data['product_cod'] = product.id
         form.data._mutable = False

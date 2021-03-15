@@ -141,18 +141,6 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-<script type="text/javascript">
-
-  function forceInputUppercase(e)
-  {
-    var start = e.target.selectionStart;
-    var end = e.target.selectionEnd;
-    e.target.value = e.target.value.toUpperCase();
-    e.target.setSelectionRange(start, end);
-  }
-
-  document.getElementById("product_cod").addEventListener("keyup", forceInputUppercase, false);
-</script>
 <script>
   var products = [
     {% for prod in product_info %}
