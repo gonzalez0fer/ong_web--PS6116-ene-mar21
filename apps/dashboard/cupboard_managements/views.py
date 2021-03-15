@@ -99,10 +99,7 @@ class CupboardManagementCreateView(CreateView):
     template_name = "cupboard_managements/cupboard_management_create.html"
 
     def get_success_url(self):
-        if self.request.user.is_superuser:
-            success_url = reverse('dashboard:cupboard_managements:list_cupboard_management',kwargs={'refectory_id':self.kwargs['refectory_id']}) 
-        else:
-            pass  
+        success_url = reverse('dashboard:cupboard_managements:list_cupboard_management',kwargs={'refectory_id':self.kwargs['refectory_id']})  
         return success_url
 
     def get_context_data(self, **kwargs):
@@ -126,7 +123,8 @@ class CupboardManagementCreateView(CreateView):
 
         self.object = None
         form = self.get_form()
-        product, created = Cupboard.objects.get_or_create(product_name=form.data['product_name'],refectory_id=self.kwargs['refectory_id'])
+        product_name_upper = form.data['product_name'].upper()
+        product, created = Cupboard.objects.get_or_create(product_name=product_name_upper,refectory_id=self.kwargs['refectory_id'])
 
         if form.is_valid():
             return self.form_valid(form, product, created)
@@ -136,6 +134,7 @@ class CupboardManagementCreateView(CreateView):
     def form_valid(self, form, product, created):
         self.object = form.save(commit=False)
         self.object.cupboard = product
+        self.object.product_name = product.product_name
         self.object.product_total_amount = self.object.product_quantity * self.object.product_unitary_amount
         #si no existia el producto, se creo en el get or create
         if created:
@@ -196,7 +195,8 @@ class CupboardManagementCreateViewGuest(CreateView):
 
         self.object = None
         form = self.get_form()
-        product, created = Cupboard.objects.get_or_create(product_name=form.data['product_name'],refectory_id=self.request.user.profile.refectory.id)
+        product_name_upper = form.data['product_name'].upper()
+        product, created = Cupboard.objects.get_or_create(product_name=product_name_upper,refectory_id=self.request.user.profile.refectory.id)
 
         if form.is_valid():
             return self.form_valid(form, product, created)
@@ -206,6 +206,7 @@ class CupboardManagementCreateViewGuest(CreateView):
     def form_valid(self, form, product, created):
         self.object = form.save(commit=False)
         self.object.cupboard = product
+        self.object.product_name = product.product_name
         self.object.product_total_amount = self.object.product_quantity * self.object.product_unitary_amount
         #si no existia el producto, se creo en el get or create
         if created:
@@ -246,10 +247,7 @@ class CupboardManagementUpdateView(UpdateView):
     template_name = "cupboard_managements/cupboard_management_update.html"
 
     def get_success_url(self):
-        if self.request.user.is_superuser:
-            success_url = reverse('dashboard:cupboard_managements:list_cupboard_management',kwargs={'refectory_id':self.kwargs['refectory_id']})
-        else:
-            pass  
+        success_url = reverse('dashboard:cupboard_managements:list_cupboard_management',kwargs={'refectory_id':self.kwargs['refectory_id']})
         return success_url
     
     def get_context_data(self, **kwargs):
@@ -329,7 +327,7 @@ class CupboardManagementUpdateViewGuest(UpdateView):
     model = CupboardManagement 
     queryset = CupboardManagement.objects.all()
     template_name = "cupboard_managements/cupboard_management_update.html"
-    success_url = "/dashboard/cupboard-managements/operations"
+    success_url = "/dashboard/cupboard-management/operations"
     
     def get_context_data(self, **kwargs):
 
