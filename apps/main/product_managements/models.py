@@ -70,6 +70,14 @@ class ProductManagement(TimeStampedModel):
         null = True,
     )
 
+    is_spare_part = models.BooleanField(
+        default=False
+    )
+
+    is_maintenance = models.BooleanField(
+        default=False
+    )
+
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         blank = True,

@@ -42,7 +42,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Litros de Agua</label>
-                 {% render_field form.water_liters class="form-control" name="water_liters" id="water_liters_update" %}
+                 {% render_field form.water_liters class="form-control" name="water_liters" id="water_liters" type="number" %}
               </div>
               <span id="water_liters_error" class="text-danger" style="display : none"></span>
             </div>
@@ -106,8 +106,9 @@
   <script>
     var tank_id = "{{ tank_info.id | safe }}"
     var tank_capacity = "{{ tank_info.capacity | safe }}"
-    var tank_current_liters = "{{ tank_info.current_liters | safe }}"
-    var original_quantity = "{{ form.water_liters.value | safe }}"
+    var current_tank_liters = "{{ tank_info.current_liters | safe }}"
+    var original_operation_liters = "{{ form.water_liters.value | safe }}"
+    var original_operation_type = "{{ form.operation_type.value | safe }}"
   </script>
-  <script src="/static/assets/js/water_managements.js"></script>
+  <script src="/static/assets/js/water_managements/water_managements.js"></script>
 {% endblock javascripts %}

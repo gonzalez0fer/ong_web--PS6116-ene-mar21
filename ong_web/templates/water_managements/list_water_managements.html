@@ -115,9 +115,9 @@
                                                 <a  href="{% url 'dashboard:water_managements:water_management_update' tank_id i.id %}" >
                                                     <button type="button" class="btn btn-info btn-sm" title="Editar">Editar</button>
                                                 </a>
-                                                <a href="{% url 'dashboard:water_managements:water_management_delete' i.id %}">
-                                                    <button type="button" class="btn btn-danger btn-sm" style="margin-left: 5px;" title="Eliminar">Eliminar</button>
-                                                </a>
+
+                                                <button type="button" class="btn btn-danger btn-sm" style="margin-left: 5px;" title="Eliminar" onclick="open_modal('{% url 'dashboard:water_managements:water_management_modal' i.id %}')">Eliminar</button>
+                                                
                                             {% else %}
                                                 <a  href="{% url 'dashboard:water_managements:water_management_update_guest' i.id %}" >
                                                     <button type="button" class="btn btn-info btn-sm" title="Editar">Editar</button>
@@ -150,9 +150,9 @@
                             <a href="{% url 'dashboard:water_managements:water_management_create' tank_id 1 %}">
                                 <button type="button" class="btn btn-default action">Registrar Egreso</button>
                             </a>
-                            <a href="">
+                            {% comment %} <a href="">
                                 <button type="button" class="btn btn-default action">Reporte</button>
-                            </a>
+                            </a> {% endcomment %}
                         {% else %}
                             <a href="{% url 'dashboard:water_managements:water_management_create_guest' 0 %}">
                                 <button type="button" class="btn btn-default action">Registrar Ingreso</button>
@@ -188,7 +188,11 @@
                             </br>
                                 Litros actuales
                             </br>   
-                                <strong>{{ water_tank_form.current_liters.initial }} L</strong>                                 
+                                <strong>{{ water_tank_form.current_liters.initial }} L</strong> 
+                            {% comment %} </br>
+                                Último Llenado
+                            </br>
+                                <strong>{{ last_filled }}</strong>   {% endcomment %}                             
                             </h4>        
                             {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%}                             
                         </div>
@@ -197,6 +201,7 @@
                   </div>   
                 </div>
               </div>
+              <div class="modal fade" id='modal_delete' role="dialog">
         </div>
 
 {% endblock content %}
@@ -205,5 +210,14 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-    <script src="/static/assets/js/list_water_managements.js"></script>
+    <script src="/static/assets/js/water_managements/list_water_managements.js"></script>
+    <script type="text/javascript">
+        var $ = jQuery.noConflict()
+        function open_modal(url){
+            $('#modal_delete').load(url, function(){
+                $(this).modal('show');
+
+            });
+        }
+    </script>
 {% endblock javascripts %}

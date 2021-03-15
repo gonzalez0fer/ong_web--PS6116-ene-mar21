@@ -1,0 +1,128 @@
+{% extends "layouts/base.html" %}
+{% load widget_tweaks %}
+{% block title %} Registrar Mantenimiento {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-7">
+    <div class="card">
+      <div class="card-header card-header-info">
+        <h4 class="card-title">Registrar Mantenimiento del Equipo</h4>
+            <p class="card-category">Completa los datos.</p>
+      </div>
+      <div class="card-body">
+        <form onsubmit="return validate()" method="post">
+          {% csrf_token %}
+                          
+          <br/>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label class="bmd-label-floating">Actividad Realizada</label>
+                <input type="text" name="activity" id="activity" class="form-control">
+              </div>
+              <span id="activity_error" class="text-danger" style="display : none"></span>
+            </div>
+          </div>
+
+          <br/>
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label class="bmd-label-floating">Comentarios</label>
+                <input type="text" name="comments" id="comments" class="form-control">
+              </div>
+              <span id="comments_error" class="text-danger" style="display : none"></span>
+            </div>
+          </div>
+
+          <br/>
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label class="bmd-label-floating">Producto o Repuesto Utilizado</label>
+                <select id="product_name" name="product_name" class="form-control">
+                    {% for i in product_info %}
+                    <option value="{{i.product_name}}">{{i.product_name}}</option>
+                    {% endfor %}
+                </select>
+              </div>
+              <span id="product_name_error" class="text-danger" style="display : none"></span>
+            </div>
+          </div>
+
+          <br/>          
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label class="bmd-label-floating">Cantidad de Unidades</label>
+                 <input id="product_quantity" type="number" class="form-control" name="product_quantity">
+              </div>
+              <span id="product_quantity_error" class="text-danger" style="display : none"></span>
+            </div>
+        </div>
+
+          <br/>
+          <p class="pull-left">
+            {% if user.is_superuser %}
+            <a  href="{% url 'dashboard:maintenance:maintenance_list' refectory.id refectory.equipment_id %}">
+              <button type="button" class="btn btn-default">Regresar</button>
+            </a>
+            {% else %}
+            <a  href="{% url 'dashboard:maintenance:maintenance_list_guest' refectory.equipment_id %}"> 
+              <button type="button" class="btn btn-default">Regresar</button>
+            </a>
+            {% endif %}            
+          </p>
+          <button id="submit-button" type="submit" class="btn btn-success pull-right">Realizar Operación</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="card card-profile">
+      <div class="card-avatar">
+          <a href="">
+              <img class="img" src="/static/assets/img/flats/maintainance.png" />
+          </a>
+      </div>
+      <div class="card-body">      
+        <h4 class="card-title">
+          Aquí podrás registrar:
+           <li>Mantenimiento a realizar</li>
+           <li>Productos en el inventario, usados para el mantenimiento</li>
+        </h4>
+        </br>
+        <h4>
+          <strong>No olvides que los productos a usar y su disponibilidad deben estar registrados en los suministros de mantenimiento</strong>
+        </h4>
+      </div>   
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+  var products = [
+    {% for prod in product_info %}
+      {
+        product_name: "{{prod.product_name}}",
+        product_quantity: "{{prod.product_quantity}}",
+      },
+    {% endfor %}
+  ]
+</script>
+<script src="/static/assets/js/maintenance/maintenance.js"></script>
+{% endblock javascripts %}

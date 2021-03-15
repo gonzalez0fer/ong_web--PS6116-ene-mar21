@@ -15,7 +15,19 @@ urlpatterns = [
         'list', 
         views.EquipmentsListViewGuest.as_view(), 
         name='list_equipments_guest'
-        ),    
+        ),
+
+    path(
+        '<int:refectory_id>/<int:pk>/detail', 
+        views.EquipmentDetailView.as_view(), 
+        name='detail_equipments'
+        ),
+
+    path(
+        '<int:pk>/detail', 
+        views.EquipmentDetailViewGuest.as_view(), 
+        name='detail_equipments_guest'
+        ),  
 
     path(
         '<int:refectory_id>/create', 
@@ -27,6 +39,12 @@ urlpatterns = [
         '<int:refectory_id>/<int:pk>/update', 
         views.EquipmentUpdateView.as_view(), 
         name='update_equipments'
+        ),
+
+    path(
+        '<int:refectory_id>/<int:pk>/delete', 
+        views.EquipmentDeleteView.as_view(), 
+        name='delete_equipments'
         ),
 
 ]

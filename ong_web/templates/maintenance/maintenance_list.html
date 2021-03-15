@@ -1,72 +1,105 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} UI Tables {% endblock %} 
+{% block title %} Historial de Mantenimiento {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<style>
+    .app-button{
+        width: 150px;
+        margin:0 40px;
+        display:inline-block;
+        line-height: 60px;
+        border-radius: 50px;
+    }
+    .bttn-row{
+    text-align:center;
+    margin-left:-20px;
+    margin-right:-20px;
+    }
+    .btn.btn-default.action:hover{
+        background-color: #4caf50;
+    }
+
+</style>
+{% endblock stylesheets %}
 
 {% block content %}
 
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-plain">
-                  <div class="card-header card-header-success">
-                    <h4 class="card-title mt-0">Mantenimiento</h4>
-                    <p class="card-category"> ¿¡QUÉ PASA PUTA?! ¿¡QUERÉS QUE TE LA PONGA?! </p>
+                  <div class="card-header card-header-info">
+                    <h4 class="card-title mt-0">Historial de Mantenimiento del equipo: {{equipment_name}}</h4>
+                    <p class="card-category"> Aquí podrás ver todas los mantenimientos realizados sobre el equipo.</p>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-hover">
+                      <table id="maintenance_list" class="table table-hover">
                         <thead class="">
-                          <th>
-                              ID
-                          </th>
-                          <th>
-                              Equipo
-                          </th>
-                          <th>
-                              Encargado
-                          </th>
-                          <th>
-                              Fecha
-                          </th>
-                          <th>
-                            Observaciones
-                        </th>
-                          <th>
-                            Resultados
-                        </th>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Actividad Realizada
+                            </th>
+                            <th>
+                                Comentarios
+                            </th>
+                            <th>
+                                Producto/Repuesto Utilizado
+                            </th>
+                            <th>
+                                Cantidad
+                            </th>                           
+                            <th>
+                                Responsable
+                            </th>
+                            <th>
+                                Fecha
+                            </th>
+                            <th>
+                                Acciones
+                            </th>
                         </thead>
                         <tbody>
   
-                            {% for refectory_object in object_list %}
+                            {% for i in object_list %}
                                     <tr>
                                         <td>
-                                            {{ refectory_object.id }}
-                                            </td>
-                                        <td>
-                                            {{ refectory_object.equipment }}
+                                            {{ i.id }}
                                         </td>
                                         <td>
-                                            {{ refectory_object.in_charge }}
+                                            {{ i.activity }}
                                         </td>
                                         <td>
-                                            {{ refectory_object.made_date }}
+                                            {{ i.comments }}
+                                        </td>                                     
+                                        <td>
+                                            {{ i.product_name }}
                                         </td>
                                         <td>
-                                            {{ refectory_object.observation }}
+                                            {{ i.product_quantity }}
                                         </td>
                                         <td>
-                                            {{ refectory_object.results }}
+                                            {{ i.created_by}}
                                         </td>
                                         <td>
-                                            <a href="{% url 'dashboard:cupboard:list_cupboard' refectory_object.id %}">
-                                                <button type="button" class="btn" style='background-color: #37005D'"><i class="material-icons">kitchen</i> Inventario</button>
-                                            </a>
-                                            <a href="{% url 'dashboard:refectory:edit_refectory' refectory_object.id %}">
+                                            {{ i.created }}
+                                        </td>
+                                        <td>
+                                            {% if user.is_superuser %}
+                                            <a  href="{% url 'dashboard:maintenance:maintenance_update' refectory_data.0.id equipment_id i.id %}">
                                                 <button type="button" class="btn btn-info">Editar</button>
                                             </a>
-                                            <button type="button" class="btn btn-danger">Eliminar</button>
+                                                
+                                            <button type="button" class="btn btn-danger" onclick="open_modal('{% url 'dashboard:maintenance:maintenance_modal' refectory_data.0.id i.id %}')">Eliminar</button>
+
+                                            {% else %}
+                                            <a  href="{% url 'dashboard:maintenance:maintenance_update_guest' i.id %}">
+                                                <button type="button" class="btn btn-info">Editar</button>
+                                            </a>                                            
+                                            {% endif %}
                                         </td>
                                         </tr>
                             {% endfor %}
@@ -76,27 +109,55 @@
                     </div>
                   </div>
                 </div>
+            {% comment %} aqui va validacion de super usuario para regresar {% endcomment %}
+            <p style="float: left; margin-left: 50px;">
+                {% if user.is_superuser %}
+                <a  href="{% url 'dashboard:equipments:list_equipments' refectory_data.0.id %}">
+                <button type="button" class="btn btn-default action">Regresar</button>
+                </a>
+                {% else %}
+                <a  href="{% url 'dashboard:equipments:list_equipments_guest' %}">
+                <button type="button" class="btn btn-default">Regresar</button>
+                </a>
+                {% endif %}
+            </p>
+            <p class="bttn-row">
+            {% if user.is_superuser %}
+                <a  href="{% url 'dashboard:maintenance:maintenance_create' refectory_data.0.id equipment_id %}">
+                    <button type="button" class="btn btn-default action">Registrar Mantenimiento</button>
+                </a>
+                <a  href="{% url 'dashboard:equipments:detail_equipments' refectory_data.0.id equipment_id %}">
+                    <button type="button" class="btn btn-default action">Ver Detalles del Equipo</button>
+                </a>
+            {% else %}
+                <a  href="{% url 'dashboard:maintenance:maintenance_create_guest' equipment_id %}">
+                    <button type="button" class="btn btn-default action">Registrar Mantenimiento</button>
+                </a>                
+                <a  href="{% url 'dashboard:equipments:detail_equipments_guest' equipment_id %}">
+                    <button type="button" class="btn btn-default action">Ver Detalles del Equipo</button>
+                </a>
+            {% endif %}
+            </p>
               </div>
-            </br>
-        </br>
-
+            <div class="modal fade" id='modal_delete' role="dialog">
         </div>
 
-    </br>
-</br>
-    <p style="float: left; margin-left: 50px;">
-        <a  href="{% url 'home' %}">
-        <button type="button" class="btn btn-default">Regresar</button>
-        </a>
-    </p>
-    <p style="float: right; margin-right: 50px;">
-        <a  href="{% url 'dashboard:refectory:create_refectory' %}">
-        <button type="button" class="btn btn-success">Agregar Punto de Distribucion</button>
-        </a>
-    </p>
+
 {% endblock content %}
 
 
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+    <script type="text/javascript">
+    var $ = jQuery.noConflict()
+    function open_modal(url){
+        $('#modal_delete').load(url, function(){
+            $(this).modal('show');
+
+        });
+    }
+
+    </script>
+<script src="/static/assets/js/maintenance/maintenance_list.js"></script>
+{% endblock javascripts %}

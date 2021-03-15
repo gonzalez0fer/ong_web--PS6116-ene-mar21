@@ -71,13 +71,13 @@ class Equipment(TimeStampedModel):
         null=True
     )
 
-    # spare_part = models.ForeignKey(
-    #     Product, 
-    #     blank=True, 
-    #     null=True, 
-    #     related_name='equipment',
-    #     on_delete = models.SET_NULL,
-    # )
+    spare_part = models.ForeignKey(
+        Product, 
+        blank=True, 
+        null=True, 
+        related_name='spare_equipment',
+        on_delete = models.SET_NULL,
+    )
     
     flow = models.FloatField(
         blank = True,
@@ -99,6 +99,12 @@ class Equipment(TimeStampedModel):
         null=False, 
         choices=Periods.choices, 
         default = Periods.SEMANAL
+    )
+
+    instructions = models.TextField(
+        max_length=2000,
+        blank=True,
+        null=True,
     )
 
     refectory = models.ForeignKey(

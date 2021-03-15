@@ -37,7 +37,7 @@
           <br/>
 
           <div class="row">
-            <div class="col-md-6">
+            <div class="col">
               <div class="form-group">
                 <label class="bmd-label-floating">Tipo de operación</label>
                 {% if product_operation == 0 %}
@@ -48,7 +48,18 @@
               </div>
               <span id="operation_type_error" class="text-danger" style="display : none"></span>
             </div>
-            
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-6">
+              <div class="form-group" style="padding-top: 2.4em;">
+                <label class="bmd-label-floating">Cantidad de Unidades</label>
+                 <input id="product_quantity" type="number" class="form-control" name="product_quantity">
+              </div>
+              <span id="product_quantity_error" class="text-danger" style="display : none"></span>
+            </div>
+
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Unidad</label>
@@ -64,24 +75,6 @@
               </div>
               <span id="product_unit_error" class="text-danger" style="display : none"></span>
             </div>
-            <!--
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="bmd-label-floating">Nombre del producto2</label>
-                 <input id="water_liters" type="text" class="form-control" name="product">
-              </div>
-              <span id="water_liters_error" class="text-danger" style="display : none"></span>
-            </div>
-          -->
-           
-
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="bmd-label-floating">Cantidad de Unidades</label>
-                 <input id="product_quantity" type="number" class="form-control" name="product_quantity">
-              </div>
-              <span id="product_quantity_error" class="text-danger" style="display : none"></span>
-            </div>
 
             <div class="col-md-6">
               <div class="form-group">
@@ -90,8 +83,17 @@
               </div>
               <span id="product_unitary_amount_error" class="text-danger" style="display : none"></span>
             </div>
-          </div>
 
+            <div class="col-md-6">
+              <div class="form-group" style="padding-top: 0.7em;">
+                <label class="bmd-label-floating" for="is_spare">¿Es un repuesto?</label>
+                <input class="col-md-3" id="is_spare_part" type="checkbox" class="form-control" name="is_spare_part" value=true>
+              </div>
+              <span id="is_spare_part_error" class="text-danger" style="display : none"></span>
+            </div>
+            
+          </div>
+          
           <br/>
           <p class="pull-left">
             {% if user.is_superuser %}

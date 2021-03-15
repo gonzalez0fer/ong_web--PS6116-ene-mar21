@@ -111,19 +111,23 @@
                                             {{ product_object.created_by }}
                                         </td>
                                         <td>
-                                            {% if user.is_superuser %}
+                                            {% if product_object.is_maintenance  %}
+                                                <p> --Mantenimiento-- </p>
+                                            {% else  %}
+                                                {% if user.is_superuser and product_object.is_maintenance == False %}
                                             <a  href="{% url 'dashboard:product_managements:update' refectory_data.0.id product_object.id%}">
-                                                <button type="button" class="btn btn-info">Editar</button>
+                                                <button type="button" class="btn btn-info btn-sm">Editar</button>
                                             </a>
-                                                
-                                            <a  href="{% url 'dashboard:product_managements:delete' refectory_data.0.id product_object.id%}">
-                                                <button type="button" class="btn btn-danger">Eliminar</button>
-                                            </a>
-                                            {% else %}
-                                            <a  href="{% url 'dashboard:product_managements:update_guest' product_object.id%}">
-                                                <button type="button" class="btn btn-info">Editar</button>
-                                            </a>                                            
+                                            <button type="button" class="btn btn-danger btn-sm" style="margin-left: 5px;" title="Eliminar" onclick="open_modal('{% url 'dashboard:product_managements:product_management_modal' refectory_data.0.id product_object.id %}')">Eliminar</button>
+                                                {% endif %}
                                             {% endif %}
+
+                                            {% if user.is_superuser == False and product_object.is_maintenance == False %}
+                                                <a  href="{% url 'dashboard:product_managements:update_guest' product_object.id%}">
+                                                    <button type="button" class="btn btn-info btn-sm">Editar</button>
+                                                </a>                                     
+                                            {% endif %}
+                                            
                                         </td>
                                         </tr>
                             {% endfor %}
@@ -133,34 +137,32 @@
                     </div>
                   </div>
                 </div>
-            </br>
-        </br>
             {% comment %} aqui va validacion de super usuario para regresar {% endcomment %}
             <p style="float: left; margin-left: 50px;">
                 {% if user.is_superuser %}
                 <a  href="{% url 'dashboard:products:list_maintenance_product' refectory_data.0.id %}">
-                <button type="button" class="btn btn-default">Regresar</button>
+                <button type="button" class="btn btn-default action">Regresar</button>
                 </a>
                 {% else %}
                 <a  href="{% url 'dashboard:products:list_maintenance_product_guest' %}">
-                <button type="button" class="btn btn-default">Regresar</button>
+                <button type="button" class="btn btn-default action">Regresar</button>
                 </a>
                 {% endif %}
             </p>
             <p class="bttn-row">
             {% if user.is_superuser %}
                 <a  href="{% url 'dashboard:product_managements:create' refectory_data.0.id 0 %}">
-                    <button type="button" class="btn btn-success">Registrar Ingreso</button>
+                    <button type="button" class="btn btn-default action">Registrar Ingreso</button>
                 </a>
                 <a  href="{% url 'dashboard:product_managements:create' refectory_data.0.id 1 %}">
-                    <button type="button" class="btn btn-success">Registrar Egreso</button>
+                    <button type="button" class="btn btn-default action">Registrar Egreso</button>
                 </a>
             {% else %}
                 <a  href="{% url 'dashboard:product_managements:create_guest' 0 %}">
-                    <button type="button" class="btn btn-success">Registrar Ingreso</button>
+                    <button type="button" class="btn btn-default action">Registrar Ingreso</button>
                 </a>                
                 <a  href="{% url 'dashboard:product_managements:create_guest' 1 %}">
-                    <button type="button" class="btn btn-success">Registrar Egreso</button>
+                    <button type="button" class="btn btn-default action">Registrar Egreso</button>
                 </a>
             {% endif %}
             </p>
@@ -195,7 +197,7 @@
 
 
 
-
+            <div class="modal fade" id='modal_delete' role="dialog">
         </div>
 
 
@@ -206,4 +208,14 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 <script src="/static/assets/js/products/product_management_list.js"></script>
+<script type="text/javascript">
+    var $ = jQuery.noConflict()
+    function open_modal(url){
+        $('#modal_delete').load(url, function(){
+            $(this).modal('show');
+
+        });
+    }
+
+</script>
 {% endblock javascripts %}

@@ -1,0 +1,119 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<div style="display: flex; justify-content: center;">
+  <div class="card card-profile" style="width: 80%;">
+    <div class="card-body" style="text-align: justify; ">
+      <div style="padding: 0px 30px;">
+          <h2 class="card-title " style="text-align: center; font-weight: bolder;">
+            {{object.name}}
+          </h2>
+          </br>
+          <h4>
+            <li>
+              <span style="font-weight: bold;">Marca:</span> {{object.brand}}
+            </li><br>
+            {% if object.equipment_model != None %}
+            <li>
+              <span style="font-weight: bold;">Modelo:</span> {{object.equipment_model}}
+            </li><br>
+            {% endif %}
+            {% if object.power != None %}
+            <li>
+              <span style="font-weight: bold;">Potencia:</span> {{object.power}}
+            </li><br>
+            {% endif %}
+            {% if object.inlet_diameter != None %}
+            <li>
+              <span style="font-weight: bold;">Diámetro interno:</span> {{object.inlet_diameter}}
+            </li><br>
+            {% endif %}
+            {% if object.diameter != None %}
+            <li>
+              <span style="font-weight: bold;">Diámetro:</span> {{object.diameter}}
+            </li><br>
+            {% endif %}
+            {% if object.height != None %}
+            <li>
+              <span style="font-weight: bold;">Altura:</span> {{object.height}}
+            </li><br>
+            {% endif %}
+            {% if object.volume != None %}
+            <li>
+              <span style="font-weight: bold;">Volume:</span> {{object.volume}}
+            </li><br>
+            {% endif %}
+            {% if object.measurements != None %}
+            <li>
+              <span style="font-weight: bold;">Medidas:</span> {{object.measurements}}
+            </li><br>
+            {% endif %}
+            {% if object.spare_part != None %}
+            <li>
+              <span style="font-weight: bold;">Respuesto:</span> {{object.spare_part.product_name}}
+            </li><br>
+            {% endif %}
+            {% if object.flow != None %}
+            <li>
+              <span style="font-weight: bold;">Flujo:</span> {{object.flow}}
+            </li><br>
+            {% endif %}
+            {% if object.light_bulb_size != None %}
+            <li>
+              <span style="font-weight: bold;">Tamaño del bombillo:</span> {{object.light_bulb_size}}
+            </li><br>
+            {% endif %}
+            {% if object.quartz_size != None %}
+            <li>
+              <span style="font-weight: bold;">Tamaño del cuarzo:</span> {{object.quartz_size}}
+            </li><br>
+            {% endif %}
+            {% if object.maintenance_frequency != None %}
+            <li>
+              <span style="font-weight: bold;">Frecuencia de Mantenimiento:</span> {{object.maintenance_frequency}}
+            </li><br>
+            {% endif %}
+            {% if object.instructions != "" %}
+            <li>
+              <span style="font-weight: bold;">Instrucciones:</span> {{object.instructions}}
+            </li><br>
+            {% endif %}
+          </h4>
+      </div>
+    </div>   
+  </div>
+</div>
+  <div class="row" style="padding: 60px 60px;">
+    {% if user.is_superuser %}
+    <p class="pull-left">
+    <a  href="{% url 'dashboard:equipments:list_equipments' object.refectory.id %}"> 
+      <button type="button" class="btn btn-default">Regresar</button>
+    </a>
+    </p>
+    {% else %}
+    <p class="pull-left">
+    <a  href="{% url 'dashboard:equipments:list_equipments_guest' %}"> 
+      <button type="button" class="btn btn-default">Regresar</button>
+    </a>
+    </p>
+    {% endif %}
+  </div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      md.initDashboardPageCharts();
+
+    });
+  </script>
+
+{% endblock javascripts %}

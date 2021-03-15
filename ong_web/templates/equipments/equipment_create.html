@@ -23,7 +23,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="bmd-label-floating">Nombre del equipo</label>
-                <input type="text" name="name" id="name" class="form-control" required="true">
+                <input type="text" name="name" id="name" class="form-control">
               </div>
               <span id="name_error" class="text-danger" style="display : none"></span>
             </div>
@@ -33,7 +33,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="bmd-label-floating">Frecuencia de Mantenimiento</label>
-                <select id="maintenance_frequency" name="maintenance_frequency" class="form-control" required="true">
+                <select id="maintenance_frequency" name="maintenance_frequency" class="form-control">
                   <option value="none">Selecciona Frecuencia de Mantenimiento... </option>
                   <option value="Semanal">Semanal</option>
                   <option value="Quincenal">Quincenal</option>
@@ -52,10 +52,11 @@
           <br/>
 
           <div class="row">
+
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Marca</label>
-                <input type="text" name="brand" id="brand" class="form-control" required="true">
+                <input type="text" name="brand" id="brand" class="form-control">
               </div>
               <span id="brand_error" class="text-danger" style="display : none"></span>
             </div>
@@ -79,9 +80,9 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Diámetro de Entrada</label>
-                <input name="inlet-diameter" id="inlet-diameter" type="number" step="0.01" class="form-control">
+                <input name="inlet_diameter" id="inlet_diameter" type="number" step="0.01" class="form-control">
               </div>
-              <span id="inlet-diameter_error" class="text-danger" style="display : none"></span>
+              <span id="inlet_diameter_error" class="text-danger" style="display : none"></span>
             </div>
 
             <div class="col-md-6">
@@ -133,13 +134,38 @@
             </div>
 
             <div class="col-md-6">
-              <div class="form-group">
+              <div class="form-group"  style="padding-top: 2.4em;">
                 <label class="bmd-label-floating">Tamaño del cuarzo</label>
                  <input id="quartz_size" name="quartz_size" type="number" step="0.01" class="form-control" >
               </div>
               <span id="quartz_size_error" class="text-danger" style="display : none"></span>
             </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Repuesto</label>
+                 <select id="spare_part" name="spare_part" class="form-control">
+                    <option value="">Seleccione repuesto del equipo... </option>
+                    {% for i in spare_info %}
+                    <option value="{{i.id}}">{{i.product_name}}</option>
+                    {% endfor %}
+                </select>
+              </div>
+              <span id="spare_part_error" class="text-danger" style="display : none"></span>
+            </div>
+
           </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label class="bmd-label-floating">Instrucciones</label>
+                <textarea id="instructions" name="instructions" class="form-control"></textarea>
+              </div>
+              <span id="instructions_error" class="text-danger" style="display : none"></span>
+            </div>
+          </div>
+          
           <br/>
           <p class="pull-left">
             <a  href="{% url 'dashboard:equipments:list_equipments' refectory.id %}"> <!--{% url dashboard:water_managements:water_management_list-->
@@ -173,4 +199,6 @@
 </div>
 
 {% endblock content %}
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script src="/static/assets/js/equipments/equipment_create.js"></script>
+{% endblock javascripts %}

@@ -8,7 +8,7 @@
 {% block content %}
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-9">
         <div class="card card-plain">
           <div class="card-header card-header-info" >
             <h4 class="card-title mt-0">Inventario de Equipos del punto de distribución {{refectory_data.0.refectory_name}}</h4>
@@ -50,9 +50,7 @@
                       {{ equipment_object.equipment_frequency }}
                     </td>
                     <td>
-                      <a href="">
-                        <button type="button" class="btn btn-info">Inspeccionar</button>
-                      </a>
+
                       <!-- <a href="">
                         <button type="button" class="btn btn-info">Registrar Mantenimiento</button>
                       </a>
@@ -60,12 +58,28 @@
                         <button type="button" class="btn btn-info">Historial de Mantenimientos</button>
                       </a> -->
                       {% if user.is_superuser %}
+                      <a href="{% url 'dashboard:maintenance:maintenance_list' refectory_data.0.id equipment_object.id %}">
+                        <button type="button" class="btn btn-info btn-sm">Historial</button>
+                      </a>
                       <a  href="{% url 'dashboard:equipments:update_equipments' refectory_data.0.id equipment_object.id %}">
-                        <button type="button" class="btn btn-info">Actualizar</button>
+                        <button type="button" class="btn btn-info btn-sm">Actualizar</button>
                       </a>
-                      <a  href="">
-                        <button type="button" class="btn btn-danger">Eliminar</button>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="open_modal('{% url 'dashboard:equipments:delete_equipments' refectory_data.0.id equipment_object.id %}')">Eliminar</button>
+                      {% else %}
+
+                      <a href="{% url 'dashboard:maintenance:maintenance_list_guest' equipment_object.id %}">
+                        <button type="button" class="btn btn-info btn-sm">Historial</button>
                       </a>
+
+                      <a href="{% url 'dashboard:maintenance:maintenance_create_guest' equipment_object.id %}">
+                        <button type="button" class="btn btn-info btn-sm">Registrar Mantenimiento</button>
+                      </a>
+
+                      <a href="{% url 'dashboard:equipments:detail_equipments_guest' equipment_object.id %}">
+                        <button type="button" class="btn btn-info btn-sm">Detalles</button>
+                      </a>
+
+                      
                       {% endif %}
                     </td>
                   </tr>
@@ -96,7 +110,7 @@
     </br>
 </br>
 
-<div class="col-md-4">
+<div class="col-md-3">
     <div class="card card-profile" style="width: fit-content;">
         <div class="card-avatar" style="max-width: 120px; max-height: 120px;">
             <a href="">
@@ -121,7 +135,7 @@
   </div>
 
 
-
+<div class="modal fade" id='delete_equipment' role="dialog">
 
 </div>
 
@@ -133,4 +147,13 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 <script src="/static/assets/js/equipments/equipment_list.js"></script>
+<script type="text/javascript">
+    var $ = jQuery.noConflict()
+    function open_modal(url){
+        $('#delete_equipment').load(url, function(){
+            $(this).modal('show');
+
+        });
+    }
+</script>
 {% endblock javascripts %}
