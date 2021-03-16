@@ -24,7 +24,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="bmd-label-floating">Nombre del producto</label>
-                <input type="text" list="product_list" name="product_name" id="product_name" class="form-control">
+                <input type="text" list="product_list" name="product_name" id="product_name" class="form-control" style="text-transform:uppercase">
                   <datalist id="product_list">
                     {% for i in product_info %}
                       <option>{{i.product_name}}</option>

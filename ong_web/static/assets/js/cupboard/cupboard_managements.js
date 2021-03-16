@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Solo para cupboard_management_create
     if (window.location.href.includes("create")) {
+        document.getElementById("product_name").addEventListener("change", quantity_validation)
+        document.getElementById("product_name").addEventListener("change", amount_validation)
         document.getElementById("product_quantity").addEventListener("change", quantity_validation)
     }
 
@@ -20,35 +22,50 @@ function name_validation() {
     product_name = document.getElementById("product_name").value
     operation_type = document.getElementById("operation_type").value
 
-    // Si el nombre es vacío
-    if (product_name == "") {
-        document.getElementById("product_name_error").innerHTML = "Debe introducir el nombre del producto"
-        document.getElementById("product_name_error").style.display = "block"
+    // Si es introducido un nombre
+    if (product_name != "") {
+        // Si la operación es un "egreso", verifico si el producto introducido existe
+        if (operation_type == "Egreso") {
+            found = products.find(product => product.product_name == product_name);
+
+            if (!found) {
+                document.getElementById("product_name_error").innerHTML = "El producto seleccionado no se encuentra registrado"
+                document.getElementById("product_name_error").style.display = "block"
+            }
+            else {
+                document.getElementById("product_name_error").style.display = "none"
+            }
+        }
     }
     else {
         document.getElementById("product_name_error").style.display = "none"
-    }
-
-    // Si la operación es un "egreso", verifico si el producto introducido existe
-    if (operation_type == "Egreso") {
-        found = products.find(product => product.product_name == product_name);
-
-        if (!found) {
-            document.getElementById("product_name_error").innerHTML = "El producto seleccionado no se encuentra registrado"
-            document.getElementById("product_name_error").style.display = "block"
-        }
     }
 }
 
 // Validación dinámica de la cantidad del producto
 function quantity_validation() {
-    product_quantity = document.getElementById("product_quantity").value
+    product_quantity = parseFloat(document.getElementById("product_quantity").value)
     operation_type = document.getElementById("operation_type").value
 
-    // Si el monto introducido es menor a uno (1)
-    if (parseInt(product_quantity) < 1) {
+    // Si la cantidad del producto introducida es menor a uno (1)
+    if (product_quantity < 1) {
         document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad mayor a 0"
         document.getElementById("product_quantity_error").style.display = "block"
+        return
+    }
+
+    // Si la cantidad del producto introducida es mayor o igual a uno (1)
+    else if (product_quantity >= 1) {
+
+        // Si la cantidad de litros introducida posee decimales
+        if (product_quantity % 1 != 0) {
+            document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad válida"
+            document.getElementById("product_quantity_error").style.display = "block"
+            return
+        }
+        else {
+            document.getElementById("product_quantity_error").style.display = "none"
+        }
     }
     else {
         document.getElementById("product_quantity_error").style.display = "none"
@@ -59,7 +76,7 @@ function quantity_validation() {
         found = products.find(product => product.product_name == product_name);
 
         if (found) {
-            if (parseInt(product_quantity) > parseInt(found.product_quantity)) {
+            if (product_quantity > parseInt(found.product_quantity)) {
                 document.getElementById("product_quantity_error").innerHTML = "La cantidad pedida excede la cantidad disponible"
                 document.getElementById("product_quantity_error").style.display = "block"
             }
@@ -72,10 +89,10 @@ function quantity_validation() {
 
 // Validación dinámica del monto del producto
 function amount_validation() {
-    product_unitary_amount = document.getElementById("product_unitary_amount").value
+    product_unitary_amount = parseFloat(document.getElementById("product_unitary_amount").value)
 
     // Si el monto introducido es menor a cero (0)
-    if (parseInt(product_unitary_amount) < 0) {
+    if (product_unitary_amount < 0) {
         document.getElementById("product_unitary_amount_error").innerHTML = "Debe introducir un precio igual o mayor a 0"
         document.getElementById("product_unitary_amount_error").style.display = "block"
     }
@@ -143,7 +160,7 @@ function validate() {
 
 // Validación dinámica de la actualización de la cantidad de productos
 function quantity_update_validation() {
-    product_quantity_update = parseInt(document.getElementById("product_quantity").value)
+    product_quantity_update = parseFloat(document.getElementById("product_quantity").value)
     operation_type_update = document.getElementById("operation_type").value
 
     product = products.find(i => i.product_name == product_name);
@@ -153,6 +170,21 @@ function quantity_update_validation() {
     if (product_quantity_update < 1) {
         document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad mayor a 0"
         document.getElementById("product_quantity_error").style.display = "block"
+        return
+    }
+
+    // Si la cantidad de productos introducida es mayor o igual a uno (1)
+    else if (product_quantity_update >= 1) {
+
+        // Si la cantidad de productos introducida posee decimales
+        if (product_quantity_update % 1 != 0) {
+            document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad de productos válida"
+            document.getElementById("product_quantity_error").style.display = "block"
+            return
+        }
+        else {
+            document.getElementById("product_quantity_error").style.display = "none"
+        }
     }
     else {
         document.getElementById("product_quantity_error").style.display = "none"
