@@ -84,11 +84,11 @@
                     </h4>
                     {% if user.is_superuser %}
                         <a  href="{% url 'dashboard:cupboard_managements:list_cupboard_management' refectory_data.0.id %}">
-                            <button type="button" class="btn btn-success">Ver Todas las Operaciones</button>
+                            <button type="button" class="btn btn-warning">Ver Todas las Operaciones</button>
                         </a>
                     {% else %}
                         <a  href="{% url 'dashboard:cupboard_managements:list_cupboard_single_management' %}">
-                            <button type="button" class="btn btn-success">Ver Todas las Operaciones</button>
+                            <button type="button" class="btn btn-warning">Ver Todas las Operaciones</button>
                         </a>
                     {% endif %}
                 </div>  
