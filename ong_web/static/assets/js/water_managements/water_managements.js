@@ -46,12 +46,24 @@ function description_validation() {
 
 // Validación dinámica de la cantidad de litros
 function liters_validation() {
-    water_liters = document.getElementById("water_liters").value
+    water_liters = parseFloat(document.getElementById("water_liters").value)
 
     // Si la cantidad de litros introducida es menor a uno (1)
-    if (parseInt(water_liters) < 1) {
+    if (water_liters < 1) {
         document.getElementById("water_liters_error").innerHTML = "Debe introducir una cantidad de litros mayor a 0"
         document.getElementById("water_liters_error").style.display = "block"
+    }
+    // Si la cantidad de litros introducida es mayor o igual a uno (1)
+    else if (water_liters >= 1) {
+
+        // Si la cantidad de litros introducida posee decimales
+        if (water_liters % 1 != 0) {
+            document.getElementById("water_liters_error").innerHTML = "Debe introducir una cantidad de litros válida"
+            document.getElementById("water_liters_error").style.display = "block"
+        }
+        else {
+            document.getElementById("water_liters_error").style.display = "none"
+        }
     }
     else {
         document.getElementById("water_liters_error").style.display = "none"
@@ -84,10 +96,10 @@ function liters_validation() {
 
 // Validación dinámica del monto del producto
 function amount_validation() {
-    water_amount = document.getElementById("water_amount").value
+    water_amount = parseFloat(document.getElementById("water_amount").value)
 
     // Si el monto introducido es menor o igual a cero (0)
-    if (parseInt(water_amount) < 0) {
+    if (water_amount < 0) {
         document.getElementById("water_amount_error").innerHTML = "Debe introducir un precio igual o mayor a 0"
         document.getElementById("water_amount_error").style.display = "block"
     }
@@ -154,12 +166,27 @@ function validate() {
 // Validación dinámica de la actualización de litros
 function liters_update_validation() {
     operation_type_update = document.getElementById("operation_type").value
-    water_liters_update = parseInt(document.getElementById("water_liters").value)
+    water_liters_update = parseFloat(document.getElementById("water_liters").value)
 
     // Si la cantidad de litros para la operación es menor a uno (1)
     if (water_liters_update < 1) {
         document.getElementById("water_liters_error").innerHTML = "Debe introducir una cantidad de litros mayor a 0"
         document.getElementById("water_liters_error").style.display = "block"
+        return
+    }
+
+    // Si la cantidad de litros introducida es mayor o igual a uno (1)
+    else if (water_liters_update >= 1) {
+
+        // Si la cantidad de litros introducida posee decimales
+        if (water_liters_update % 1 != 0) {
+            document.getElementById("water_liters_error").innerHTML = "Debe introducir una cantidad de litros válida"
+            document.getElementById("water_liters_error").style.display = "block"
+            return
+        }
+        else {
+            document.getElementById("water_liters_error").style.display = "none"
+        }
     }
     else {
         document.getElementById("water_liters_error").style.display = "none"
@@ -179,8 +206,6 @@ function liters_update_validation() {
     else {
         base_quantity = current_tank_liters + original_operation_liters
     }
-
-    console.log("base: ", base_quantity)
 
     // Si el nuevo tipo de operación es "ingreso"
     if (operation_type_update == "Ingreso") {
@@ -208,7 +233,6 @@ function liters_update_validation() {
 
         // Si, debido a la nueva cantidad egresada, se sobrepasa la capacidad máxima del tanque
         if (base_quantity - water_liters_update > tank_capacity) {
-            console.log("sfgsdfug")
             document.getElementById("water_liters_error").innerHTML = "Operación inválida"
             document.getElementById("water_liters_error").style.display = "block"
         }
