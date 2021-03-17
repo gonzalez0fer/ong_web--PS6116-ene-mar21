@@ -30,15 +30,15 @@ function name_validation() {
 
             if (!found) {
                 document.getElementById("product_name_error").innerHTML = "El producto seleccionado no se encuentra registrado"
-                document.getElementById("product_name_error").style.display = "block"
+                document.getElementById("product_name_error").style.visibility = "visible"
             }
             else {
-                document.getElementById("product_name_error").style.display = "none"
+                document.getElementById("product_name_error").style.visibility = "hidden"
             }
         }
     }
     else {
-        document.getElementById("product_name_error").style.display = "none"
+        document.getElementById("product_name_error").style.visibility = "hidden"
     }
 }
 
@@ -50,25 +50,25 @@ function quantity_validation() {
     // Si la cantidad del producto introducida es menor a uno (1)
     if (product_quantity < 1) {
         document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad mayor a 0"
-        document.getElementById("product_quantity_error").style.display = "block"
+        document.getElementById("product_quantity_error").style.visibility = "visible"
         return
     }
 
     // Si la cantidad del producto introducida es mayor o igual a uno (1)
     else if (product_quantity >= 1) {
 
-        // Si la cantidad de litros introducida posee decimales
+        // Si la cantidad del producto introducida posee decimales
         if (product_quantity % 1 != 0) {
             document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad válida"
-            document.getElementById("product_quantity_error").style.display = "block"
+            document.getElementById("product_quantity_error").style.visibility = "visible"
             return
         }
         else {
-            document.getElementById("product_quantity_error").style.display = "none"
+            document.getElementById("product_quantity_error").style.visibility = "hidden"
         }
     }
     else {
-        document.getElementById("product_quantity_error").style.display = "none"
+        document.getElementById("product_quantity_error").style.visibility = "hidden"
     }
 
     // Si la operación es un "egreso", verifico la cantidad disponible del producto
@@ -78,10 +78,10 @@ function quantity_validation() {
         if (found) {
             if (product_quantity > parseInt(found.product_quantity)) {
                 document.getElementById("product_quantity_error").innerHTML = "La cantidad pedida excede la cantidad disponible"
-                document.getElementById("product_quantity_error").style.display = "block"
+                document.getElementById("product_quantity_error").style.visibility = "visible"
             }
             else {
-                document.getElementById("product_quantity_error").style.display = "none"
+                document.getElementById("product_quantity_error").style.visibility = "hidden"
             }
         }
     }
@@ -94,10 +94,10 @@ function amount_validation() {
     // Si el monto introducido es menor a cero (0)
     if (product_unitary_amount < 0) {
         document.getElementById("product_unitary_amount_error").innerHTML = "Debe introducir un precio igual o mayor a 0"
-        document.getElementById("product_unitary_amount_error").style.display = "block"
+        document.getElementById("product_unitary_amount_error").style.visibility = "visible"
     }
     else {
-        document.getElementById("product_unitary_amount_error").style.display = "none"
+        document.getElementById("product_unitary_amount_error").style.visibility = "hidden"
     }
 }
 
@@ -112,39 +112,39 @@ function validate() {
     // Si el nombre del producto es vacío
     if (product_name == "") {
         document.getElementById("product_name_error").innerHTML = "Debe introducir el nombre del producto"
-        document.getElementById("product_name_error").style.display = "block"
+        document.getElementById("product_name_error").style.visibility = "visible"
         error = true
     }
 
     // Si la cantidad del producto es vacía
     if (product_quantity == "") {
         document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad mayor a 0"
-        document.getElementById("product_quantity_error").style.display = "block"
+        document.getElementById("product_quantity_error").style.visibility = "visible"
         error = true
     }
 
     // Si el monto del producto es vacío
     if (product_unitary_amount == "") {
         document.getElementById("product_unitary_amount_error").innerHTML = "Debe introducir un precio igual o mayor a 0"
-        document.getElementById("product_unitary_amount_error").style.display = "block"
+        document.getElementById("product_unitary_amount_error").style.visibility = "visible"
         error = true
     }
 
-    product_quantity_error = document.getElementById("product_quantity_error").style.display
-    product_unitary_amount_error = document.getElementById("product_unitary_amount_error").style.display
+    product_quantity_error = document.getElementById("product_quantity_error").style.visibility
+    product_unitary_amount_error = document.getElementById("product_unitary_amount_error").style.visibility
 
     // Solo para cupboard_management_create 
     if (window.location.href.includes("create")) {
-        product_name_error = document.getElementById("product_name_error").style.display
+        product_name_error = document.getElementById("product_name_error").style.visibility
 
-        if (product_name_error == "block" || product_quantity_error == "block" || product_unitary_amount_error == "block"){
+        if (product_name_error == "visible" || product_quantity_error == "visible" || product_unitary_amount_error == "visible"){
             error = true
         }
     }
 
     // Solo para cupboard_management_update
     if (window.location.href.includes("update")) {
-        if (product_quantity_error == "block" || product_unitary_amount_error == "block"){
+        if (product_quantity_error == "visible" || product_unitary_amount_error == "visible"){
             error = true
         }
     }
@@ -169,7 +169,7 @@ function quantity_update_validation() {
     // Si la cantidad de productos introducido es menor a uno (1)
     if (product_quantity_update < 1) {
         document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad mayor a 0"
-        document.getElementById("product_quantity_error").style.display = "block"
+        document.getElementById("product_quantity_error").style.visibility = "visible"
         return
     }
 
@@ -179,15 +179,15 @@ function quantity_update_validation() {
         // Si la cantidad de productos introducida posee decimales
         if (product_quantity_update % 1 != 0) {
             document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad de productos válida"
-            document.getElementById("product_quantity_error").style.display = "block"
+            document.getElementById("product_quantity_error").style.visibility = "visible"
             return
         }
         else {
-            document.getElementById("product_quantity_error").style.display = "none"
+            document.getElementById("product_quantity_error").style.visibility = "hidden"
         }
     }
     else {
-        document.getElementById("product_quantity_error").style.display = "none"
+        document.getElementById("product_quantity_error").style.visibility = "hidden"
     }
 
     original_operation_quantity = parseInt(original_operation_quantity)
@@ -209,7 +209,7 @@ function quantity_update_validation() {
         // Si, debido a la nueva cantidad ingresada, la cantidad del producto es menor a cero (0)
         if (base_quantity + product_quantity_update < 0) {
             document.getElementById("product_quantity_error").innerHTML = "Operación inválida"
-            document.getElementById("product_quantity_error").style.display = "block"
+            document.getElementById("product_quantity_error").style.visibility = "visible"
         }
     }
     // Si el nuevo tipo de operación es "egreso"
@@ -218,7 +218,7 @@ function quantity_update_validation() {
         // Si, debido a la nueva cantidad egresada, la cantidad del producto es menor a cero (0) 
         if (base_quantity - product_quantity_update < 0) {
             document.getElementById("product_quantity_error").innerHTML = "La cantidad pedida excede la cantidad disponible"
-            document.getElementById("product_quantity_error").style.display = "block"
+            document.getElementById("product_quantity_error").style.visibility = "visible"
         }
     }
 }

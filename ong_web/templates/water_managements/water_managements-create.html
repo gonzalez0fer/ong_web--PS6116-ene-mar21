@@ -26,7 +26,7 @@
                 <input type="text" value="Egreso" id="operation_type" name="operation_type" class="form-control" readonly>
               {% endif %}
             </div>
-            <span id="operation_type_error" class="text-danger" style="display : none"></span>
+            <span id="operation_type_error" class="text-danger" style="visibility : hidden"></span>
           </div>       
 
           {% if tank_info.sell_operation %}
@@ -52,7 +52,7 @@
                 </select>
               {% endif %}
             </div>
-            <span id="operation_description_error" class="text-danger" style="display : none"></span>
+            <span id="operation_description_error" class="text-danger" style="visibility : hidden"></span>
           </div>
 
           <br/>
@@ -63,7 +63,7 @@
                 <label class="bmd-label-floating">Litros de Agua</label>
                  <input id="water_liters" type="number" class="form-control" name="water_liters">
               </div>
-              <span id="water_liters_error" class="text-danger" style="display : none"></span>
+              <span id="water_liters_error" class="text-danger" style="visibility : hidden"></span>
             </div>
 
             <div class="col-md-6">
@@ -75,7 +75,7 @@
                   <input id="water_amount" type="number" step="0.01" class="form-control" name="water_amount">
                 {% endif %}
               </div>
-              <span id="water_amount_error" class="text-danger" style="display : none"></span>
+              <span id="water_amount_error" class="text-danger" style="visibility : hidden"></span>
             </div>
           </div>
 
