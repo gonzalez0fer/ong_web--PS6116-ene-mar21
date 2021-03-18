@@ -11,7 +11,7 @@ function unit_validation() {
 
     if (found) {
         document.getElementById("product_unit").value = found.product_unit;
-        document.getElementById("product_unit").setAttribute("disabled","disabled");
+        document.getElementById("product_unit").setAttribute("disabled", true);
     }
 
 }
