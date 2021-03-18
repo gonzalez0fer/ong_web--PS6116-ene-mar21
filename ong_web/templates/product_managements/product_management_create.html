@@ -23,7 +23,7 @@
             <div class="col">
               <div class="form-group">
                 <label class="bmd-label-floating">Nombre del producto</label>
-                <input type="text" list="product_list" name="product_cod" id="product_cod" class="form-control">
+                <input type="text" list="product_list" name="product_cod" id="product_cod" class="form-control" style="text-transform:uppercase">
                   <datalist id="product_list">
                     {% for i in product_info %}
                       <option>{{i.product_name}}</option>
@@ -147,6 +147,7 @@
       {
         product_name: "{{prod.product_name}}",
         product_quantity: "{{prod.product_quantity}}",
+        product_unit: "{{prod.product_unit}}"
       },
     {% endfor %}
   ]

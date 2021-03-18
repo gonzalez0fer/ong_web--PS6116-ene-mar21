@@ -1,3 +1,21 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // Verificación dinámica de campos (Create & Update)
+    document.getElementById("product_cod").addEventListener("change", unit_validation)
+    
+})
+
+function unit_validation() {
+
+    product_cod = document.getElementById("product_cod").value;
+    const found = products.find(product => product.product_name == product_cod);
+
+    if (found) {
+        document.getElementById("product_unit").value = found.product_unit;
+        document.getElementById("product_unit").setAttribute("disabled","disabled");
+    }
+
+}
+
 function validate() {
     error = false
 
@@ -6,6 +24,10 @@ function validate() {
     product_quantity = document.getElementById("product_quantity").value
     product_unitary_amount = document.getElementById("product_unitary_amount").value
     product_unit = document.getElementById("product_unit").value
+
+    if (document.getElementById("product_unit").disabled) {
+        document.getElementById("product_unit").disabled = false;
+    }
 
     // Verificar si la operacion es valida
     if (operation_type != "Ingreso" && operation_type != "Egreso") {
@@ -37,7 +59,6 @@ function validate() {
         document.getElementById("product_cod_error").style.display = "none"
     }
 
-    console.log(product_quantity)
     // Verificar que la cantidad del producto sea valida
     if (product_quantity == "") {
         document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad válida"
