@@ -104,16 +104,28 @@ class MaintenanceListGuest(ListView):
         context['refectory_data'] = []
 
         for i in query:
-            context['object_list'].append({
-                    'id':i.id,
-                    'equipment_name':i.equipment.name,
-                    'activity':i.activity,
-                    'comments':i.comments,
-                    'product_name':i.product.product_name,
-                    'product_quantity':i.product_quantity,
-                    'created_by':str(i.created_by.profile.name) + ' ' + str(i.created_by.profile.last_name),
-                    'created':i.created,
-            })
+            if i.product == None:
+                context['object_list'].append({
+                        'id':i.id,
+                        'equipment_name':i.equipment.name,
+                        'activity':i.activity,
+                        'comments':i.comments,
+                        'product_name':"-",
+                        'product_quantity':"-",
+                        'created_by':str(i.created_by.profile.name) + ' ' + str(i.created_by.profile.last_name),
+                        'created':i.created,
+                })
+            else:
+                context['object_list'].append({
+                        'id':i.id,
+                        'equipment_name':i.equipment.name,
+                        'activity':i.activity,
+                        'comments':i.comments,
+                        'product_name':i.product.product_name,
+                        'product_quantity':i.product_quantity,
+                        'created_by':str(i.created_by.profile.name) + ' ' + str(i.created_by.profile.last_name),
+                        'created':i.created,
+                })
         
         context['equipment_id'] = self.kwargs['pk']
         context['equipment_name'] = equipment.name
@@ -251,23 +263,35 @@ class MaintenanceCreateViewGuest(CreateView):
     def post(self, request, *args, **kwargs):
         self.object = None
         form = self.get_form()
-        product_used = Product.objects.get(refectory_id=self.request.user.profile.refectory.id,product_name=form.data['product_name'])
-        product_management_form = ProductManagementForm(
-            data={
-                'product_cod':product_used,
-                'product_name':product_used.product_name,
-                'product_unit':product_used.product_unit,
-                'operation_type':'Egreso',
-                'product_quantity':form.data['product_quantity'],
-                'product_unitary_amount':0,
-                'is_spare_part':product_used.is_spare_part,
-                'is_maintenance':True,
-        })
 
-        if form.is_valid() and product_management_form.is_valid():
-            return self.form_valid(form, product_management_form, product_used)
+        try:
+            product_used = Product.objects.get(refectory_id=self.request.user.profile.refectory.id,product_name=form.data['product_name'])
+
+        except ObjectDoesNotExist:
+            product_used = None
+            product_management_form = None
+            if form.is_valid():
+                return self.form_valid(form, product_management_form, product_used)
+            else:
+                return self.form_invalid(form)
         else:
-            return self.form_invalid(form, product_management_form)
+            product_management_form = ProductManagementForm(
+                data={
+                    'product_cod':product_used,
+                    'product_name':product_used.product_name,
+                    'product_unit':product_used.product_unit,
+                    'operation_type':'Egreso',
+                    'product_quantity':form.data['product_quantity'],
+                    'product_unitary_amount':0,
+                    'is_spare_part':product_used.is_spare_part,
+                    'is_maintenance':True,
+            })
+
+            if form.is_valid() and product_management_form.is_valid():
+                return self.form_valid(form, product_management_form, product_used)
+            else:
+                return self.form_invalid(form)
+
 
     def form_valid(self, form, product_management_form, product_used):
         self.object = form.save(commit=False)
@@ -275,27 +299,29 @@ class MaintenanceCreateViewGuest(CreateView):
         self.object.created_by = self.request.user
         self.object.product = product_used
         
-
-        product_management_object = product_management_form.save(commit=False)
-        product_management_object.product_total_amount = 0
-        product_management_object.created_by = self.request.user
+        if product_management_form != None:
+            product_management_object = product_management_form.save(commit=False)
+            product_management_object.product_total_amount = 0
+            product_management_object.created_by = self.request.user
+            
+            #validacion de cantidad disponible
+            product_used.total_product_quantity -= self.object.product_quantity 
+            product_used.save()
+            product_management_object.save()
+            #buscar y guardar operacion registradad de product management
+    
+            self.object.product_operation = product_management_object
         
-        #validacion de cantidad disponible
-        product_used.total_product_quantity -= self.object.product_quantity 
-        product_used.save()
-        product_management_object.save()
-        #buscar y guardar operacion registradad de product management
-        product_operation = product_management_object
-        self.object.product_operation = product_operation
+        else:
+            self.object.product_operation = product_management_form
 
         self.object.save()
         return super().form_valid(form)
 
-    def form_invalid(self, form, product_management_form):
+    def form_invalid(self, form):
         return self.render_to_response(
             self.get_context_data(
                 form=form,
-                product_management_form=product_management_form,
             )
         )
 
@@ -400,23 +426,30 @@ class MaintenanceUpdateViewGuest(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(MaintenanceUpdateViewGuest, self).get_context_data(**kwargs)
 
-        
-        product_operation = ProductManagement.objects.get(id=context['object'].product_operation.id)
-        query = Product.objects.filter(refectory_id=self.request.user.profile.refectory.id).order_by('product_name')
+        if context['object'].product_operation != None:
+            product_operation = ProductManagement.objects.get(id=context['object'].product_operation.id)
+            query = Product.objects.filter(refectory_id=self.request.user.profile.refectory.id).order_by('product_name')
 
-        context['product_info'] = []
-        context['product_operation'] = product_operation
+            context['product_info'] = []
+            context['product_operation'] = product_operation
 
-        for i in query:
-            context['product_info'].append({
-                "product_name": i.product_name,
-                "product_quantity": i.total_product_quantity,
-            })
+            for i in query:
+                context['product_info'].append({
+                    "product_name": i.product_name,
+                    "product_quantity": i.total_product_quantity,
+                })
 
-        context['refectory'] = {
-            'id' : self.request.user.profile.refectory.id,
-            'equipment_id':context['object'].equipment.id,
-        }
+            context['refectory'] = {
+                'id' : self.request.user.profile.refectory.id,
+                'equipment_id':context['object'].equipment.id,
+            }
+
+        else:
+            context['refectory'] = {
+                'id' : self.request.user.profile.refectory.id,
+                'equipment_id':context['object'].equipment.id,
+                'no_products_op':True,
+            }
 
         return context
 
@@ -425,7 +458,15 @@ class MaintenanceUpdateViewGuest(UpdateView):
         self.object = self.get_object()
         temp = self.object.product_quantity
         form = self.get_form()
-        product_used = Product.objects.get(refectory_id=self.request.user.profile.refectory.id,product_name=form.data['product_name'])
+
+        try:
+            product_used = Product.objects.get(refectory_id=self.request.user.profile.refectory.id,product_name=form.data['product_name'])
+
+        except ObjectDoesNotExist:
+            product_used = None
+            temp = None
+        else:
+            pass
 
         if form.is_valid():
             return self.form_valid(form, product_used, temp)
@@ -434,18 +475,20 @@ class MaintenanceUpdateViewGuest(UpdateView):
 
     def form_valid(self, form, product_used, temp):
         self.object = form.save(commit=False)
-        self.object.product = product_used
         
-        product_management_object = ProductManagement.objects.get(id=self.object.product_operation.id)
-        product_management_object.product_cod = product_used
-        product_management_object.product_name = product_used.product_name
-        product_management_object.product_quantity = self.object.product_quantity
-        
-        #validacion de cantidad disponible
-        product_used.total_product_quantity = (product_used.total_product_quantity + temp) - self.object.product_quantity 
-        product_used.save()
+        if product_used != None:
+            self.object.product = product_used
+            product_management_object = ProductManagement.objects.get(id=self.object.product_operation.id)
+            #TODO VALIDAR SI ES EL MISMO PRODUCTO
+            product_management_object.product_cod = product_used
+            product_management_object.product_name = product_used.product_name
+            product_management_object.product_quantity = self.object.product_quantity
+            
+            #TODO validacion de cantidad disponible
+            product_used.total_product_quantity = (product_used.total_product_quantity + temp) - self.object.product_quantity 
+            product_used.save()
 
-        product_management_object.save()
+            product_management_object.save()
 
         self.object.save()
 
@@ -476,12 +519,15 @@ class ModalTemplate(TemplateView):
 
 def DeleteMaintenance(request, refectory_id, equipment_id, pk):
     maintenance_op = get_object_or_404(Maintenance, id = pk)
-    product_operation = ProductManagement.objects.get(id=maintenance_op.product_operation.id)
-    product = Product.objects.get(refectory_id=refectory_id,product_name=product_operation.product_name)
 
-    product.total_product_quantity += product_operation.product_quantity 
-    product.save()    
-    product_operation.delete()
+    if maintenance_op.product_operation != None:
+        product_operation = ProductManagement.objects.get(id=maintenance_op.product_operation.id)
+        product = Product.objects.get(refectory_id=refectory_id,product_name=product_operation.product_name)
+
+        product.total_product_quantity += product_operation.product_quantity 
+        product.save()    
+        product_operation.delete()
+    
     maintenance_op.delete()
     return HttpResponseRedirect("/dashboard/maintenance/"+str(refectory_id)+"/"+str(equipment_id)+"/history")
     
