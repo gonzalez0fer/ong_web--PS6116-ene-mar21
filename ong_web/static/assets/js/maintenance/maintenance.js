@@ -85,11 +85,12 @@ function validate() {
                 document.getElementById("product_quantity_error").style.display = "none"
             }
 
-        } else if (product_quantity && product_name == "none" || product_name == "") {
+        } else if (product_quantity && !product_name) {
             // Caso: Se puso cantidad pero no nombre.
+            console.log("Entro aqui? Quantity: " + product_quantity + " Name: " + product_name)
             document.getElementById("product_name_error").innerHTML = "Por favor, introduzca el nombre del producto a utilizar"
             document.getElementById("product_name_error").style.display = "block" 
-        } else if (product_name && product_quantity == "none" || product_quantity == "") {
+        } else if (product_name && !product_quantity) {
             // Caso: Se puso nombre pero no cantidad
             document.getElementById("product_quantity_error").innerHTML = "Por favor, introduzca la cantidad de producto a utilizar"
             document.getElementById("product_quantity_error").style.display = "block" 
