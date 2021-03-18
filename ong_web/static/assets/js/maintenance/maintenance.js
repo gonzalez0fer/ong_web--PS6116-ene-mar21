@@ -46,7 +46,7 @@ function product_name_validation() {
 function product_quantity_validation() {
     product_quantity = document.getElementById("product_quantity").value
 
-    if (parseInt(product_quantity) < 1 || product_quantity == "none" || product_quantity == "") {
+    if (parseInt(product_quantity) < 1) {
         document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad válida"
         document.getElementById("product_quantity_error").style.display = "block"
     }
@@ -65,20 +65,35 @@ function validate() {
     product_name = document.getElementById("product_name").value
 
     if (window.location.href.includes("register")) {
-        // Encontrar el producto que se está usando
-        const found = products.find(product => product.product_name == product_name);
-        
-        // Verificación de cantidad válida
-        if (parseInt(product_quantity) < 1 || product_quantity == "none" || product_quantity == "") {
-            document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad válida"
-            document.getElementById("product_quantity_error").style.display = "block"
-        }
-        // Verificación de disponibilidad
-        else if (parseInt(product_quantity) > parseInt(found.product_quantity)) {
-            document.getElementById("product_quantity_error").innerHTML = "La cantidad pedida excede la cantidad disponible"
-            document.getElementById("product_quantity_error").style.display = "block"
-        } else {
-            document.getElementById("product_quantity_error").style.display = "none"
+  
+        // Caso: Se puso cantidad y nombre
+        if (product_quantity && product_name) {
+            
+            // Encontrar el producto que se está usando
+            const found = products.find(product => product.product_name == product_name);
+
+            // Verificación de cantidad válida
+            if (parseInt(product_quantity) < 1) {
+                document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad válida"
+                document.getElementById("product_quantity_error").style.display = "block"
+            }
+            // Verificación de disponibilidad
+            else if (parseInt(product_quantity) > parseInt(found.product_quantity)) {
+                document.getElementById("product_quantity_error").innerHTML = "La cantidad pedida excede la cantidad disponible"
+                document.getElementById("product_quantity_error").style.display = "block"
+            } else {
+                document.getElementById("product_quantity_error").style.display = "none"
+            }
+
+        } else if (product_quantity && !product_name) {
+            // Caso: Se puso cantidad pero no nombre.
+            console.log("Entro aqui? Quantity: " + product_quantity + " Name: " + product_name)
+            document.getElementById("product_name_error").innerHTML = "Por favor, introduzca el nombre del producto a utilizar"
+            document.getElementById("product_name_error").style.display = "block" 
+        } else if (product_name && !product_quantity) {
+            // Caso: Se puso nombre pero no cantidad
+            document.getElementById("product_quantity_error").innerHTML = "Por favor, introduzca la cantidad de producto a utilizar"
+            document.getElementById("product_quantity_error").style.display = "block" 
         }
     }
 
@@ -86,17 +101,19 @@ function validate() {
         // Encontrar el producto que se está usando
         const found = products.find(product => product.product_name == product_name);
 
-        // Verificicación de cantidad válida
-        if (parseInt(product_quantity) < 1 || product_quantity == "none" || product_quantity == "") {
-            document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad válida"
-            document.getElementById("product_quantity_error").style.display = "block"
-            error = true
-        }
-        // Si la cantidad nueva es mayor que la vieja, entonces nueva-vieja < disponible
-        else if (parseInt(old_quantity) < parseInt(product_quantity) && parseInt(product_quantity) - parseInt(old_quantity) > found.product_quantity) {
-            document.getElementById("product_quantity_error").innerHTML = "Cantidad inválida"
-            document.getElementById("product_quantity_error").style.display = "block"
-            error = true
+        // Si se usó algun producto para el mantenimiento se tiene que verificar que...
+        if (product_quantity){
+            // Verificicación de cantidad válida
+            if (parseInt(product_quantity) < 1 || product_quantity == "none" || product_quantity == "") {
+                document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad válida"
+                document.getElementById("product_quantity_error").style.display = "block"
+            }
+            // Si la cantidad nueva es mayor que la vieja, entonces nueva-vieja < disponible
+            else if (parseInt(old_quantity) < parseInt(product_quantity) && parseInt(product_quantity) - parseInt(old_quantity) > found.product_quantity) {     
+                document.getElementById("product_quantity_error").innerHTML = "Cantidad inválida"
+                document.getElementById("product_quantity_error").style.display = "block"
+            }
+            
         }
     }
 
@@ -116,13 +133,19 @@ function validate() {
         document.getElementById("comments_error").style.display = "none"
     }
 
-    if (product_name == "none" || product_name == "") {
-        document.getElementById("product_name_error").innerHTML = "Por favor, introduzca algún comentario respecto al mantenimiento"
-        document.getElementById("product_name_error").style.display = "block"
-    }
-    else {
-        document.getElementById("product_name_error").style.display = "none"
-    }
+    // // Verificacion de uso de proucto
+    // if (product_name == "none" || product_name == "") {
+    //     document.getElementById("product_name_error").innerHTML = "Por favor, introduzca la cantidad de producto a utilizar"
+    //     document.getElementById("product_name_error").style.display = "block"    
+    // }
+    // else {
+    //     document.getElementById("product_name_error").style.display = "none"
+    // }
+
+    
+
+
+    
 
 
     activity_error = document.getElementById("activity_error").style.display

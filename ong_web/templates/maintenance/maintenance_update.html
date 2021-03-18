@@ -64,7 +64,11 @@
             <div class="col">
               <div class="form-group">
                 <label class="bmd-label-floating">Cantidad de Unidades</label>
-                {% render_field form.product_quantity class="form-control" name="product_quantity" id="product_quantity" %}
+                {% if refectory.no_products_op %}
+                  <input id="product_quantity" value="" class="form-control" name="product_quantity" readonly>
+                {% else %}
+                  {% render_field form.product_quantity class="form-control" name="product_quantity" id="product_quantity" %}
+                {% endif %}
               </div>
               <span id="product_quantity_error" class="text-danger" style="display : none"></span>
             </div>
@@ -126,7 +130,6 @@
       },
     {% endfor %}
   ]
-  console.log("Lista de productos: " + products)
 </script>
 <script src="/static/assets/js/maintenance/maintenance.js"></script>
 {% endblock javascripts %}
