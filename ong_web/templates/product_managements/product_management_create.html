@@ -15,7 +15,7 @@
             <p class="card-category">Completa los datos.</p>
       </div>
       <div class="card-body">
-        <form onsubmit="return validate()" method="post">
+        <form onsubmit="return validate()" method="post" autocomplete="off">
           {% csrf_token %}
                           
           <br/>

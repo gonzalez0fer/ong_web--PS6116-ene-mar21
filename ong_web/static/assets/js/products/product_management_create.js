@@ -11,7 +11,7 @@ function unit_validation() {
 
     if (found) {
         document.getElementById("product_unit").value = found.product_unit;
-        document.getElementById("product_unit").setAttribute("disabled", true);
+        document.getElementById("product_unit").setAttribute("disabled", 'disabled');
     }
 
 }
@@ -108,6 +108,10 @@ function validate() {
                 document.getElementById("operation_type_error").style.display = "none"
             }
         }
+    }
+
+    if (error) {
+        document.getElementById("product_unit").setAttribute("disabled", 'disabled');
     }
 
     return !error
