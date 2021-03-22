@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.urls import reverse_lazy
 from django.views.generic import ListView,CreateView,UpdateView,TemplateView
 from django.http import HttpResponse
+from django.contrib import messages
 
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -100,7 +101,7 @@ class ProductManagementCreateView(CreateView):
     template_name = "product_managements/product_management_create.html"
 
     def get_success_url(self):
-        success_url = reverse('dashboard:products:list_maintenance_product',kwargs={'pk':self.kwargs['refectory_id']})    
+        success_url = reverse('dashboard:product_managements:list_product_management',kwargs={'refectory_id':self.kwargs['refectory_id']})    
         return success_url
 
     def get_context_data(self, **kwargs):
@@ -168,6 +169,7 @@ class ProductManagementCreateView(CreateView):
         product.save()
         self.object.created_by = self.request.user
         self.object.save()
+        messages.success(self.request, 'Operación registrada exitosamente')
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -249,6 +251,7 @@ class ProductManagementCreateViewGuest(CreateView):
         product.save()
         self.object.created_by = self.request.user
         self.object.save()
+        messages.success(self.request, 'Operación registrada exitosamente')
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -266,10 +269,7 @@ class ProductManagementUpdateView(UpdateView):
     template_name = "product_managements/product_management_update.html"
 
     def get_success_url(self):
-        if self.request.user.is_superuser:
-            success_url = reverse('dashboard:products:list_maintenance_product',kwargs={'pk':self.kwargs['refectory_id']}) 
-        else:
-            success_url = "/dashboard/products/maintenance/"   
+        success_url = reverse('dashboard:product_managements:list_product_management',kwargs={'refectory_id':self.kwargs['refectory_id']})    
         return success_url
     
     def get_context_data(self, **kwargs):
@@ -341,6 +341,7 @@ class ProductManagementUpdateView(UpdateView):
                 product.product_unit = self.object.product_unit
                 product.is_spare_part = self.object.is_spare_part                       
         product.save()
+        messages.success(self.request, 'Operación actualizada exitosamente')
         return super().form_valid(form)
 
 
@@ -428,6 +429,7 @@ class ProductManagementUpdateViewGuest(UpdateView):
                 product.product_unit = self.object.product_unit
                 product.is_spare_part = self.object.is_spare_part                       
         product.save()
+        messages.success(self.request, 'Operación actualizada exitosamente')
         return super().form_valid(form)
 
 
@@ -467,7 +469,8 @@ def DeleteProductManagementOperation(request, refectory_id, pk):
     if product_op.operation_type == 'Ingreso':
         if product.total_product_quantity - product_op.product_quantity < 0:
             #TODO return a lista de operaciones y mensaje de error
-            return HttpResponseRedirect("/dashboard/products/"+str(refectory_id))
+            messages.error(request, 'No se puede eliminar la operación seleccionada')
+            return HttpResponseRedirect("/dashboard/product-managements/"+str(refectory_id))
         product.total_product_quantity -= product_op.product_quantity
 
 
@@ -479,4 +482,5 @@ def DeleteProductManagementOperation(request, refectory_id, pk):
         product.delete()
     
     product_op.delete()
-    return HttpResponseRedirect("/dashboard/products/"+str(refectory_id))
+    messages.success(request, 'Operación eliminada exitosamente')
+    return HttpResponseRedirect("/dashboard/product-managements/"+str(refectory_id))

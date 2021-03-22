@@ -5,6 +5,8 @@ from django.views.generic.edit import UpdateView, FormView
 from apps.main.users.models import CustomUser, UserProfile
 from .forms import CustomUserForm, UserProfileForm, UserAssignRefectoryForm
 from django.http import HttpResponse
+from django.contrib import messages
+
 
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -89,6 +91,7 @@ class UserUpdateProfile(UpdateView):
         self.object.profile.address = profile_form.cleaned_data['address']
         self.object.profile.about = profile_form.cleaned_data['about']
         self.object.profile.save()
+        messages.success(self.request, 'Usuario actualizado exitosamente')
         return super().form_valid(form)
 
 
@@ -158,6 +161,7 @@ class UserUpdateSingleProfile(UpdateView):
         self.object.profile.address = profile_form.cleaned_data['address']
         self.object.profile.about = profile_form.cleaned_data['about']
         self.object.profile.save()
+        messages.success(self.request, 'Usuario actualizado exitosamente')
         return super().form_valid(form)
 
 
@@ -176,4 +180,8 @@ class UserAssignRefectory(UpdateView):
     model = UserProfile
     template_name = 'users/assign_refectory.html'
     form_class = UserAssignRefectoryForm
-    success_url = "/dashboard/user/"
+
+    def get_success_url(self, **kwargs):
+        success_url = "/dashboard/user/"
+        messages.success(self.request, 'Centro asignado exitosamente')
+        return succes_url

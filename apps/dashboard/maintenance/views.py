@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import UpdateView, CreateView
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import messages
 
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -222,6 +223,7 @@ class MaintenanceCreateView(CreateView):
             self.object.product_operation = product_management_form
 
         self.object.save()
+        messages.success(self.request, 'Mantenimiento registrado exitosamente')
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -316,6 +318,7 @@ class MaintenanceCreateViewGuest(CreateView):
             self.object.product_operation = product_management_form
 
         self.object.save()
+        messages.success(self.request, 'Mantenimiento registrado exitosamente')
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -402,7 +405,7 @@ class MaintenanceUpdateView(UpdateView):
             product_management_object.save()
 
         self.object.save()
-
+        messages.success(self.request, 'Mantenimiento actualizado exitosamente')
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -489,9 +492,9 @@ class MaintenanceUpdateViewGuest(UpdateView):
             product_used.save()
 
             product_management_object.save()
-
+        
         self.object.save()
-
+        messages.success(self.request, 'Mantenimiento actualizado exitosamente')
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -529,5 +532,6 @@ def DeleteMaintenance(request, refectory_id, equipment_id, pk):
         product_operation.delete()
     
     maintenance_op.delete()
+    messages.success(request, 'Mantenimiento eliminado exitosamente')
     return HttpResponseRedirect("/dashboard/maintenance/"+str(refectory_id)+"/"+str(equipment_id)+"/history")
     
