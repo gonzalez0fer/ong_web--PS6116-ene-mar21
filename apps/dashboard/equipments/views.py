@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView, DetailView
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.http import HttpResponse
+from django.contrib import messages
 
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -127,6 +128,7 @@ class EquipmentCreateView(CreateView):
         self.object.created_by = self.request.user
         self.object.refectory_id = self.kwargs['refectory_id']
         self.object.save()
+        messages.success(self.request, 'Equipo registrado exitosamente')
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -179,6 +181,7 @@ class EquipmentUpdateView(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
+        messages.success(self.request, 'Equipo actualizado exitosamente')
         return super().form_valid(form)
 
 
@@ -195,6 +198,7 @@ class EquipmentDeleteView(DeleteView):
 
     def get_success_url(self, **kwargs):
         succes_url = reverse('dashboard:equipments:list_equipments',kwargs={'refectory_id':self.kwargs['refectory_id']})
+        messages.success(self.request, 'Equipo eliminado exitosamente')
         return succes_url
     
     def get_context_data(self, **kwargs):

@@ -1008,6 +1008,35 @@ pre code {
   }
 }
 
+.success, .error {
+  list-style: none;
+  color: #fff;
+  text-align: center;
+  border-radius: .25rem;
+  border: 1px solid transparent;
+  position: relative;
+  padding: 12px 30px;
+  margin: 0.3125rem 1px;
+  font-size: .75rem;
+  font-weight: 400;
+  line-height: 1.428571;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.success {
+  background-color: #4caf50;
+  border-color: #4caf50;
+  box-shadow: 3px 3px 3px #3f9241;
+}
+
+.error {
+  background-color: #f44336;
+  border-color: #f44336;
+  box-shadow: 3px 3px 3px #b42c22;
+}
+
 .container-fluid {
   width: 100%;
   padding-right: 15px;

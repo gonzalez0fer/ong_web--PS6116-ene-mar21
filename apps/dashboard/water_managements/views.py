@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import UpdateView, CreateView
 from django.http import HttpResponse
-
+from django.contrib import messages
 
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -183,6 +183,7 @@ class WaterManagementCreateView(CreateView):
             tank.current_liters = tank.current_liters - self.object.water_liters    
         tank.save()
         self.object.save()
+        messages.success(self.request, 'Operación registrada exitosamente')
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -243,6 +244,7 @@ class WaterManagementCreateViewGuest(CreateView):
             tank.current_liters = tank.current_liters - self.object.water_liters    
         tank.save()
         self.object.save()
+        messages.success(self.request, 'Operación registrada exitosamente')
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -295,6 +297,7 @@ class WaterManagementRegisterSell(CreateView):
         tank.current_liters = tank.current_liters - self.object.water_liters    
         tank.save()
         self.object.save()
+        messages.success(self.request, 'Operación registrada exitosamente')
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -381,6 +384,7 @@ class WaterManagementUpdateView(UpdateView):
                 # operacion inversa                
                 tank.current_liters = (tank.current_liters - temp) - self.object.water_liters                        
         tank.save()
+        messages.success(self.request, 'Operación actualizada exitosamente')
         return super().form_valid(form)
 
 
@@ -458,6 +462,7 @@ class WaterManagementUpdateViewGuest(UpdateView):
                 # operacion inversa                
                 tank.current_liters = (tank.current_liters - temp) - self.object.water_liters                         
         tank.save()
+        messages.success(self.request, 'Operación actualizada exitosamente')
         return super().form_valid(form)
 
 
@@ -497,6 +502,7 @@ def DeleteWaterOperation(request,pk):
     if water_op.operation_type == 'Ingreso':
         if  tank.current_liters - water_op.water_liters < 0:
             #TODO meter mensaje de error
+            messages.error(request, 'No se puede eliminar la operación seleccionada')
             return HttpResponseRedirect("/dashboard/water_managements/"+str(tank.id))
         tank.current_liters -= water_op.water_liters
         if len(last_filled) == 0:
@@ -507,12 +513,14 @@ def DeleteWaterOperation(request,pk):
     else:
         if water_op.water_liters + tank.current_liters > tank.capacity:
             #TODO meter mensaje de error
+            messages.error(request, 'No se puede eliminar la operación seleccionada')
             return HttpResponseRedirect("/dashboard/water_managements/"+str(tank.id))        
         tank.current_liters += water_op.water_liters
 
     tank.save()
 
     water_op.delete()
+    messages.success(request, 'Operación eliminada exitosamente')
     return HttpResponseRedirect("/dashboard/water_managements/"+str(tank.id))
 
     

@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.urls import reverse_lazy
 from django.views.generic import ListView,CreateView,UpdateView,TemplateView
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
 
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -165,6 +166,7 @@ class CupboardManagementCreateView(CreateView):
         product.save()
         self.object.created_by = self.request.user
         self.object.save()
+        messages.success(self.request, 'Operación registrada exitosamente')
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -237,6 +239,7 @@ class CupboardManagementCreateViewGuest(CreateView):
         product.save()
         self.object.created_by = self.request.user
         self.object.save()
+        messages.success(self.request, 'Operación registrada exitosamente')
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -318,6 +321,7 @@ class CupboardManagementUpdateView(UpdateView):
                 # operacion inversa                
                 product.total_product_quantity = (product.total_product_quantity - temp) - self.object.product_quantity                     
         product.save()
+        messages.success(self.request, 'Operación actualizada exitosamente')
         return super().form_valid(form)
 
 
@@ -397,6 +401,7 @@ class CupboardManagementUpdateViewGuest(UpdateView):
                 # operacion inversa                
                 product.total_product_quantity = (product.total_product_quantity - temp) - self.object.product_quantity                       
         product.save()
+        messages.success(self.request, 'Operación actualizada exitosamente')
         return super().form_valid(form)
 
 
@@ -434,6 +439,7 @@ def DeleteCupboardManagementOperation(request, refectory_id, pk):
     if product_op.operation_type == 'Ingreso':
         if product.total_product_quantity - product_op.product_quantity < 0:
             #TODO mensaje de error
+            messages.error(request, 'No se puede eliminar la operación seleccionada')
             return HttpResponseRedirect("/dashboard/cupboard-management/"+str(refectory_id))
         product.total_product_quantity -= product_op.product_quantity
 
@@ -445,4 +451,5 @@ def DeleteCupboardManagementOperation(request, refectory_id, pk):
         product.delete()
     
     product_op.delete()
+    messages.success(request, 'Operación eliminada exitosamente')
     return HttpResponseRedirect("/dashboard/cupboard-management/"+str(refectory_id))
