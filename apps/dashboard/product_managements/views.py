@@ -13,6 +13,8 @@ from apps.main.refectories.models import Refectory
 from apps.main.products.models import Product
 from apps.main.product_managements.models import ProductManagement
 
+from apps.main.utils import get_exchange_rate
+
 @method_decorator([login_required, superuser_required], name='dispatch')
 class ProductManagementListView(ListView):
     template_name = "product_managements/product_management_list.html"
@@ -25,7 +27,7 @@ class ProductManagementListView(ListView):
 
         refectory = Refectory.objects.get(id=self.kwargs['refectory_id'])
         product = Product.objects.filter(refectory=refectory.id).order_by('created')
-        
+        exchange_rate = get_exchange_rate()
 
         for j in product:
             query = ProductManagement.objects.filter(product_cod=j).order_by('created')
@@ -36,7 +38,9 @@ class ProductManagementListView(ListView):
                         'operation_type':i.operation_type,
                         'product_quantity':i.product_quantity,
                         'product_unitary_amount':i.product_unitary_amount,
+                        'product_unitary_amount_dollars':round(i.product_unitary_amount/exchange_rate,2),
                         'product_total_amount':i.product_total_amount,
+                        'product_total_amount_dollars':round(i.product_total_amount/exchange_rate,2),
                         'product_unit':i.product_unit,
                         'created': i.created,
                         'created_by':str(i.created_by.profile.name) + ' ' + str(i.created_by.profile.last_name),
@@ -64,7 +68,7 @@ class ProductManagementListViewGuest(ListView):
 
         refectory = Refectory.objects.get(id=self.request.user.profile.refectory.id)
         product = Product.objects.filter(refectory=refectory.id).order_by('created')
-        
+        exchange_rate = get_exchange_rate()
 
         for j in product:
             query = ProductManagement.objects.filter(product_cod=j).order_by('created')
@@ -75,7 +79,9 @@ class ProductManagementListViewGuest(ListView):
                         'operation_type':i.operation_type,
                         'product_quantity':i.product_quantity,
                         'product_unitary_amount':i.product_unitary_amount,
+                        'product_unitary_amount_dollars':round(i.product_unitary_amount/exchange_rate,2),
                         'product_total_amount':i.product_total_amount,
+                        'product_total_amount_dollars':round(i.product_total_amount/exchange_rate,2),
                         'product_unit':i.product_unit,
                         'created': i.created,
                         'created_by':str(i.created_by.profile.name) + ' ' + str(i.created_by.profile.last_name),

@@ -18,6 +18,8 @@ from apps.main.users.models import CustomUser
 from apps.main.water_tanks.models import WaterTank
 from apps.main.water_managements.models import WaterManagement
 
+from apps.main.utils import get_exchange_rate
+
 @method_decorator([login_required, superuser_required], name='dispatch')
 class WaterManagementList(ListView):
     template_name = "water_managements/list_water_managements.html"
@@ -29,6 +31,7 @@ class WaterManagementList(ListView):
         tank = WaterTank.objects.get(id=self.kwargs['pk'])
         refectory = Refectory.objects.get(id=tank.refectory_id)
         query = WaterManagement.objects.filter(cupboard=tank.id).order_by('created')
+        exchange_rate = get_exchange_rate()
         
         context['object_list'] = []
         context['tank_id'] = self.kwargs['pk']
@@ -43,7 +46,9 @@ class WaterManagementList(ListView):
                     'operation_description':i.operation_description,
                     'water_liters':i.water_liters,
                     'water_amount':i.water_amount,
+                    'water_amount_dollars':round(i.water_amount/exchange_rate,2),
                     'water_price_total':i.water_price_total,
+                    'water_price_total_dollars':round(i.water_price_total/exchange_rate,2),
                     'created_by':str(i.created_by.profile.name) + ' ' + str(i.created_by.profile.last_name),
                     'created':i.created,
                     'tank_id':i.cupboard_id,
@@ -80,6 +85,7 @@ class WaterManagementListGuest(ListView):
         refectory = Refectory.objects.get(id=self.request.user.profile.refectory.id)
         tank = WaterTank.objects.get(refectory_id=refectory.id)
         query = WaterManagement.objects.filter(cupboard=tank.id).order_by('created')
+        exchange_rate = get_exchange_rate()
         
         context['object_list'] = []
         context['tank_id'] = tank.id
@@ -94,7 +100,9 @@ class WaterManagementListGuest(ListView):
                     'operation_description':i.operation_description,
                     'water_liters':i.water_liters,
                     'water_amount':i.water_amount,
+                    'water_amount_dollars':round(i.water_amount/exchange_rate,2),
                     'water_price_total':i.water_price_total,
+                    'water_price_total_dollars':round(i.water_price_total/exchange_rate,2),
                     'created_by':str(i.created_by.profile.name) + ' ' + str(i.created_by.profile.last_name),
                     'created':i.created,
                     'tank_id':i.cupboard_id,

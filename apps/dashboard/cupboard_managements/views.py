@@ -12,6 +12,8 @@ from apps.main.refectories.models import Refectory
 from apps.main.cupboards.models import Cupboard
 from apps.main.cupboard_managements.models import CupboardManagement
 
+from apps.main.utils import get_exchange_rate
+
 @method_decorator([login_required, superuser_required], name='dispatch')
 class CupboardManagementListView(ListView):
     template_name = "cupboard_managements/cupboard_management_list.html"
@@ -25,7 +27,7 @@ class CupboardManagementListView(ListView):
 
         refectory = Refectory.objects.get(id=self.kwargs['refectory_id'])
         cupboard = Cupboard.objects.filter(refectory=refectory).order_by('created')
-        
+        exchange_rate = get_exchange_rate()        
 
         for j in cupboard:
             query = CupboardManagement.objects.filter(cupboard=j).order_by('created')
@@ -38,7 +40,9 @@ class CupboardManagementListView(ListView):
                         'operation_type':i.operation_type,
                         'product_quantity':i.product_quantity,
                         'product_unitary_amount':i.product_unitary_amount,
+                        'product_unitary_amount_dollars':round(i.product_unitary_amount/exchange_rate,2),
                         'product_total_amount':i.product_total_amount,
+                        'product_total_amount_dollars':round(i.product_total_amount/exchange_rate,2),
                         'created':i.created,
                         'created_by':str(i.created_by.profile.name)+' '+str(i.created_by.profile.last_name),
                 })
@@ -62,6 +66,7 @@ class CupboardManagementListSingleView(ListView):
         
         refectory = Refectory.objects.get(id=self.request.user.profile.refectory.id)
         cupboard = Cupboard.objects.filter(refectory_id=refectory.id).order_by('created')
+        exchange_rate = get_exchange_rate()
         
         context['object_list'] = []
         context['refectory_data'] = []
@@ -77,7 +82,9 @@ class CupboardManagementListSingleView(ListView):
                         'operation_type':i.operation_type,
                         'product_quantity':i.product_quantity,
                         'product_unitary_amount':i.product_unitary_amount,
+                        'product_unitary_amount_dollars':round(i.product_unitary_amount/exchange_rate,2),
                         'product_total_amount':i.product_total_amount,
+                        'product_total_amount_dollars':round(i.product_total_amount/exchange_rate,2),
                         'created':i.created,
                         'created_by':str(i.created_by.profile.name)+' '+str(i.created_by.profile.last_name),
                 })
