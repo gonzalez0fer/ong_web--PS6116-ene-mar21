@@ -146,14 +146,15 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-<script src="/static/assets/js/equipments/equipment_list.js"></script>
-<script type="text/javascript">
-    var $ = jQuery.noConflict()
-    function open_modal(url){
-        $('#delete_equipment').load(url, function(){
-            $(this).modal('show');
+  <script src="/static/assets/js/equipments/equipment_list.js"></script>
+  <script type="text/javascript">
+      var $ = jQuery.noConflict()
+      function open_modal(url){
+          $('#delete_equipment').load(url, function(){
+              $(this).modal('show');
 
-        });
-    }
-</script>
+          });
+      }
+  </script>
+  <script src="/static/assets/js/notification-message.js"></script>
 {% endblock javascripts %}
