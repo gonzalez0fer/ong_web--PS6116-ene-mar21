@@ -1008,11 +1008,9 @@ pre code {
   }
 }
 
-.success {
+.success, .error {
   list-style: none;
-  background-color: #28a745;
   color: #fff;
-  box-shadow: 3px 3px 3px #1f8337;
   text-align: center;
   border-radius: .25rem;
   border: 1px solid transparent;
@@ -1025,6 +1023,18 @@ pre code {
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0;
+}
+
+.success {
+  background-color: #28a745;
+  border-color: #28a745;
+  box-shadow: 3px 3px 3px #1f8337;
+}
+
+.error {
+  background-color: #f44336;
+  border-color: #f44336;
+  box-shadow: 3px 3px 3px #b42c22;
 }
 
 .container-fluid {
