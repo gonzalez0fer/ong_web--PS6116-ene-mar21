@@ -29,7 +29,31 @@
                 </a>
           </li>
 
-          <li class="nav-item dropdown">
+          {% url 'dashboard:refectory:list_refectories' as refect_list %}
+          <li class="nav-item {% if refect_list == request.path or 'refectory' in request.path %} active {% endif %}">
+            <a class="nav-link" href="{% url 'dashboard:refectory:list_refectories' %}">
+              <i class="material-icons">food_bank</i>
+              <p>Puntos de Distribución</p>
+            </a>
+          </li>
+
+          {% url 'dashboard:water_tanks:tanks_list' as water_tanks_view %}
+          <li class="nav-item {% if water_tanks_view == request.path or 'water_managements' in request.path %} active {% endif %}">
+            <a class="nav-link" href="{% url 'dashboard:water_tanks:tanks_list' %}">
+              <i class="material-icons">opacity</i>
+              <p>Agua</p>
+            </a>
+          </li>
+
+          {% url 'dashboard:cupboard:refectories_cupboard_list' as refect_cupboard_list %}
+          <li class="nav-item {% if refect_cupboard_list == request.path or 'cupboard' in request.path or 'cupboard-management' in request.path %} active {% endif %}">
+            <a class="nav-link" href="{% url 'dashboard:cupboard:refectories_cupboard_list' %}">
+              <i class="material-icons">kitchen</i>
+              <p>Alimentos</p>
+            </a>
+          </li>
+
+ {% comment %}          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="javascript:;" role="button" aria-haspopup="true" aria-expanded="false"><i class="material-icons">food_bank</i>Comedores</a>
             <div class="dropdown-menu">
 
@@ -42,18 +66,10 @@
                     <i class="material-icons">kitchen</i> 
                     <p>Ver Inventario</p>
                   </a>
-          </li>
-
-          {% url 'dashboard:water_tanks:tanks_list' as water_tanks_view %}
-          <li class="nav-item {% if water_tanks_view == request.path or 'water_managements' in request.path %} active {% endif %}">
-            <a class="nav-link" href="{% url 'dashboard:water_tanks:tanks_list' %}">
-              <i class="material-icons">opacity</i>
-              <p>Agua</p>
-            </a>
-          </li>
+          </li> {% endcomment %}
 
           {% url 'dashboard:maintenance:refectories_maintenance_list' as maint_refect_view %}
-          <li class="nav-item {% if maint_refect_view == request.path or 'products' in request.path or 'product-managements' in request.path or 'maintenance' in request.path%} active {% endif %}">
+          <li class="nav-item {% if maint_refect_view == request.path or 'products' in request.path or 'product-managements' in request.path or 'equipments' in request.path or 'maintenance' in request.path %} active {% endif %}">
             <a class="nav-link" href="{% url 'dashboard:maintenance:refectories_maintenance_list' %}">
               <i class="material-icons">home_repair_service</i>
               <p>Mantenimiento</p>

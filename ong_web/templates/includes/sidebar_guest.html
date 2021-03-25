@@ -23,7 +23,7 @@
       </li>
       {% if user.profile.refectory %}
       {% url 'dashboard:water_managements:water_management_list_guest' as tanks_view %} 
-      <li class="nav-item {% if request.path == tanks_view %} active {% endif %}">
+      <li class="nav-item {% if request.path == tanks_view or 'water_managements' in request.path %} active {% endif %}">
         <a class="nav-link" href="{% url 'dashboard:water_managements:water_management_list_guest'%}">
           <i class="material-icons">opacity</i>
           <p>Agua</p>
@@ -33,17 +33,17 @@
 
       {% if user.profile.refectory %}
       {% url 'dashboard:cupboard:list_products' as cupboard_view %} 
-      <li class="nav-item {% if request.path == cupboard_view %} active {% endif %} ">
+      <li class="nav-item {% if request.path == cupboard_view or 'cupboard-management' in request.path %} active {% endif %} ">
         <a class="nav-link" href="{% url 'dashboard:cupboard:list_products'%}">
-          <i class="material-icons">kitchen</i>
-          <p>Inventario</p>
+          <i class="material-icons">restaurant</i>
+          <p>Alimentos</p>
         </a>
       </li>
       {% endif %}
 
       {% if user.profile.refectory %}
       {% url 'dashboard:products:list_maintenance_product_guest' as products_maintenance %} 
-      <li class="nav-item {% if request.path == products_maintenance %} active {% endif %} ">
+      <li class="nav-item {% if request.path == products_maintenance  or 'product-managements' in request.path %} active {% endif %} ">
         <a class="nav-link" href="{% url 'dashboard:products:list_maintenance_product_guest'%}">
           <i class="material-icons">science</i>
           <p>Suministros</p>
@@ -53,7 +53,7 @@
 
       {% if user.profile.refectory %}
       {% url 'dashboard:equipments:list_equipments_guest' as equipments_maintenance %} 
-      <li class="nav-item {% if request.path == equipments_maintenance %} active {% endif %} ">
+      <li class="nav-item {% if request.path == equipments_maintenance or 'equipments' in request.path or 'maintenance' in request.path %} active {% endif %}">
         <a class="nav-link" href="{% url 'dashboard:equipments:list_equipments_guest'%}">
           <i class="material-icons">build</i>
           <p>Equipos</p>

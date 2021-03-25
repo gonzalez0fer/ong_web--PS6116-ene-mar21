@@ -12,7 +12,7 @@
       <div style="padding: 0px 30px;">
         {% if user.is_superuser %}
           <h2 class="card-title " style="text-align: center; font-weight: bolder;">
-            Bienvenido al Sistema de Inventarios para el Proyecto Agua Segura de la ONG +Verde +Humano Venezuela
+            Bienvenido, {% if user.profile.name != None %} {{ user.profile.name }}, {% endif %} al Sistema de Inventarios para el Proyecto Agua Segura de la ONG +Verde +Humano Venezuela
           </h2>
           </br>
           <h4>
@@ -27,7 +27,7 @@
               <button type="button" class="btn btn-info"> Registrar usuario</button>  
             </a>
             <a  href="{% url 'dashboard:refectory:list_refectories' %}">
-              <button type="button" class="btn btn-info"> Ver centros de distribución</button>  
+              <button type="button" class="btn btn-info"> Ver puntos de distribución</button>  
             </a>
             <a  href="{% url 'dashboard:water_tanks:tanks_list' %}">
               <button type="button" class="btn btn-info"> Tanques de agua</button>  
@@ -38,7 +38,7 @@
           </div>
         {% else %}
           <h2 class="card-title " style="text-align: center; font-weight: bolder;">
-            Bienvenido al Sistema de Inventarios para el Proyecto Agua Segura de la ONG +Verde +Humano
+            Bienvenido, {% if user.profile.name != None %} {{ user.profile.name }}, {% endif %} al Sistema de Inventarios para el Proyecto Agua Segura de la ONG +Verde +Humano
           </h2>
           </br>
           <h4>
@@ -51,7 +51,7 @@
             <a  href="{% url 'dashboard:water_managements:water_management_sell' %}">
               <button type="button" class="btn btn-info"> Registar Venta de Agua</button>  
             </a>
-            <a  href="">
+            <a  href="{% url 'dashboard:cupboard_managements:list_cupboard_single_management' %}">
               <button type="button" class="btn btn-info"> Ver Historial de Alimentos</button>  
             </a>
             <a  href="{% url 'dashboard:product_managements:list_product_management_guest' %}">

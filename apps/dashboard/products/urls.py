@@ -11,7 +11,7 @@ urlpatterns = [
         name='list_maintenance_product'
         ),
     path(
-        'maintenance/', 
+        'product-list/', 
         views.ProductsSingleListView.as_view(), 
         name='list_maintenance_product_guest'
         ),

@@ -17,4 +17,10 @@ urlpatterns = [
         name='list_products'
         ),
 
+    path(
+        'refectories/',
+        views.RefectoriesCupboardListView.as_view(),
+        name='refectories_cupboard_list'
+    ),
+
 ]

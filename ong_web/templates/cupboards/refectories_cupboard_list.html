@@ -10,9 +10,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-plain">
-                  <div class="card-header card-header-success" style="background: linear-gradient(60deg, #26c6da, #00acc1);">
-                    <h4 class="card-title mt-0">Mantenimiento</h4>
-                    <p class="card-category"> Aquí podrás ingresar al inventario de suministros o al inventario de equipos de cada Punto de Distribución</p>
+                  <div class="card-header card-header-info">
+                    <h4 class="card-title mt-0">Inventario de Alimentos</h4>
+                    <p class="card-category"> Aquí podrás ingresar a los inventarios de alimentos de cada Punto de Distribución</p>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -48,14 +48,19 @@
                                             {{ refectory_object.address }}
                                         </td>
                                         <td>
-                                            {{ refectory_object.mandated }}
+                                            <ul>
+
+                                                {% for i in refectory_object.mandated %}
+                                            
+                                                    <li>{{i}}</li>
+
+                                                {% endfor %}
+
+                                            </ul>
                                         </td>
                                         <td>
-                                            <a href="{% url 'dashboard:products:list_maintenance_product' refectory_object.id %}">
-                                                <button type="button" class="btn" style='background-color: #37005D'><i class="material-icons" style="padding-right: 10px;">science</i> Ver Suministros</button>
-                                            </a>
-                                            <a href="{% url 'dashboard:equipments:list_equipments' refectory_object.id %}">
-                                                <button type="button" class="btn" style='background-color: #37005D'><i class="material-icons" style="padding-right: 10px;">build</i> Ver Equipos</button>
+                                            <a href="{% url 'dashboard:cupboard:list_cupboard' refectory_object.id %}">
+                                                <button type="button" class="btn" style='background-color: #37005D'><i class="material-icons">kitchen</i> Ver Alimentos</button>
                                             </a>
                                         </td>
                                         </tr>
@@ -79,11 +84,6 @@
         <button type="button" class="btn btn-default">Regresar</button>
         </a>
     </p>
-    <!-- <p style="float: right; margin-right: 50px;">
-        <a  href="{% url 'dashboard:refectory:create_refectory' %}">
-        <button type="button" class="btn btn-success">Agregar Punto de distribucion</button>
-        </a>
-    </p> -->
 {% endblock content %}
 
 
