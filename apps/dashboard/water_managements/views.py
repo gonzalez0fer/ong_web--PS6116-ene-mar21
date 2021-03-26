@@ -540,6 +540,8 @@ class DownloadPDF(View):
 
     def get(self, request, *args, **kwargs):
 		
+        refectory = Refectory.objects.get(refectory_id=self.kwargs['tank_id'])
+
         from_date = self.request.GET.get("from_date")
         to_date = self.request.GET.get("to_date")
         #TODO validaciones rangos de fecha
@@ -560,8 +562,14 @@ class DownloadPDF(View):
         suma_egresos_dolares = round(suma_egresos['water_price_total__sum']/exchange_rate,2)
 
         data = {
+            "nombre": refectory.name,
+            "direccion": refectory.address,
+            "precio_venta": refectory.capacity,
+            "desde": from_date,
+            "hasta": to_date,
             "total_ingresos": len(total_ingresos),
             "total_egresos": len(total_egresos),
+            "total_operaciones": len(total_ingresos) + len(total_egresos),
             "total_litros_ingresos": total_litros_ingresos['water_liters__sum'],
             "total_litros_egresos": total_litros_egresos['water_liters__sum'],
             "prom_litros_ingresos": prom_litros_ingresos['water_liters__avg'],
@@ -571,6 +579,8 @@ class DownloadPDF(View):
             "suma_ingresos_dolares": suma_ingresos_dolares,
             "suma_egresos": suma_egresos['water_price_total__sum'],
             "suma_egresos_dolares": suma_egresos_dolares,
+            "ganancia_neta": suma_egresos['water_price_total__sum'] - suma_ingresos['water_price_total__sum'],
+            "diferencial_tanque": total_litros_ingresos['water_liters__sum'] - total_litros_egresos['water_liters__sum'],
         }
 
         pdf = render_pdf_view('water_managements/pdf_water_managements.html', data)
