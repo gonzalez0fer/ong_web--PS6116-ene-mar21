@@ -107,14 +107,14 @@
 
                         </br>
                         </br>
-                        Comedor asignado:
+                        Punto de Distribución Asignado:
                         <strong>{{object.profile.refectory|default_if_none:"(sin asignar)" }}</strong>
                         </h4>
                     </div>  
                     
                     {% if user.is_superuser %}
                     <p class="pull-left">
-                        <button type="button" class=" btn btn-warning" onclick="open_modal('{% url 'dashboard:user:assign_refectory' view.kwargs.pk %}')">Asignar Comedor</button>
+                        <button type="button" class=" btn btn-warning" onclick="open_modal('{% url 'dashboard:user:assign_refectory' view.kwargs.pk %}')">Asignar Punto de Distribución</button>
                     </p>
                     {% endif %}
 

@@ -22,7 +22,7 @@
                                 ID
                           </th>
                           <th>
-                              Comedor
+                              Punto de Distribución
                           </th>
                           <th>
                               Capacidad (Litros)
@@ -48,13 +48,13 @@
                                             {{ i.refectory_name }}
                                         </td>
                                         <td>
-                                            {{ i.capacity }} <!--OJO ESTO ES CAPACIDAD DE COMEDORES POR LO QUE VEO-->
+                                            {{ i.capacity }}
                                         </td>
                                         <td>
-                                            {{ i.current_liters }} <!--OJO ESTO ES CAPACIDAD DE COMEDORES POR LO QUE VEO-->
+                                            {{ i.current_liters }} 
                                         </td>
                                         <td>
-                                            {{ i.last_fill_date }} <!--OJO ESTO DEBERIA SER DEL OBJETO WATER TANK PERO LO ENTIENDE (?)-->
+                                            {{ i.last_fill_date }} 
                                         </td>
                                         <td>
                                             <a href="{% url 'dashboard:water_managements:water_management_list' i.id %}">

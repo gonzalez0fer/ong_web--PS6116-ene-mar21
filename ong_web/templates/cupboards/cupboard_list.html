@@ -11,8 +11,8 @@
         <div class="col-md-8">
             <div class="card card-plain">
                 <div class="card-header card-header-info">
-                <h4 class="card-title mt-0">Alacena del comedor <b>{{refectory_data.0.refectory_name}}</b></h4>
-                <p class="card-category"> Aqui podras ver todos los productos disponibles en el deposito del comedor.</p>
+                <h4 class="card-title mt-0">Inventario de Alimentos del Punto de Distribución <b>{{refectory_data.0.refectory_name}}</b></h4>
+                <p class="card-category"> Aqui podras ver todos los productos disponibles en el inventario del punto de distribución.</p>
                 </div>
                 <div class="card-body">
                 <div class="table-responsive">
@@ -77,9 +77,9 @@
                     </a>
                 </div>
                 <div class="card-body">
-                    <h4 class="card-title">Comedor: <strong>{{refectory_data.0.refectory_name}}</strong> 
+                    <h4 class="card-title">Punto de Distribución: <strong>{{refectory_data.0.refectory_name}}</strong> 
                     </br>
-                        Direccion: 
+                        Dirección: 
                         {{refectory_data.0.refectory_address}}
                     </h4>
                     {% if user.is_superuser %}
