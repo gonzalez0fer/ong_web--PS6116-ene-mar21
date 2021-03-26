@@ -149,9 +149,9 @@
                             <a href="{% url 'dashboard:water_managements:water_management_create' tank_id 1 %}">
                                 <button type="button" class="btn btn-default action">Registrar Egreso</button>
                             </a>
-                            {% comment %} <a href="">
-                                <button type="button" class="btn btn-default action">Reporte</button>
-                            </a> {% endcomment %}
+
+                            <button type="button" class="btn btn-default action" onclick="open_modal('{% url 'dashboard:water_managements:water_management_report_modal' tank_id %}')">Reporte</button>
+
                         {% else %}
                             <a href="{% url 'dashboard:water_managements:water_management_create_guest' 0 %}">
                                 <button type="button" class="btn btn-default action">Registrar Ingreso</button>

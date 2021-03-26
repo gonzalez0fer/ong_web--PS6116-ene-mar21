@@ -57,5 +57,17 @@ urlpatterns = [
         '<int:pk>/delete', 
         views.DeleteWaterOperation, 
         name='water_management_delete'
-        ),  
+        ),
+
+    path(
+        '<int:tank_id>/report',
+        views.ModalTemplateReport.as_view(),
+        name='water_management_report_modal'
+    ),
+
+    path(
+        '<int:tank_id>/pdf',
+        views.DownloadPDF.as_view(),
+        name='water_management_pdf'
+    ),
 ]

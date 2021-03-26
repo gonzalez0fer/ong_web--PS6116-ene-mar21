@@ -1,10 +1,11 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render,reverse
 from django.urls import reverse_lazy
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, View
 from django.views.generic.edit import UpdateView, CreateView
 from django.http import HttpResponse
 from django.contrib import messages
+from django.db.models import Avg, Sum
 
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -18,7 +19,8 @@ from apps.main.users.models import CustomUser
 from apps.main.water_tanks.models import WaterTank
 from apps.main.water_managements.models import WaterManagement
 
-from apps.main.utils import get_exchange_rate
+
+from apps.main.utils import get_exchange_rate, render_pdf_view
 
 @method_decorator([login_required, superuser_required], name='dispatch')
 class WaterManagementList(ListView):
@@ -523,4 +525,58 @@ def DeleteWaterOperation(request,pk):
     messages.success(request, 'Operación eliminada exitosamente')
     return HttpResponseRedirect("/dashboard/water_managements/"+str(tank.id))
 
-    
+
+class ModalTemplateReport(TemplateView):
+    template_name = "water_managements/report_modal.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['tank_id'] = self.kwargs['tank_id']
+
+        return context
+
+class DownloadPDF(View):
+
+    def get(self, request, *args, **kwargs):
+		
+        from_date = self.request.GET.get("from_date")
+        to_date = self.request.GET.get("to_date")
+        #TODO validaciones rangos de fecha
+        total_ingresos = WaterManagement.objects.filter(cupboard_id=self.kwargs['tank_id'],created__range=(from_date,to_date),operation_type="Ingreso")
+        total_egresos = WaterManagement.objects.filter(cupboard_id=self.kwargs['tank_id'],created__range=(from_date,to_date),operation_type="Egreso")
+
+        total_litros_ingresos = total_ingresos.aggregate(Sum('water_liters'))
+        total_litros_egresos = total_egresos.aggregate(Sum('water_liters'))
+
+        prom_litros_ingresos = total_ingresos.aggregate(Avg('water_liters'))
+        prom_litros_egresos = total_egresos.aggregate(Avg('water_liters'))
+
+        exchange_rate = get_exchange_rate()
+        suma_ingresos = total_ingresos.aggregate(Sum('water_price_total'))
+        suma_ingresos_dolares = round(suma_ingresos['water_price_total__sum']/exchange_rate,2)
+
+        suma_egresos = total_egresos.aggregate(Sum('water_price_total'))
+        suma_egresos_dolares = round(suma_egresos['water_price_total__sum']/exchange_rate,2)
+
+        data = {
+            "total_ingresos": len(total_ingresos),
+            "total_egresos": len(total_egresos),
+            "total_litros_ingresos": total_litros_ingresos['water_liters__sum'],
+            "total_litros_egresos": total_litros_egresos['water_liters__sum'],
+            "prom_litros_ingresos": prom_litros_ingresos['water_liters__avg'],
+            "prom_litros_egresos": prom_litros_egresos['water_liters__avg'],
+            "tasa_cambio": exchange_rate,
+            "suma_ingresos": suma_ingresos['water_price_total__sum'],
+            "suma_ingresos_dolares": suma_ingresos_dolares,
+            "suma_egresos": suma_egresos['water_price_total__sum'],
+            "suma_egresos_dolares": suma_egresos_dolares,
+        }
+
+        pdf = render_pdf_view('water_managements/pdf_water_managements.html', data)
+
+        response = HttpResponse(pdf, content_type='application/pdf')
+        filename = "Reporte Agua.pdf" #TODO nombre dinamico
+        content = "attachment; filename='%s'" %(filename)
+        response['Content-Disposition'] = content
+        return response
