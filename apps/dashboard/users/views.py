@@ -184,4 +184,4 @@ class UserAssignRefectory(UpdateView):
     def get_success_url(self, **kwargs):
         success_url = "/dashboard/user/"
         messages.success(self.request, 'Centro asignado exitosamente')
-        return succes_url
+        return success_url

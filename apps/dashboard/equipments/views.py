@@ -91,8 +91,8 @@ class EquipmentCreateView(CreateView):
     template_name = "equipments/equipment_create.html"
     
     def get_success_url(self, **kwargs):
-        succes_url = reverse('dashboard:equipments:list_equipments',kwargs={'refectory_id':self.kwargs['refectory_id']})
-        return succes_url
+        success_url = reverse('dashboard:equipments:list_equipments',kwargs={'refectory_id':self.kwargs['refectory_id']})
+        return success_url
 
     def get_context_data(self, **kwargs):
 
@@ -146,8 +146,8 @@ class EquipmentUpdateView(UpdateView):
     template_name = "equipments/equipment_update.html"
 
     def get_success_url(self, **kwargs):
-        succes_url = reverse('dashboard:equipments:list_equipments',kwargs={'refectory_id':self.kwargs['refectory_id']})
-        return succes_url
+        success_url = reverse('dashboard:equipments:list_equipments',kwargs={'refectory_id':self.kwargs['refectory_id']})
+        return success_url
 
     def get_context_data(self, **kwargs):
 
@@ -197,9 +197,9 @@ class EquipmentDeleteView(DeleteView):
     template_name = "equipments/equipments_delete.html"
 
     def get_success_url(self, **kwargs):
-        succes_url = reverse('dashboard:equipments:list_equipments',kwargs={'refectory_id':self.kwargs['refectory_id']})
+        success_url = reverse('dashboard:equipments:list_equipments',kwargs={'refectory_id':self.kwargs['refectory_id']})
         messages.success(self.request, 'Equipo eliminado exitosamente')
-        return succes_url
+        return success_url
     
     def get_context_data(self, **kwargs):
 
