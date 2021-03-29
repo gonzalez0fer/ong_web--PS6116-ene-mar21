@@ -25,7 +25,7 @@
                 <label class="bmd-label-floating">Actividad Realizada</label>
                 {% render_field form.activity class="form-control" name="activity" id="activity" %}
               </div>
-              <span id="activity_error" class="text-danger" style="display : none"></span>
+              <span id="activity_error" class="text-danger" style="visibility : hidden"></span>
             </div>
           </div>
 
@@ -37,7 +37,7 @@
                 <label class="bmd-label-floating">Comentarios</label>
                 {% render_field form.comments class="form-control" name="comments" id="comments" %}
               </div>
-              <span id="comments_error" class="text-danger" style="display : none"></span>
+              <span id="comments_error" class="text-danger" style="visibility : hidden"></span>
             </div>
           </div>
 
@@ -54,7 +54,7 @@
                         {% endfor %} {% endcomment %}
                     </select>
               </div>
-              <span id="product_name_error" class="text-danger" style="display : none"></span>
+              <span id="product_name_error" class="text-danger" style="visibility : hidden"></span>
             </div>
           </div>
 
@@ -70,7 +70,7 @@
                   {% render_field form.product_quantity class="form-control" name="product_quantity" id="product_quantity" %}
                 {% endif %}
               </div>
-              <span id="product_quantity_error" class="text-danger" style="display : none"></span>
+              <span id="product_quantity_error" class="text-danger" style="visibility : hidden"></span>
             </div>
         </div>
 

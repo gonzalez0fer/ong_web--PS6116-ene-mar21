@@ -25,7 +25,7 @@
                 <label class="bmd-label-floating">Nombre del equipo <b>*</b></label>
                 <input type="text" name="name" id="name" class="form-control">
               </div>
-              <span id="name_error" class="text-danger" style="display : none"></span>
+              <span id="name_error" class="text-danger" style="visibility : hidden"></span>
             </div>
           </div>
 
@@ -45,7 +45,7 @@
                   <option value="Trienal">Trienal</option>
                 </select>
               </div>
-              <span id="maintenance_frequency_error" class="text-danger" style="display : none"></span>
+              <span id="maintenance_frequency_error" class="text-danger" style="visibility : hidden"></span>
             </div>
           </div>
 
@@ -58,7 +58,7 @@
                 <label class="bmd-label-floating">Marca  <b>*</b></label>
                 <input type="text" name="brand" id="brand" class="form-control">
               </div>
-              <span id="brand_error" class="text-danger" style="display : none"></span>
+              <span id="brand_error" class="text-danger" style="visibility : hidden"></span>
             </div>
             
             <div class="col-md-6">
@@ -66,7 +66,7 @@
                 <label class="bmd-label-floating">Modelo</label>
                 <input id="equipment_model" name="equipment_model" class="form-control" >
               </div>
-              <span id="equipment_model_error" class="text-danger" style="display : none"></span>
+              <span id="equipment_model_error" class="text-danger" style="visibility : hidden"></span>
             </div>
             
             <div class="col-md-6">
@@ -74,7 +74,7 @@
                 <label class="bmd-label-floating">Potencia</label>
                   <input id="power" name="power" type="number" step="0.01" class="form-control">
               </div>
-              <span id="power_error" class="text-danger" style="display : none"></span>
+              <span id="power_error" class="text-danger" style="visibility : hidden"></span>
             </div>
 
             <div class="col-md-6">
@@ -82,7 +82,7 @@
                 <label class="bmd-label-floating">Diámetro de Entrada</label>
                 <input name="inlet_diameter" id="inlet_diameter" type="number" step="0.01" class="form-control">
               </div>
-              <span id="inlet_diameter_error" class="text-danger" style="display : none"></span>
+              <span id="inlet_diameter_error" class="text-danger" style="visibility : hidden"></span>
             </div>
 
             <div class="col-md-6">
@@ -90,7 +90,7 @@
                 <label class="bmd-label-floating">Diámetro</label>
                 <input name="diameter" id="diameter" type="number" step="0.01" class="form-control">
               </div>
-              <span id="diameter_error" class="text-danger" style="display : none"></span>
+              <span id="diameter_error" class="text-danger" style="visibility : hidden"></span>
             </div>
             
             <div class="col-md-6">
@@ -98,7 +98,7 @@
                 <label class="bmd-label-floating">Alto</label>
                 <input name="height" id="height" type="number" step="0.01" class="form-control">
               </div>
-              <span id="height_error" class="text-danger" style="display : none"></span>
+              <span id="height_error" class="text-danger" style="visibility : hidden"></span>
             </div>
 
             <div class="col-md-6">
@@ -106,7 +106,7 @@
                 <label class="bmd-label-floating">Volumen</label>
                 <input name="volume" id="volume" type="number" step="0.01" class="form-control">
               </div>
-              <span id="volume_error" class="text-danger" style="display : none"></span>
+              <span id="volume_error" class="text-danger" style="visibility : hidden"></span>
             </div>
 
             <div class="col-md-6">
@@ -114,7 +114,7 @@
                 <label class="bmd-label-floating">Medidas</label>
                 <input name="measurements" id="measurements" class="form-control">
               </div>
-              <span id="measurements_error" class="text-danger" style="display : none"></span>
+              <span id="measurements_error" class="text-danger" style="visibility : hidden"></span>
             </div>    
 
             <div class="col-md-6">
@@ -122,7 +122,7 @@
                 <label class="bmd-label-floating">Flujo Máximo</label>
                  <input id="flow" name="flow" type="number" step="0.01" class="form-control" >
               </div>
-              <span id="flow_error" class="text-danger" style="display : none"></span>
+              <span id="flow_error" class="text-danger" style="visibility : hidden"></span>
             </div>
 
             <div class="col-md-6">
@@ -130,7 +130,7 @@
                 <label class="bmd-label-floating">Tamaño del bombillo</label>
                  <input id="light_bulb_size" name="light_bulb_size" type="number" step="0.01" class="form-control" >
               </div>
-              <span id="light_bulb_size_error" class="text-danger" style="display : none"></span>
+              <span id="light_bulb_size_error" class="text-danger" style="visibility : hidden"></span>
             </div>
 
             <div class="col-md-6">
@@ -138,7 +138,7 @@
                 <label class="bmd-label-floating">Tamaño del cuarzo</label>
                  <input id="quartz_size" name="quartz_size" type="number" step="0.01" class="form-control" >
               </div>
-              <span id="quartz_size_error" class="text-danger" style="display : none"></span>
+              <span id="quartz_size_error" class="text-danger" style="visibility : hidden"></span>
             </div>
 
             <div class="col-md-6">
@@ -151,7 +151,7 @@
                     {% endfor %}
                 </select>
               </div>
-              <span id="spare_part_error" class="text-danger" style="display : none"></span>
+              <span id="spare_part_error" class="text-danger" style="visibility : hidden"></span>
             </div>
 
           </div>
@@ -162,7 +162,7 @@
                 <label class="bmd-label-floating">Instrucciones</label>
                 <textarea id="instructions" name="instructions" class="form-control"></textarea>
               </div>
-              <span id="instructions_error" class="text-danger" style="display : none"></span>
+              <span id="instructions_error" class="text-danger" style="visibility : hidden"></span>
             </div>
           </div>
           
@@ -199,5 +199,5 @@
 
 {% endblock content %}
 {% block javascripts %}
-<script src="/static/assets/js/equipments/equipment_create.js"></script>
+<script src="/static/assets/js/equipments/equipments.js"></script>
 {% endblock javascripts %}
