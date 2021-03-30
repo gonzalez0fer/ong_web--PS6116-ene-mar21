@@ -14,28 +14,88 @@
             left: 50pt; width: 512pt; top: 772pt; height: 20pt;
         }
     }
+    tr, td {
+        vertical-align: middle;
+        text-align: center;
+        /*border: 0.5px solid black;*/
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
 </style>
 </head>
 
 <body>
     <!-- Content for Static Frame 'header_frame' -->
     <div id="header_content">
-    	<h3>Reporte Inventario de Agua</h3>
+        <img class="img" src="/static/assets/img/logo/Agua-Segura-Logo-Med.png"/>
+    	<h2>Reporte Inventario de Agua</h2>
     </div>
 
     <!-- Content for Static Frame 'footer_frame' -->
-    <div id="footer_content">(c) - page <pdf:pagenumber>
-        of <pdf:pagecount>
+    <div id="footer_content">
+        Página <pdf:pagenumber> de <pdf:pagecount>
     </div>
 
     <!-- HTML Content -->
-    <p> Total Ingresos: {{total_ingresos}}, Litros: {{total_litros_ingresos}} L, Promedio: {{prom_litros_ingresos}} L</p>
-    <p> Total Egresos: {{total_egresos}}, Litros: {{total_litros_egresos}} L, Promedio: {{prom_litros_egresos}} L</p>
+    <h3>Período de Operaciones</h3>
+    <p><strong>Desde: </strong>{{ desde }}</p>
+    <p><strong>Hasta: </strong>{{ hasta }}</p>
+    <hr>
     <br>
-    <p> Tasa de Cambio: {{tasa_cambio}} Bs </p>
     <br>
-    <p> Total Bs Ingresos: {{suma_ingresos}} Bs, Total $ Ingresos: ${{suma_ingresos_dolares}}</p>
-    <p> Total Bs Egresos: {{suma_egresos}} Bs, Total $ Egresos: ${{suma_egresos_dolares}}</p>
+    <h3>Operaciones (Litros)</h3>
+    <hr>
+    <table>
+        <thead>
+            <th>Tipo de Operación</th>
+            <th>Cantidad de Operaciones</th>
+            <th>Total de Litros (L)</th>
+            <th>Promedio de Litros (L)</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ingresos</td>
+                <td>{{ total_ingresos }}</td>
+                <td>{{ total_litros_ingresos }}</td>
+                <td>{{ prom_litros_ingresos }}</td>
+            </tr>
+            <tr>
+                <td>Egresos</td>
+                <td>{{ total_egresos }}</td>
+                <td>{{ total_litros_egresos }}</td>
+                <td>{{ prom_litros_egresos }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
     <br>
+    <br>
+    <h3>Operaciones (Plata)</h3>
+    <hr>
+    <table>
+        <thead>
+            <th>Tipo de Operación</th>
+            <th>Total en Bolívares (Bs.)</th>
+            <th>Total en Dólares ($)</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ingresos</td>
+                <td>{{ suma_ingresos }}</td>
+                <td>{{ suma_ingresos_dolares }}</td>
+            </tr>
+            <tr>
+                <td>Egresos</td>
+                <td>{{ suma_egresos }}</td>
+                <td>{{ suma_egresos_dolares }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <br>
+    <br>
+    <p><strong>Tasa de Cambio: </strong>{{ tasa_cambio }} Bs.</p>
+    <p><strong>Ganancia Neta: </strong>{{ ganancia_neta }} Bs.</p>
+
 </body>
 </html>

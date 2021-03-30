@@ -71,59 +71,54 @@
                         </thead>
                         <tbody>
                             {% for i in object_list %}
-                                    <tr>
+                                <tr>
+                                    <td>
+                                        {{ refectory_data.0.id }}00{{ i.id }}
+                                    </td>
+                                    {% if i.operation_type == "Ingreso"%}
                                         <td>
-                                            {{ refectory_data.0.id }}00{{ i.id }}
-                                        </td>
-                                        {% if i.operation_type == "Ingreso"%}
-                                        <td>
-                                            
-                                                {{ i.water_liters }}
+                                            {{ i.water_liters }}
                                         </td>
                                         <td>
                                             -
                                         </td>
-                                            {% endif %}
-                                            {% if i.operation_type == "Egreso"%}
+                                    {% endif %}
+                                    {% if i.operation_type == "Egreso"%}
                                         <td>
                                             -
                                         </td>
                                         <td>
-                                            
-                                                {{ i.water_liters }}
-                                            
+                                            {{ i.water_liters }}        
                                         </td>
-                                            {% endif %}
-                                        <td>
-                                            {{ i.operation_description }} 
-                                        </td>                                                                               
-                                        <td>
-                                            {{ i.water_amount }} - {{ i.water_amount_dollars }} 
-                                        </td>
-                                        <td>
-                                            {{ i.water_price_total }} - {{ i.water_price_total_dollars }}
-                                        </td>
-                                        <td>
-                                            {{ i.created_by }} 
-                                        </td>                                          
-                                        <td>
-                                            {{ i.created }}
-                                        </td> 
-                                        <td>
-                                            {% if user.is_superuser %}
-                                                <a  href="{% url 'dashboard:water_managements:water_management_update' tank_id i.id %}" >
-                                                    <button type="button" class="btn btn-info btn-sm" title="Editar">Editar</button>
-                                                </a>
-
-                                                <button type="button" class="btn btn-danger btn-sm" style="margin-left: 5px;" title="Eliminar" onclick="open_modal('{% url 'dashboard:water_managements:water_management_modal' i.id %}')">Eliminar</button>
-                                                
-                                            {% else %}
-                                                <a  href="{% url 'dashboard:water_managements:water_management_update_guest' i.id %}" >
-                                                    <button type="button" class="btn btn-info btn-sm" title="Editar">Editar</button>
-                                                </a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
+                                    {% endif %}
+                                    <td>
+                                        {{ i.operation_description }} 
+                                    </td>                                                                               
+                                    <td>
+                                        {{ i.water_amount }} - {{ i.water_amount_dollars }} 
+                                    </td>
+                                    <td>
+                                        {{ i.water_price_total }} - {{ i.water_price_total_dollars }}
+                                    </td>
+                                    <td>
+                                        {{ i.created_by }} 
+                                    </td>                                          
+                                    <td>
+                                        {{ i.created }}
+                                    </td> 
+                                    <td>
+                                        {% if user.is_superuser %}
+                                            <a  href="{% url 'dashboard:water_managements:water_management_update' tank_id i.id %}" >
+                                                <button type="button" class="btn btn-info btn-sm" title="Editar">Editar</button>
+                                            </a>
+                                            <button type="button" class="btn btn-danger btn-sm" style="margin-left: 5px;" title="Eliminar" onclick="open_modal('{% url 'dashboard:water_managements:water_management_modal' i.id %}')">Eliminar</button>
+                                        {% else %}
+                                            <a  href="{% url 'dashboard:water_managements:water_management_update_guest' i.id %}" >
+                                                <button type="button" class="btn btn-info btn-sm" title="Editar">Editar</button>
+                                            </a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
                             {% endfor %}  
                         </tbody>
                       </table>

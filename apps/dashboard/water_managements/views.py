@@ -540,7 +540,7 @@ class DownloadPDF(View):
 
     def get(self, request, *args, **kwargs):
 		
-        refectory = Refectory.objects.get(refectory_id=self.kwargs['tank_id'])
+        refectory = Refectory.objects.get(id=self.kwargs['tank_id'])
 
         from_date = self.request.GET.get("from_date")
         to_date = self.request.GET.get("to_date")
@@ -587,6 +587,6 @@ class DownloadPDF(View):
 
         response = HttpResponse(pdf, content_type='application/pdf')
         filename = "Reporte Agua.pdf" #TODO nombre dinamico
-        content = "attachment; filename='%s'" %(filename)
+        content = "attachment; filename=%s" %(filename)
         response['Content-Disposition'] = content
         return response

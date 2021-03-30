@@ -5,7 +5,7 @@
         <div class="modal-header">
             <h2>Generar Reporte</h2>
         </div>
-        <form  action="{% url 'dashboard:water_managements:water_management_pdf' tank_id %}" method="GET">
+        <form action="{% url 'dashboard:water_managements:water_management_pdf' tank_id %}" method="GET">
             <div class="modal-body">
                 <div class="form-group">
                   <label>Seleccione el rango de fechas del reporte:</label>
@@ -13,12 +13,10 @@
                   <input type="date" name="to_date">
                 </div>
             </div>
-          
             <div class="modal-footer">
                 <button class="btn btn-default pull-left" type="button" data-dismiss="modal">Cancelar</button>
                 <button class="submit-btn btn btn-primary" type="submit">Generar Reporte</button>
             </div>
-
         </form>  
     </div>
 </div>
