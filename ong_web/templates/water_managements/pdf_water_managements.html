@@ -1,59 +1,50 @@
 <head>
     <style>
         @page {
-            size: a4 portrait;
-            @frame header_frame {           /* Static Frame */
-                -pdf-frame-content: header_content;
-                left: 50pt; width: 512pt; top: 50pt; height: 40pt;
-            }
-            @frame content_frame {          /* Content Frame */
-                left: 50pt; width: 512pt; top: 90pt; height: 632pt;
-            }
-            @frame footer_frame {           /* Another static Frame */
-                -pdf-frame-content: footer_content;
-                left: 50pt; width: 512pt; top: 772pt; height: 20pt;
+            background-image: url("static\assets\img\Agua-Segura-Pdf-Template.png");
+            @frame content_frame {
+                top: 80pt;
+                left: 50pt;
+                width: 512pt;
             }
         }
         tr, td {
             vertical-align: middle;
             text-align: center;
-            /*border: 0.5px solid black;*/
             padding-top: 3px;
             padding-bottom: 3px;
+        }
+        #title {
+            padding: 0;
+            margin: 0;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .info {
+            margin-left: 50px;
         }
     </style>
 </head>
 
 <body>
-    <!-- Content for Static Frame 'header_frame' -->
-   
-    <div id="header_content">
-        <img class="img" src="static\assets\img\logo\Agua-Segura-Logo-Med.png"/>
-    </div>
-
-    <!-- Content for Static Frame 'footer_frame' -->
-    <div id="footer_content">
-        Página <pdf:pagenumber> de <pdf:pagecount>
-    </div>
-
-    <!-- HTML Content -->
+    <br>
+    <br>
     <div id="title">
         <h1>Reporte Inventario de Agua</h1>
     </div>
-
+    <br>
     <div class="row">
         <div class="col-md-6">
-            <h3>Datos del Comedor</h3>
-            <p><strong>Nombre: </strong>{{ nombre }}</p>
-            <p><strong>Dirección: </strong>{{ direccion }}</p>
+            <h3>Datos del Punto de Distribución</h3>
+            <p class="info"><strong>Nombre: </strong>{{ nombre }}</p>
+            <p class="info"><strong>Dirección: </strong>{{ direccion }}</p>
         </div>
         <div class="col-md-6">
             <h3>Período de Operaciones</h3>
-            <p><strong>Desde: </strong>{{ desde }}</p>
-            <p><strong>Hasta: </strong>{{ hasta }}</p>
+            <p class="info"><strong>Desde: </strong>{{ desde }}</p>
+            <p class="info"><strong>Hasta: </strong>{{ hasta }}</p>
         </div>
     </div>
-    
     <hr>
     <br>
     <br>
@@ -84,7 +75,7 @@
     <hr>
     <br>
     <br>
-    <h3>Operaciones (Bs/$)</h3>
+    <h3>Operaciones (Bs./$)</h3>
     <p><strong>Tasa de Cambio: </strong>{{ tasa_cambio }} Bs.</p>
     <hr>
     <table>
@@ -110,6 +101,5 @@
     <br>
     <br>
     <h3>Ganancia Neta: {{ ganancia_neta }} Bs.</h3>
-
 </body>
 </html>
