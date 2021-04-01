@@ -23,9 +23,8 @@
     <div class="modal-content">
         <div class="modal-header">
             <h2>Generar Reporte</h2>
-            <button id="prueba">PRUEBA</button>
         </div>
-        <form action="{% url 'dashboard:water_managements:water_management_pdf' tank_id %}" method="GET">
+        <form onsubmit="return validate()" action="{% url 'dashboard:water_managements:water_management_pdf' tank_id %}" method="GET">
             <div class="modal-body">
                 <div class="form-group">
                 <label>Seleccione el rango de fechas del reporte:</label>
@@ -46,7 +45,7 @@
                         </div>
                     </div>
                     <div class="row" id="error">
-                        <span id="date_error" class="text-danger" style="visibility : hidden"></span>
+                        <span id="interval_error" class="text-danger" style="visibility : hidden"></span>
                     </div>                
                 </div>
             </div>
