@@ -562,7 +562,7 @@ class DownloadPDF(View):
         suma_egresos_dolares = round(suma_egresos['water_price_total__sum']/exchange_rate,2)
 
         ganancia_neta = suma_egresos['water_price_total__sum'] - suma_ingresos['water_price_total__sum']
-        ganancia_neta_dolares = round(ganacia_neta/exchange_rate,2)
+        ganancia_neta_dolares = round(ganancia_neta/exchange_rate,2)
 
         data = {
             "nombre": refectory.name,
