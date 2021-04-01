@@ -561,6 +561,9 @@ class DownloadPDF(View):
         suma_egresos = total_egresos.aggregate(Sum('water_price_total'))
         suma_egresos_dolares = round(suma_egresos['water_price_total__sum']/exchange_rate,2)
 
+        ganancia_neta = suma_egresos['water_price_total__sum'] - suma_ingresos['water_price_total__sum']
+        ganancia_neta_dolares = round(ganacia_neta/exchange_rate,2)
+
         data = {
             "nombre": refectory.name,
             "direccion": refectory.address,
@@ -579,8 +582,10 @@ class DownloadPDF(View):
             "suma_ingresos_dolares": suma_ingresos_dolares,
             "suma_egresos": suma_egresos['water_price_total__sum'],
             "suma_egresos_dolares": suma_egresos_dolares,
-            "ganancia_neta": suma_egresos['water_price_total__sum'] - suma_ingresos['water_price_total__sum'],
+            "ganancia_neta": ganancia_neta,
+            "ganancia_neta_dolares": ganancia_neta_dolares,
             "diferencial_tanque": total_litros_ingresos['water_liters__sum'] - total_litros_egresos['water_liters__sum'],
+            "diferencial_tanque_promedio": prom_litros_ingresos['water_liters__avg'] - prom_litros_egresos['water_liters__avg'],
         }
 
         pdf = render_pdf_view('water_managements/pdf_water_managements.html', data)
