@@ -1,16 +1,53 @@
 {% load widget_tweaks %}
 
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+    <style>
+        p {
+            margin: 0 15px 0 0;
+            align-self: center;
+        }
+        #date {
+            padding: 1rem;
+        }
+        #from, #to {
+            margin-bottom: 15px;
+        }
+        #error {
+            justify-content: center;
+        }
+    </style>
+{% endblock stylesheets %}
+
 <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
             <h2>Generar Reporte</h2>
+            <button id="prueba">PRUEBA</button>
         </div>
         <form action="{% url 'dashboard:water_managements:water_management_pdf' tank_id %}" method="GET">
             <div class="modal-body">
                 <div class="form-group">
-                  <label>Seleccione el rango de fechas del reporte:</label>
-                  <input type="date" name="from_date">
-                  <input type="date" name="to_date">
+                <label>Seleccione el rango de fechas del reporte:</label>
+                    <div class="row" id="date">
+                        <div class="col">
+                            <div class="row" id="from">
+                                <p>Desde: </p>
+                                <input id="from_date" type="date" name="from_date">
+                            </div>
+                            <span id="from_error" class="text-danger" style="visibility : hidden"></span>
+                        </div>
+                        <div class="col">
+                            <div class="row" id="to">
+                                <p>Hasta: </p>
+                                <input id="to_date" type="date" name="to_date">
+                            </div>
+                            <span id="to_error" class="text-danger" style="visibility : hidden"></span>
+                        </div>
+                    </div>
+                    <div class="row" id="error">
+                        <span id="date_error" class="text-danger" style="visibility : hidden"></span>
+                    </div>                
                 </div>
             </div>
             <div class="modal-footer">
@@ -20,3 +57,8 @@
         </form>  
     </div>
 </div>
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+    <script src="/static/assets/js/report/report.js"></script>
+{% endblock javascripts %}

@@ -70,6 +70,12 @@
                 <td>{{ total_litros_egresos }}</td>
                 <td>{{ prom_litros_egresos }}</td>
             </tr>
+            <tr>
+                <td>Total</td>
+                <td>{{ total_operaciones }}</td>
+                <td>{{ diferencial_tanque }}</td>
+                <td>{{ diferencial_tanque_promedio }}</td>
+            </tr>
         </tbody>
     </table>
     <hr>
@@ -95,11 +101,13 @@
                 <td>{{ suma_egresos }}</td>
                 <td>{{ suma_egresos_dolares }}</td>
             </tr>
+            <tr>
+                <td>Ganancia Neta</td>
+                <td>{{ ganancia_neta }}</td>
+                <td>{{ ganancia_neta_dolares }}</td>
+            </tr>
         </tbody>
     </table>
     <hr>
-    <br>
-    <br>
-    <h3>Ganancia Neta: {{ ganancia_neta }} Bs.</h3>
 </body>
 </html>
