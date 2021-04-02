@@ -19,8 +19,8 @@ from apps.main.users.models import CustomUser
 from apps.main.water_tanks.models import WaterTank
 from apps.main.water_managements.models import WaterManagement
 
-
 from apps.main.utils import get_exchange_rate, render_pdf_view
+from datetime import datetime, timedelta
 
 @method_decorator([login_required, superuser_required], name='dispatch')
 class WaterManagementList(ListView):
@@ -544,54 +544,156 @@ class DownloadPDF(View):
 
         from_date = self.request.GET.get("from_date")
         to_date = self.request.GET.get("to_date")
-        #TODO validaciones rangos de fecha
-        total_ingresos = WaterManagement.objects.filter(cupboard_id=self.kwargs['tank_id'],created__range=(from_date,to_date),operation_type="Ingreso")
-        total_egresos = WaterManagement.objects.filter(cupboard_id=self.kwargs['tank_id'],created__range=(from_date,to_date),operation_type="Egreso")
 
-        total_litros_ingresos = total_ingresos.aggregate(Sum('water_liters'))
-        total_litros_egresos = total_egresos.aggregate(Sum('water_liters'))
+        new_from_date =  datetime.strptime(from_date, "%Y-%m-%d")
+        new_from_date_str = datetime.strftime(new_from_date, "%d-%m-%Y")
+         
+        new_to_date =  datetime.strptime(to_date, "%Y-%m-%d")
+        #Sumar 1 a to_date porque el query se realiza hasta las 00:00 del dia seleccionado
+        new_to_date_1 = new_to_date + timedelta(days=1)
+        new_to_date_1_str = datetime.strftime(new_to_date_1, "%Y-%m-%d")
+        new_to_date_str = datetime.strftime(new_to_date, "%d-%m-%Y")
 
-        prom_litros_ingresos = total_ingresos.aggregate(Avg('water_liters'))
-        prom_litros_egresos = total_egresos.aggregate(Avg('water_liters'))
+        total_ingresos = WaterManagement.objects.filter(cupboard_id=self.kwargs['tank_id'],created__range=(from_date,new_to_date_1_str),operation_type="Ingreso")
+        total_egresos = WaterManagement.objects.filter(cupboard_id=self.kwargs['tank_id'],created__range=(from_date,new_to_date_1_str),operation_type="Egreso")
 
-        exchange_rate = get_exchange_rate()
-        suma_ingresos = total_ingresos.aggregate(Sum('water_price_total'))
-        suma_ingresos_dolares = round(suma_ingresos['water_price_total__sum']/exchange_rate,2)
+        if total_ingresos and total_egresos:
+            total_litros_ingresos = total_ingresos.aggregate(Sum('water_liters'))
+            total_litros_egresos = total_egresos.aggregate(Sum('water_liters'))
 
-        suma_egresos = total_egresos.aggregate(Sum('water_price_total'))
-        suma_egresos_dolares = round(suma_egresos['water_price_total__sum']/exchange_rate,2)
+            prom_litros_ingresos = total_ingresos.aggregate(Avg('water_liters'))
+            prom_litros_egresos = total_egresos.aggregate(Avg('water_liters'))
 
-        ganancia_neta = suma_egresos['water_price_total__sum'] - suma_ingresos['water_price_total__sum']
-        ganancia_neta_dolares = round(ganancia_neta/exchange_rate,2)
+            exchange_rate = get_exchange_rate()
+            suma_ingresos = total_ingresos.aggregate(Sum('water_price_total'))
+            suma_ingresos_dolares = round(suma_ingresos['water_price_total__sum']/exchange_rate,2)
 
-        data = {
-            "nombre": refectory.name,
-            "direccion": refectory.address,
-            "precio_venta": refectory.capacity,
-            "desde": from_date,
-            "hasta": to_date,
-            "total_ingresos": len(total_ingresos),
-            "total_egresos": len(total_egresos),
-            "total_operaciones": len(total_ingresos) + len(total_egresos),
-            "total_litros_ingresos": total_litros_ingresos['water_liters__sum'],
-            "total_litros_egresos": total_litros_egresos['water_liters__sum'],
-            "prom_litros_ingresos": prom_litros_ingresos['water_liters__avg'],
-            "prom_litros_egresos": prom_litros_egresos['water_liters__avg'],
-            "tasa_cambio": exchange_rate,
-            "suma_ingresos": suma_ingresos['water_price_total__sum'],
-            "suma_ingresos_dolares": suma_ingresos_dolares,
-            "suma_egresos": suma_egresos['water_price_total__sum'],
-            "suma_egresos_dolares": suma_egresos_dolares,
-            "ganancia_neta": ganancia_neta,
-            "ganancia_neta_dolares": ganancia_neta_dolares,
-            "diferencial_tanque": total_litros_ingresos['water_liters__sum'] - total_litros_egresos['water_liters__sum'],
-            "diferencial_tanque_promedio": prom_litros_ingresos['water_liters__avg'] - prom_litros_egresos['water_liters__avg'],
-        }
+            suma_egresos = total_egresos.aggregate(Sum('water_price_total'))
+            suma_egresos_dolares = round(suma_egresos['water_price_total__sum']/exchange_rate,2)
 
-        pdf = render_pdf_view('water_managements/pdf_water_managements.html', data)
+            ganancia_neta = suma_egresos['water_price_total__sum'] - suma_ingresos['water_price_total__sum']
+            ganancia_neta_dolares = round(ganancia_neta/exchange_rate,2)
 
-        response = HttpResponse(pdf, content_type='application/pdf')
-        filename = "Reporte Agua.pdf" #TODO nombre dinamico
-        content = "attachment; filename=%s" %(filename)
-        response['Content-Disposition'] = content
-        return response
+            data = {
+                "nombre": refectory.name,
+                "direccion": refectory.address,
+                "precio_venta": refectory.capacity,
+                "desde": new_from_date_str,
+                "hasta": new_to_date_str,
+                "total_ingresos": len(total_ingresos),
+                "total_egresos": len(total_egresos),
+                "total_operaciones": len(total_ingresos) + len(total_egresos),
+                "total_litros_ingresos": total_litros_ingresos['water_liters__sum'],
+                "total_litros_egresos": total_litros_egresos['water_liters__sum'],
+                "prom_litros_ingresos": prom_litros_ingresos['water_liters__avg'],
+                "prom_litros_egresos": prom_litros_egresos['water_liters__avg'],
+                "tasa_cambio": exchange_rate,
+                "suma_ingresos": suma_ingresos['water_price_total__sum'],
+                "suma_ingresos_dolares": suma_ingresos_dolares,
+                "suma_egresos": suma_egresos['water_price_total__sum'],
+                "suma_egresos_dolares": suma_egresos_dolares,
+                "ganancia_neta": ganancia_neta,
+                "ganancia_neta_dolares": ganancia_neta_dolares,
+                "diferencial_tanque": total_litros_ingresos['water_liters__sum'] - total_litros_egresos['water_liters__sum'],
+                "diferencial_tanque_promedio": prom_litros_ingresos['water_liters__avg'] - prom_litros_egresos['water_liters__avg'],
+            }
+
+            pdf = render_pdf_view('water_managements/pdf_water_managements.html', data)
+
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "Reporte Agua.pdf" #TODO nombre dinamico
+            content = "attachment; filename=%s" %(filename)
+            response['Content-Disposition'] = content
+            return response
+
+        else:
+            if total_ingresos:
+                total_litros_ingresos = total_ingresos.aggregate(Sum('water_liters'))
+                prom_litros_ingresos = total_ingresos.aggregate(Avg('water_liters'))
+
+                exchange_rate = get_exchange_rate()
+                suma_ingresos = total_ingresos.aggregate(Sum('water_price_total'))
+                suma_ingresos_dolares = round(suma_ingresos['water_price_total__sum']/exchange_rate,2)
+
+                ganancia_neta = 0-suma_ingresos['water_price_total__sum']
+                ganancia_neta_dolares = round(ganancia_neta/exchange_rate,2)
+
+                data = {
+                    "nombre": refectory.name,
+                    "direccion": refectory.address,
+                    "precio_venta": refectory.capacity,
+                    "desde": new_from_date_str,
+                    "hasta": new_to_date_str,
+                    "total_ingresos": len(total_ingresos),
+                    "total_egresos": 0,
+                    "total_operaciones": len(total_ingresos),
+                    "total_litros_ingresos": total_litros_ingresos['water_liters__sum'],
+                    "total_litros_egresos": 0,
+                    "prom_litros_ingresos": prom_litros_ingresos['water_liters__avg'],
+                    "prom_litros_egresos": 0,
+                    "tasa_cambio": exchange_rate,
+                    "suma_ingresos": suma_ingresos['water_price_total__sum'],
+                    "suma_ingresos_dolares": suma_ingresos_dolares,
+                    "suma_egresos": 0,
+                    "suma_egresos_dolares": 0,
+                    "ganancia_neta": ganancia_neta,
+                    "ganancia_neta_dolares": ganancia_neta_dolares,
+                    "diferencial_tanque": total_litros_ingresos['water_liters__sum'],
+                    "diferencial_tanque_promedio": prom_litros_ingresos['water_liters__avg'],
+                }
+
+                pdf = render_pdf_view('water_managements/pdf_water_managements.html', data)
+
+                response = HttpResponse(pdf, content_type='application/pdf')
+                filename = "Reporte Agua.pdf" #TODO nombre dinamico
+                content = "attachment; filename=%s" %(filename)
+                response['Content-Disposition'] = content
+                return response
+
+            elif total_egresos:
+                total_litros_egresos = total_egresos.aggregate(Sum('water_liters'))
+
+                prom_litros_egresos = total_egresos.aggregate(Avg('water_liters'))
+
+                exchange_rate = get_exchange_rate()
+                suma_egresos = total_egresos.aggregate(Sum('water_price_total'))
+                suma_egresos_dolares = round(suma_egresos['water_price_total__sum']/exchange_rate,2)
+
+                ganancia_neta = suma_egresos['water_price_total__sum']
+                ganancia_neta_dolares = round(ganancia_neta/exchange_rate,2)
+
+                data = {
+                    "nombre": refectory.name,
+                    "direccion": refectory.address,
+                    "precio_venta": refectory.capacity,
+                    "desde": new_from_date_str,
+                    "hasta": new_to_date_str,
+                    "total_ingresos": 0,
+                    "total_egresos": len(total_egresos),
+                    "total_operaciones": len(total_egresos),
+                    "total_litros_ingresos": 0,
+                    "total_litros_egresos": total_litros_egresos['water_liters__sum'],
+                    "prom_litros_ingresos": 0,
+                    "prom_litros_egresos": prom_litros_egresos['water_liters__avg'],
+                    "tasa_cambio": exchange_rate,
+                    "suma_ingresos": 0,
+                    "suma_ingresos_dolares": 0,
+                    "suma_egresos": suma_egresos['water_price_total__sum'],
+                    "suma_egresos_dolares": suma_egresos_dolares,
+                    "ganancia_neta": ganancia_neta,
+                    "ganancia_neta_dolares": ganancia_neta_dolares,
+                    "diferencial_tanque": 0 - total_litros_egresos['water_liters__sum'],
+                    "diferencial_tanque_promedio": 0 - prom_litros_egresos['water_liters__avg'],
+                }
+
+                pdf = render_pdf_view('water_managements/pdf_water_managements.html', data)
+
+                response = HttpResponse(pdf, content_type='application/pdf')
+                filename = "Reporte Agua.pdf" #TODO nombre dinamico
+                content = "attachment; filename=%s" %(filename)
+                response['Content-Disposition'] = content
+                return response
+            else:
+                messages.error(self.request, 'No existen operaciones en el periodo seleccionado')
+                return HttpResponseRedirect("/dashboard/water_managements/"+str(self.kwargs['tank_id']))
+
