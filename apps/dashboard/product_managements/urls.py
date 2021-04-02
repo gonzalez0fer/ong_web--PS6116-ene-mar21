@@ -51,7 +51,19 @@ urlpatterns = [
         '<int:refectory_id>/<int:pk>/delete', 
         views.DeleteProductManagementOperation, 
         name='delete'
-        ),      
+        ),
+
+    path(
+        '<int:refectory_id>/report',
+        views.ModalTemplateReport.as_view(),
+        name='product_management_report_modal'
+    ),
+
+    path(
+        '<int:refectory_id>/pdf',
+        views.DownloadPDF.as_view(),
+        name='product_management_pdf'
+    ),      
     
 
 ]
