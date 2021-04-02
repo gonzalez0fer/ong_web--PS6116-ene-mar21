@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.urls import reverse_lazy
-from django.views.generic import ListView,CreateView,UpdateView,TemplateView
+from django.views.generic import ListView,CreateView,UpdateView,TemplateView,View
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
+from django.db.models import Avg, Sum
 
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -13,7 +14,8 @@ from apps.main.refectories.models import Refectory
 from apps.main.cupboards.models import Cupboard
 from apps.main.cupboard_managements.models import CupboardManagement
 
-from apps.main.utils import get_exchange_rate
+from apps.main.utils import get_exchange_rate, render_pdf_view
+from datetime import datetime, timedelta
 
 @method_decorator([login_required, superuser_required], name='dispatch')
 class CupboardManagementListView(ListView):
@@ -453,3 +455,71 @@ def DeleteCupboardManagementOperation(request, refectory_id, pk):
     product_op.delete()
     messages.success(request, 'Operación eliminada exitosamente')
     return HttpResponseRedirect("/dashboard/cupboard-management/"+str(refectory_id))
+
+class ModalTemplateReport(TemplateView):
+    template_name = "cupboard_managements/report_modal.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['refectory_id'] = self.kwargs['refectory_id']
+
+        return context
+
+class DownloadPDF(View):
+
+    def get(self, request, *args, **kwargs):
+		
+        refectory = Refectory.objects.get(id=self.kwargs['refectory_id'])
+
+        from_date = self.request.GET.get("from_date")
+        to_date = self.request.GET.get("to_date")
+
+        new_from_date =  datetime.strptime(from_date, "%Y-%m-%d")
+        new_from_date_str = datetime.strftime(new_from_date, "%d-%m-%Y")
+         
+        new_to_date =  datetime.strptime(to_date, "%Y-%m-%d")
+        #Sumar 1 a to_date porque el query se realiza hasta las 00:00 del dia seleccionado
+        new_to_date_1 = new_to_date + timedelta(days=1)
+        new_to_date_1_str = datetime.strftime(new_to_date_1, "%Y-%m-%d")
+        new_to_date_str = datetime.strftime(new_to_date, "%d-%m-%Y")
+
+        query = Cupboard.objects.filter(refectory_id=self.kwargs['refectory_id'])
+        if not query:
+            messages.error(self.request, 'No existen suministros registrados para generar reporte')
+            return HttpResponseRedirect("/dashboard/cupboard-management/"+str(self.kwargs['refectory_id']))
+        
+        count = 0
+        total_gastos = 0
+
+        for i in query:
+            operations = CupboardManagement.objects.filter(cupboard_id=i.id, created__range=(from_date,new_to_date_1_str), operation_type="Ingreso")
+            if operations:
+                count += len(operations)
+                suma_gastos = operations.aggregate(Sum('product_total_amount'))
+                total_gastos += suma_gastos['product_total_amount__sum']
+            else:
+                pass
+
+        exchange_rate = get_exchange_rate()
+        total_gastos_dolares = round(total_gastos/exchange_rate,2)
+
+        data = {
+            "nombre": refectory.name,
+            "direccion": refectory.address,
+            "desde": new_from_date_str,
+            "hasta": new_to_date_str,
+            "lista_productos": query,
+            "total_operaciones": count,
+            "total_gastos": total_gastos,
+            "total_gastos_dolares": total_gastos_dolares,
+            "tasa_cambio": exchange_rate,
+        }
+
+        pdf = render_pdf_view('cupboard_managements/pdf_cupboard_management.html', data)
+
+        response = HttpResponse(pdf, content_type='application/pdf')
+        filename = "Reporte Alimentos.pdf" #TODO nombre dinamico
+        content = "attachment; filename=%s" %(filename)
+        response['Content-Disposition'] = content
+        return response

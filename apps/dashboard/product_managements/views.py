@@ -532,7 +532,7 @@ class DownloadPDF(View):
         for i in query:
             operations = ProductManagement.objects.filter(product_cod=i.id, created__range=(from_date,new_to_date_1_str), operation_type="Ingreso")
             if operations:
-                count += 1
+                count += len(operations)
                 suma_gastos = operations.aggregate(Sum('product_total_amount'))
                 total_gastos += suma_gastos['product_total_amount__sum']
             else:

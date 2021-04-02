@@ -53,4 +53,16 @@ urlpatterns = [
         name='delete'
         ),
 
+    path(
+        '<int:refectory_id>/report',
+        views.ModalTemplateReport.as_view(),
+        name='cupboard_management_report_modal'
+    ),
+
+    path(
+        '<int:refectory_id>/pdf',
+        views.DownloadPDF.as_view(),
+        name='cupboard_management_pdf'
+    ),      
+
 ]

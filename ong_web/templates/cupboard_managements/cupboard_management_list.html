@@ -135,6 +135,7 @@
                             <a href="{% url 'dashboard:cupboard-management:create' refectory_data.0.id 1 %}">
                                 <button type="button" class="btn btn-default action">Registrar Egreso</button>
                             </a>
+                            <button type="button" class="btn btn-default action" onclick="open_modal('{% url 'dashboard:cupboard-management:cupboard_management_report_modal' refectory_data.0.id %}')">Reporte</button>
                         {% else %}
                             <a href="{% url 'dashboard:cupboard-management:create_guest' 0 %}">
                                 <button type="button" class="btn btn-default action">Registrar Ingreso</button>
