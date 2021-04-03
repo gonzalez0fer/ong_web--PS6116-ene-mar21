@@ -1,0 +1,67 @@
+<head>
+    <style>
+        @page {
+            background-image: url("static\assets\img\Agua-Segura-Pdf-Template.png");
+            @frame content_frame {
+                top: 80pt;
+                left: 50pt;
+                width: 512pt;
+            }
+        }
+        tr, td {
+            vertical-align: middle;
+            text-align: center;
+            padding-top: 3px;
+            padding-bottom: 3px;
+        }
+        #title {
+            padding: 0;
+            margin: 0;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .info {
+            margin-left: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <br>
+    <br>
+    <div id="title">
+        <h1>Reporte Inventario de Equipos</h1>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Datos del Punto de Distribución</h3>
+            <p class="info"><strong>Nombre: </strong>{{ nombre }}</p>
+            <p class="info"><strong>Dirección: </strong>{{ direccion }}</p>
+        </div>
+        <div class="col-md-6">
+            <h3>Período de Operaciones</h3>
+            <p class="info"><strong>Desde: </strong>{{ desde }}</p>
+            <p class="info"><strong>Hasta: </strong>{{ hasta }}</p>
+        </div>
+    </div>
+    <hr>
+    <br>
+    <br>
+    <h3>Mantenimientos Realizados</h3>
+    <hr>
+    <table>
+        <thead>
+            <th>Total de Operaciones</th>
+            <th>Número de Equipos</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ total_operaciones }}</td>
+                <td>{{ numero_equipos }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+</body>
+</html>

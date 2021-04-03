@@ -1,9 +1,10 @@
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.urls import reverse_lazy
-from django.views.generic import ListView, TemplateView, DetailView
+from django.views.generic import ListView, TemplateView, DetailView, View
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
+from django.db.models import Avg, Sum
 
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -12,7 +13,11 @@ from apps.main.users.decorators import superuser_required
 from apps.main.refectories.models import Refectory
 from apps.main.equipments.models import Equipment
 from apps.main.products.models import Product
+from apps.main.maintenance.models import Maintenance
 from .forms import EquipmentForm
+
+from apps.main.utils import render_pdf_view
+from datetime import datetime, timedelta
 
 @method_decorator([login_required, superuser_required], name='dispatch')
 class EquipmentsListView(ListView):
@@ -209,3 +214,69 @@ class EquipmentDeleteView(DeleteView):
             'id' : self.kwargs['refectory_id'],
         }
         return context
+
+class ModalTemplateReport(TemplateView):
+    template_name = "equipments/report_modal.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['refectory_id'] = self.kwargs['refectory_id']
+
+        return context
+
+class DownloadPDF(View):
+
+    def get(self, request, *args, **kwargs):
+		
+        refectory = Refectory.objects.get(id=self.kwargs['refectory_id'])
+
+        from_date = self.request.GET.get("from_date")
+        to_date = self.request.GET.get("to_date")
+
+        new_from_date =  datetime.strptime(from_date, "%Y-%m-%d")
+        new_from_date_str = datetime.strftime(new_from_date, "%d-%m-%Y")
+         
+        new_to_date =  datetime.strptime(to_date, "%Y-%m-%d")
+        #Sumar 1 a to_date porque el query se realiza hasta las 00:00 del dia seleccionado
+        new_to_date_1 = new_to_date + timedelta(days=1)
+        new_to_date_1_str = datetime.strftime(new_to_date_1, "%Y-%m-%d")
+        new_to_date_str = datetime.strftime(new_to_date, "%d-%m-%Y")
+
+        query = Equipment.objects.filter(refectory_id=self.kwargs['refectory_id'])
+        if not query:
+            messages.error(self.request, 'No existen equipos registrados para generar reporte')
+            return HttpResponseRedirect("/dashboard/equipments/"+str(self.kwargs['refectory_id']))
+        
+        count = 0
+        equipments_maintenance = {}
+
+        for i in query:
+            operations = Maintenance.objects.filter(equipment_id=i.id, created__range=(from_date,new_to_date_1_str))
+            if operations:
+                count += len(operations)
+                equipments_maintenance[i.name] = len(operations)
+            else:
+                pass
+
+        if count == 0:
+            messages.error(self.request, 'No existen mantenimientos en el periodo seleccionado')
+            return HttpResponseRedirect("/dashboard/equipments/"+str(self.kwargs['refectory_id']))
+
+        data = {
+            "nombre": refectory.name,
+            "direccion": refectory.address,
+            "desde": new_from_date_str,
+            "hasta": new_to_date_str,
+            "mantenimientos": equipments_maintenance,
+            "total_operaciones": count,
+            "numero_equipos": len(query),
+        }
+
+        pdf = render_pdf_view('equipments/pdf_equipments.html', data)
+
+        response = HttpResponse(pdf, content_type='application/pdf')
+        filename = "Reporte Equipos.pdf" #TODO nombre dinamico
+        content = "attachment; filename=%s" %(filename)
+        response['Content-Disposition'] = content
+        return response

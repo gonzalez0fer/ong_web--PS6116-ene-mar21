@@ -47,4 +47,16 @@ urlpatterns = [
         name='delete_equipments'
         ),
 
+    path(
+        '<int:refectory_id>/report',
+        views.ModalTemplateReport.as_view(),
+        name='equipments_report_modal'
+    ),
+
+    path(
+        '<int:refectory_id>/pdf',
+        views.DownloadPDF.as_view(),
+        name='equipments_pdf'
+    ),
+
 ]

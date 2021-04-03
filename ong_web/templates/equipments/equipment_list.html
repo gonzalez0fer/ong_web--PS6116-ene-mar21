@@ -129,6 +129,7 @@
               <a  href="{% url 'dashboard:equipments:create_equipments' refectory_data.0.id %}">
                 <button type="button" class="btn btn-warning">Agregar Equipo</button>
               </a>
+                <button type="button" class="btn btn-default action" onclick="open_modal('{% url 'dashboard:equipments:equipments_report_modal' refectory_data.0.id %}')">Reporte</button>
               {% endif %}
             </div> 
     </div>
