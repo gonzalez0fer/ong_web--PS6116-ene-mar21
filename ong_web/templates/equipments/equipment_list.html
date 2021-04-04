@@ -3,7 +3,15 @@
 {% block title %} UI Tables {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+  <style>
+    .bttn-row{
+      text-align:center;
+      margin-left:-20px;
+      margin-right:-20px;
+      }
+  </style>
+{% endblock stylesheets %}
 
 {% block content %}
 
@@ -78,32 +86,30 @@
                       <a href="{% url 'dashboard:equipments:detail_equipments_guest' equipment_object.id %}">
                         <button type="button" class="btn btn-info btn-sm">Detalles</button>
                       </a>
-
-                      
                       {% endif %}
                     </td>
                   </tr>
                 {% endfor %}
-
                 </tbody>
               </table>
             </div>
           </div>
         </div>
-    </br>
-</br>
     {% if user.is_superuser %}
-    <p style="float: left; margin-left: 50px;">
-      <a  href="{% url 'dashboard:maintenance:refectories_maintenance_list' %}">
-        <button type="button" class="btn btn-default">Regresar</button>
-      </a>
-    </p>
+      <p style="float: left; margin-left: 50px;">
+        <a  href="{% url 'dashboard:maintenance:refectories_maintenance_list' %}">
+          <button type="button" class="btn btn-default">Regresar</button>
+        </a>
+      </p>
+      <p class="bttn-row">
+        <button type="button" class="btn btn-default action" onclick="open_modal('{% url 'dashboard:equipments:equipments_report_modal' refectory_data.0.id %}')">Reporte</button>
+      </p>
     {% else %}
-    <p style="float: left; margin-left: 50px;">
-      <a  href="/">
-        <button type="button" class="btn btn-default">Regresar</button>
-      </a>
-    </p>
+      <p style="float: left; margin-left: 50px;">
+        <a  href="/">
+          <button type="button" class="btn btn-default">Regresar</button>
+        </a>
+      </p>
     {% endif %}
 
       </div>
@@ -111,29 +117,28 @@
 </br>
 
 <div class="col-md-3">
-    <div class="card card-profile" >
-        <div class="card-avatar" style="max-width: 120px; max-height: 120px;">
-            <a href="">
-              <img class="img" src="/static/assets/img/flats/maintainance.png" />
-            </a>
-          </div>
-            <div class="card-body">
-              <h4 class="card-title" style="padding-bottom: 10px;">
-                Punto de distribución: 
-                <b>{{refectory_data.0.refectory_name}}</b>
-                </br>
-                Direccion: 
-                <b>{{refectory_data.0.refectory_address}}</b>
-              </h4>
-              {% if user.is_superuser %}
-              <a  href="{% url 'dashboard:equipments:create_equipments' refectory_data.0.id %}">
-                <button type="button" class="btn btn-warning">Agregar Equipo</button>
-              </a>
-                <button type="button" class="btn btn-default action" onclick="open_modal('{% url 'dashboard:equipments:equipments_report_modal' refectory_data.0.id %}')">Reporte</button>
-              {% endif %}
-            </div> 
+  <div class="card card-profile" >
+    <div class="card-avatar" style="max-width: 120px; max-height: 120px;">
+      <a href="">
+        <img class="img" src="/static/assets/img/flats/maintainance.png" />
+      </a>
     </div>
+    <div class="card-body">
+      <h4 class="card-title" style="padding-bottom: 10px;">
+        Punto de distribución: 
+        <b>{{refectory_data.0.refectory_name}}</b>
+        </br>
+        Direccion: 
+        <b>{{refectory_data.0.refectory_address}}</b>
+      </h4>
+      {% if user.is_superuser %}
+        <a  href="{% url 'dashboard:equipments:create_equipments' refectory_data.0.id %}">
+          <button type="button" class="btn btn-warning">Agregar Equipo</button>
+        </a>
+      {% endif %}
+    </div> 
   </div>
+</div>
 
 
 <div class="modal fade" id='delete_equipment' role="dialog">
