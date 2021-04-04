@@ -528,15 +528,37 @@ class DownloadPDF(View):
         
         count = 0
         total_gastos = 0
+        products_dict = {}
 
         for i in query:
             operations = ProductManagement.objects.filter(product_cod=i.id, created__range=(from_date,new_to_date_1_str), operation_type="Ingreso")
+            consumos = ProductManagement.objects.filter(product_cod=i.id, created__range=(from_date,new_to_date_1_str), operation_type="Egreso")
             if operations:
                 count += len(operations)
                 suma_gastos = operations.aggregate(Sum('product_total_amount'))
                 total_gastos += suma_gastos['product_total_amount__sum']
+                suma_cantidades_ingresos = operations.aggregate(Sum('product_quantity'))
+                if consumos:
+                    suma_cantidades_egresos = consumos.aggregate(Sum('product_quantity'))
+                    products_dict[i.product_name] = [
+                        i.product_unit, 
+                        suma_cantidades_ingresos['product_quantity__sum'],
+                        suma_cantidades_egresos['product_quantity__sum'],
+                        suma_cantidades_ingresos['product_quantity__sum'] - suma_cantidades_egresos['product_quantity__sum'],
+                        i.total_product_quantity
+                        ]
+                else:
+                    products_dict[i.product_name] = [
+                        i.product_unit, 
+                        suma_cantidades_ingresos['product_quantity__sum'],
+                        0,
+                        suma_cantidades_ingresos['product_quantity__sum'],
+                        i.total_product_quantity
+                        ]
             else:
                 pass
+        
+        print(products_dict)
 
         exchange_rate = get_exchange_rate()
         total_gastos_dolares = round(total_gastos/exchange_rate,2)
@@ -546,7 +568,7 @@ class DownloadPDF(View):
             "direccion": refectory.address,
             "desde": new_from_date_str,
             "hasta": new_to_date_str,
-            "lista_productos": query,
+            "dict_productos": products_dict,
             "total_operaciones": count,
             "total_gastos": total_gastos,
             "total_gastos_dolares": total_gastos_dolares,
