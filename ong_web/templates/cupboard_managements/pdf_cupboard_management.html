@@ -49,21 +49,47 @@
     <hr>
     <br>
     <br>
-    <h3>Gastos (Bs./$)</h3>
+    <h3>Datos de Operaciones</h3>
     <p><strong>Tasa de Cambio: </strong>{{ tasa_cambio }} Bs.</p>
     <hr>
     <table>
         <thead>
-            <th>Total de Operaciones</th>
-            <th>Total en Bolívares (Bs.)</th>
-            <th>Total en Dólares ($)</th>
+            <th>Tipo de Operación</th>
+            <th>Cantidad de Operaciones</th>
+            <th>Total de Gastos (Bs.)</th>
+            <th>Total de Gastos ($)</th>
         </thead>
         <tbody>
             <tr>
+                <td>Total</td>
                 <td>{{ total_operaciones }}</td>
                 <td>{{ total_gastos }}</td>
                 <td>{{ total_gastos_dolares }}</td>
             </tr>
+        </tbody>
+    </table>
+    <hr>
+    <br>
+    <br>
+    <h3>Operaciones</h3>
+    <hr>
+    <table>
+        <thead>
+            <th>Alimento</th>
+            <th>Cantidad Ingresada</th>
+            <th>Cantidad Consumida</th>
+            <th>Cantidad Disponible</th>
+            <th>Cantidad Actual</th>
+        </thead>
+        <tbody>
+            {% for key, value in dict_productos.items %}
+                <tr>
+                    <td>{{ key }}</td>
+                    {% for data in value %}
+                        <td>{{ data }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
     <hr>
