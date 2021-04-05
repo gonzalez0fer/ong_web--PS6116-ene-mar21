@@ -121,6 +121,7 @@ class ProductManagementCreateView(CreateView):
                 "product_name": i.product_name,
                 "product_quantity": i.total_product_quantity,
                 "product_unit": i.product_unit,
+                "is_spare_part": i.is_spare_part,
             })
 
         context['refectory'] = {

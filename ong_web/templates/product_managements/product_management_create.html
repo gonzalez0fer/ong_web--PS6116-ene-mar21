@@ -86,8 +86,8 @@
 
             <div class="col-md-6">
               <div class="form-group" style="padding-top: 0.7em;">
-                <label class="bmd-label-floating" for="is_spare">¿Es un repuesto?</label>
-                <input class="col-md-3" id="is_spare_part" type="checkbox" class="form-control" name="is_spare_part" value=true>
+                <label class="bmd-label-floating" for="is_spare_part">¿Es un repuesto?</label>
+                <input class="col-md-3" id="is_spare_part" type="checkbox" class="form-control" name="is_spare_part">
               </div>
               <span id="is_spare_part_error" class="text-danger" style="visibility : hidden"></span>
             </div>
@@ -147,7 +147,8 @@
       {
         product_name: "{{prod.product_name}}",
         product_quantity: "{{prod.product_quantity}}",
-        product_unit: "{{prod.product_unit}}"
+        product_unit: "{{prod.product_unit}}",
+        is_spare_part: "{{prod.is_spare_part}}"
       },
     {% endfor %}
   ]

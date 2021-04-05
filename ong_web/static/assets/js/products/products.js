@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById("product_cod").addEventListener("change", quantity_validation)
         document.getElementById("product_cod").addEventListener("change", amount_validation)
         document.getElementById("product_cod").addEventListener("change", unit_validation)
+        document.getElementById("product_cod").addEventListener("change", spare_part_validation)
         document.getElementById("product_quantity").addEventListener("change", quantity_validation)
     }
 
@@ -128,6 +129,30 @@ function unit_validation() {
 
 }
 
+// Validacion dinámica de las unidades del producto
+function spare_part_validation() {
+
+    product_cod = document.getElementById("product_cod").value;
+    const found = products.find(product => product.product_name == product_cod);
+
+    if (found) {
+        if (found.is_spare_part == "False") {
+            document.getElementById("is_spare_part").checked = false;
+        } else {
+            document.getElementById("is_spare_part").checked = true;
+        }
+        document.getElementById("is_spare_part").setAttribute("disabled", 'disabled');
+        unit_found = true;
+    } else if (!found && document.getElementById("is_spare_part").disabled) {
+        document.getElementById("is_spare_part").disabled = false;
+        document.getElementById("is_spare_part").checked = false;
+        unit_found = false;
+    } else {
+        document.getElementById("is_spare_part_error").style.visibility = "hidden"
+    }
+
+}
+
 
 // Validación estática al momento de enviar el formulario
 function validate() {
@@ -147,6 +172,7 @@ function validate() {
 
     if (document.getElementById("product_unit").disabled) {
         document.getElementById("product_unit").disabled = false;
+        document.getElementById("is_spare_part").disabled = false;
     }
 
     // Si el nombre del producto es vacío
@@ -200,6 +226,7 @@ function validate() {
     if (error) {
         if (unit_found) {
             document.getElementById("product_unit").setAttribute("disabled", 'disabled');
+            document.getElementById("is_spare_part").setAttribute("disabled", 'disabled');
             unit_found = false;
         }
         return false

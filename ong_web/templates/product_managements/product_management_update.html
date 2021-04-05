@@ -82,7 +82,7 @@
             <div class="col-md-6">
               <div class="form-group" style="padding-top: 0.7em;">
                 <label class="bmd-label-floating" for="is_spare">¿Es un repuesto?</label>
-                  {% render_field form.is_spare_part name="is_spare_part" id="is_spare_part" class="col-md-3" %}                  
+                  <input name="is_spare_part" id="is_spare_part" class="col-md-3" type="checkbox" checked="{{object.is_spare_part}}" disabled="true">                  
               </div>
               <span id="is_spare_part_error" class="text-danger" style="visibility : hidden"></span>
             </div> 
