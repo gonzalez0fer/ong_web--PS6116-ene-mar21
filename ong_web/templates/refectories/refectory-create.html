@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 {% load widget_tweaks %}
-{% block title %} Page User {% endblock %} 
+{% block title %} Agregar PD {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -14,7 +14,7 @@
                 <div class="col-md-7">
                   <div class="card">
                     <div class="card-header card-header-info">
-                      <h4 class="card-title">Crea un Comedor</h4>
+                      <h4 class="card-title">Crea un Punto de Distribución</h4>
                       <p class="card-category">Completa los datos.</p>
                     </div>
                     <div class="card-body">
@@ -78,7 +78,7 @@
                             <button type="button" class="btn btn-default">Regresar</button>
                             </a>
                         </p>
-                        <button type="submit" class="btn btn-success pull-right">Crear Comedor</button>
+                        <button type="submit" class="btn btn-success pull-right">Crear Punto de Distribución</button>
                         <div class="clearfix"></div>
                       </form>
                     </div>
@@ -95,14 +95,12 @@
                     <div class="card-body" style="text-align: justify;">
                       <div style="padding: 0px 30px;">
                         <h4 class="card-title">
-                          Un comedor es el centro principal de distribucion de nuestro
-                          vital liquido, al crear un comedor habilitaras al sistema
-                          para dar seguimiento a todas sus operaciones, ganancias e 
-                          inventariado.
+                          Al habilitar un punto de distribución en el sistema,
+                          se podrá dar seguimiento a todas sus inventarios y operaciones.
                         </h4>
                         </br>
                         <h4>
-                          <strong>No olvides asignar un autorizado a este comedor
+                          <strong>No olvides asignar usuarios a este punto de distribución
                           desde Usuarios->Ver Usuario->Editar</strong>
                         </h4>
                       </div>

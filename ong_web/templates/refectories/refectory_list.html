@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} UI Tables {% endblock %} 
+{% block title %} Puntos de Distribución {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -28,7 +28,7 @@
                               Ciudad
                           </th>
                           <th>
-                              Capacidad de los Tanques
+                              Capacidad de los Tanques (L)
                           </th>
                           <th>
                             Encargados
@@ -92,7 +92,7 @@
     </p>
     <p style="float: right; margin-right: 50px;">
         <a  href="{% url 'dashboard:refectory:create_refectory' %}">
-        <button type="button" class="btn btn-success">Agregar Comedor</button>
+        <button type="button" class="btn btn-success">Agregar Punto de Distribución</button>
         </a>
     </p>
 {% endblock content %}

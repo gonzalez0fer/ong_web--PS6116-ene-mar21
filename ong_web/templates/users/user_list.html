@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} UI Tables {% endblock %} 
+{% block title %} Lista de Usuarios {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -34,7 +34,7 @@
                             Administrador
                         </th>
                         <th>
-                            Comedor Asignado
+                            Punto de Distribución Asignado
                         </th>
                           <th>
                               Acciones
@@ -72,7 +72,7 @@
                                             <a href="{% url 'dashboard:user:edit_user' user_object.id %}">
                                                 <button type="button" class="btn btn-info">Editar</button>
                                             </a>
-                                            <button type="button" class="btn btn-default" disabled>Eliminar</button>
+                                            {% comment %} <button type="button" class="btn btn-default" disabled>Eliminar</button> {% endcomment %}
                                         </td>
                                         </tr>
 
@@ -146,7 +146,7 @@
                             Administrador
                         </th>
                         <th>
-                            Comedor Asignado
+                            Punto de Distribución Asignado
                         </th>
                         <th>
                             Acciones
@@ -189,7 +189,7 @@
                             <a href="{% url 'dashboard:user:edit_user' user_object.id %}">
                                 <button type="button" class="btn btn-info">Editar</button>
                             </a>
-                            <button type="button" class="btn btn-danger">Eliminar</button>
+                            {% comment %} <button type="button" class="btn btn-danger">Eliminar</button> {% endcomment %}
                           </td>
                         </tr>
                         {% endif %}

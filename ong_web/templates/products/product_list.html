@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} UI Tables {% endblock %} 
+{% block title %} Suministros {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -98,7 +98,7 @@
                         Punto de distribución:
                         <strong>{{refectory_data.0.refectory_name}}</strong> 
                         </br>
-                        Direccion: 
+                        Dirección: 
                         {{refectory_data.0.refectory_address}}
                       </h4>
                       {% if user.is_superuser %}

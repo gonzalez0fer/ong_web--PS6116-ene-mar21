@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} UI Tables {% endblock %} 
+{% block title %} Historial de Operaciones {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}
@@ -22,8 +22,8 @@
         <div class="col">
             <div class="card card-plain">
                 <div class="card-header card-header-info">
-                    <h4 class="card-title mt-0">Operaciones de la alacena del comedor <b>{{refectory_data.0.refectory_name}}</b></h4>
-                    <p class="card-category"> Aqui podras ver todas las operaciones de los productos guardados en el deposito del comedor.</p>
+                    <h4 class="card-title mt-0">Operaciones del Inventario del Punto de Distribución <b>{{refectory_data.0.refectory_name}}</b></h4>
+                    <p class="card-category"> Aquí podras ver todas las operaciones de los productos guardados en el inventario del punto de distribución.</p>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
