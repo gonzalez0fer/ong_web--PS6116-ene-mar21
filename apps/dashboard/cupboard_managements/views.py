@@ -519,7 +519,10 @@ class DownloadPDF(View):
             else:
                 pass
 
-        print(products_dict)
+        if count == 0:
+            messages.error(self.request, 'No existen operaciones en el periodo seleccionado')
+            return HttpResponseRedirect("/dashboard/cupboard-management/"+str(self.kwargs['refectory_id']))
+
         exchange_rate = get_exchange_rate()
         total_gastos_dolares = round(total_gastos/exchange_rate,2)
 
