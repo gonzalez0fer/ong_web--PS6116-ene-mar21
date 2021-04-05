@@ -520,7 +520,7 @@ class DownloadPDF(View):
                 pass
 
         if count == 0:
-            messages.error(self.request, 'No existen operaciones en el periodo seleccionado')
+            messages.error(self.request, 'No existen ingresos en el periodo seleccionado')
             return HttpResponseRedirect("/dashboard/cupboard-management/"+str(self.kwargs['refectory_id']))
 
         exchange_rate = get_exchange_rate()
