@@ -64,8 +64,8 @@ function quantity_validation() {
     // Si la cantidad del producto introducida es mayor o igual a uno (1)
     else if (product_quantity >= 1) {
 
-        // Si la cantidad del producto introducida posee decimales
-        if (product_quantity % 1 != 0) {
+        // Si la cantidad del producto introducida posee decimales o es mayor a la capacidad de la BD
+        if (product_quantity % 1 != 0 || product_quantity > 2147483647) {
             document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad válida"
             document.getElementById("product_quantity_error").style.visibility = "visible"
             return
@@ -254,8 +254,8 @@ function quantity_update_validation() {
     // Si la cantidad de productos introducida es mayor o igual a uno (1)
     else if (product_quantity_update >= 1) {
 
-        // Si la cantidad de productos introducida posee decimales
-        if (product_quantity_update % 1 != 0) {
+        // Si la cantidad de productos introducida posee decimales o es mayor que la capacidad de la BD
+        if (product_quantity_update % 1 != 0 || product_quantity_update > 2147483647) {
             document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad de productos válida"
             document.getElementById("product_quantity_error").style.visibility = "visible"
             return
