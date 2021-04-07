@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'apps.main.products.apps.ProductsConfig',
     'apps.main.product_managements.apps.ProductManagementsConfig',
     'apps.main.equipments.apps.EquipmentsConfig',
+    'apps.main.notifications.apps.NotificationsConfig',
 ]
 
 THIRD_PARTY_APPS = [
