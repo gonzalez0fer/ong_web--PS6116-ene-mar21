@@ -60,6 +60,11 @@ urlpatterns = [
         'equipments/',
         include('apps.dashboard.equipments.urls', namespace='equipments'),
         ),
+
+    path(
+        'notifications-panel/',
+        include('apps.dashboard.notifications.urls', namespace='notifications'),
+        ),
    
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),

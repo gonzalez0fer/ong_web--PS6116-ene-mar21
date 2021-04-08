@@ -19,7 +19,7 @@ class Notifications(TimeStampedModel):
         MANTENIMIENTO = 'Mantenimiento'
         NONE = ''
 
-    refectory = models.OneToOneField(
+    refectory = models.ForeignKey(
         Refectory, 
         blank=True, 
         null=True, 
@@ -43,9 +43,9 @@ class Notifications(TimeStampedModel):
         null=False
     )
 
-    # user_notification = models.ForeignKey(
-    #     settings.AUTH_USER_MODEL,
-    #     blank = True,
-    #     null = True,
-    #     on_delete = models.SET_NULL,
-    # )
+    user_notification = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        blank = True,
+        null = True,
+        on_delete = models.SET_NULL,
+    )

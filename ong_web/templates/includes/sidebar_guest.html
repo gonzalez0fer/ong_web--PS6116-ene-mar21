@@ -35,7 +35,7 @@
       {% url 'dashboard:cupboard:list_products' as cupboard_view %} 
       <li class="nav-item {% if request.path == cupboard_view or 'cupboard-management' in request.path %} active {% endif %} ">
         <a class="nav-link" href="{% url 'dashboard:cupboard:list_products'%}">
-          <i class="material-icons">restaurant</i>
+          <i class="material-icons">kitchen</i>
           <p>Alimentos</p>
         </a>
       </li>
