@@ -14,6 +14,8 @@ from .forms import ProductManagementForm
 from apps.main.refectories.models import Refectory
 from apps.main.products.models import Product
 from apps.main.product_managements.models import ProductManagement
+from apps.main.notifications.models import Notifications
+from apps.main.users.models import CustomUser
 
 from apps.main.utils import get_exchange_rate, render_pdf_view
 from datetime import datetime, timedelta
@@ -177,6 +179,27 @@ class ProductManagementCreateView(CreateView):
         product.save()
         self.object.created_by = self.request.user
         self.object.save()
+        #validacion notificacion de stock
+        if self.object.operation_type == 'Egreso':
+            if product.total_product_quantity <= 2 and product.total_product_quantity > 0:
+                total_users = CustomUser.objects.all().order_by('id')
+                
+                for i in total_users:
+                    Notifications.objects.create(refectory_id=self.kwargs['refectory_id'],
+                            read=False,
+                            notification_type='Suministros',
+                            notification_message='%s bajo en stock' %(product.product_name),
+                            user_notification_id=i.id
+                    )
+            elif product.total_product_quantity == 0:
+                total_users = CustomUser.objects.all()
+                for i in total_users:
+                    Notifications.objects.create(refectory_id=self.kwargs['refectory_id'],
+                            read=False,
+                            notification_type='Suministros',
+                            notification_message='%s sin stock' %(product.product_name),
+                            user_notification_id=i.id
+                    )
         messages.success(self.request, 'Operación registrada exitosamente')
         return super().form_valid(form)
 
@@ -259,6 +282,29 @@ class ProductManagementCreateViewGuest(CreateView):
         product.save()
         self.object.created_by = self.request.user
         self.object.save()
+
+        #validacion notificacion de stock
+        if self.object.operation_type == 'Egreso':
+            if product.total_product_quantity <= 2 and product.total_product_quantity > 0:
+                total_users = CustomUser.objects.all().order_by('id')
+                
+                for i in total_users:
+                    Notifications.objects.create(refectory_id=self.request.user.profile.refectory.id,
+                            read=False,
+                            notification_type='Suministros',
+                            notification_message='%s bajo en stock' %(product.product_name),
+                            user_notification_id=i.id
+                    )
+            elif product.total_product_quantity == 0:
+                total_users = CustomUser.objects.all()
+                for i in total_users:
+                    Notifications.objects.create(refectory_id=self.request.user.profile.refectory.id,
+                            read=False,
+                            notification_type='Suministros',
+                            notification_message='%s sin stock' %(product.product_name),
+                            user_notification_id=i.id
+                    )
+
         messages.success(self.request, 'Operación registrada exitosamente')
         return super().form_valid(form)
 
@@ -349,6 +395,27 @@ class ProductManagementUpdateView(UpdateView):
                 product.product_unit = self.object.product_unit
                 product.is_spare_part = self.object.is_spare_part                       
         product.save()
+        #validacion notificacion de stock
+        if self.object.operation_type == 'Egreso':
+            if product.total_product_quantity <= 2 and product.total_product_quantity > 0:
+                total_users = CustomUser.objects.all().order_by('id')
+                
+                for i in total_users:
+                    Notifications.objects.create(refectory_id=self.kwargs['refectory_id'],
+                            read=False,
+                            notification_type='Suministros',
+                            notification_message='%s bajo en stock' %(product.product_name),
+                            user_notification_id=i.id
+                    )
+            elif product.total_product_quantity == 0:
+                total_users = CustomUser.objects.all()
+                for i in total_users:
+                    Notifications.objects.create(refectory_id=self.kwargs['refectory_id'],
+                            read=False,
+                            notification_type='Suministros',
+                            notification_message='%s sin stock' %(product.product_name),
+                            user_notification_id=i.id
+                    )
         messages.success(self.request, 'Operación actualizada exitosamente')
         return super().form_valid(form)
 
@@ -437,6 +504,29 @@ class ProductManagementUpdateViewGuest(UpdateView):
                 product.product_unit = self.object.product_unit
                 product.is_spare_part = self.object.is_spare_part                       
         product.save()
+
+        #validacion notificacion de stock
+        if self.object.operation_type == 'Egreso':
+            if product.total_product_quantity <= 2 and product.total_product_quantity > 0:
+                total_users = CustomUser.objects.all().order_by('id')
+                
+                for i in total_users:
+                    Notifications.objects.create(refectory_id=self.request.user.profile.refectory.id,
+                            read=False,
+                            notification_type='Suministros',
+                            notification_message='%s bajo en stock' %(product.product_name),
+                            user_notification_id=i.id
+                    )
+            elif product.total_product_quantity == 0:
+                total_users = CustomUser.objects.all()
+                for i in total_users:
+                    Notifications.objects.create(refectory_id=self.request.user.profile.refectory.id,
+                            read=False,
+                            notification_type='Suministros',
+                            notification_message='%s sin stock' %(product.product_name),
+                            user_notification_id=i.id
+                    )
+
         messages.success(self.request, 'Operación actualizada exitosamente')
         return super().form_valid(form)
 
