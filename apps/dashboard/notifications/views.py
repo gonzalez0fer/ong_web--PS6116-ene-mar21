@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import ListView
+from django.views.generic import ListView, View
 from django.views.generic.edit import UpdateView, CreateView
 from django.http import HttpResponse
 from django.contrib import messages
@@ -40,3 +40,17 @@ class NotificationListViewGuest(ListView):
                     'created':i.created,
             })      
         return context
+
+class NotificationCount(View):
+    def get(self, request, *args, **kwargs):
+        query = Notifications.objects.filter(user_notification_id=self.request.user.id,read=False)
+        return len(query)
+
+class UpdateNotificationStatus(View):
+    def put(self, request, *args, **kwargs):
+        notifications_list = self.request.GET.get("q")
+        for i in notifications_list:
+            query = Notifications.objects.get(id=i.id)
+            query.read = True
+            query.save()
+        return 200

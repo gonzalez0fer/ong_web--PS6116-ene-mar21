@@ -16,4 +16,16 @@ urlpatterns = [
         views.NotificationListViewGuest.as_view(), 
         name='notifications_list_guest'
         ),
+
+    path(
+        'notifications-count', 
+        views.NotificationCount.as_view(), 
+        name='notifications_count'
+        ),
+
+    path(
+        'notifications-update', 
+        views.UpdateNotificationStatus.as_view(), 
+        name='notifications_update'
+        ),
 ]
