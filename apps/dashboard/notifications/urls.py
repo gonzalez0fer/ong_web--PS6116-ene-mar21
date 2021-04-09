@@ -12,7 +12,7 @@ urlpatterns = [
         ),
 
     path(
-        'notifications', 
+        'notifications-user', 
         views.NotificationListViewGuest.as_view(), 
         name='notifications_list_guest'
         ),
@@ -24,8 +24,14 @@ urlpatterns = [
         ),
 
     path(
-        'notifications-update', 
+        '<int:pk>/notifications-read-update', 
+        views.UpdateNotificationRead.as_view(), 
+        name='notifications_read_update'
+        ),
+
+    path(
+        '<int:pk>/notifications-status-update', 
         views.UpdateNotificationStatus.as_view(), 
-        name='notifications_update'
+        name='notifications_status_update'
         ),
 ]

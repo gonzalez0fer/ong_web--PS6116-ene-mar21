@@ -19,6 +19,13 @@ class Notifications(TimeStampedModel):
         MANTENIMIENTO = 'Mantenimiento'
         NONE = ''
 
+    class NotificationStatus(models.TextChoices):
+        """
+        	Every type of issue
+        """
+        PENDIENTE     =   'Pendiente'
+        SOLUCIONADO     =   'Solucionado'
+
     refectory = models.ForeignKey(
         Refectory, 
         blank=True, 
@@ -41,6 +48,14 @@ class Notifications(TimeStampedModel):
     notification_message = models.CharField(
         max_length=100,
         null=False
+    )
+
+
+    notification_status = models.CharField(
+        max_length=20, 
+        null=False, 
+        choices=NotificationStatus.choices, 
+        default = NotificationStatus.PENDIENTE
     )
 
     user_notification = models.ForeignKey(
