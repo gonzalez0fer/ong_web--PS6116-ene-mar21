@@ -125,7 +125,7 @@ function validate() {
     }
 
     // Si no es seleccionada una descripción
-    if (operation_description == "hidden") {
+    if (operation_description == "") {
         document.getElementById("operation_description_error").innerHTML = "Debe seleccionar una opción válida"
         document.getElementById("operation_description_error").style.visibility = "visible"
         error = true
