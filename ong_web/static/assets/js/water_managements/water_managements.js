@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    
-    document.getElementById("operation_type").addEventListener("change", type_validation)
     document.getElementById("operation_description").addEventListener("change", description_validation)
     document.getElementById("water_amount").addEventListener("change", amount_validation)
     
@@ -16,26 +14,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 })
 
-// Validación dinámica del tipo de operación
-function type_validation() {
-    operation_type = document.getElementById("operation_type").value
-
-    // Si no es seleccionado un tipo de operación
-    if (operation_type == "hidden") {
-        document.getElementById("operation_type_error").innerHTML = "Debe seleccionar una opción válida"
-        document.getElementById("operation_type_error").style.visibility = "visible"
-    }
-    else {
-        document.getElementById("operation_type_error").style.visibility = "hidden"
-    }
-}
-
 // Validación dinámica de la descripción de la operación
 function description_validation() {
     operation_description = document.getElementById("operation_description").value
 
     // Si no es seleccionada una  descripción
-    if (operation_description == "hidden") {
+    if (operation_description == "none") {
         document.getElementById("operation_description_error").innerHTML = "Debe seleccionar una opción válida"
         document.getElementById("operation_description_error").style.visibility = "visible"
     }
@@ -117,15 +101,8 @@ function validate() {
     water_liters = document.getElementById("water_liters").value
     water_amount = document.getElementById("water_amount").value
 
-    // Si no es seleccionado un tipo de operación
-    if (operation_type == "hidden") {
-        document.getElementById("operation_type_error").innerHTML = "Debe seleccionar una opción válida"
-        document.getElementById("operation_type_error").style.visibility = "visible"
-        error = true
-    }
-
     // Si no es seleccionada una descripción
-    if (operation_description == "") {
+    if (operation_description == "none") {
         document.getElementById("operation_description_error").innerHTML = "Debe seleccionar una opción válida"
         document.getElementById("operation_description_error").style.visibility = "visible"
         error = true
@@ -145,12 +122,11 @@ function validate() {
         error = true
     }
 
-    operation_type_error = document.getElementById("operation_type_error").style.visibility
     operation_description_error = document.getElementById("operation_description_error").style.visibility
     water_liters_error = document.getElementById("water_liters_error").style.visibility
     water_amount_error = document.getElementById("water_amount_error").style.visibility
 
-    if (operation_type_error == "visible" || operation_description_error == "visible" || water_liters_error == "visible" || water_amount_error == "visible"){
+    if (operation_description_error == "visible" || water_liters_error == "visible" || water_amount_error == "visible"){
         error = true
     }
 
