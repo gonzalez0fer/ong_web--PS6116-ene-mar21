@@ -24,7 +24,7 @@ class NotificationListView(ListView):
 
 class NotificationListViewGuest(ListView):
     model = Notifications
-    template_name = ''
+    template_name = 'notifications/notifications_list_guest.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -38,6 +38,7 @@ class NotificationListViewGuest(ListView):
                     'notification_message':i.notification_message,
                     'read':i.read,
                     'created':i.created,
+                    'notification_status':i.notification_status
             })      
         return context
 
@@ -60,10 +61,10 @@ def UpdateNotificationRead(request, pk):
 def UpdateNotificationStatus(request, pk):
     notifications_id = pk
     query = Notifications.objects.get(id=notifications_id)
-    query.status = 'Solucionado'
+    query.notification_status = 'Solucionado'
     query.save()
 
-    notifications_list = Notifications.objects.filter(refectory_id=query.refectory_id,status='Pendiente',notification_message=query.notification_message)
+    notifications_list = Notifications.objects.filter(refectory_id=query.refectory_id,notification_status='Pendiente',notification_message=query.notification_message)
     for i in notifications_list:
         i.status = 'Solucionado'
         i.save()

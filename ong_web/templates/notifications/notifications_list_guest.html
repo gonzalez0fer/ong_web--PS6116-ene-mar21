@@ -77,10 +77,10 @@
                                         </td>
                                         <td>
                                             <a  href="{% url 'dashboard:notifications:notifications_read_update' notification_object.id %}">
-                                                <button type="button" class="btn btn-info btn-sm" >Marcar como leído</button>
+                                                <button type="button" class="btn btn-info" >Marcar como leído</button>
                                             </a>
                                             <a  href="{% url 'dashboard:notifications:notifications_status_update' notification_object.id %}">
-                                                <button type="button" class="btn btn-success btn-sm" >Marcar como solucionado</button>
+                                                <button type="button" class="btn btn-info" >Marcar como solucionado</button>
                                             </a>                              
                                         </td>                                    
                                     </tr>
@@ -151,7 +151,7 @@
                                             - No hay acciones disponibles -
                                         {% else %}
                                         <a  href="{% url 'dashboard:notifications:notifications_status_update' notification_object.id %}">
-                                            <button type="button" class="btn btn-success btn-sm" >Marcar como solucionado</button>
+                                            <button type="button" class="btn btn-info" >Marcar como solucionado</button>
                                         </a> 
                                         {% endif %}      
                                     </td>
