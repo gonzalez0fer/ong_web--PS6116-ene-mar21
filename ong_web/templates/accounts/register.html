@@ -16,14 +16,6 @@
           </h4>
         </div>
         <div class="card-body">
-
-          <h6 class="card-category">
-              {% if msg %}
-                <span class="text-danger">{{ msg }}</span>
-              {% else %}
-                Completar todos los campos
-              {% endif %}  
-          </h6>
           
           <br />
 
@@ -34,7 +26,7 @@
             </p>  
 
           {% else %}
-            <form role="form" method="post" action="">
+            <form onsubmit="return validate()" role="form" method="post" action="">
                 
               {% csrf_token %} 
 
@@ -42,11 +34,12 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="bmd-label-floating">Correo</label>
-                    {{ form.email }}
+                    <input type="text" id="email" name="email" class="form-control">
                   </div>
+                  <span id="email_error" class="text-danger" style="visibility : hidden"></span>
+                  <span id="default_email_error" class="text-danger">{{ form.email.errors }}</span>
                 </div>
               </div>
-              <span class="text-danger">{{ form.email.errors }}</span>
 
               <br />
 
@@ -54,11 +47,12 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="bmd-label-floating">Contraseña</label>
-                    {{ form.password1 }}
+                    <input type="password" id="password_1" name="password1" class="form-control">
                   </div>
+                  <span id="password_1_error" class="text-danger" style="visibility : hidden"></span>
+                  <span id="default_password_1_error" class="text-danger">{{ form.password1.errors }}</span>
                 </div>
               </div>
-              <span class="text-danger">{{ form.password1.errors }}</span>
 
               <br />
 
@@ -66,20 +60,27 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="bmd-label-floating">Verificar la contraseña</label>
-                    {{ form.password2 }}
+                    <input type="password" id="password_2" name="password2" class="form-control">
                   </div>
+                  <span id="password_2_error" class="text-danger" style="visibility : hidden"></span>
+                  <span id="default_password_2_error" class="text-danger">{{ form.password2.errors }}</span>
                 </div>
               </div>
 
+              <br />
 
-              <span class="text-danger">{{ form.password2.errors }}</span>
+              <div class="row">
+                <div class="col">
+                  <span id="passwords_error" class="text-danger" style="visibility : hidden"></span>
+                </div>
+              </div>
 
               <br />
               <p class="pull-left">
                 <a  href="{% url 'dashboard:user:list_users' %}">
                 <button type="button" class="btn btn-default">Regresar</button>
                 </a>
-            </p>
+              </p>
 
               <button type="submit" name="register" class="btn btn-success pull-right">Registrar</button>
 
@@ -121,4 +122,6 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+  <script src="/static/assets/js/register/register.js"></script>
+{% endblock javascripts %}

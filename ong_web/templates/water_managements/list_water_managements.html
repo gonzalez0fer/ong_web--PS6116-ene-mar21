@@ -177,13 +177,10 @@
                             </br>
                                 Litros actuales
                             </br>   
-                                <strong>{{ water_tank_form.current_liters.initial }} L</strong> 
-                            {% comment %} </br>
-                                Último Llenado
-                            </br>
-                                <strong>{{ last_filled }}</strong>   {% endcomment %}                             
+                                <strong>{{ water_tank_form.current_liters.initial }} L</strong>                            
                             </h4>        
-                            {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%}                             
+                            {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%}    
+                            </br>                         
                         </div>
                         </br>
                     </div>
