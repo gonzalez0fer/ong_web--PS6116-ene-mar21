@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, View
 from django.views.generic.edit import UpdateView, CreateView
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.contrib import messages
 
 from django.utils.decorators import method_decorator
@@ -45,7 +45,7 @@ class NotificationListViewGuest(ListView):
 class NotificationCount(View):
     def get(self, request, *args, **kwargs):
         query = Notifications.objects.filter(user_notification_id=self.request.user.id,read=False)
-        return len(query)
+        return JsonResponse({"count":len(query)})
 
 def UpdateNotificationRead(request, pk):
     notifications_id = pk
@@ -66,7 +66,7 @@ def UpdateNotificationStatus(request, pk):
 
     notifications_list = Notifications.objects.filter(refectory_id=query.refectory_id,notification_status='Pendiente',notification_message=query.notification_message)
     for i in notifications_list:
-        i.status = 'Solucionado'
+        i.notification_status = 'Solucionado'
         i.save()
 
     if request.user.is_superuser:

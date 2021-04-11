@@ -21,7 +21,7 @@
                     href="{% url 'dashboard:notifications:notifications_list' %}" 
                     aria-haspopup="true" aria-expanded="false">
                     <i class="material-icons" style="color:black;">notifications</i>
-                    <span class="notification">5</span>
+                    <span class="notification" id="notification_count"></span>
                     <p class="d-lg-none d-md-block">
                       Some Actions
                     </p>
@@ -33,7 +33,7 @@
                     href="{% url 'dashboard:notifications:notifications_list_guest' %}" 
                     aria-haspopup="true" aria-expanded="false">
                     <i class="material-icons" style="color:black;">notifications</i>
-                    <span class="notification">5</span>
+                    <span class="notification" id="notification_count"></span>
                     <p class="d-lg-none d-md-block">
                       Some Actions
                     </p>
@@ -58,3 +58,15 @@
           {% endif %}
         </div>
       </nav>
+{% block javascripts %}
+      <script>
+        setTimeout(async() => {
+          const not_count = document.getElementById("notification_count");
+          const res = await fetch("{% url 'dashboard:notifications:notifications_count' %}");
+          const data = await res.json();
+          console.log(data);
+          not_count.innerHTML = data.count;
+        }, 5000)
+      </script>
+
+{% endblock javascripts %}
