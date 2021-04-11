@@ -16,7 +16,7 @@ from apps.main.users.models import CustomUser
 @method_decorator([login_required, superuser_required], name='dispatch')
 class NotificationListView(ListView):
     model = Notifications
-    template_name = ''
+    template_name = 'notifications/notifications_list.html'
 
     def get_queryset(self):
         queryset = Notifications.objects.filter(user_notification_id=self.request.user.id)
