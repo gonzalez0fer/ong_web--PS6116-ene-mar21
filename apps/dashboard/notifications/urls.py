@@ -25,13 +25,13 @@ urlpatterns = [
 
     path(
         '<int:pk>/notifications-read-update', 
-        views.UpdateNotificationRead.as_view(), 
+        views.UpdateNotificationRead, 
         name='notifications_read_update'
         ),
 
     path(
         '<int:pk>/notifications-status-update', 
-        views.UpdateNotificationStatus.as_view(), 
+        views.UpdateNotificationStatus, 
         name='notifications_status_update'
         ),
 ]

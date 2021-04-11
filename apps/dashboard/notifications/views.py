@@ -46,30 +46,29 @@ class NotificationCount(View):
         query = Notifications.objects.filter(user_notification_id=self.request.user.id,read=False)
         return len(query)
 
-class UpdateNotificationRead(View):
-    def put(self, request, *args, **kwargs):
-        notifications_id = self.kwargs['pk']
-        query = Notifications.objects.get(id=notifications_id)
-        query.read = True
-        query.save()
-        if self.request.user.is_superuser:
-            return HttpResponseRedirect("/dashboard/notifications/notifications-admin")
-        else:
-            return HttpResponseRedirect("/dashboard/notifications/notifications-user")
+def UpdateNotificationRead(request, pk):
+    notifications_id = pk
+    query = Notifications.objects.get(id=notifications_id)
+    query.read = True
+    query.save()
+    if request.user.is_superuser:
+        return HttpResponseRedirect("/dashboard/notifications/notifications-admin")
+    else:
+        return HttpResponseRedirect("/dashboard/notifications/notifications-user")
 
-class UpdateNotificationStatus(View):
-    def put(self, request, *args, **kwargs):
-        notifications_id = self.kwargs['pk']
-        query = Notifications.objects.get(id=notifications_id)
-        query.status = 'Solucionado'
-        query.save()
 
-        notifications_list = Notifications.objects.filter(refectory_id=query.refectory_id,status='Pendiente',notification_message=query.notification_message)
-        for i in notifications_list:
-            i.status = 'Solucionado'
-            i.save()
+def UpdateNotificationStatus(request, pk):
+    notifications_id = pk
+    query = Notifications.objects.get(id=notifications_id)
+    query.status = 'Solucionado'
+    query.save()
 
-        if self.request.user.is_superuser:
-            return HttpResponseRedirect("/dashboard/notifications/notifications-admin")
-        else:
-            return HttpResponseRedirect("/dashboard/notifications/notifications-user")
+    notifications_list = Notifications.objects.filter(refectory_id=query.refectory_id,status='Pendiente',notification_message=query.notification_message)
+    for i in notifications_list:
+        i.status = 'Solucionado'
+        i.save()
+
+    if request.user.is_superuser:
+        return HttpResponseRedirect("/dashboard/notifications/notifications-admin")
+    else:
+        return HttpResponseRedirect("/dashboard/notifications/notifications-user")
