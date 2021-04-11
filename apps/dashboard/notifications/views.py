@@ -52,9 +52,9 @@ def UpdateNotificationRead(request, pk):
     query.read = True
     query.save()
     if request.user.is_superuser:
-        return HttpResponseRedirect("/dashboard/notifications/notifications-admin")
+        return HttpResponseRedirect("/dashboard/notifications-panel/notifications-admin")
     else:
-        return HttpResponseRedirect("/dashboard/notifications/notifications-user")
+        return HttpResponseRedirect("/dashboard/notifications-panel/notifications-user")
 
 
 def UpdateNotificationStatus(request, pk):
@@ -69,6 +69,6 @@ def UpdateNotificationStatus(request, pk):
         i.save()
 
     if request.user.is_superuser:
-        return HttpResponseRedirect("/dashboard/notifications/notifications-admin")
+        return HttpResponseRedirect("/dashboard/notifications-panel/notifications-admin")
     else:
-        return HttpResponseRedirect("/dashboard/notifications/notifications-user")
+        return HttpResponseRedirect("/dashboard/notifications-panel/notifications-user")
