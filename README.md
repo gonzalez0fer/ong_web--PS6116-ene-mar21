@@ -1,5 +1,5 @@
 # ong_web--PS6116-ene-mar21
-Sistema para la ONG +Verde +Humana el cual tiene como función princiapl llevar un mejor control del ingreso y egreso del agua y los productos que manejan, (comida, productos de mantenimiento, maquinarias), en los disitntos puntos de distribución que estos manejan. 
+Sistema para la ONG +Verde +Humana el cual tiene como función principal llevar un mejor control del ingreso y egreso del agua y los productos que utilizan, (comida, productos de mantenimiento, maquinarias), en los disitntos puntos de distribución que estos manejan. 
 
 ## Sistema +Verde +Humano
 Este proyecto fue generado en Django v3.1.5
