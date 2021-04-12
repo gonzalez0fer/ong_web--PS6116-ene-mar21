@@ -40,18 +40,18 @@ python manage.py runserver
 3. Control de acceso
 
 ## Dependencias
-asgiref==3.3.1
-certifi==2020.12.5
-Django==3.1.5
-django-environ==0.4.5
-django-extra-views==0.13.0
-django-model-utils==4.1.1
-django-widget-tweaks==1.4.8
-psycopg2-binary==2.8.6
-pytz==2020.5
-request==2.25.1
-six==1.15.0
-sqlparse==0.4.1
+-asgiref==3.3.1
+-certifi==2020.12.5
+-Django==3.1.5
+-django-environ==0.4.5
+-django-extra-views==0.13.0
+-django-model-utils==4.1.1
+-django-widget-tweaks==1.4.8
+-psycopg2-binary==2.8.6
+-pytz==2020.5
+-request==2.25.1
+-six==1.15.0
+-sqlparse==0.4.1
 
 ## Integrantes
 Fernando González
