@@ -11,108 +11,121 @@
 
 
             <div class="row">
-                <div class="col-md-7">
-                  <div class="card">
-                    <div class="card-header card-header-info">
-                      <h4 class="card-title">Crea un Punto de Distribución</h4>
-                      <p class="card-category">Completa los datos.</p>
-                    </div>
-                    <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
-                            
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                              <div class="form-group">
-                                <label class="bmd-label-floating">Nombre</label>
-                                {% render_field form.name class="form-control" %}
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                  <label class="bmd-label-floating">Precio de Venta de Agua (Bs.)</label>
-                                  {% render_field form.capacity class="form-control" %}
-                                </div>
-                              </div>
-                          </div>
-
-                          <br />
-                          <div class="row">
-                            <div class="col-md-6">
-                              <div class="form-group">
-                                <label class="bmd-label-floating">Capacidad del Tanque (Litros)</label>
-                                {% render_field water_tank_form.capacity class="form-control" %}
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                  <label class="bmd-label-floating">Cantidad de Litros Actuales</label>
-                                  {% render_field water_tank_form.current_liters class="form-control" %}
-                                </div>
-                              </div>
-                          </div>
-                        <br />
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <label class="bmd-label-floating">Dirección</label>
-                              {% render_field form.address class="form-control" %}
-                            </div>
-                          </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <label>Descripcion</label>
-                              <div class="form-group">
-                                <label class="bmd-label-floating"></label>
-                                {% render_field form.description class="form-control" %}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <p class="pull-left">
-                            <a  href="{% url 'dashboard:refectory:list_refectories' %}">
-                            <button type="button" class="btn btn-default">Regresar</button>
-                            </a>
-                        </p>
-                        <button type="submit" class="btn btn-success pull-right">Crear Punto de Distribución</button>
-                        <div class="clearfix"></div>
-                      </form>
-                    </div>
+              <div class="col-md-7">
+                <div class="card">
+                  <div class="card-header card-header-info">
+                    <h4 class="card-title">Crea un Punto de Distribución</h4>
+                    <p class="card-category">Completa los datos.</p>
                   </div>
-                </div>
+                  <div class="card-body">
+                    <form onsubmit="return validate()" role="form" method="post" >
+                      {% csrf_token %}
+                          
+                      <br />
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="bmd-label-floating" for="name">Nombre <b>*</b></label>
+                            <input class="form-control" id="name" name="name">
+                          </div>
+                          <span id="name_error" class="text-danger" style="visibility : hidden"></span>
+                        </div>
 
-                <div class="col-md-5">
-                  <div class="card card-profile">
-                    <div class="card-avatar">
-                      <a href="">
-                        <img class="img" src="/static/assets/img/flats/refectory.png" />
-                      </a>
-                    </div>
-                    <div class="card-body" style="text-align: justify;">
-                      <div style="padding: 0px 30px;">
-                        <h4 class="card-title">
-                          Al habilitar un punto de distribución en el sistema,
-                          se podrá dar seguimiento a todas sus inventarios y operaciones.
-                        </h4>
-                        </br>
-                        <h4>
-                          <strong>No olvides asignar usuarios a este punto de distribución
-                          desde Usuarios->Ver Usuario->Editar</strong>
-                        </h4>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="bmd-label-floating" for="water_price">Precio de Venta de Agua (Bs.) <b>*</b></label>
+                            <input class="form-control" type="number" step="0.01" id="water_price" name="water_price">
+                          </div>
+                          <span id="water_price_error" class="text-danger" style="visibility : hidden"></span>
+                        </div>
                       </div>
-                    </div>   
+                      
+                      <br />
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="bmd-label-floating" for="capacity">Capacidad del Tanque (Litros) <b>*</b></label>
+                            <input class="form-control" type="number" id="capacity" name="capacity">
+                          </div>
+                          <span id="capacity_error" class="text-danger" style="visibility : hidden"></span>
+                        </div>
+                      
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="bmd-label-floating" for="current_liters">Cantidad de Litros Actuales <b>*</b></label>
+                            <input class="form-control" type="number" id="current_liters" name="current_liters">
+                          </div>
+                          <span id="current_liters_error" class="text-danger" style="visibility : hidden"></span>
+                        </div>
+                      </div>
+
+                      <br />
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="bmd-label-floating" for="address">Dirección <b>*</b></label>
+                            <input class="form-control" id="address" name="address">
+                          </div>
+                          <span id="address_error" class="text-danger" style="visibility : hidden"></span>
+                        </div>
+                      </div>
+
+                      <br />
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="bmd-label-floating" for="description">Descripcion</label>
+                            <input class="form-control" id="description" name="description">
+                          </div>
+                          <span id="description_error" class="text-danger" style="visibility : hidden"></span>
+                        </div>
+                      </div>
+
+                      <p class="pull-left">
+                        <a  href="{% url 'dashboard:refectory:list_refectories' %}">
+                          <button type="button" class="btn btn-default">Regresar</button>
+                        </a>
+                      </p>
+
+                      <button type="submit" class="btn btn-success pull-right">Crear Punto de Distribución</button>
+                      <div class="clearfix"></div>
+                    </form>
                   </div>
                 </div>
               </div>
+
+              <div class="col-md-5">
+                <div class="card card-profile">
+                  <div class="card-avatar">
+                    <a href="">
+                      <img class="img" src="/static/assets/img/flats/refectory.png" />
+                    </a>
+                  </div>
+                  <div class="card-body" style="text-align: justify;">
+                    <div style="padding: 0px 30px;">
+                      <h4 class="card-title">
+                        Al habilitar un punto de distribución en el sistema,
+                        se podrá dar seguimiento a todas sus inventarios y operaciones.
+                      </h4>
+                      </br>
+                      <h4>
+                        <strong>No olvides asignar usuarios a este punto de distribución
+                        desde Usuarios->Ver Usuario->Editar</strong>
+                      </h4>
+                    </div>
+                  </div>   
+                </div>
               </div>
+            </div>
 
 
 
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script src="/static/assets/js/refectories/refectories_create.js"></script>
+{% endblock javascripts %}

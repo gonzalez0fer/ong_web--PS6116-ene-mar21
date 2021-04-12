@@ -7,146 +7,143 @@
 
 {% block content %}
 
-
-
-
-            <div class="row">
-                <div class="col-md-8">
-                  <div class="card">
-                    <div class="card-header card-header-info">
-                      <h4 class="card-title">Editar Información</h4>
-                      <p class="card-category">Completa los datos.</p>
-                    </div>
-                    <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
-                            
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                              <div class="form-group">
-                                <label class="bmd-label-floating">Nombre</label>
-                                {% render_field form.name class="form-control" %}
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                  <label class="bmd-label-floating">Precio de Venta de Agua (Bs.)</label>
-                                  {% render_field form.capacity class="form-control" %}
-                                </div>
-                              </div>
-                          </div>
-
-                          <br />
-                          <div class="row">
-                            <div class="col-md-6">
-                              <div class="form-group">
-                                <label class="bmd-label-floating">Capacidad del Tanque (Litros)</label>
-                                {% render_field water_tank_form.capacity class="form-control" %}
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                  <label class="bmd-label-floating">Cantidad de Litros Actuales</label>
-                                  {% render_field water_tank_form.current_liters class="form-control" %}
-                                </div>
-                              </div>
-                          </div>
-                        <br />
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <label class="bmd-label-floating">Dirección</label>
-                              {% render_field form.address class="form-control" %}
-                            </div>
-                          </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <label>Descripcion</label>
-                              <div class="form-group">
-                                <label class="bmd-label-floating"></label>
-                                {% render_field form.description class="form-control" %}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <p class="pull-left">
-                            <a  href="{% url 'dashboard:refectory:list_refectories' %}">
-                            <button type="button" class="btn btn-default">Regresar</button>
-                            </a>
-                        </p>
-                        <button type="submit" class="btn btn-success pull-right">Guardar</button>
-                        <div class="clearfix"></div>
-                      </form>
-                    </div>
-                  </div>
+<div class="row">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header card-header-info">
+        <h4 class="card-title">Editar Información</h4>
+        <p class="card-category">Completa los datos.</p>
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+              
+          <br/>
+          <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="bmd-label-floating" for="name">Nombre</label>
+                  {% render_field form.name class="form-control" id="name" name="name" %}
                 </div>
-                <div class="col-md-4">
-                    
-                    <div class="card card-profile">
-                        <div class="card-avatar">
-                            <a href="">
-                              <img class="img" src="/static/assets/img/flats/refectory.png" />
-                            </a>
-                          </div>
-                            <div class="card-body">
-        
-                                <h4 class="card-title">
-                                    <strong>Punto de Distribución <b>{{form.name.initial}}</b></strong> 
-                                </br>
-                            </br>
-                                <div style="text-align: justify; padding: 0px 25px;">
-                                    Aquí podrás conocer y modificar los datos con respecto al punto de distribución seleccionado.
-                                </br>
-                            </br>
-                                    Dirección: 
-                                    {{form.address.initial}}
-                                </br>
-                                    Precio de Venta de Agua:
-                                    <strong>{{form.capacity.initial}} Bs./L</strong>
-                                  </div>
-                                </h4>
-                            </br>
-                            <div class="row" style="background-color: rgba(153, 160, 160, 0.295); position: relative;">
-    
-                                <div class="col-md-5">
-                                    <h4 class="" style="position: absolute; top:50%; margin: 0;   -ms-transform: translateY(-50%); transform: translateY(-50%);">
-                                        Capacidad del tanque
-                                    </br>
-                                        <strong>{{ water_tank_form.capacity.initial }} lts.</strong> 
-                                    </br>
-                                    </br>
-                                        Litros actuales
-                                        </br>   
-                                        <strong>{{ water_tank_form.current_liters.initial }} lts.</strong> 
-    
-                                    </h4>                           
-                                </div>
-                                <div class="col-md-7">
-        
-                                    <h4 style="margin-top: 10px;">Nivel del tanque</h4>        
-                                    {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%}                            
-                                </div>
-                            </br>
-        
-                            </div>
-    
-    
-    
-                              </div>    
-                            
-                    </div>
-                    
-                  </div>
-                    
+                <span id="name_error" class="text-danger" style="visibility : hidden"></span>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="bmd-label-floating" for="water_price">Precio de Venta de Agua (Bs.)</label>
+                  {% render_field form.capacity class="form-control" id="water_price" name="water_price" %}
+                </div>
+                <span id="water_price_error" class="text-danger" style="visibility : hidden"></span>
+              </div>
+          </div>
+
+          <br/>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating" for="capacity">Capacidad del Tanque (Litros)</label>
+                {% render_field water_tank_form.capacity class="form-control" id="capacity" name="capacity" %}
+              </div>
+              <span id="capacity_error" class="text-danger" style="visibility : hidden"></span>
             </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating" for="current_liters">Cantidad de Litros Actuales</label>
+                {% render_field water_tank_form.current_liters class="form-control" id="current_liters" name="current_liters" %}
+              </div>
+              <span id="current_liters_error" class="text-danger" style="visibility : hidden"></span>
+            </div>
+          </div>
+
+          <br />
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="bmd-label-floating" for="address">Dirección</label>
+                {% render_field form.address class="form-control" id="address" name="address" %}
+              </div>
+              <span id="address_error" class="text-danger" style="visibility : hidden"></span>
+            </div>
+          </div>
+
+          <br />
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="bmd-label-floating" for="description">Descripción</label>
+                {% render_field form.description class="form-control" id="description" name="description" %}
+              </div>
+              <span id="description_error" class="text-danger" style="visibility : hidden"></span>
+            </div>
+          </div>
+
+          <p class="pull-left">
+            <a  href="{% url 'dashboard:refectory:list_refectories' %}">
+              <button type="button" class="btn btn-default">Regresar</button>
+            </a>
+          </p>
+
+          <button type="submit" class="btn btn-success pull-right">Guardar</button>
+          <div class="clearfix"></div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card card-profile">
+      <div class="card-avatar">
+        <a href="">
+          <img class="img" src="/static/assets/img/flats/refectory.png" />
+        </a>
+      </div>
+      <div class="card-body">
+        <h4 class="card-title">
+          <strong>Punto de Distribución <b>{{form.name.initial}}</b></strong> 
+          </br>
+          </br>
+          <div style="text-align: justify; padding: 0px 25px;">
+            Aquí podrás conocer y modificar los datos con respecto al punto de distribución seleccionado.
+            </br>
+            </br>
+            Dirección: 
+            {{form.address.initial}}
+            </br>
+            Precio de Venta de Agua:
+            <strong>{{form.capacity.initial}} Bs./L</strong>
+          </div>
+        </h4>
+        </br>
+        <div class="row" style="background-color: rgba(153, 160, 160, 0.295); position: relative;">
+          <div class="col-md-5">
+            <h4 class="" style="position: absolute; top:50%; margin: 0;   -ms-transform: translateY(-50%); transform: translateY(-50%);">
+              Capacidad del tanque
+              </br>
+              <strong>{{ water_tank_form.capacity.initial }} lts.</strong> 
+              </br>
+              </br>
+              Litros actuales
+              </br>   
+              <strong>{{ water_tank_form.current_liters.initial }} lts.</strong> 
+            </h4>                           
+          </div>
+          <div class="col-md-7">
+            <h4 style="margin-top: 10px;">Nivel del tanque</h4>        
+            {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%}                            
+          </div>
+          </br>
+        </div>
+      </div>       
+    </div>   
+  </div>        
+</div>
 
 
 
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script src="/static/assets/js/refectories/refectories_create.js"></script>
+{% endblock javascripts %}
