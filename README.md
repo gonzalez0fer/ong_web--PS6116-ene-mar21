@@ -54,10 +54,10 @@ python manage.py runserver
 - sqlparse==0.4.1
 
 ## Integrantes
-Fernando González
-Juan Diego Porras
-Javier Vivas
-Victoria Torres
-Pablo González
-Maria F. Machado
-Pedro Maldonado
+-- Fernando González
+-- Juan Diego Porras
+-- Javier Vivas
+-- Victoria Torres
+-- Pablo González
+-- Maria F. Machado
+-- Pedro Maldonado
