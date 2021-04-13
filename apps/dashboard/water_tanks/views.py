@@ -28,7 +28,6 @@ class TanksListView(ListView):
 
         for i in query:
             refectory = Refectory.objects.get(id=i.refectory_id)
-            print(refectory)
             context['object_list'].append({
                     'id':i.id, 
                     'capacity':i.capacity, 
