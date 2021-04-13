@@ -48,9 +48,19 @@ function product_name_validation() {
 // Validación dinámica de la cantidad de producto a usar
 function product_quantity_validation() {
     product_quantity = document.getElementById("product_quantity").value
+    product_name = document.getElementById("product_name").value
+    const found = products.find(product => product.product_name == product_name);
 
-    if (parseInt(product_quantity) < 1) {
+    if (product_quantity == "none" || product_quantity == "") {
         document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad válida"
+        document.getElementById("product_quantity_error").style.visibility = "visible"
+    }
+    else if (parseInt(product_quantity) < 1) {
+        document.getElementById("product_quantity_error").innerHTML = "Debe introducir una cantidad válida"
+        document.getElementById("product_quantity_error").style.visibility = "visible"
+    }
+    else if (found && parseInt(product_quantity) > parseInt(found.product_quantity)) {
+        document.getElementById("product_quantity_error").innerHTML = "La cantidad pedida excede la cantidad disponible"
         document.getElementById("product_quantity_error").style.visibility = "visible"
     }
     else {

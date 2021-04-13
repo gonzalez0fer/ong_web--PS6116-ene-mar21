@@ -132,13 +132,19 @@ function unit_validation() {
 // Validacion dinámica de las unidades del producto
 function spare_part_validation() {
 
-    product_cod = document.getElementById("product_cod").value;
-    const found = products.find(product => product.product_name == product_cod);
+    if (window.location.href.includes("update")) {
+        product_name = document.getElementById("product_name").value
+    } else {
+        product_name = document.getElementById("product_cod").value;
+    }
 
+    const found = products.find(product => product.product_name == product_name);
+
+    console.log(found, product_name, found.is_spare_part)
     if (found) {
         if (found.is_spare_part == "False") {
             document.getElementById("is_spare_part").checked = false;
-        } else {
+        } else if (found.is_spare_part == "True") {
             document.getElementById("is_spare_part").checked = true;
         }
         document.getElementById("is_spare_part").setAttribute("disabled", 'disabled');
@@ -154,7 +160,7 @@ function spare_part_validation() {
 }
 
 
-// Validación estática al momento de enviar el formulario
+// Validación estática al  de enviar el formulario
 function validate() {
 
     error = false
@@ -169,6 +175,11 @@ function validate() {
     product_unit = document.getElementById("product_unit").value
     product_quantity = document.getElementById("product_quantity").value
     product_unitary_amount = document.getElementById("product_unitary_amount").value
+    spare_part_check = document.getElementById("is_spare_part").checked
+    spare_part_val = document.getElementById("is_spare_part").value
+    console.log(spare_part_val)
+    console.log(spare_part_check)
+
 
     if (document.getElementById("product_unit").disabled) {
         document.getElementById("product_unit").disabled = false;
