@@ -25,7 +25,7 @@
                 <label class="bmd-label-floating">Nombre del equipo  <b>*</b></label>
                 {% render_field form.name name="name" id="name" class="form-control" readonly="true" %}
               </div>
-              <span id="name_error" class="text-danger" style="display : none"></span>
+              <span id="name_error" class="text-danger" style.visibility = "hidden"></span>
             </div>
           </div>
 
@@ -33,9 +33,9 @@
             <div class="col">
               <div class="form-group">
                 <label class="bmd-label-floating">Frecuencia de Mantenimiento  <b>*</b></label>
-                {% render_field form.maintenance_frequency id="maintenance_frequency" name="maintenance_frequency" class="form-control" required="true" %}
+                {% render_field form.maintenance_frequency id="maintenance_frequency" name="maintenance_frequency" class="form-control" %}
               </div>
-              <span id="maintenance_frequency_error" class="text-danger" style="display : none"></span>
+              <span id="maintenance_frequency_error" class="text-danger" style.visibility = "hidden"></span>
             </div>
           </div>
 
@@ -45,9 +45,9 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Marca  <b>*</b></label>
-                {% render_field form.brand name="brand" id="brand" class="form-control" required="true" %}
+                {% render_field form.brand name="brand" id="brand" class="form-control" %}
               </div>
-              <span id="brand_error" class="text-danger" style="display : none"></span>
+              <span id="brand_error" class="text-danger" style.visibility = "hidden"></span>
             </div>
             
             <div class="col-md-6">
@@ -55,7 +55,7 @@
                 <label class="bmd-label-floating">Modelo</label>
                 {% render_field form.equipment_model id="equipment_model" name="equipment_model" class="form-control" %}
               </div>
-              <span id="equipment_model_error" class="text-danger" style="display : none"></span>
+              <span id="equipment_model_error" class="text-danger" style.visibility = "hidden"></span>
             </div>
             
             <div class="col-md-6">
@@ -63,7 +63,7 @@
                 <label class="bmd-label-floating">Potencia</label>
                 {% render_field form.power id="power" name="power" step="0.01" class="form-control" %}
               </div>
-              <span id="power_error" class="text-danger" style="display : none"></span>
+              <span id="power_error" class="text-danger" style.visibility = "hidden"></span>
             </div>
 
             <div class="col-md-6">
@@ -71,7 +71,7 @@
                 <label class="bmd-label-floating">Diámetro de Entrada</label>
                 {% render_field form.inlet_diameter name="inlet_diameter" id="inlet_diameter" step="0.01" class="form-control" %}
               </div>
-              <span id="inlet_diameter_error" class="text-danger" style="display : none"></span>
+              <span id="inlet_diameter_error" class="text-danger" style.visibility = "hidden"></span>
             </div>
 
             <div class="col-md-6">
@@ -79,7 +79,7 @@
                 <label class="bmd-label-floating">Diámetro</label>
               {% render_field form.diameter name="diameter" id="diameter" step="0.01" class="form-control" %}
               </div>
-              <span id="diameter_error" class="text-danger" style="display : none"></span>
+              <span id="diameter_error" class="text-danger" style.visibility = "hidden"></span>
             </div>
             
             <div class="col-md-6">
@@ -87,7 +87,7 @@
                 <label class="bmd-label-floating">Alto</label>
               {% render_field form.height name="height" id="height" step="0.01" class="form-control" %}
               </div>
-              <span id="height_error" class="text-danger" style="display : none"></span>
+              <span id="height_error" class="text-danger" style.visibility = "hidden"></span>
             </div>
 
             <div class="col-md-6">
@@ -95,7 +95,7 @@
                 <label class="bmd-label-floating">Volumen</label>
               {% render_field form.volume name="volume" id="volume" step="0.01" class="form-control" %}
               </div>
-              <span id="volume_error" class="text-danger" style="display : none"></span>
+              <span id="volume_error" class="text-danger" style.visibility = "hidden"></span>
             </div>
 
             <div class="col-md-6">
@@ -103,7 +103,7 @@
                 <label class="bmd-label-floating">Medidas</label>
               {% render_field form.measurements name="measurements" id="measurements" class="form-control" %}
               </div>
-              <span id="measurements_error" class="text-danger" style="display : none"></span>
+              <span id="measurements_error" class="text-danger" style.visibility = "hidden"></span>
             </div>    
 
             <div class="col-md-6">
@@ -111,7 +111,7 @@
                 <label class="bmd-label-floating">Flujo Máximo</label>
                 {% render_field form.flow id="flow" name="flow" step="0.01" class="form-control" %}
               </div>
-              <span id="flow_error" class="text-danger" style="display : none"></span>
+              <span id="flow_error" class="text-danger" style.visibility = "hidden"></span>
             </div>
 
             <div class="col-md-6">
@@ -120,7 +120,7 @@
                 {% render_field form.light_bulb_size id="light_bulb_size" name="light_bulb_size" step="0.01" class="form-control" %}
               </div>
               
-              <span id="light_bulb_size_error" class="text-danger" style="display : none"></span>
+              <span id="light_bulb_size_error" class="text-danger" style.visibility = "hidden"></span>
             </div>
 
             <div class="col-md-6">
@@ -128,7 +128,7 @@
                 <label class="bmd-label-floating">Tamaño del cuarzo</label>
                 {% render_field form.quartz_size id="quartz_size" name="quartz_size" step="0.01" class="form-control" %}
               </div>
-              <span id="quartz_size_error" class="text-danger" style="display : none"></span>
+              <span id="quartz_size_error" class="text-danger" style.visibility = "hidden"></span>
             </div>
 
             <div class="col-md-6">
@@ -145,7 +145,7 @@
                         {% endfor %}
                     </select>
               </div>
-              <span id="spare_part_error" class="text-danger" style="display : none"></span>
+              <span id="spare_part_error" class="text-danger" style.visibility = "hidden"></span>
             </div>
           </div>
           <br/>
@@ -157,7 +157,7 @@
                 <label class="bmd-label-floating">Instrucciones</label>
                 {% render_field form.instructions id="instructions" name="instructions" class="form-control" %}
               </div>
-              <span id="instructions_error" class="text-danger" style="display : none"></span>
+              <span id="instructions_error" class="text-danger" style.visibility = "hidden"></span>
             </div>
           </div>
 
@@ -196,5 +196,5 @@
 
 {% endblock content %}
 {% block javascripts %}
-<script src="/static/assets/js/equipments/equipment_create.js"></script>
+<script src="/static/assets/js/equipments/equipments.js"></script>
 {% endblock javascripts %}

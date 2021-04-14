@@ -36,7 +36,7 @@
                 <label class="bmd-label-floating">Tipo de operación</label>
                  {% render_field form.operation_type class="form-control" name="operation_type" id="operation_type" %}
               </div>
-              <span id="operation_type_error" class="text-danger" style="display : none"></span>
+              <span id="operation_type_error" class="text-danger" style="visibility : hidden"></span>
             </div>
           </div>
 
@@ -48,7 +48,7 @@
                 <label class="bmd-label-floating">Nombre del producto2</label>
                  <input id="water_liters" type="text" class="form-control" name="product">
               </div>
-              <span id="water_liters_error" class="text-danger" style="display : none"></span>
+              <span id="water_liters_error" class="text-danger" style="visibility : hidden"></span>
             </div>
           -->
            
@@ -59,7 +59,7 @@
                 <label class="bmd-label-floating">Cantidad de unidades</label>
                   {% render_field form.product_quantity class="form-control" name="product_quantity" id="product_quantity" %}                
               </div>
-              <span id="product_quantity_error" class="text-danger" style="display : none"></span>
+              <span id="product_quantity_error" class="text-danger" style="visibility : hidden"></span>
             </div>
 
 
@@ -68,7 +68,7 @@
                 <label class="bmd-label-floating">Unidad</label>
                   <input type="text" name="product_unit" id="product_unit" class="form-control" value="{{object.product_unit}}" readonly>                
               </div>
-              <span id="product_unit_error" class="text-danger" style="display : none"></span>
+              <span id="product_unit_error" class="text-danger" style="visibility : hidden"></span>
             </div>
 
             <div class="col-md-6">
@@ -76,15 +76,15 @@
                 <label class="bmd-label-floating">Precio Unitario (Bolívares)</label>
                   {% render_field form.product_unitary_amount class="form-control" name="product_unitary_amount" id="product_unitary_amount" type="number" step="0.01" %}                  
               </div>
-              <span id="product_unitary_amount_error" class="text-danger" style="display : none"></span>
+              <span id="product_unitary_amount_error" class="text-danger" style="visibility : hidden"></span>
             </div> 
 
             <div class="col-md-6">
               <div class="form-group" style="padding-top: 0.7em;">
                 <label class="bmd-label-floating" for="is_spare">¿Es un repuesto?</label>
-                  {% render_field form.is_spare_part name="is_spare_part" id="is_spare_part" class="col-md-3" %}                  
+                  <input name="is_spare_part" id="is_spare_part" class="col-md-3" type="checkbox" checked="">                  
               </div>
-              <span id="is_spare_part_error" class="text-danger" style="display : none"></span>
+              <span id="is_spare_part_error" class="text-danger" style="visibility : hidden"></span>
             </div> 
 
 
@@ -133,17 +133,29 @@
 {% block javascripts %}
 <script>
   var op_count = "{{ product_code_operation | safe }}";
-  var old_operation = "{{ object.operation_type | safe }}";
-  var old_quantity = "{{ object.product_quantity | safe }}";
+  var product_name = "{{ form.product_name.value | safe }}"
+  var original_operation_type = "{{ form.operation_type.value | safe }}"
+  var original_operation_quantity = "{{ form.product_quantity.value | safe }}"
   
   var products = [
     {% for prod in product_info %}
       {
         product_name: "{{prod.product_name}}",
         product_quantity: "{{prod.product_quantity}}",
+        product_unit: "{{prod.product_unit}}",
+        is_spare_part: "{{prod.is_spare_part}}"
       },
     {% endfor %}
   ]
 </script>
-<script src="/static/assets/js/products/product_management_update.js"></script>
+<script src="/static/assets/js/products/products.js"></script>
+<script>
+  if ("{{object.is_spare_part}}" == "False") {
+    document.getElementById("is_spare_part").checked = true
+    document.getElementById("is_spare_part").disabled = true
+  } else {
+    document.getElementById("is_spare_part").checked = false
+    document.getElementById("is_spare_part").disabled = true
+  }
+</script>
 {% endblock javascripts %}
