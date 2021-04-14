@@ -23,6 +23,10 @@
     .btn.btn-sm{
         padding: 0.40625rem 0.8rem
     }
+    
+    .water-jar .water-filling {
+        font-size: 30px !important;
+    }
 </style>
 
 {% endblock stylesheets %}
@@ -127,12 +131,12 @@
                     <p style="float: left; margin-left: 50px;">
                         {% if user.is_superuser %}
                             <a  href="{% url 'dashboard:water_tanks:tanks_list' %}">
-                                <button type="button" class="btn btn-default action">Regresar</button>
+                                <button type="button" class="btn btn-default">Regresar</button>
                             </a>
                         {% else %}
                         {% comment %} redireccion a home {% endcomment %}
                             <a  href="/dashboard">
-                                <button type="button" class="btn btn-default action">Regresar</button>
+                                <button type="button" class="btn btn-default">Regresar</button>
                             </a>
                         {% endif %}
                     </p>
@@ -177,13 +181,10 @@
                             </br>
                                 Litros actuales
                             </br>   
-                                <strong>{{ water_tank_form.current_liters.initial }} L</strong> 
-                            {% comment %} </br>
-                                Último Llenado
-                            </br>
-                                <strong>{{ last_filled }}</strong>   {% endcomment %}                             
+                                <strong>{{ water_tank_form.current_liters.initial }} L</strong>                            
                             </h4>        
-                            {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%}                             
+                            {% include 'includes/water_tank.html' with water_percent=water_extra_fields.initial.water_percent%}    
+                            </br>                         
                         </div>
                         </br>
                     </div>

@@ -141,11 +141,11 @@
             <p style="float: left; margin-left: 50px;">
                 {% if user.is_superuser %}
                 <a  href="{% url 'dashboard:products:list_maintenance_product' refectory_data.0.id %}">
-                <button type="button" class="btn btn-default action">Regresar</button>
+                <button type="button" class="btn btn-default">Regresar</button>
                 </a>
                 {% else %}
                 <a  href="{% url 'dashboard:products:list_maintenance_product_guest' %}">
-                <button type="button" class="btn btn-default action">Regresar</button>
+                <button type="button" class="btn btn-default">Regresar</button>
                 </a>
                 {% endif %}
             </p>

@@ -97,13 +97,13 @@
                                         <td>
                                             {% if user.is_superuser %}
                                                 <a href="{% url 'dashboard:cupboard-management:update' refectory_data.0.id product_object.id %}">
-                                                    <button type="button" class="btn btn-info">Editar</button>
+                                                    <button type="button" class="btn btn-info btn-sm">Editar</button>
                                                 </a>    
                                                 
-                                                <button type="button" class="btn btn-danger" style="margin-left: 5px;" title="Eliminar" onclick="open_modal('{% url 'dashboard:cupboard-management:cupboard_management_modal' refectory_data.0.id product_object.id %}')">Eliminar</button>
+                                                <button type="button" class="btn btn-danger btn-sm" style="margin-left: 5px;" title="Eliminar" onclick="open_modal('{% url 'dashboard:cupboard-management:cupboard_management_modal' refectory_data.0.id product_object.id %}')">Eliminar</button>
                                             {% else %}
                                                 <a href="{% url 'dashboard:cupboard-management:update_guest' product_object.id %}">
-                                                    <button type="button" class="btn btn-info">Editar</button>
+                                                    <button type="button" class="btn btn-info btn-sm">Editar</button>
                                                 </a>                                            
                                             {% endif %}
                                         </td>

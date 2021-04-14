@@ -1,0 +1,244 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Historial de Operaciones {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+    .app-button{
+        width: 150px;
+        margin:0 40px;
+        display:inline-block;
+        line-height: 60px;
+        border-radius: 50px;
+    }
+    .bttn-row{
+    text-align:center;
+    margin-left:-20px;
+    margin-right:-20px;
+    }
+    .btn.btn-default.action:hover{
+        background-color: #4caf50;
+    }
+
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-plain">
+                  <div class="card-header card-header-info">
+                    <h4 class="card-title mt-0">Tabla de notificaciones <span style="font-weight: bolder">NUEVAS</span></h4>
+                    <p class="card-category"> Aquí podrás ver todas las notificaciones que <span style="font-weight: bolder">NO</span> han sido leídas.</p>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table id="notifications_list_new" class="table table-hover">
+                        <thead class="">
+                          <th>
+                              Centro
+                          </th>
+                          <th>
+                              Tipo
+                          </th>
+                          <th>
+                              Descripción
+                          </th>
+                          <th>
+                              Fecha
+                          </th>
+                          <th>
+                              Status
+                          </th>
+                          <th>
+                            Acción
+                        </th>
+                        </thead>
+                        <tbody>
+                            {% for notification_object in object_list %}
+                                {% if not notification_object.read %}
+                                    <tr>
+                                        <td>
+                                            {{notification_object.refectory.id}}
+                                        </td>
+                                        <td>
+                                            {{ notification_object.notification_type }}
+                                        </td>
+                                        <td>
+                                            {{ notification_object.notification_message }}    
+                                        </td>
+                                        <td>
+                                            {{ notification_object.created }}          
+                                        </td>   
+                                        <td>
+                                            {{ notification_object.notification_status }}          
+                                        </td>
+                                        <td>
+                                            <a  href="{% url 'dashboard:notifications:notifications_read_update' notification_object.id %}">
+                                                <button type="button" class="btn btn-info btn-sm" >Marcar como leído</button>
+                                            </a>
+                                            {% if notification_object.notification_status != "Solucionado" %}
+                                            <a  href="{% url 'dashboard:notifications:notifications_status_update' notification_object.id %}">
+                                                <button type="button" class="btn btn-success btn-sm" >Marcar como solucionado</button>
+                                            </a>
+                                            {% endif %}                              
+                                        </td>                                    
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+                
+            {% comment %} aqui va validacion de super usuario para regresar {% endcomment %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-plain">
+                <div class="card-header card-header-info">
+                    <h4 class="card-title mt-0">Tabla de notificaciones <span style="font-weight: bolder">LEÍDAS</span></h4>
+                    <p class="card-category"> Aquí podrás ver todas las notificaciones que ya han sido leídas.</p>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                    <table id="notifications_list_read" class="table table-hover">
+                        <thead class="">
+                        <th>
+                            Centro
+                        </th>
+                        <th>
+                            Tipo
+                        </th>
+                        <th>
+                            Descripción
+                        </th>
+                        <th>
+                            Fecha
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>
+                            Acción
+                        </th>
+                        </thead>
+                        <tbody>
+                            {% for notification_object in object_list %}
+                            {% if notification_object.read %}
+                                <tr>
+                                    <td>
+                                        {{notification_object.refectory.id}}
+                                    </td>
+                                    <td>
+                                        {{ notification_object.notification_type }}
+                                    </td>
+                                    <td>
+                                        {{ notification_object.notification_message }}    
+                                    </td>
+                                    <td>
+                                        {{ notification_object.created }}    
+                                    </td>
+                                    <td>
+                                        {{ notification_object.notification_status }}          
+                                    </td>
+                                    
+                                    <td>
+                                        {% if notification_object.notification_status == "Solucionado" %}
+                                            - No hay acciones disponibles -
+                                        {% else %}
+                                        <a  href="{% url 'dashboard:notifications:notifications_status_update' notification_object.id %}">
+                                            <button type="button" class="btn btn-success btn-sm" >Marcar como solucionado</button>
+                                        </a> 
+                                        {% endif %}      
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- {% comment %}
+            <p style="float: left; margin-left: 50px;">
+                {% if user.is_superuser %}
+                <a  href="{% url 'dashboard:products:list_maintenance_product' refectory_data.0.id %}">
+                <button type="button" class="btn btn-default action">Regresar</button>
+                </a>
+                {% else %}
+                <a  href="{% url 'dashboard:products:list_maintenance_product_guest' %}">
+                <button type="button" class="btn btn-default action">Regresar</button>
+                </a>
+                {% endif %}
+            </p>
+            <p class="bttn-row">
+            {% if user.is_superuser %}
+                <a  href="{% url 'dashboard:product_managements:create' refectory_data.0.id 0 %}">
+                    <button type="button" class="btn btn-default action">Registrar Ingreso</button>
+                </a>
+                <a  href="{% url 'dashboard:product_managements:create' refectory_data.0.id 1 %}">
+                    <button type="button" class="btn btn-default action">Registrar Egreso</button>
+                </a>
+
+                <button type="button" class="btn btn-default action" onclick="open_modal('{% url 'dashboard:product_managements:product_management_report_modal' refectory_data.0.id %}')">Reporte</button>
+            {% else %}
+                <a  href="{% url 'dashboard:product_managements:create_guest' 0 %}">
+                    <button type="button" class="btn btn-default action">Registrar Ingreso</button>
+                </a>                
+                <a  href="{% url 'dashboard:product_managements:create_guest' 1 %}">
+                    <button type="button" class="btn btn-default action">Registrar Egreso</button>
+                </a>
+            {% endif %}
+            </p>
+            {% endcomment %} -->
+              </div>
+            </br>
+        </br>
+
+        <!-- <div class="col-md-4">
+                    
+            <div class="card card-profile">
+                <div class="card-avatar">
+                    <a href="">
+                      <img class="img" src="/static/assets/img/flats/refectory.png" />
+                    </a>
+                  </div>
+                    <div class="card-body">
+
+                        <h4 class="card-title">
+                            Punto de distribución:
+                            <strong>{{refectory_data.0.refectory_name}}</strong> 
+                        </br>
+                            Direccion: 
+                            {{refectory_data.0.refectory_address}}
+
+                        </h4>
+                      </div>    
+                        
+
+                  
+            </div>
+          </div> -->
+
+
+
+            <div class="modal fade" id='modal_delete' role="dialog">
+        </div>
+
+
+{% endblock content %}
+
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+    <script src="/static/assets/js/notification-message.js"></script>
+    <script src="/static/assets/js/notifications/notifications_list.js"></script>
+{% endblock javascripts %}

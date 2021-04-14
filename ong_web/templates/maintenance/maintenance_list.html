@@ -90,14 +90,14 @@
                                         <td>
                                             {% if user.is_superuser %}
                                             <a  href="{% url 'dashboard:maintenance:maintenance_update' refectory_data.0.id equipment_id i.id %}">
-                                                <button type="button" class="btn btn-info">Editar</button>
+                                                <button type="button" class="btn btn-info btn-sm">Editar</button>
                                             </a>
                                                 
-                                            <button type="button" class="btn btn-danger" onclick="open_modal('{% url 'dashboard:maintenance:maintenance_modal' refectory_data.0.id i.id %}')">Eliminar</button>
+                                            <button type="button" class="btn btn-danger btn-sm" onclick="open_modal('{% url 'dashboard:maintenance:maintenance_modal' refectory_data.0.id i.id %}')">Eliminar</button>
 
                                             {% else %}
                                             <a  href="{% url 'dashboard:maintenance:maintenance_update_guest' i.id %}">
-                                                <button type="button" class="btn btn-info">Editar</button>
+                                                <button type="button" class="btn btn-info btn-sm">Editar</button>
                                             </a>                                            
                                             {% endif %}
                                         </td>
@@ -113,7 +113,7 @@
             <p style="float: left; margin-left: 50px;">
                 {% if user.is_superuser %}
                 <a  href="{% url 'dashboard:equipments:list_equipments' refectory_data.0.id %}">
-                <button type="button" class="btn btn-default action">Regresar</button>
+                <button type="button" class="btn btn-default">Regresar</button>
                 </a>
                 {% else %}
                 <a  href="{% url 'dashboard:equipments:list_equipments_guest' %}">

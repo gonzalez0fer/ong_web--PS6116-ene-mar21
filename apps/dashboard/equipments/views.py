@@ -122,7 +122,6 @@ class EquipmentCreateView(CreateView):
 
         self.object = None
         form = self.get_form()
-        print(form)
         if form.is_valid():
             return self.form_valid(form)
         else:

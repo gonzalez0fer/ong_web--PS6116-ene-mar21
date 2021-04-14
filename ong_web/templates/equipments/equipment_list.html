@@ -20,7 +20,6 @@
         <div class="card card-plain">
           <div class="card-header card-header-info" >
             <h4 class="card-title mt-0">Inventario de Equipos del punto de distribución <b>{{refectory_data.0.refectory_name}}</b></h4>
-            <p class="card-category"> Aqui podras ver todos los equipos con los que cuenta el punto de distribución.</p>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -124,13 +123,7 @@
       </a>
     </div>
     <div class="card-body">
-      <h4 class="card-title" style="padding-bottom: 10px;">
-        Punto de distribución: 
-        <b>{{refectory_data.0.refectory_name}}</b>
-        </br>
-        Dirección: 
-        <b>{{refectory_data.0.refectory_address}}</b>
-      </h4>
+      <h4 class="card-title" style="padding-bottom: 10px;">Aquí podrás ver todos los equipos con los que cuenta el Punto de Distribución.</h4>
       {% if user.is_superuser %}
         <a  href="{% url 'dashboard:equipments:create_equipments' refectory_data.0.id %}">
           <button type="button" class="btn btn-warning">Agregar Equipo</button>

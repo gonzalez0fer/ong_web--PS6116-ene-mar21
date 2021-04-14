@@ -18,6 +18,8 @@ from apps.main.refectories.models import Refectory
 from apps.main.users.models import CustomUser
 from apps.main.water_tanks.models import WaterTank
 from apps.main.water_managements.models import WaterManagement
+from apps.main.notifications.models import Notifications
+from apps.main.users.models import CustomUser
 
 from apps.main.utils import get_exchange_rate, render_pdf_view
 from datetime import datetime, timedelta
@@ -185,6 +187,29 @@ class WaterManagementCreateView(CreateView):
             tank.current_liters = tank.current_liters - self.object.water_liters    
         tank.save()
         self.object.save()
+
+        #validacion notificacion de nivel del tanque
+        if self.object.operation_type == 'Egreso':
+            if ((tank.current_liters * 100)//tank.capacity) <= 10 and ((tank.current_liters * 100)//tank.capacity) > 0:
+                total_users = CustomUser.objects.all().order_by('id')
+                
+                for i in total_users:
+                    Notifications.objects.create(refectory_id=self.kwargs['tank_id'],
+                            read=False,
+                            notification_type='Agua',
+                            notification_message='Nivel del tanque bajo',
+                            user_notification_id=i.id
+                    )
+            elif ((tank.current_liters * 100)//tank.capacity) == 0:
+                total_users = CustomUser.objects.all()
+                for i in total_users:
+                    Notifications.objects.create(refectory_id=self.kwargs['tank_id'],
+                            read=False,
+                            notification_type='Agua',
+                            notification_message='Tanque vacio',
+                            user_notification_id=i.id
+                    )
+
         messages.success(self.request, 'Operación registrada exitosamente')
         return super().form_valid(form)
 
@@ -246,6 +271,29 @@ class WaterManagementCreateViewGuest(CreateView):
             tank.current_liters = tank.current_liters - self.object.water_liters    
         tank.save()
         self.object.save()
+
+        #validacion notificacion de nivel del tanque
+        if self.object.operation_type == 'Egreso':
+            if ((tank.current_liters * 100)//tank.capacity) <= 10 and ((tank.current_liters * 100)//tank.capacity) > 0:
+                total_users = CustomUser.objects.all().order_by('id')
+                
+                for i in total_users:
+                    Notifications.objects.create(refectory_id=self.request.user.profile.refectory.id,
+                            read=False,
+                            notification_type='Agua',
+                            notification_message='Nivel del tanque bajo',
+                            user_notification_id=i.id
+                    )
+            elif ((tank.current_liters * 100)//tank.capacity) == 0:
+                total_users = CustomUser.objects.all()
+                for i in total_users:
+                    Notifications.objects.create(refectory_id=self.request.user.profile.refectory.id,
+                            read=False,
+                            notification_type='Agua',
+                            notification_message='Tanque vacio',
+                            user_notification_id=i.id
+                    )
+
         messages.success(self.request, 'Operación registrada exitosamente')
         return super().form_valid(form)
 
@@ -299,6 +347,28 @@ class WaterManagementRegisterSell(CreateView):
         tank.current_liters = tank.current_liters - self.object.water_liters    
         tank.save()
         self.object.save()
+
+        #validacion notificacion de nivel del tanque
+        if ((tank.current_liters * 100)//tank.capacity) <= 10 and ((tank.current_liters * 100)//tank.capacity) > 0:
+            total_users = CustomUser.objects.all().order_by('id')
+            
+            for i in total_users:
+                Notifications.objects.create(refectory_id=self.request.user.profile.refectory.id,
+                        read=False,
+                        notification_type='Agua',
+                        notification_message='Nivel del tanque bajo',
+                        user_notification_id=i.id
+                )
+        elif ((tank.current_liters * 100)//tank.capacity) == 0:
+            total_users = CustomUser.objects.all()
+            for i in total_users:
+                Notifications.objects.create(refectory_id=self.request.user.profile.refectory.id,
+                        read=False,
+                        notification_type='Agua',
+                        notification_message='Tanque vacio',
+                        user_notification_id=i.id
+                )
+
         messages.success(self.request, 'Operación registrada exitosamente')
         return super().form_valid(form)
 
@@ -323,7 +393,6 @@ class WaterManagementUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
 
         context = super(WaterManagementUpdateView, self).get_context_data(**kwargs)
-        water_operation = get_object_or_404(WaterManagement, pk=self.kwargs['pk'])
         query = WaterTank.objects.get(id=self.kwargs['tank_id'])
         context['tank_info'] = {
             'id' : self.kwargs['tank_id'],
@@ -386,6 +455,30 @@ class WaterManagementUpdateView(UpdateView):
                 # operacion inversa                
                 tank.current_liters = (tank.current_liters - temp) - self.object.water_liters                        
         tank.save()
+        
+        #validacion notificacion de nivel del tanque
+        if self.object.operation_type == 'Egreso':
+            if ((tank.current_liters * 100)//tank.capacity) <= 10 and ((tank.current_liters * 100)//tank.capacity) > 0:
+                total_users = CustomUser.objects.all().order_by('id')
+                
+                for i in total_users:
+                    Notifications.objects.create(refectory_id=self.kwargs['tank_id'],
+                            read=False,
+                            notification_type='Agua',
+                            notification_message='Nivel del tanque bajo',
+                            user_notification_id=i.id
+                    )
+            elif ((tank.current_liters * 100)//tank.capacity) == 0:
+                total_users = CustomUser.objects.all()
+                for i in total_users:
+                    Notifications.objects.create(refectory_id=self.kwargs['tank_id'],
+                            read=False,
+                            notification_type='Agua',
+                            notification_message='Tanque vacio',
+                            user_notification_id=i.id
+                    )
+
+
         messages.success(self.request, 'Operación actualizada exitosamente')
         return super().form_valid(form)
 
@@ -464,6 +557,28 @@ class WaterManagementUpdateViewGuest(UpdateView):
                 # operacion inversa                
                 tank.current_liters = (tank.current_liters - temp) - self.object.water_liters                         
         tank.save()
+
+        #validacion notificacion de nivel del tanque
+        if self.object.operation_type == 'Egreso':
+            if ((tank.current_liters * 100)//tank.capacity) <= 10 and ((tank.current_liters * 100)//tank.capacity) > 0:
+                total_users = CustomUser.objects.all().order_by('id')
+                
+                for i in total_users:
+                    Notifications.objects.create(refectory_id=self.request.user.profile.refectory.id,
+                            read=False,
+                            notification_type='Agua',
+                            notification_message='Nivel del tanque bajo',
+                            user_notification_id=i.id
+                    )
+            elif ((tank.current_liters * 100)//tank.capacity) == 0:
+                total_users = CustomUser.objects.all()
+                for i in total_users:
+                    Notifications.objects.create(refectory_id=self.request.user.profile.refectory.id,
+                            read=False,
+                            notification_type='Agua',
+                            notification_message='Tanque vacio',
+                            user_notification_id=i.id
+                    )
         messages.success(self.request, 'Operación actualizada exitosamente')
         return super().form_valid(form)
 
