@@ -9,7 +9,7 @@ class Refectory(TimeStampedModel):
         null=True
         )
         
-    address = models.TextField(
+    address = models.CharField(
         max_length=600,
         blank=True, 
         null=True
