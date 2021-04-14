@@ -38,7 +38,7 @@
                       <table id="notifications_list_new" class="table table-hover">
                         <thead class="">
                           <th>
-                              Centro
+                              Punto de Distribución
                           </th>
                           <th>
                               Tipo
@@ -61,7 +61,7 @@
                                 {% if not notification_object.read %}
                                     <tr>
                                         <td>
-                                            {{notification_object.refectory.id}}
+                                            {{notification_object.refectory.name}}
                                         </td>
                                         <td>
                                             {{ notification_object.notification_type }}
@@ -110,7 +110,7 @@
                     <table id="notifications_list_read" class="table table-hover">
                         <thead class="">
                         <th>
-                            Centro
+                            Punto de Distribución
                         </th>
                         <th>
                             Tipo
@@ -133,7 +133,7 @@
                             {% if notification_object.read %}
                                 <tr>
                                     <td>
-                                        {{notification_object.refectory.id}}
+                                        {{notification_object.refectory.name}}
                                     </td>
                                     <td>
                                         {{ notification_object.notification_type }}

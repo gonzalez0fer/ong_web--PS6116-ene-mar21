@@ -30,16 +30,13 @@
             <div class="col-md-12">
                 <div class="card card-plain">
                   <div class="card-header card-header-info">
-                    <h4 class="card-title mt-0">Tabla de notificaciones <span style="font-weight: bolder">NUEVAS</span></h4>
+                    <h4 class="card-title mt-0">Tabla de notificaciones <span style="font-weight: bolder">NUEVAS</span> del Punto de Distribución {{ user.profile.refectory.name }}</h4>
                     <p class="card-category"> Aquí podrás ver todas las notificaciones que <span style="font-weight: bolder">NO</span> han sido leídas.</p>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
                       <table id="notifications_list_new" class="table table-hover">
                         <thead class="">
-                          <th>
-                              Centro
-                          </th>
                           <th>
                               Tipo
                           </th>
@@ -60,9 +57,6 @@
                             {% for notification_object in object_list %}
                                 {% if not notification_object.read %}
                                     <tr>
-                                        <td>
-                                            {{notification_object.refectory.id}}
-                                        </td>
                                         <td>
                                             {{ notification_object.notification_type }}
                                         </td>
@@ -102,16 +96,13 @@
             <div class="col-md-12">
                 <div class="card card-plain">
                 <div class="card-header card-header-info">
-                    <h4 class="card-title mt-0">Tabla de notificaciones <span style="font-weight: bolder">LEÍDAS</span></h4>
+                    <h4 class="card-title mt-0">Tabla de notificaciones <span style="font-weight: bolder">LEÍDAS</span> del Punto de Distribución {{ user.profile.refectory.name }}</h4>
                     <p class="card-category"> Aquí podrás ver todas las notificaciones que ya han sido leídas.</p>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                     <table id="notifications_list_read" class="table table-hover">
                         <thead class="">
-                        <th>
-                            Centro
-                        </th>
                         <th>
                             Tipo
                         </th>
@@ -132,9 +123,6 @@
                             {% for notification_object in object_list %}
                             {% if notification_object.read %}
                                 <tr>
-                                    <td>
-                                        {{notification_object.refectory.id}}
-                                    </td>
                                     <td>
                                         {{ notification_object.notification_type }}
                                     </td>

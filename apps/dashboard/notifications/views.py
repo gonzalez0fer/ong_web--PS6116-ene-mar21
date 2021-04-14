@@ -34,6 +34,7 @@ class NotificationListViewGuest(ListView):
         for i in query:
             context['object_list'].append({
                     'id':i.id,
+                    'refectory':i.refectory,
                     'notification_type':i.notification_type,
                     'notification_message':i.notification_message,
                     'read':i.read,

@@ -72,7 +72,7 @@ class RefectoryCreateView(CreateView):
         water_tank_object.refectory = self.object
         water_tank_object.created_by = self.request.user
         water_tank_object.save()
-        messages.success(self.request, 'Centro creado exitosamente')
+        messages.success(self.request, 'Punto de distribución creado exitosamente')
         return super().form_valid(form)
 
     def form_invalid(self, form, water_tank_form):
@@ -137,7 +137,7 @@ class RefectoryUpdateView(UpdateView):
         self.object.water_tank.capacity = water_tank_form.cleaned_data['capacity']
         self.object.water_tank.current_liters = water_tank_form.cleaned_data['current_liters']
         self.object.water_tank.save()
-        messages.success(self.request, 'Centro actualizado exitosamente')
+        messages.success(self.request, 'Punto de distribución actualizado exitosamente')
         return super().form_valid(form)
 
 
