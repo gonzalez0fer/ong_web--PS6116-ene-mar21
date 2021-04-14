@@ -11,8 +11,7 @@
             <div class="col-md-8">
                 <div class="card card-plain">
                   <div class="card-header card-header-info" >
-                    <h4 class="card-title mt-0">Inventario de mantenimiento del punto de distribución <b>{{refectory_data.0.refectory_name}}</b></h4>
-                    <p class="card-category"> Aqui podras ver todos los productos de mantenimiento del punto de distribución.</p>
+                    <h4 class="card-title mt-0">Inventario de mantenimiento del Punto de Distribución <b>{{refectory_data.0.refectory_name}}</b></h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -95,11 +94,7 @@
                   </div>
                     <div class="card-body">
                       <h4 class="card-title" style="padding-bottom: 20px;">
-                        Punto de distribución:
-                        <strong>{{refectory_data.0.refectory_name}}</strong> 
-                        </br>
-                        Dirección: 
-                        {{refectory_data.0.refectory_address}}
+                        Aquí podrás ver todos los productos de mantenimiento del Punto de Distribución.
                       </h4>
                       {% if user.is_superuser %}
                       <a  href="{% url 'dashboard:product_managements:list_product_management' refectory_data.0.id %}">

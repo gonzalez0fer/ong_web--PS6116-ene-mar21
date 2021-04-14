@@ -3,7 +3,13 @@
 {% block title %} Actualizar PD {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<style>
+  .water-jar .water-filling{
+    font-size: 30px !important;
+  }
+</style>
+{% endblock stylesheets %}
 
 {% block content %}
 
@@ -60,7 +66,7 @@
           <div class="row">
             <div class="col-md-12">
               <div class="form-group">
-                <label class="bmd-label-floating" for="address">Dirección</label>
+                <label class="bmd-label-floating" for="address">Ciudad</label>
                 {% render_field form.address class="form-control" id="address" name="address" %}
               </div>
               <span id="address_error" class="text-danger" style="visibility : hidden"></span>

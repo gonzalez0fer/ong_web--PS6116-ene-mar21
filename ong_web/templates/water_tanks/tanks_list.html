@@ -16,7 +16,7 @@
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-hover">
+                      <table id="water_tanks_list" class="table table-hover">
                         <thead class="">
                           <th>
                                 ID
@@ -58,7 +58,7 @@
                                         </td>
                                         <td>
                                             <a href="{% url 'dashboard:water_managements:water_management_list' i.id %}">
-                                                <button type="button" class="btn" style='background-color: #37005D'><i class="material-icons">opacity</i> Ver Operaciones</button>
+                                                <button type="button" class="btn btn-sm" style='background-color: #37005D'><i class="material-icons">opacity</i> Ver Operaciones</button>
                                             </a>
                                         </td>
                                     </tr>
@@ -88,4 +88,6 @@
 
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script src="/static/assets/js/water_tanks/water_tanks_list.js"></script>
+{% endblock javascripts %}

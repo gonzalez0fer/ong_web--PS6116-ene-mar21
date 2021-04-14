@@ -1,4 +1,11 @@
-
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+.navbar .notification {
+  right: 65px
+}
+</style>
+{% endblock stylesheets %}
       <!-- Navbar -->
       <nav class="navbar bg-info navbar-expand-lg navbar-transparent navbar-absolute fixed-top  ">
         <div class="container-fluid">
@@ -17,9 +24,7 @@
             <ul class="navbar-nav">
               {% if user.is_superuser %}
                 <li>
-                  <a class="nav-link" 
-                    href="{% url 'dashboard:notifications:notifications_list' %}" 
-                    aria-haspopup="true" aria-expanded="false">
+                  <a class="nav-link" href="{% url 'dashboard:notifications:notifications_list' %}" >
                     <i class="material-icons" style="color:black;">notifications</i>
                     <span class="notification" id="notification_count"></span>
                     <p class="d-lg-none d-md-block">
@@ -29,9 +34,7 @@
                 </li>
               {% else %}
                 <li>
-                  <a class="nav-link" 
-                    href="{% url 'dashboard:notifications:notifications_list_guest' %}" 
-                    aria-haspopup="true" aria-expanded="false">
+                  <a class="nav-link" href="{% url 'dashboard:notifications:notifications_list_guest' %}">
                     <i class="material-icons" style="color:black;">notifications</i>
                     <span class="notification" id="notification_count"></span>
                     <p class="d-lg-none d-md-block">
@@ -69,7 +72,12 @@
           const res = await fetch("{% url 'dashboard:notifications:notifications_count' %}");
           const data = await res.json();
           console.log(data);
-          not_count.innerHTML = data.count;
+          if (parseInt(data.count) != 0) {
+            console.log("Prueba")
+            not_count.innerHTML = data.count;
+          } else {
+            document.getElementById("notification_count").style.visibility = "hidden"
+          }
         }, 5000)
       </script>
 
