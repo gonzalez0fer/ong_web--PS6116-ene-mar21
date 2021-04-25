@@ -101,6 +101,8 @@ class Equipment(TimeStampedModel):
         default = Periods.SEMANAL
     )
 
+    maintenance_date = models.DateField(null=True)
+
     instructions = models.TextField(
         max_length=2000,
         blank=True,

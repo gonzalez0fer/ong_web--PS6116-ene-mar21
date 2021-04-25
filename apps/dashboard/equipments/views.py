@@ -16,7 +16,7 @@ from apps.main.products.models import Product
 from apps.main.maintenance.models import Maintenance
 from .forms import EquipmentForm
 
-from apps.main.utils import render_pdf_view
+from apps.main.utils import render_pdf_view, assign_maintenance_date
 from datetime import datetime, timedelta
 
 @method_decorator([login_required, superuser_required], name='dispatch')
@@ -131,6 +131,9 @@ class EquipmentCreateView(CreateView):
         self.object = form.save(commit=False)
         self.object.created_by = self.request.user
         self.object.refectory_id = self.kwargs['refectory_id']
+
+        self.object.maintenance_date = assign_maintenance_date(self.object.maintenance_frequency)
+
         self.object.save()
         messages.success(self.request, 'Equipo registrado exitosamente')
         return super().form_valid(form)
@@ -175,16 +178,21 @@ class EquipmentUpdateView(UpdateView):
     def post(self, request, *args, **kwargs):
 
         self.object = self.get_object()
+        temp_frequency = self.object.maintenance_frequency
         form = self.get_form()
 
         if form.is_valid():
-            return self.form_valid(form)
+            return self.form_valid(form, temp_frequency)
         else:
             return self.form_invalid(form)
 
 
-    def form_valid(self, form):
+    def form_valid(self, form, temp_frequency):
         self.object = form.save(commit=False)
+
+        if self.object.maintenance_frequency != temp_frequency:
+            self.object.maintenance_date = assign_maintenance_date(self.object.maintenance_frequency)
+            
         messages.success(self.request, 'Equipo actualizado exitosamente')
         return super().form_valid(form)
 

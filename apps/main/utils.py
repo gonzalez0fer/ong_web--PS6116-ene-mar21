@@ -5,6 +5,7 @@ from io import BytesIO
 from xhtml2pdf import pisa
 from django import template
 from django.contrib.staticfiles import finders
+from datetime import datetime, timedelta
 
 import os.path
 import requests
@@ -34,4 +35,30 @@ def render_pdf_view(template_src, context_dict={}):
 		return HttpResponse(result.getvalue(), content_type='application/pdf')
 	return None
 
+def assign_maintenance_date(frequency):
+	today = datetime.today().date()
+	if frequency == 'Semanal':
+		maintenance_date = today + timedelta(days=7)
+
+	elif frequency == 'Quincenal':
+		maintenance_date = today + timedelta(days=15)
 	
+	elif frequency == 'Mensual':
+		maintenance_date = today + timedelta(days=30)
+	
+	elif frequency == 'Trimestral':
+		maintenance_date = today + timedelta(days=90)
+	
+	elif frequency == 'Semestral':
+		maintenance_date = today + timedelta(days=180)
+
+	elif frequency == 'Anual':
+		maintenance_date = today + timedelta(days=365)
+	
+	elif frequency == 'Bienal':
+		maintenance_date = today + timedelta(days=730)
+
+	elif frequency == 'Trienal':
+		maintenance_date = today + timedelta(days=1095)
+
+	return maintenance_date
