@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'apps.main.product_managements.apps.ProductManagementsConfig',
     'apps.main.equipments.apps.EquipmentsConfig',
     'apps.main.notifications.apps.NotificationsConfig',
+    'django_celery_beat'
 ]
 
 THIRD_PARTY_APPS = [
@@ -161,3 +162,15 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'ong_web/static'),
 )
+
+CELERY_IMPORTS = ("apps.main.tasks",)
+
+from celery.schedules import crontab
+
+CELERY_BEAT_SCHEDULE = {
+
+    "scheduled_task": {
+        "task": "apps.main.tasks.web_scrapping_BCV",
+        "schedule": crontab(minute=0, hour=13),
+    },
+}

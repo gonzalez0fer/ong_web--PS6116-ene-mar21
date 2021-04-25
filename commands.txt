@@ -1,0 +1,11 @@
+
+RUN RABBIT
+PowerShell
+.\rabbitmq-service.bat stop
+.\rabbitmq-service.bat start
+
+CELERY
+celery -A ong_web worker -l info --pool=solo
+
+CELERY BEAT
+celery -A ong_web beat -l INFO
