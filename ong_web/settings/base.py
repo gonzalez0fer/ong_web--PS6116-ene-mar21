@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'apps.main.product_managements.apps.ProductManagementsConfig',
     'apps.main.equipments.apps.EquipmentsConfig',
     'apps.main.notifications.apps.NotificationsConfig',
+    'apps.main.dollar_rates.apps.DollarRatesConfig',
     'django_celery_beat'
 ]
 

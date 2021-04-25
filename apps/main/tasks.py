@@ -4,14 +4,15 @@ from bs4 import BeautifulSoup
 import urllib.request
 from celery import shared_task
 
+from apps.main.dollar_rates.models import DollarRate
+
 @shared_task
 def web_scrapping_BCV():
     url = "http://www.bcv.org.ve/"
     page = urllib.request.urlopen(url)
     soup = BeautifulSoup(page, 'html.parser')
     content_dollar = soup.find("div", {"id":"dolar"})
-    #content_date = soup.find("span", {"class":"date-display-single"})
-    #fecha = content_date.text
     price = content_dollar.div.strong.text.strip()
     value = float(price.replace('.','').replace(',','.'))
-    return value
+    DollarRate.objects.create(value=value)
+    return True

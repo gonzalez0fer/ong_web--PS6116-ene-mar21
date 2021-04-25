@@ -9,9 +9,15 @@ from django.contrib.staticfiles import finders
 import os.path
 import requests
 
+from apps.main.dollar_rates.models import DollarRate
+
 def get_exchange_rate():
-    r = requests.get('https://s3.amazonaws.com/dolartoday/data.json')
-    return r.json()['USD']['sicad2']
+	query = DollarRate.objects.latest('created')
+	return query.value
+
+# def get_exchange_rate():
+#     r = requests.get('https://s3.amazonaws.com/dolartoday/data.json')
+#     return r.json()['USD']['sicad2']
 
 #TODO validar url en linux y luego ver como se hara en Heroku
 def fetch_resources(uri, rel):
