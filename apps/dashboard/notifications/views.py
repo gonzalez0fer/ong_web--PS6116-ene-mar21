@@ -12,6 +12,9 @@ from apps.main.users.decorators import superuser_required
 from apps.main.notifications.models import Notifications
 from apps.main.refectories.models import Refectory
 from apps.main.users.models import CustomUser
+from apps.main.equipments.models import Equipment
+
+from apps.main.utils import assign_maintenance_date
 
 @method_decorator([login_required, superuser_required], name='dispatch')
 class NotificationListView(ListView):
@@ -64,6 +67,11 @@ def UpdateNotificationStatus(request, pk):
     query = Notifications.objects.get(id=notifications_id)
     query.notification_status = 'Solucionado'
     query.save()
+
+    if query.notification_type == 'Mantenimiento':
+        equipment = Equipment.objects.get(id=query.equipment_id)
+        equipment.maintenance_date = assign_maintenance_date(equipment.maintenance_frequency)
+        equipment.save()
 
     notifications_list = Notifications.objects.filter(refectory_id=query.refectory_id,notification_status='Pendiente',notification_message=query.notification_message)
     for i in notifications_list:

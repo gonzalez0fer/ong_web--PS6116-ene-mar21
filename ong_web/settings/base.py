@@ -170,8 +170,12 @@ from celery.schedules import crontab
 
 CELERY_BEAT_SCHEDULE = {
 
-    "scheduled_task": {
+    "web_scrapping_task": {
         "task": "apps.main.tasks.web_scrapping_BCV",
         "schedule": crontab(minute=0, hour=13),
     },
+    "maintenance_check_task": {
+        "task": "apps.main.tasks.maintenance_daily_checks",
+        "schedule": crontab(minute=0, hour=12),
+    }
 }

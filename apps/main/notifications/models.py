@@ -5,7 +5,7 @@ from datetime import datetime
 from model_utils.models import TimeStampedModel
 
 from apps.main.refectories.models import Refectory
-
+from apps.main.equipments.models import Equipment
 
 class Notifications(TimeStampedModel):
 
@@ -62,5 +62,13 @@ class Notifications(TimeStampedModel):
         settings.AUTH_USER_MODEL,
         blank = True,
         null = True,
+        on_delete = models.SET_NULL,
+    )
+
+    equipment = models.ForeignKey(
+        Equipment, 
+        blank=True, 
+        null=True, 
+        related_name='notification_equipment',
         on_delete = models.SET_NULL,
     )
